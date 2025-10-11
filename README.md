@@ -169,4 +169,4 @@ Cole no `<head>` do `index.html` e ajuste conforme necessário.
 - **OAB/RJ**: 134.947
 - **Endereço**: Av. Ataulfo de Paiva, 1235, Sala 303/191 — Leblon Office Tower — Leblon — Rio de Janeiro/RJ — CEP 22440-034
 
-> **CTA**: **Solicitar proposta** — use os botões do site para enviar mensagem ou agendar atendimento.
+> **CTA**: **Solicitar proposta** — use os botões do site para enviar mensagem ou agendar atendimento. 
