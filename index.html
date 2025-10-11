@@ -565,8 +565,7 @@
                         <input type="hidden" name="consent_timestamp" value="">
                     </div>
                     
-  <input type="hidden" name="cf-turnstile-response" id="ts-token">
-  <div id="cf-turnstile-widget"></div>
+  <div class="cf-turnstile" data-sitekey="0x4AAAAAAB5-eeBvq97oMip7" data-theme="auto" data-action="contact_form"></div>
 <button type="submit" class="w-full cta-button px-8 py-4 rounded-lg text-white font-bold text-lg shadow-lg">Enviar Solicitação</button>
                 </form>
             </div>
@@ -700,35 +699,16 @@
     </script>
 
 <script>
-(function(){ 
-  function whenReady(cb){ 
-    if (window.turnstile && typeof turnstile.render === 'function') return cb();
-    setTimeout(function(){ whenReady(cb); }, 100);
-  }
-  whenReady(function(){ 
-    var wid = turnstile.render('#cf-turnstile-widget', {
-      sitekey: '0x4AAAAAAB5-eeBvq97oMip7',
-      theme: 'auto',
-      action: 'contact_form',
-      callback: function(token){ 
-        var el = document.getElementById('ts-token'); 
-        if (el) el.value = token || '';
-      }
-    });
-    // opcional: renovar token a cada ~110s
-    setInterval(function(){ try { turnstile.reset(wid); } catch(e){} }, 110000);
-  });
-  // Guard para evitar submit sem token
+(function(){
   var form = document.querySelector('form[action="/api/contato"]');
-  if (form) {
-    form.addEventListener('submit', function(e){
-      var token = (document.getElementById('ts-token')||{}).value || '';
-      if (!token) { 
-        e.preventDefault(); 
-        alert('Validação de segurança ainda não carregou. Aguarde 1–2 segundos e clique em Enviar novamente.');
-      }
-    });
-  }
+  if (!form) return;
+  form.addEventListener('submit', function(e){
+    var t = document.querySelector('input[name="cf-turnstile-response"]');
+    if (!t || !t.value) {
+      e.preventDefault();
+      alert('Validação de segurança ainda não carregou. Aguarde 1–2 segundos e clique em Enviar novamente.');
+    }
+  });
 })();
 </script>
 
