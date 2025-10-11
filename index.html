@@ -564,7 +564,10 @@
                         </label>
                         <input type="hidden" name="consent_timestamp" value="">
                     </div>
-                    <button type="submit" class="w-full cta-button px-8 py-4 rounded-lg text-white font-bold text-lg shadow-lg">Enviar Solicitação</button>
+                    
+  <input type="hidden" name="cf-turnstile-response" id="ts-token">
+  <div id="cf-turnstile-widget"></div>
+<button type="submit" class="w-full cta-button px-8 py-4 rounded-lg text-white font-bold text-lg shadow-lg">Enviar Solicitação</button>
                 </form>
             </div>
         </div>
@@ -695,26 +698,39 @@
       }
     })();
     </script>
+
 <script>
-(function(){
-  // Recebe o token do Turnstile e grava no hidden input
-  window.__tsDone = function(token){
-    try {
-      var el = document.getElementById('ts-token');
-      if (el) el.value = token || '';
-    } catch(e){}
-  };
-  // Impede envio sem token
-  var form = document.querySelector('form[action="/api/contato"]');
-  if (!form) return;
-  form.addEventListener('submit', function(e){
-    var v = (document.getElementById('ts-token')||{}).value || '';
-    if (!v) {
-      e.preventDefault();
-      alert('Validação de segurança ainda não carregou. Aguarde 1–2 segundos e clique em Enviar novamente.');
-    }
+(function(){ 
+  function whenReady(cb){ 
+    if (window.turnstile && typeof turnstile.render === 'function') return cb();
+    setTimeout(function(){ whenReady(cb); }, 100);
+  }
+  whenReady(function(){ 
+    var wid = turnstile.render('#cf-turnstile-widget', {
+      sitekey: '0x4AAAAAAB5-eeBvq97oMip7',
+      theme: 'auto',
+      action: 'contact_form',
+      callback: function(token){ 
+        var el = document.getElementById('ts-token'); 
+        if (el) el.value = token || '';
+      }
+    });
+    // opcional: renovar token a cada ~110s
+    setInterval(function(){ try { turnstile.reset(wid); } catch(e){} }, 110000);
   });
+  // Guard para evitar submit sem token
+  var form = document.querySelector('form[action="/api/contato"]');
+  if (form) {
+    form.addEventListener('submit', function(e){
+      var token = (document.getElementById('ts-token')||{}).value || '';
+      if (!token) { 
+        e.preventDefault(); 
+        alert('Validação de segurança ainda não carregou. Aguarde 1–2 segundos e clique em Enviar novamente.');
+      }
+    });
+  }
 })();
 </script>
+
 </body>
 </html>
