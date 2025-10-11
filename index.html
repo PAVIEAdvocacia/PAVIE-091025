@@ -117,17 +117,7 @@
 
     <!-- Schema.org JSON-LD: FAQPage -->
     <script type="application/ld+json">
-    {
-      "@context":"https://schema.org",
-      "@type":"FAQPage",
-      "mainEntity":[
-        {"@type":"Question","name":"Como funciona o atendimento digital?","acceptedAnswer":{"@type":"Answer","text":"Atendimento 100% online: videochamada, assinatura eletrônica, upload seguro e comunicação por WhatsApp/e-mail. Reuniões presenciais no RJ/Maricá se preferir."}},
-        {"@type":"Question","name":"Quanto tempo demora um inventário?","acceptedAnswer":{"@type":"Answer","text":"Extrajudicial: 60 a 120 dias (dependendo de documentos e cartório). Judicial: 12 a 24 meses em média, variando pela complexidade."}},
-        {"@type":"Question","name":"Preciso ir ao cartório ou tribunal?","acceptedAnswer":{"@type":"Answer","text":"Inventário extrajudicial/divórcio consensual exigem ida ao cartório para assinatura. Processos judiciais costumam dispensar presença física; audiências podem ser on-line."}},
-        {"@type":"Question","name":"Quais documentos preciso para iniciar?","acceptedAnswer":{"@type":"Answer","text":"RG/CPF, certidões atualizadas, documentos dos bens e, em inventário, a última declaração de IR do falecido. Enviamos checklist personalizado após o contato."}},
-        {"@type":"Question","name":"Atendem fora do Rio de Janeiro?","acceptedAnswer":{"@type":"Answer","text":"Sim. Atendimento digital em todo o Brasil, com correspondentes locais quando necessário."}}
-      ]
-    }
+    {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Como funciona o atendimento digital?","acceptedAnswer":{"@type":"Answer","text":"Atendimento 100% online: videochamada, assinatura eletrônica, upload seguro e comunicação por WhatsApp/e-mail. Reuniões presenciais no RJ/Maricá se preferir."}},{"@type":"Question","name":"Quanto tempo demora um inventário?","acceptedAnswer":{"@type":"Answer","text":"Extrajudicial: 60 a 120 dias (dependendo de documentos e cartório). Judicial: 12 a 24 meses em média, variando pela complexidade."}},{"@type":"Question","name":"Preciso ir ao cartório ou tribunal?","acceptedAnswer":{"@type":"Answer","text":"Inventário extrajudicial/divórcio consensual exigem ida ao cartório para assinatura. Processos judiciais costumam dispensar presença física; audiências podem ser on-line."}},{"@type":"Question","name":"Quais documentos preciso para iniciar?","acceptedAnswer":{"@type":"Answer","text":"RG/CPF, certidões atualizadas, documentos dos bens e, em inventário, a última declaração de IR do falecido. Enviamos checklist personalizado após o contato."}},{"@type":"Question","name":"Atendem fora do Rio de Janeiro?","acceptedAnswer":{"@type":"Answer","text":"Sim. Atendimento digital em todo o Brasil, com correspondentes locais quando necessário."}},{"@type":"Question","name":"Posso desistir após contratar?","acceptedAnswer":{"@type":"Answer","text":"Sim. Você pode encerrar o contrato a qualquer momento. Os honorários serão calculados proporcionalmente ao trabalho já realizado, conforme previsto no contrato. Garantimos total transparência e boa‑fé na apuração de valores."}},{"@type":"Question","name":"Como funciona o parcelamento?","acceptedAnswer":{"@type":"Answer","text":"Trabalhamos com entrada + parcelas mensais, sempre vinculadas a marcos do projeto. Ex.: 30% na assinatura, 40% após protocolo, 30% após conclusão. O número de parcelas varia conforme o valor total e a duração estimada do serviço; tudo é definido na proposta."}},{"@type":"Question","name":"Meus dados estão seguros?","acceptedAnswer":{"@type":"Answer","text":"Sim. Armazenamento em ambiente criptografado, acesso restrito com 2FA, LGPD e sigilo profissional. Política de Privacidade disponível no site."}}]}
     </script>
 </head>
 <body class="antialiased">
@@ -217,19 +207,22 @@
     <section id="sobre" class="py-20 bg-slate-50">
     <div class="max-w-5xl mx-auto px-4 text-center">
         <div class="section-accent mx-auto mb-8"></div>
-        <h2 class="text-4xl md:text-5xl font-bold text-slate-900 mb-8">Direito claro para decisões seguras.</h2>
+        <div class="mb-3">
+            <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-100 text-orange-700 text-sm font-semibold tracking-wide">Consultoria jurídica</span>
+        </div>
+        <h2 class="text-4xl md:text-5xl font-bold text-slate-900 mb-4">Direito claro para decisões seguras.</h2>
         <div class="text-xl text-slate-600 leading-relaxed space-y-4 max-w-3xl mx-auto">
-            <p>PAVIE | Advocacia é sociedade unipessoal situada no Rio de Janeiro (Leblon), com atendimento online em todo o Brasil. Atuação em <strong>Família e Sucessões</strong>, <strong>Contratos &amp; Obrigações</strong>, <strong>Trabalho &amp; Previdência</strong>, <strong>Tributos &amp; Fazenda Pública</strong>, <strong>Imobiliário</strong>, <strong>Consumidor</strong> e <strong>Compliance (PJ/OSCs)</strong>.</p>
-            <p><strong>Transformamos dúvida em plano de ação</strong> — você entende o que fazer, quando e por quê. Sem juridiquês, com prazos estimados, documentos corretos e comunicação registrada.</p>
+            <p><span class="font-semibold">PAVIE <span class="text-orange-600">|</span> Advocacia</span> é sociedade unipessoal situada no Rio de Janeiro (Leblon), com atendimento online em todo o Brasil. Atuação em <strong>Família e Sucessões</strong>, <strong>Contratos &amp; Obrigações</strong>, <strong>Trabalho &amp; Previdência</strong>, <strong>Tributos &amp; Fazenda Pública</strong>, <strong>Imobiliário</strong>, <strong>Consumidor</strong> e <strong>Compliance (PJ/OSCs)</strong>.</p>
+            <p><strong>Transformamos dúvida em plano de ação</strong> <span class="text-orange-600">—</span> você entende o que fazer, quando e por quê. Sem juridiquês, com prazos estimados, documentos corretos e comunicação registrada.</p>
         </div>
         <div class="max-w-3xl mx-auto mt-8">
             <ul class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-left text-slate-700">
-                <li class="check-icon">Consulta diagnóstica e checklist de documentos</li>
+                <li class="check-icon"><span class="text-orange-600 font-semibold">Consultoria jurídica</span> com parecer e plano de ação</li>
+<li class="check-icon">Consulta diagnóstica e checklist de documentos</li>
                 <li class="check-icon">Cronograma com marcos e prazos realistas</li>
                 <li class="check-icon">Proposta por escrito, por etapas e sem surpresas</li>
                 <li class="check-icon">Atendimento online e presencial (Leblon/Maricá)</li>
-                <li class="check-icon">Sigilo profissional e proteção de dados (LGPD)</li>
-            </ul>
+                <li class="check-icon">Sigilo profissional e proteção de dados (LGPD)</li></ul>
         </div>
     </div>
 </section>
@@ -457,8 +450,7 @@
                 <p class="text-xl text-slate-600">Respostas claras para as dúvidas mais comuns</p>
             </div>
 
-            <div class="space-y-6">
-                <details class="bg-white rounded-xl p-6 shadow-sm border border-slate-200">
+            <div class="space-y-6"><details class="bg-white rounded-xl p-6 shadow-sm border border-slate-200">
                     <summary class="font-bold text-lg text-slate-900 cursor-pointer">Como funciona o atendimento digital?</summary>
                     <p class="mt-4 text-slate-600 leading-relaxed">Todo o atendimento pode ser feito 100% online: reuniões por videochamada, assinatura de documentos eletrônica (D4Sign), upload seguro e comunicação via WhatsApp/e-mail. Também realizamos reuniões presenciais no Leblon (RJ) e em Maricá (RJ).</p>
                 </details>
@@ -482,7 +474,22 @@
                     <summary class="font-bold text-lg text-slate-900 cursor-pointer">Atendem fora do Rio de Janeiro?</summary>
                     <p class="mt-4 text-slate-600 leading-relaxed"><strong>Sim.</strong> Atendimento digital em todo o Brasil; correspondentes locais quando necessário.</p>
                 </details>
-            </div>
+
+                <details class="bg-white rounded-xl p-6 shadow-sm border border-slate-200">
+                    <summary class="font-bold text-lg text-slate-900 cursor-pointer">Posso desistir após contratar?</summary>
+                    <p class="mt-4 text-slate-600 leading-relaxed">Sim. Você pode encerrar o contrato a qualquer momento. Os honorários serão calculados proporcionalmente ao trabalho já realizado, conforme previsto no contrato. Garantimos total transparência e boa‑fé na apuração de valores.</p>
+                </details>
+
+                <details class="bg-white rounded-xl p-6 shadow-sm border border-slate-200">
+                    <summary class="font-bold text-lg text-slate-900 cursor-pointer">Como funciona o parcelamento?</summary>
+                    <p class="mt-4 text-slate-600 leading-relaxed">Trabalhamos com entrada + parcelas mensais, sempre vinculadas a marcos do projeto. Por exemplo: 30% na assinatura, 40% após protocolo, 30% após conclusão. O número de parcelas varia conforme o valor total e a duração estimada do serviço. Tudo definido na proposta.</p>
+                </details>
+
+                <details class="bg-white rounded-xl p-6 shadow-sm border border-slate-200">
+                    <summary class="font-bold text-lg text-slate-900 cursor-pointer">Meus dados estão seguros?</summary>
+                    <p class="mt-4 text-slate-600 leading-relaxed">Sim, absolutamente. Todos os documentos são armazenados em ambiente criptografado, com acesso restrito e protegido por autenticação de dois fatores (2FA). Cumprimos rigorosamente a LGPD e o sigilo profissional da advocacia. Você pode consultar nossa <a href="#privacidade" class="text-orange-600 underline">Política de Privacidade</a> no rodapé do site.</p>
+                </details>
+</div>
         </div>
     </section>
 
