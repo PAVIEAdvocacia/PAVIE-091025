@@ -364,7 +364,13 @@
 
       <div class="bg-white rounded-xl p-8 text-slate-900">
         <h3 class="text-2xl font-bold mb-6">Formulário de Contato</h3>
-        <!-- IMPORTANTE: action aponta para a função Pages Functions /contato -->
+        <!-- IMPORTANTE:
+  - Este formulário envia via POST para a Pages Function /contato.
+  - No Cloudflare Pages, configure em Configurações > Variáveis e segredos:
+      * MAIL_FROM (texto)  → remetente do e-mail de saída
+      * MAIL_TO   (texto)  → destino que receberá as mensagens
+      * TURNSTILE_SECRET (segredo) → chave secreta do Turnstile
+  - Este HTML usa apenas a *chave do site* do Turnstile (data-sitekey). A chave secreta NUNCA deve ir no cliente. -->
         <form class="space-y-4 text-left" method="post" action="/contato" aria-describedby="aviso-lgpd">
           <!-- Honeypot antispam -->
           <input type="text" name="company" class="sr-only" tabindex="-1" autocomplete="off" aria-hidden="true">
