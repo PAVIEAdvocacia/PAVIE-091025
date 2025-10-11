@@ -1,6 +1,12 @@
-// Cloudflare Pages Functions — POST /api/contato
-// Valida Turnstile no servidor, aplica honeypot simples, valida campos essenciais
-// e envia e-mail via MailChannels. Em sucesso, redireciona com hash para feedback UX.
+// Cloudflare Pages Functions — /api/contato
+// GET -> 405; POST -> valida Turnstile, envia via MailChannels e redireciona.
+
+export async function onRequestGet() {
+  return new Response(
+    '405 — Use POST via o formulário do site (esta URL não deve ser acessada diretamente).',
+    { status: 405, headers: { 'content-type': 'text/plain; charset=utf-8' } }
+  );
+}
 
 export async function onRequestPost(context) {
   const { request, env } = context;
@@ -10,7 +16,7 @@ export async function onRequestPost(context) {
   try {
     form = await request.formData();
   } catch (e) {
-    return new Response('Requisição inválida', { status: 400 });
+    return new Response('Requisição inválida (form não enviado).', { status: 400 });
   }
 
   // 1.1) Honeypot anti-spam
@@ -22,7 +28,7 @@ export async function onRequestPost(context) {
   // 2) Validar Turnstile (server-side)
   const token = form.get('cf-turnstile-response');
   if (!token) {
-    return new Response('Turnstile ausente', { status: 400 });
+    return new Response('Turnstile ausente (o widget precisa estar dentro do <form>).', { status: 400 });
   }
   const ip = request.headers.get('CF-Connecting-IP') || '';
 
@@ -37,7 +43,6 @@ export async function onRequestPost(context) {
   });
   const ts = await tsRes.json();
   if (!ts.success) {
-    // Opcional: você pode registrar ts['error-codes'] nos logs
     return new Response('Falha na verificação do Turnstile', { status: 403 });
   }
 
@@ -76,21 +81,26 @@ export async function onRequestPost(context) {
     personalizations: [{ to: [{ email: to }] }],
     from: { email: from, name: 'Formulário — PAVIE | Advocacia' },
     subject: `Novo contato pelo site — ${nome}`,
-    content: [{ type: 'text/plain', value: contentText }]
+    content: [{ type: 'text/plain', value: contentText }],
+    headers: { 'Reply-To': `${nome} <${email}>` }
   };
+
+  const headers = { 'content-type': 'application/json' };
+  if (env.MAILCHANNELS_API_KEY) {
+    headers['X-Api-Key'] = env.MAILCHANNELS_API_KEY;
+  }
 
   const mail = await fetch('https://api.mailchannels.net/tx/v1/send', {
     method: 'POST',
-    headers: { 'content-type': 'application/json' },
+    headers,
     body: JSON.stringify(payload)
   });
 
   if (mail.status >= 400) {
-    const detail = await mail.text();
     return new Response('Não foi possível enviar o e-mail', { status: 502 });
   }
 
-  // 5) Responder conforme o "Accept" do cliente:
+  // 5) Responder conforme o "Accept" do cliente
   const accept = request.headers.get('accept') || '';
   if (accept.includes('application/json')) {
     return new Response(JSON.stringify({ ok: true }), {
@@ -98,7 +108,7 @@ export async function onRequestPost(context) {
     });
   }
 
-  // 5.1) Redirecionar com indicador de sucesso (UX simples)
+  // 6) Redirecionar para a página com sucesso
   const here = new URL(request.url);
   here.hash = 'agendar?ok=1';
   return Response.redirect(here.toString(), 303);
