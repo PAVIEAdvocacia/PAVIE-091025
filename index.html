@@ -695,5 +695,26 @@
       }
     })();
     </script>
+<script>
+(function(){
+  // Recebe o token do Turnstile e grava no hidden input
+  window.__tsDone = function(token){
+    try {
+      var el = document.getElementById('ts-token');
+      if (el) el.value = token || '';
+    } catch(e){}
+  };
+  // Impede envio sem token
+  var form = document.querySelector('form[action="/api/contato"]');
+  if (!form) return;
+  form.addEventListener('submit', function(e){
+    var v = (document.getElementById('ts-token')||{}).value || '';
+    if (!v) {
+      e.preventDefault();
+      alert('Validação de segurança ainda não carregou. Aguarde 1–2 segundos e clique em Enviar novamente.');
+    }
+  });
+})();
+</script>
 </body>
 </html>
