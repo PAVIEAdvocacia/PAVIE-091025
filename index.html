@@ -116,8 +116,8 @@
     {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Como funciona o atendimento digital?","acceptedAnswer":{"@type":"Answer","text":"Atendimento 100% online: videochamada, assinatura eletrônica, upload seguro e comunicação por WhatsApp/e-mail. Reuniões presenciais no RJ/Maricá se preferir."}},{"@type":"Question","name":"Quanto tempo demora um inventário?","acceptedAnswer":{"@type":"Answer","text":"Extrajudicial: 60 a 120 dias (dependendo de documentos e cartório). Judicial: 12 a 24 meses em média, variando pela complexidade."}},{"@type":"Question","name":"Preciso ir ao cartório ou tribunal?","acceptedAnswer":{"@type":"Answer","text":"Inventário extrajudicial/divórcio consensual exigem ida ao cartório para assinatura. Processos judiciais costumam dispensar presença física; audiências podem ser on-line."}},{"@type":"Question","name":"Quais documentos preciso para iniciar?","acceptedAnswer":{"@type":"Answer","text":"RG/CPF, certidões atualizadas, documentos dos bens e, em inventário, a última declaração de IR do falecido. Enviamos checklist personalizado após o contato."}},{"@type":"Question","name":"Atendem fora do Rio de Janeiro?","acceptedAnswer":{"@type":"Answer","text":"Sim. Atendimento digital em todo o Brasil, com correspondentes locais quando necessário."}},{"@type":"Question","name":"Posso desistir após contratar?","acceptedAnswer":{"@type":"Answer","text":"Sim. Você pode encerrar o contrato a qualquer momento. Os honorários serão calculados proporcionalmente ao trabalho já realizado, conforme previsto no contrato. Garantimos total transparência e boa‑fé na apuração de valores."}},{"@type":"Question","name":"Como funciona o parcelamento?","acceptedAnswer":{"@type":"Answer","text":"Trabalhamos com entrada + parcelas mensais, sempre vinculadas a marcos do projeto. Ex.: 30% na assinatura, 40% após protocolo, 30% após conclusão. O número de parcelas varia conforme o valor total e a duração estimada do serviço; tudo é definido na proposta."}},{"@type":"Question","name":"Meus dados estão seguros?","acceptedAnswer":{"@type":"Answer","text":"Sim. Armazenamento em ambiente criptografado, acesso restrito com 2FA, LGPD e sigilo profissional. Política de Privacidade disponível no site."}}]}
     </script>
 <script async="" defer="" src="https://challenges.cloudflare.com/turnstile/v0/api.js"></script>
-<link href="https://www.pavieadvocacia.com.br/" rel="canonical"/><meta content="PAVIE | Advocacia — Direito claro para decisões seguras" property="og:title"/><meta content="Atuação em Família &amp; Sucessões, Contratos &amp; Obrigações, Trabalho &amp; Previdência, Tributos &amp; Fazenda Pública, Imobiliário, Consumidor e Compliance (PJ/OSCs). Atendimento online e presencial (Leblon/Maricá)." property="og:description"/><meta content="https://www.pavieadvocacia.com.br/" property="og:url"/><meta content="website" property="og:type"/><meta content="summary_large_image" name="twitter:card"/></head>
-<body class="antialiased"><span aria-hidden="true" class="sr-only" id="honorarios"></span>
+</head>
+<body class="antialiased">
 <!-- Top Bar Fixed -->
 <div aria-label="Atalho de contato" class="bg-slate-900 text-white py-2 fixed w-full top-0 z-50" role="region">
 <div class="max-w-7xl mx-auto px-4 flex justify-between items-center text-sm">
@@ -491,7 +491,7 @@
 </div>
 <div>
 <label class="block text-sm font-semibold mb-2" for="fone">Telefone/WhatsApp *</label>
-<input class="w-full px-4 py-3 rounded-lg border border-slate-300 focus:border-orange-500 focus:ring-2 focus:ring-orange-200 outline-none transition" id="fone" inputmode="tel" name="telefone" pattern="^[0-9()+\-\s]{8,20}$" placeholder="+55..." required="" type="tel"/>
+<input class="w-full px-4 py-3 rounded-lg border border-slate-300 focus:border-orange-500 focus:ring-2 focus:ring-orange-200 outline-none transition" id="fone" inputmode="tel" name="telefone" pattern="^\+?\d{8,15}$" placeholder="+55..." required="" type="tel"/>
 </div>
 </div>
 <div>
@@ -523,9 +523,9 @@
 </label>
 <input name="consent_timestamp" type="hidden" value=""/>
 </div>
-<div class="cf-turnstile" data-action="contact_form" data-callback="tsOk" data-error-callback="tsError" data-expired-callback="tsExpired" data-refresh-expired="auto" data-sitekey="0x4AAAAAAB5-eeBvq97oMip7" data-theme="auto"></div>
-<button aria-busy="true" class="w-full cta-button px-8 py-4 rounded-lg text-white font-bold text-lg shadow-lg" disabled="disabled" type="submit">Enviar Solicitação</button>
-<p class="text-sm mt-3 text-slate-600" id="form-status">Carregando segurança…</p></form>
+
+<div class="mt-4" id="ts-container"></div><button class="w-full cta-button px-8 py-4 rounded-lg text-white font-bold text-lg shadow-lg" type="submit">Enviar Solicitação</button>
+</form>
 </div>
 </div>
 </section>
@@ -647,87 +647,92 @@
       }
     })();
     </script>
-<script>
+
+<p class="text-sm mt-3 text-slate-600" id="form-status">Carregando segurança…</p><script>
 (function(){
+  var SITE_KEY = window.PAVIE_TURNSTILE_SITEKEY || (document.querySelector('[data-sitekey]')||{}).getAttribute('data-sitekey') || 'COLOQUE_SUA_SITE_KEY_AQUI';
   var form = document.querySelector('form[action="/api/contato"]');
   if (!form) return;
   var submitBtn = form.querySelector('button[type="submit"]') || form.querySelector('button');
   var statusEl = document.getElementById('form-status');
+  var container = document.getElementById('ts-container');
   var originalText = submitBtn ? (submitBtn.textContent || submitBtn.innerText) : 'Enviar';
-  var tsReady = false;
+  var tokenReady = false;
 
-  function setStatus(msg){
-    if (statusEl) statusEl.textContent = msg;
-  }
+  function setStatus(m){ if(statusEl) statusEl.textContent = m; }
 
-  window.tsOk = function(token){
-    tsReady = !!token;
-    setStatus('Pronto para enviar.');
-    if (submitBtn){ submitBtn.disabled = false; submitBtn.removeAttribute('aria-busy'); }
-  };
-  window.tsExpired = function(){
-    tsReady = false;
-    setStatus('Segurança expirada — atualizando…');
-    if (submitBtn){ submitBtn.disabled = true; submitBtn.setAttribute('aria-busy','true'); }
-  };
-  window.tsError = function(){
-    tsReady = false;
-    setStatus('Erro ao carregar a validação. Recarregue a página.');
-    if (submitBtn){ submitBtn.disabled = true; submitBtn.setAttribute('aria-busy','true'); }
-  };
-
-  // Grace check after load
-  function graceCheck(){
-    var hiddenToken = form.querySelector('input[name="cf-turnstile-response"]');
-    if (hiddenToken && hiddenToken.value){
-      window.tsOk(hiddenToken.value);
-    } else {
-      setStatus('Carregando segurança…');
-      // try again shortly
-      setTimeout(graceCheck, 800);
+  function enableSend(ok){
+    tokenReady = !!ok;
+    if (submitBtn){
+      submitBtn.disabled = !ok;
+      if (ok){ submitBtn.removeAttribute('aria-busy'); }
+      else { submitBtn.setAttribute('aria-busy','true'); }
     }
   }
+
+  window.tsOk = function(token){ enableSend(!!token); setStatus('Pronto para enviar.'); };
+  window.tsExpired = function(){ enableSend(false); setStatus('Segurança expirada — atualizando…'); };
+  window.tsError = function(){ enableSend(false); setStatus('Erro ao carregar a validação. Recarregue a página.'); };
+
+  function boot(){
+    if (!window.turnstile || !container) { setTimeout(boot, 300); return; }
+    try{
+      setStatus('Inicializando segurança…');
+      turnstile.render('#ts-container', {
+        sitekey: SITE_KEY,
+        theme: 'auto',
+        callback: function(token){ window.tsOk(token); },
+        'expired-callback': function(){ window.tsExpired(); },
+        'error-callback': function(){ window.tsError(); }
+      });
+    }catch(e){
+      console.error('Turnstile render error', e);
+      setStatus('Erro ao inicializar a segurança.');
+    }
+  }
+
+  // Start disabled until token ok
+  enableSend(false);
+
   if (window.turnstile && typeof turnstile.ready === 'function'){
-    turnstile.ready(function(){ setTimeout(graceCheck, 400); });
+    turnstile.ready(function(){ setTimeout(boot, 200); });
   } else {
-    // if API script loads later
-    setTimeout(graceCheck, 800);
+    // if loader script arrives later
+    window.addEventListener('load', boot);
+    setTimeout(boot, 1000);
   }
 
   form.addEventListener('submit', async function(e){
     e.preventDefault();
     var hiddenToken = form.querySelector('input[name="cf-turnstile-response"]');
-    if (!tsReady || !hiddenToken || !hiddenToken.value){
-      alert('Validação de segurança ainda não carregou. Aguarde 1–2 segundos e clique em Enviar novamente.');
+    if (!tokenReady || !hiddenToken || !hiddenToken.value){
+      alert('Validação de segurança ainda não carregou.');
       return;
     }
-    try {
+    try{
       if (submitBtn){ submitBtn.disabled = true; submitBtn.textContent = 'Enviando…'; }
       setStatus('Enviando…');
       var fd = new FormData(form);
       var res = await fetch('/api/contato', { method: 'POST', body: fd });
       var data = {};
-      try { data = await res.json(); } catch(e){}
-      if (res.ok && data && (data.success === true || data.delivered)) {
-        if (submitBtn){ submitBtn.textContent = 'Enviado!'; }
+      try { data = await res.json(); } catch(_){}
+      if (res.ok && data && (data.success === true || data.delivered)){
         setStatus('Mensagem enviada com sucesso.');
+        if (submitBtn){ submitBtn.textContent = 'Enviado!'; }
         form.reset();
         if (window.turnstile && typeof turnstile.reset === 'function') { try { turnstile.reset(); } catch(_){} }
-        tsReady = false;
-        if (submitBtn){ submitBtn.disabled = true; submitBtn.setAttribute('aria-busy','true'); }
+        enableSend(false);
       } else {
-        console.error('Envio falhou', data);
+        console.error('Resposta da API', data);
+        setStatus('Falha no envio: ' + (data && data.error ? data.error : 'indefinida'));
         if (submitBtn){ submitBtn.textContent = 'Tentar novamente'; submitBtn.disabled = false; }
-        setStatus('Não foi possível enviar agora.');
-        alert('Não foi possível enviar agora. Verifique se os campos obrigatórios estão preenchidos e tente novamente.');
+        setTimeout(function(){ if(submitBtn) submitBtn.textContent = originalText; }, 2500);
       }
-    } catch (err) {
+    }catch(err){
       console.error('Erro de rede', err);
-      if (submitBtn){ submitBtn.textContent = 'Tentar novamente'; submitBtn.disabled = false; }
       setStatus('Falha de conexão.');
-      alert('Falha de conexão. Verifique sua internet e tente novamente.');
-    } finally {
-      if (submitBtn){ setTimeout(function(){ submitBtn.textContent = originalText; }, 2500); }
+      if (submitBtn){ submitBtn.textContent = 'Tentar novamente'; submitBtn.disabled = false; }
+      setTimeout(function(){ if(submitBtn) submitBtn.textContent = originalText; }, 2500);
     }
   });
 })();
