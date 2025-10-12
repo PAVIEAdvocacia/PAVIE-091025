@@ -525,7 +525,7 @@
 </div>
 <div class="cf-turnstile" data-action="contact_form" data-callback="tsOk" data-error-callback="tsError" data-expired-callback="tsExpired" data-refresh-expired="auto" data-sitekey="0x4AAAAAAB5-eeBvq97oMip7" data-theme="auto"></div>
 <button aria-busy="true" class="w-full cta-button px-8 py-4 rounded-lg text-white font-bold text-lg shadow-lg" disabled="disabled" type="submit">Enviar Solicitação</button>
-</form>
+<p class="text-sm mt-3 text-slate-600" id="form-status">Carregando segurança…</p></form>
 </div>
 </div>
 </section>
@@ -647,45 +647,55 @@
       }
     })();
     </script>
-
 <script>
 (function(){
   var form = document.querySelector('form[action="/api/contato"]');
   if (!form) return;
   var submitBtn = form.querySelector('button[type="submit"]') || form.querySelector('button');
+  var statusEl = document.getElementById('form-status');
   var originalText = submitBtn ? (submitBtn.textContent || submitBtn.innerText) : 'Enviar';
   var tsReady = false;
 
-  // Callbacks wired from the widget attributes
+  function setStatus(msg){
+    if (statusEl) statusEl.textContent = msg;
+  }
+
   window.tsOk = function(token){
     tsReady = !!token;
+    setStatus('Pronto para enviar.');
     if (submitBtn){ submitBtn.disabled = false; submitBtn.removeAttribute('aria-busy'); }
   };
   window.tsExpired = function(){
     tsReady = false;
+    setStatus('Segurança expirada — atualizando…');
     if (submitBtn){ submitBtn.disabled = true; submitBtn.setAttribute('aria-busy','true'); }
   };
   window.tsError = function(){
     tsReady = false;
+    setStatus('Erro ao carregar a validação. Recarregue a página.');
     if (submitBtn){ submitBtn.disabled = true; submitBtn.setAttribute('aria-busy','true'); }
   };
 
-  // Extra safety: if the Turnstile API is ready and we didn't get a callback yet, poll for the hidden input
+  // Grace check after load
+  function graceCheck(){
+    var hiddenToken = form.querySelector('input[name="cf-turnstile-response"]');
+    if (hiddenToken && hiddenToken.value){
+      window.tsOk(hiddenToken.value);
+    } else {
+      setStatus('Carregando segurança…');
+      // try again shortly
+      setTimeout(graceCheck, 800);
+    }
+  }
   if (window.turnstile && typeof turnstile.ready === 'function'){
-    turnstile.ready(function(){
-      // After a grace period, recheck for the hidden input
-      setTimeout(function(){
-        var hiddenToken = form.querySelector('input[name="cf-turnstile-response"]');
-        if (hiddenToken && hiddenToken.value){
-          window.tsOk(hiddenToken.value);
-        }
-      }, 800);
-    });
+    turnstile.ready(function(){ setTimeout(graceCheck, 400); });
+  } else {
+    // if API script loads later
+    setTimeout(graceCheck, 800);
   }
 
   form.addEventListener('submit', async function(e){
     e.preventDefault();
-    // guard: token not ready
     var hiddenToken = form.querySelector('input[name="cf-turnstile-response"]');
     if (!tsReady || !hiddenToken || !hiddenToken.value){
       alert('Validação de segurança ainda não carregou. Aguarde 1–2 segundos e clique em Enviar novamente.');
@@ -693,22 +703,28 @@
     }
     try {
       if (submitBtn){ submitBtn.disabled = true; submitBtn.textContent = 'Enviando…'; }
+      setStatus('Enviando…');
       var fd = new FormData(form);
       var res = await fetch('/api/contato', { method: 'POST', body: fd });
       var data = {};
       try { data = await res.json(); } catch(e){}
       if (res.ok && data && (data.success === true || data.delivered)) {
         if (submitBtn){ submitBtn.textContent = 'Enviado!'; }
+        setStatus('Mensagem enviada com sucesso.');
         form.reset();
         if (window.turnstile && typeof turnstile.reset === 'function') { try { turnstile.reset(); } catch(_){} }
         tsReady = false;
         if (submitBtn){ submitBtn.disabled = true; submitBtn.setAttribute('aria-busy','true'); }
       } else {
+        console.error('Envio falhou', data);
         if (submitBtn){ submitBtn.textContent = 'Tentar novamente'; submitBtn.disabled = false; }
-        alert('Não foi possível enviar agora. Tente novamente em instantes.');
+        setStatus('Não foi possível enviar agora.');
+        alert('Não foi possível enviar agora. Verifique se os campos obrigatórios estão preenchidos e tente novamente.');
       }
     } catch (err) {
+      console.error('Erro de rede', err);
       if (submitBtn){ submitBtn.textContent = 'Tentar novamente'; submitBtn.disabled = false; }
+      setStatus('Falha de conexão.');
       alert('Falha de conexão. Verifique sua internet e tente novamente.');
     } finally {
       if (submitBtn){ setTimeout(function(){ submitBtn.textContent = originalText; }, 2500); }
