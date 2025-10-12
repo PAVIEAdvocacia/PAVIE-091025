@@ -115,8 +115,8 @@
 <script type="application/ld+json">
     {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Como funciona o atendimento digital?","acceptedAnswer":{"@type":"Answer","text":"Atendimento 100% online: videochamada, assinatura eletrônica, upload seguro e comunicação por WhatsApp/e-mail. Reuniões presenciais no RJ/Maricá se preferir."}},{"@type":"Question","name":"Quanto tempo demora um inventário?","acceptedAnswer":{"@type":"Answer","text":"Extrajudicial: 60 a 120 dias (dependendo de documentos e cartório). Judicial: 12 a 24 meses em média, variando pela complexidade."}},{"@type":"Question","name":"Preciso ir ao cartório ou tribunal?","acceptedAnswer":{"@type":"Answer","text":"Inventário extrajudicial/divórcio consensual exigem ida ao cartório para assinatura. Processos judiciais costumam dispensar presença física; audiências podem ser on-line."}},{"@type":"Question","name":"Quais documentos preciso para iniciar?","acceptedAnswer":{"@type":"Answer","text":"RG/CPF, certidões atualizadas, documentos dos bens e, em inventário, a última declaração de IR do falecido. Enviamos checklist personalizado após o contato."}},{"@type":"Question","name":"Atendem fora do Rio de Janeiro?","acceptedAnswer":{"@type":"Answer","text":"Sim. Atendimento digital em todo o Brasil, com correspondentes locais quando necessário."}},{"@type":"Question","name":"Posso desistir após contratar?","acceptedAnswer":{"@type":"Answer","text":"Sim. Você pode encerrar o contrato a qualquer momento. Os honorários serão calculados proporcionalmente ao trabalho já realizado, conforme previsto no contrato. Garantimos total transparência e boa‑fé na apuração de valores."}},{"@type":"Question","name":"Como funciona o parcelamento?","acceptedAnswer":{"@type":"Answer","text":"Trabalhamos com entrada + parcelas mensais, sempre vinculadas a marcos do projeto. Ex.: 30% na assinatura, 40% após protocolo, 30% após conclusão. O número de parcelas varia conforme o valor total e a duração estimada do serviço; tudo é definido na proposta."}},{"@type":"Question","name":"Meus dados estão seguros?","acceptedAnswer":{"@type":"Answer","text":"Sim. Armazenamento em ambiente criptografado, acesso restrito com 2FA, LGPD e sigilo profissional. Política de Privacidade disponível no site."}}]}
     </script>
-
-<script defer src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit"></script></head>
+<script async="" defer src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit"></script>
+</head>
 <body class="antialiased">
 <!-- Top Bar Fixed -->
 <div aria-label="Atalho de contato" class="bg-slate-900 text-white py-2 fixed w-full top-0 z-50" role="region">
@@ -524,8 +524,8 @@
 <input name="consent_timestamp" type="hidden" value=""/>
 </div>
 
-<div class="mt-4" data-sitekey="0x4AAAAAAB6FBS0cTG_7KOYv" id="ts-container"></div><button class="w-full cta-button px-8 py-4 rounded-lg text-white font-bold text-lg shadow-lg" type="submit">Enviar Solicitação</button>
-<p class="text-sm mt-3 text-slate-600" id="form-status">Carregando segurança…</p></form>
+<div class="mt-4" data-sitekey="0x4AAAAAAB6FBS0cTG_7KOYv" id="ts-container"></div><p class="text-sm mt-3 text-slate-600" id="form-status">Carregando segurança…</p><button class="w-full cta-button px-8 py-4 rounded-lg text-white font-bold text-lg shadow-lg" type="submit">Enviar Solicitação</button>
+</form>
 </div>
 </div>
 </section>
@@ -660,109 +660,5 @@
   });
 })();
 </script>
-<script>
-(function(){
-  var form = document.querySelector('form[action="/api/contato"]') || document.querySelector('form');
-  if (!form) return;
-  var submitBtn = form.querySelector('button[type="submit"]') || form.querySelector('button');
-  var statusEl = document.getElementById('form-status');
-  var sitekey = '0x4AAAAAAB6FBS0cTG_7KOYv';
-  var widgetId = null;
-  var tokenReady = false;
-
-  function setStatus(m){ if(statusEl) statusEl.textContent = m; }
-  function setEnabled(ok){
-    tokenReady = !!ok;
-    if (submitBtn){
-      submitBtn.disabled = !ok;
-      if (ok) submitBtn.removeAttribute('aria-busy'); else submitBtn.setAttribute('aria-busy','true');
-    }
-  }
-
-  function ensureHiddenToken(){
-    var token = (window.turnstile && widgetId) ? turnstile.getResponse(widgetId) : '';
-    var hidden = form.querySelector('input[name="cf-turnstile-response"]');
-    if (!hidden) {
-      hidden = document.createElement('input');
-      hidden.type = 'hidden';
-      hidden.name = 'cf-turnstile-response';
-      form.appendChild(hidden);
-    }
-    hidden.value = token || '';
-    return hidden.value.length > 0;
-  }
-
-  function onOk(token){
-    setEnabled(!!token);
-    ensureHiddenToken();
-    setStatus('Pronto para enviar.');
-  }
-  function onExpired(){
-    setEnabled(false);
-    setStatus('Segurança expirada — atualizando…');
-  }
-  function onError(){
-    setEnabled(false);
-    setStatus('Erro ao carregar a validação. Recarregue a página.');
-  }
-
-  function boot(){
-    if (!window.turnstile) return void setTimeout(boot, 200);
-    try {
-      setStatus('Inicializando segurança…');
-      widgetId = turnstile.render('#ts-container', {
-        sitekey: sitekey,
-        theme: 'auto',
-        callback: onOk,
-        'expired-callback': onExpired,
-        'error-callback': onError
-      });
-    } catch(e){
-      console.error('Turnstile render error', e);
-      setStatus('Erro ao inicializar a segurança.');
-    }
-  }
-
-  setEnabled(false);
-  if (window.turnstile && typeof turnstile.ready === 'function') {
-    turnstile.ready(function(){ setTimeout(boot, 150); });
-  } else {
-    window.addEventListener('load', boot);
-    setTimeout(boot, 800);
-  }
-
-  form.addEventListener('submit', async function(e){
-    e.preventDefault();
-    if (!ensureHiddenToken()) {
-      alert('Validação de segurança ainda não carregou.');
-      return;
-    }
-    try {
-      if (submitBtn){ submitBtn.disabled = true; submitBtn.textContent = 'Enviando…'; }
-      setStatus('Enviando…');
-      var fd = new FormData(form);
-      var res = await fetch('/api/contato', { method: 'POST', body: fd });
-      var data = {};
-      try { data = await res.json(); } catch(_){}
-      if (res.ok && data && (data.success === true || data.delivered)) {
-        setStatus('Mensagem enviada com sucesso.');
-        if (submitBtn) submitBtn.textContent = 'Enviado!';
-        form.reset();
-        if (window.turnstile && widgetId) try { turnstile.reset(widgetId); } catch(_){}
-        setEnabled(false);
-      } else {
-        console.error('Resposta API', data);
-        setStatus('Falha no envio: ' + (data && data.error ? data.error : 'indefinida'));
-        if (submitBtn) { submitBtn.textContent = 'Tentar novamente'; submitBtn.disabled = false; }
-        setTimeout(function(){ if(submitBtn) submitBtn.textContent = 'Enviar Solicitação'; }, 2500);
-      }
-    } catch(err){
-      console.error('Erro de rede', err);
-      setStatus('Falha de conexão.');
-      if (submitBtn) { submitBtn.textContent = 'Tentar novamente'; submitBtn.disabled = false; }
-      setTimeout(function(){ if(submitBtn) submitBtn.textContent = 'Enviar Solicitação'; }, 2500);
-    }
-  });
-})();
-</script></body>
+<script defer src="form.turnstile.js"></script></body>
 </html>
