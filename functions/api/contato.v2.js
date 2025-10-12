@@ -58,7 +58,7 @@ export const onRequestPost = async (context) => {
   const nome     = (formData.get("nome")     || "").toString().trim();
   const email    = (formData.get("email")    || "").toString().trim();
   const telefone = (formData.get("telefone") || "").toString().trim();
-  const assunto  = (formData.get("assunto")  || "Contato").toString().trim();
+  const assunto  = ((formData.get("assunto") || formData.get("servico") || "Contato")).toString().trim();
   const mensagem = (formData.get("mensagem") || "").toString().trim();
 
   const to = env.MAIL_TO;

@@ -1,33 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://www.pavieadvocacia.com.br/</loc>
-    <lastmod>2025-10-10</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>1.00</priority>
-  </url>
-  <url>
-    <loc>https://www.pavieadvocacia.com.br/pages/servicos.html</loc>
-    <lastmod>2025-10-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.85</priority>
-  </url>
-  <url>
-    <loc>https://www.pavieadvocacia.com.br/pages/contato.html</loc>
-    <lastmod>2025-10-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.80</priority>
-  </url>
-  <url>
-    <loc>https://www.pavieadvocacia.com.br/pages/privacidade.html</loc>
-    <lastmod>2025-10-10</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.60</priority>
-  </url>
-  <url>
-    <loc>https://www.pavieadvocacia.com.br/pages/termos.html</loc>
-    <lastmod>2025-10-10</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.60</priority>
-  </url>
+  <url><loc>https://pavieadvocacia.com.br/</loc><changefreq>weekly</changefreq><priority>1.0</priority></url>
+  <url><loc>https://pavieadvocacia.com.br/pages/privacidade.html</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://pavieadvocacia.com.br/pages/termos.html</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://pavieadvocacia.com.br/pages/servicos.html</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
 </urlset>

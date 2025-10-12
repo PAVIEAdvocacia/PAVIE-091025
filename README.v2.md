@@ -170,3 +170,20 @@ Cole no `<head>` do `index.html` e ajuste conforme necessário.
 - **Endereço**: Av. Ataulfo de Paiva, 1235, Sala 303/191 — Leblon Office Tower — Leblon — Rio de Janeiro/RJ — CEP 22440-034
 
 > **CTA**: **Solicitar proposta** — use os botões do site para enviar mensagem ou agendar atendimento. 
+
+## 16) Cloudflare Pages + Turnstile — passo a passo
+1. **Environment Variables** (Pages → *Settings* → *Environment variables*):
+   - **Secrets**: `TURNSTILE_SECRET` (Add Parameter → *Encrypt value*).
+   - **Plain text**: `MAIL_TO` (seu e-mail de recebimento) e `MAIL_FROM` (ex.: `site@pavieadvocacia.com.br`).
+2. **Formulário**:
+   - No `index.html`, mantenha o widget Turnstile:
+     ```html
+     <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+     <div class="cf-turnstile" data-sitekey="SEU_SITE_KEY" data-theme="auto" data-action="contact_form"></div>
+     ```
+   - O formulário envia para `/api/contato` e a função valida o token e envia e‑mail via MailChannels.
+3. **Testes**:
+   - Abra `https://SEU_DOMINIO/api/contato` (GET). O JSON deve indicar `hasSecret`, `hasMailTo` e `hasMailFrom: true`.
+4. **Logs**: Workers & Pages → seu projeto → *Deployments* → *Exibir detalhes* → *Logs*.
+5. **Segurança**:
+   - **Nunca** commite segredos no repositório. Se um segredo vazar, **gire** (rotate) no Turnstile e substitua o valor em `TURNSTILE_SECRET`.

@@ -120,8 +120,18 @@
     {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Como funciona o atendimento digital?","acceptedAnswer":{"@type":"Answer","text":"Atendimento 100% online: videochamada, assinatura eletrônica, upload seguro e comunicação por WhatsApp/e-mail. Reuniões presenciais no RJ/Maricá se preferir."}},{"@type":"Question","name":"Quanto tempo demora um inventário?","acceptedAnswer":{"@type":"Answer","text":"Extrajudicial: 60 a 120 dias (dependendo de documentos e cartório). Judicial: 12 a 24 meses em média, variando pela complexidade."}},{"@type":"Question","name":"Preciso ir ao cartório ou tribunal?","acceptedAnswer":{"@type":"Answer","text":"Inventário extrajudicial/divórcio consensual exigem ida ao cartório para assinatura. Processos judiciais costumam dispensar presença física; audiências podem ser on-line."}},{"@type":"Question","name":"Quais documentos preciso para iniciar?","acceptedAnswer":{"@type":"Answer","text":"RG/CPF, certidões atualizadas, documentos dos bens e, em inventário, a última declaração de IR do falecido. Enviamos checklist personalizado após o contato."}},{"@type":"Question","name":"Atendem fora do Rio de Janeiro?","acceptedAnswer":{"@type":"Answer","text":"Sim. Atendimento digital em todo o Brasil, com correspondentes locais quando necessário."}},{"@type":"Question","name":"Posso desistir após contratar?","acceptedAnswer":{"@type":"Answer","text":"Sim. Você pode encerrar o contrato a qualquer momento. Os honorários serão calculados proporcionalmente ao trabalho já realizado, conforme previsto no contrato. Garantimos total transparência e boa‑fé na apuração de valores."}},{"@type":"Question","name":"Como funciona o parcelamento?","acceptedAnswer":{"@type":"Answer","text":"Trabalhamos com entrada + parcelas mensais, sempre vinculadas a marcos do projeto. Ex.: 30% na assinatura, 40% após protocolo, 30% após conclusão. O número de parcelas varia conforme o valor total e a duração estimada do serviço; tudo é definido na proposta."}},{"@type":"Question","name":"Meus dados estão seguros?","acceptedAnswer":{"@type":"Answer","text":"Sim. Armazenamento em ambiente criptografado, acesso restrito com 2FA, LGPD e sigilo profissional. Política de Privacidade disponível no site."}}]}
     </script>
   <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
-</head>
+
+    <link rel="canonical" href="https://www.pavieadvocacia.com.br/">
+    <meta property="og:title" content="PAVIE | Advocacia — Família, Sucessões e Patrimônio no Rio de Janeiro">
+    <meta property="og:description" content="Advocacia com clareza e segurança: consulta diagnóstica, cronograma realista e proposta por etapas. Atendimento online e presencial (Leblon/Maricá).">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.pavieadvocacia.com.br/">
+    <meta property="og:image" content="https://www.pavieadvocacia.com.br/assets/img/og-image.jpg">
+    <meta name="twitter:card" content="summary_large_image">
+    </head>
 <body class="antialiased">
+<div id="honorarios" class="sr-only" aria-hidden="true"></div>
+
 
     <!-- Top Bar Fixed -->
     <div class="bg-slate-900 text-white py-2 fixed w-full top-0 z-50" role="region" aria-label="Atalho de contato">
@@ -532,7 +542,7 @@
                         </div>
                         <div>
                             <label class="block text-sm font-semibold mb-2" for="fone">Telefone/WhatsApp *</label>
-                            <input id="fone" name="telefone" type="tel" required inputmode="tel" pattern="^\+?\d{8,15}$" class="w-full px-4 py-3 rounded-lg border border-slate-300 focus:border-orange-500 focus:ring-2 focus:ring-orange-200 outline-none transition" placeholder="+55...">
+                            <input id="fone" name="telefone" type="tel" required inputmode="tel" pattern="^[0-9()+\-\s]{8,20}$" class="w-full px-4 py-3 rounded-lg border border-slate-300 focus:border-orange-500 focus:ring-2 focus:ring-orange-200 outline-none transition" placeholder="+55...">
                         </div>
                     </div>
                     <div>
@@ -707,6 +717,44 @@
     if (!t || !t.value) {
       e.preventDefault();
       alert('Validação de segurança ainda não carregou. Aguarde 1–2 segundos e clique em Enviar novamente.');
+    }
+  });
+})();
+</script>
+
+
+<script>
+(function(){
+  var form = document.querySelector('form[action="/api/contato"]');
+  if (!form) return;
+  form.addEventListener('submit', async function(e){
+    e.preventDefault();
+    var submitBtn = form.querySelector('button[type="submit"]');
+    var originalText = submitBtn ? submitBtn.textContent : '';
+    function setBtn(t){ if(submitBtn){ submitBtn.disabled = true; submitBtn.textContent = t; } }
+    function resetBtn(){ if(submitBtn){ submitBtn.disabled = false; submitBtn.textContent = originalText; } }
+    var t = document.querySelector('input[name="cf-turnstile-response"]');
+    if (!t || !t.value) {
+      alert('Validação de segurança ainda não carregou. Aguarde 1–2 segundos e tente novamente.');
+      return;
+    }
+    setBtn('Enviando…');
+    try{
+      var resp = await fetch('/api/contato', { method:'POST', body: new FormData(form) });
+      var data = {};
+      try{ data = await resp.json(); } catch(e){}
+      if (!resp.ok || data.success === false){
+        alert('Não foi possível enviar agora. Tente novamente em instantes.');
+        resetBtn();
+        return;
+      }
+      setBtn('Enviado!');
+      form.reset();
+      try{ if (window.turnstile) window.turnstile.reset(); }catch(e){}
+      setTimeout(resetBtn, 1500);
+    }catch(err){
+      alert('Falha de rede. Verifique sua conexão e tente de novo.');
+      resetBtn();
     }
   });
 })();
