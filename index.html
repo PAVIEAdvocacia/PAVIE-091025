@@ -478,7 +478,7 @@
 </div>
 <div class="bg-white rounded-xl p-8 text-slate-900">
 <h3 class="text-2xl font-bold mb-6">Formulário de Contato</h3>
-<form action="/api/contato" aria-describedby="aviso-lgpd" class="space-y-4 text-left" method="POST">
+<form id="contato-form" action="/api/contato" aria-describedby="aviso-lgpd" class="space-y-4 text-left" method="POST">
 <input aria-hidden="true" autocomplete="off" class="sr-only" name="company" tabindex="-1" type="text"/>
 <div>
 <label class="block text-sm font-semibold mb-2" for="nome">Nome completo *</label>
@@ -524,6 +524,7 @@
 <input name="consent_timestamp" type="hidden" value=""/>
 </div>
 <p class="text-sm mt-3 text-slate-600" id="form-status">Carregando segurança…</p><div class="cf-turnstile" data-sitekey="0x4AAAAAAB6FBS0cTG_7KOYv" id="ts-container"></div><button class="w-full cta-button px-8 py-4 rounded-lg text-white font-bold text-lg shadow-lg" type="submit">Enviar Solicitação</button>
+  <div id="form-feedback" role="status" aria-live="polite" class="mt-3 text-sm"></div>
 </form>
 </div>
 </div>
@@ -659,5 +660,6 @@
   });
 })();
 </script>
-<script defer="" src="/form.turnstile.js"></script></body>
+<script defer="" src="/form.turnstile.js"></script>  <script src="/form.submit.js" defer></script>
+</body>
 </html>
