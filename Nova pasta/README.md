@@ -9,7 +9,7 @@ Repositório oficial do **site institucional** da **PAVIE | Advocacia** (solo + 
 
 ---
 
-## 1) Propósito & Escopo
+## 1) Propósito & Escopo .
 - **O que é**: código-fonte do site estático (landing principal, páginas de serviços, contato, políticas, blog informativo).
 - **O que não é**: gestão de casos, banco de dados de clientes ou documentos sigilosos (**NÃO** versionar aqui).
 
