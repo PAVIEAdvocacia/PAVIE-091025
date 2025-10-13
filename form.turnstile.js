@@ -1,5 +1,3 @@
-
-// Montagem explícita do Turnstile no container #ts-container
 window.tsOnload = function tsOnload() {
   var container = document.getElementById('ts-container');
   var statusEl = document.getElementById('form-status');

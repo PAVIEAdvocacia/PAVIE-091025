@@ -1,9 +1,8 @@
-\
 /**
  * Cloudflare Pages Function: /api/contato
- * (Turnstile + MailChannels com From do próprio domínio)
+ * Turnstile + MailChannels
  */
-const JSON_HEADERS = { "content-type": "application/json; charset=UTF-8" };
+const JSON_HEADERS = { "content-type": "application/json; charset=UTF-8", "Access-Control-Allow-Origin": "*" };
 
 const jsonResponse = (obj, status = 200, extraHeaders = {}) =>
   new Response(JSON.stringify(obj), { status, headers: { ...JSON_HEADERS, ...extraHeaders } });
@@ -36,9 +35,23 @@ export const onRequestOptions = async () => {
     status: 204,
     headers: {
       "Access-Control-Allow-Origin": "*",
-      "Access-Control-Allow-Methods": "POST, OPTIONS",
+      "Access-Control-Allow-Methods": "POST, OPTIONS, GET",
       "Access-Control-Allow-Headers": "Content-Type"
     }
+  });
+};
+
+// GET de diagnóstico rápido no navegador
+export const onRequestGet = async ({ env, request }) => {
+  const method = "GET";
+  const url = new URL(request.url);
+  return jsonResponse({
+    ok: true,
+    method,
+    host: url.hostname,
+    hasSecret: !!env.TURNSTILE_SECRET,
+    hasMailTo: !!env.MAIL_TO,
+    hasMailFrom: !!env.MAIL_FROM
   });
 };
 
@@ -63,6 +76,11 @@ export const onRequestPost = async ({ request, env }) => {
     const subject = (fields.subject || fields.assunto || "Contato via site").toString().trim();
     const message = (fields.message || fields.mensagem || "").toString().trim();
     const tsToken = (fields["cf-turnstile-response"] || fields["turnstile"] || "").toString().trim();
+    const honeypot = (fields.company || "").toString().trim();
+
+    if (honeypot) {
+      return jsonResponse({ success: true, detail: "Ok" }, 200);
+    }
 
     if (!name || !email || !message) {
       return jsonResponse(
@@ -71,10 +89,10 @@ export const onRequestPost = async ({ request, env }) => {
       );
     }
 
-    const ts = await verifyTurnstile(tsToken, env.TURNSTILE_SECRET_KEY, ip);
+    const ts = await verifyTurnstile(tsToken, env.TURNSTILE_SECRET, ip);
     if (!ts?.success) {
       return jsonResponse(
-        { success: false, error: "TurnstileFail", tsData: ts || {}, detail: "Falha na verificação anti‑bot." },
+        { success: false, error: "TurnstileFail", tsData: ts || {}, detail: "Falha na verificação anti-bot." },
         403
       );
     }
@@ -90,7 +108,7 @@ export const onRequestPost = async ({ request, env }) => {
       message,
       ``,
       `IP: ${ip}`
-    ].filter(Boolean).join("\n");
+    ].filter(Boolean).join("\\n");
 
     const htmlContent = `\
       <div style="font-family:system-ui, Arial, sans-serif; line-height:1.5; font-size:16px;">
@@ -110,9 +128,7 @@ export const onRequestPost = async ({ request, env }) => {
 
     const payload = {
       personalizations: [{
-        to: [{ email: env.MAIL_TO }],
-        dkim_domain: siteHost,
-        dkim_selector: "mailchannels",
+        to: [{ email: env.MAIL_TO }]
       }],
       from: { email: fromEmail, name: env.MAIL_FROM_NAME || "Formulário do Site" },
       reply_to: { email, name },
