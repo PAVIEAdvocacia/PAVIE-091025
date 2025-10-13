@@ -1,74 +1,60 @@
-
+\
 /**
  * Cloudflare Pages Function: /api/contato
- * - GET  → diagnóstico (sem dados sensíveis)
- * - POST → valida Turnstile e envia via MailChannels
- *          sempre responde com 303 redirect para evitar tela 502 ao enviar via <form>
- * - OPTIONS → CORS
+ * (Turnstile + MailChannels com From do próprio domínio)
  */
 const JSON_HEADERS = { "content-type": "application/json; charset=UTF-8" };
 
-const json = (obj, status = 200, extra = {}) =>
-  new Response(JSON.stringify(obj), { status, headers: { ...JSON_HEADERS, ...extra } });
-
-const seeOther = (location) =>
-  new Response(null, { status: 303, headers: { Location: location } });
+const jsonResponse = (obj, status = 200, extraHeaders = {}) =>
+  new Response(JSON.stringify(obj), { status, headers: { ...JSON_HEADERS, ...extraHeaders } });
 
 async function verifyTurnstile(token, secret, remoteip = "") {
   if (!token) return { success: false, "error-codes": ["missing-input-response"] };
   if (!secret) return { success: false, "error-codes": ["missing-input-secret"] };
-  const fd = new FormData();
-  fd.append("secret", secret);
-  fd.append("response", token);
-  if (remoteip) fd.append("remoteip", remoteip);
-  const r = await fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify", { method: "POST", body: fd });
-  try { return await r.json(); } catch { return { success:false, "error-codes":["invalid-json"] }; }
+
+  const formData = new FormData();
+  formData.append("secret", secret);
+  formData.append("response", token);
+  if (remoteip) formData.append("remoteip", remoteip);
+
+  const resp = await fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
+    method: "POST",
+    body: formData,
+  });
+
+  let data;
+  try { data = await resp.json(); }
+  catch (e) {
+    const txt = await resp.text();
+    data = { success: false, "error-codes": ["invalid-json"], detail: txt.slice(0, 500) };
+  }
+  return data;
 }
 
-function esc(s=""){return String(s).replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#039;");}
-function cryptoId(){const a=new Uint8Array(16); crypto.getRandomValues(a); return Array.from(a).map(b=>b.toString(16).padStart(2,"0")).join("");}
+export const onRequestOptions = async () => {
+  return new Response(null, {
+    status: 204,
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "POST, OPTIONS",
+      "Access-Control-Allow-Headers": "Content-Type"
+    }
+  });
+};
 
-export const onRequest = async ({ request, env }) => {
-  const method = request.method.toUpperCase();
-
-  // CORS preflight
-  if (method === "OPTIONS") {
-    return new Response(null, {
-      status: 204,
-      headers: {
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Methods": "POST, OPTIONS",
-        "Access-Control-Allow-Headers": "Content-Type"
-      }
-    });
-  }
-
-  // GET: diagnóstico simples
-  if (method === "GET") {
-    return json({
-      ok: true,
-      metodo: "GET",
-      hasSecret: Boolean(env.TURNSTILE_SECRET_KEY),
-      hasMailTo: Boolean(env.MAIL_TO),
-      hasMailFrom: Boolean(env.MAIL_FROM),
-    });
-  }
-
-  if (method !== "POST") return json({ ok:false, error:"MethodNotAllowed" }, 405);
-
-  // POST
+export const onRequestPost = async ({ request, env }) => {
   try {
     const ip = request.headers.get("CF-Connecting-IP") || "";
-    const host = new URL(request.url).hostname;
-    const accept = (request.headers.get("accept") || "").toLowerCase();
-    const returnTo = `https://${host}/#agendar`;
+    const url = new URL(request.url);
+    const siteHost = url.hostname;
 
     let fields = {};
-    const ctype = (request.headers.get("content-type") || "");
-    if (ctype.includes("application/json")) fields = await request.json();
-    else {
+    const ctype = request.headers.get("content-type") || "";
+    if (ctype.includes("application/json")) {
+      fields = await request.json();
+    } else {
       const form = await request.formData();
-      for (const [k,v] of form.entries()) fields[k] = v;
+      for (const [k, v] of form.entries()) fields[k] = v;
     }
 
     const name = (fields.name || fields.nome || "").toString().trim();
@@ -78,72 +64,100 @@ export const onRequest = async ({ request, env }) => {
     const message = (fields.message || fields.mensagem || "").toString().trim();
     const tsToken = (fields["cf-turnstile-response"] || fields["turnstile"] || "").toString().trim();
 
-    // Anti‑spam (honeypot)
-    if (fields.company) {
-      return seeOther(`${returnTo}?sent=0&spam=1`);
-    }
-
     if (!name || !email || !message) {
-      return seeOther(`${returnTo}?sent=0&code=validation`);
+      return jsonResponse(
+        { success: false, error: "ValidationError", detail: "Campos obrigatórios ausentes (nome, email, mensagem)." },
+        400
+      );
     }
 
     const ts = await verifyTurnstile(tsToken, env.TURNSTILE_SECRET_KEY, ip);
     if (!ts?.success) {
-      return seeOther(`${returnTo}?sent=0&code=bot`);
+      return jsonResponse(
+        { success: false, error: "TurnstileFail", tsData: ts || {}, detail: "Falha na verificação anti‑bot." },
+        403
+      );
     }
 
-    const text = [
-      `Novo contato pelo site (${host})`,
+    const textContent = [
+      `Novo contato pelo site (${siteHost})`,
+      ``,
       `Nome: ${name}`,
       `Email: ${email}`,
       phone ? `Telefone: ${phone}` : null,
-      "",
-      "Mensagem:",
+      ``,
+      `Mensagem:`,
       message,
-      "",
+      ``,
       `IP: ${ip}`
     ].filter(Boolean).join("\n");
 
-    const html = `\
+    const htmlContent = `\
       <div style="font-family:system-ui, Arial, sans-serif; line-height:1.5; font-size:16px;">
-        <p><strong>Novo contato pelo site (${host})</strong></p>
-        <p><strong>Nome:</strong> ${esc(name)}<br/>
-           <strong>Email:</strong> ${esc(email)}<br/>
-           ${phone ? `<strong>Telefone:</strong> ${esc(phone)}<br/>` : ""}
+        <p><strong>Novo contato pelo site (${siteHost})</strong></p>
+        <p><strong>Nome:</strong> ${escapeHtml(name)}<br/>
+           <strong>Email:</strong> ${escapeHtml(email)}<br/>
+           ${phone ? `<strong>Telefone:</strong> ${escapeHtml(phone)}<br/>` : ""}
         </p>
-        <p><strong>Mensagem:</strong><br/>${esc(message).replace(/\\n/g,"<br/>")}</p>
-        <p style="color:#666;font-size:12px;margin-top:16px;">IP: ${esc(ip)}</p>
+        <p><strong>Mensagem:</strong><br/>${escapeHtml(message).replace(/\\n/g, "<br/>")}</p>
+        <p style="color:#666;font-size:12px;margin-top:16px;">IP: ${escapeHtml(ip)}</p>
       </div>`;
 
-    const fromEmail = (env.MAIL_FROM && env.MAIL_FROM.trim()) ? env.MAIL_FROM.trim() : `no-reply@${host}`;
+    const mcEndpoint = "https://api.mailchannels.net/tx/v1/send";
+    const fromEmail = (env.MAIL_FROM && env.MAIL_FROM.trim())
+      ? env.MAIL_FROM.trim()
+      : `no-reply@${siteHost}`;
 
     const payload = {
       personalizations: [{
         to: [{ email: env.MAIL_TO }],
-        dkim_domain: host,
+        dkim_domain: siteHost,
         dkim_selector: "mailchannels",
       }],
       from: { email: fromEmail, name: env.MAIL_FROM_NAME || "Formulário do Site" },
       reply_to: { email, name },
       subject: subject || "Contato via site",
-      content: [{ type:"text/plain", value:text }, { type:"text/html", value:html }],
-      headers: { "X-Entity-Ref-ID": cryptoId() }
+      content: [
+        { type: "text/plain", value: textContent },
+        { type: "text/html", value: htmlContent }
+      ],
+      headers: {
+        "X-Entity-Ref-ID": cryptoRandomId(),
+        "List-Unsubscribe": `<mailto:${env.MAIL_TO}?subject=unsubscribe>`
+      }
     };
 
-    const send = await fetch("https://api.mailchannels.net/tx/v1/send", {
+    const mcResp = await fetch(mcEndpoint, {
       method: "POST",
-      headers: { "content-type":"application/json" },
-      body: JSON.stringify(payload)
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify(payload),
     });
 
-    // Mesmo se o MailChannels falhar, evitamos 5xx para não exibir a página 502
-    if (!send.ok) {
-      // Redireciona com erro amigável
-      return seeOther(`${returnTo}?sent=0&code=mail`);
+    const mcText = await mcResp.text();
+    if (!mcResp.ok) {
+      return jsonResponse(
+        { success: false, error: "MailChannelsFail", status: mcResp.status, detail: mcText.slice(0, 2000) },
+        502
+      );
     }
 
-    return seeOther(`${returnTo}?sent=1`);
-  } catch (e) {
-    return seeOther(`/#agendar?sent=0&code=server`);
+    return jsonResponse({ success: true, detail: "Mensagem enviada com sucesso.", mailchannels: { status: mcResp.status, body: mcText.slice(0, 500) } }, 200);
+  } catch (err) {
+    return jsonResponse({ success: false, error: "ServerError", detail: String(err?.stack || err) }, 500);
   }
 };
+
+function escapeHtml(str = "") {
+  return String(str)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+}
+
+function cryptoRandomId() {
+  const arr = new Uint8Array(16);
+  crypto.getRandomValues(arr);
+  return Array.from(arr).map(b => b.toString(16).padStart(2, "0")).join("");
+}
