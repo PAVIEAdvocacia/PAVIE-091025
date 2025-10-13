@@ -1,0 +1,11 @@
+# robots.txt — PAVIE | Advocacia
+User-agent: *
+Allow: /
+
+# Evitar indexação de áreas internas (ajuste conforme sua estrutura real)
+Disallow: /tmp/
+Disallow: /vendor/
+Disallow: /private/
+Disallow: /forms/
+
+Sitemap: https://www.pavieadvocacia.com.br/sitemap.xml
