@@ -1,4 +1,4 @@
-# PAVIE | Advocacia — Site Institucional
+# PAVIE | Advocacia — Site Institucional d
 Repositório oficial do **site institucional** da **PAVIE | Advocacia** (solo + parcerias). Foco em **confiança, clareza e conversão**, com observância à ética profissional (Prov. **OAB 205/2021**), **LGPD/GDPR**, **WCAG 2.2 AA**, **Core Web Vitals** e **SEO técnico** (Schema.org).
 
 - **Responsável técnico**: Fabio Mathias Pavie — OAB/RJ **134.947**
@@ -9,7 +9,7 @@ Repositório oficial do **site institucional** da **PAVIE | Advocacia** (solo + 
 
 ---
 
-## 1) Propósito & Escopo
+## 1) Propósito & Escopo    d
 - **O que é**: código-fonte do site estático (landing principal, páginas de serviços, contato, políticas, blog informativo).
 - **O que não é**: gestão de casos, banco de dados de clientes ou documentos sigilosos (**NÃO** versionar aqui).
 
