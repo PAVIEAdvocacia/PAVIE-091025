@@ -1,58 +1,32 @@
-/**
- * Envio do formulário via Fetch para não redirecionar a página.
- * Mantém layout/texto; apenas intercepta o submit.
- * Requisitos no HTML:
- *   - <form id="contato-form" method="post" action="/api/contato">
- *   - <div id="ts-container" data-sitekey="0x4AAAAAAB6FBS0cTG_7KOYv"></div>
- *   - <div id="form-feedback"></div> (opcional)
- */
 (function(){
   const form = document.getElementById('contato-form');
-  if (!form) return;
-
+  if (!form) { console.warn('[form.submit.js] Não encontrei #contato-form.'); return; }
   const feedback = document.getElementById('form-feedback');
   const btn = form.querySelector('button[type="submit"], [data-submit]');
-
-  function setBusy(b){
-    if (btn) {
-      btn.disabled = b;
-      btn.setAttribute('aria-busy', String(b));
-    }
-    if (feedback) {
-      feedback.textContent = b ? 'Enviando…' : '';
-    }
-  }
-
+  const setMsg = (m) => { if (feedback) feedback.textContent = m; console.log('[form-feedback]', m); };
+  function setBusy(b){ if (btn){ btn.disabled=b; btn.setAttribute('aria-busy', String(b)); } setMsg(b?'Enviando…':''); }
   form.addEventListener('submit', async (ev) => {
-    // impede a navegação para /api/contato
     ev.preventDefault();
     setBusy(true);
     try {
       const fd = new FormData(form);
-      const res = await fetch(form.getAttribute('action') || '/api/contato', {
-        method: 'POST',
-        body: fd
-      });
-
-      let data;
-      try { data = await res.json(); }
-      catch(e){ data = { ok:false, raw: await res.text() }; }
-
-      if (res.ok && data && (data.success || data.ok)) {
-        if (feedback) feedback.textContent = 'Mensagem enviada com sucesso.';
-        form.reset();
-        // reseta o token do Turnstile, se presente
-        try { if (window.turnstile) turnstile.reset(); } catch(e){}
+      console.debug('[submit] Enviando', Array.from(fd.entries()));
+      const res = await fetch(form.getAttribute('action') || '/api/contato', { method:'POST', body: fd });
+      const text = await res.text();
+      let data; try { data = JSON.parse(text); } catch(e){ data = { parseError:true, raw:text }; }
+      console.debug('[submit] HTTP', res.status, data);
+      if (res.ok && (data.success || data.ok)) {
+        setMsg('Mensagem enviada com sucesso.');
+        try { form.reset(); if (window.turnstile) turnstile.reset(); } catch(e){}
       } else {
-        const msg = (data && (data.detail || data.error)) || 'Falha ao enviar. Tente novamente.';
-        if (feedback) feedback.textContent = 'Erro: ' + msg;
-        else alert('Erro: ' + msg);
+        const msg = (data && (data.detail || data.error || data.raw)) || ('Falha HTTP '+res.status);
+        setMsg('Erro: ' + msg);
+        alert('Erro ao enviar: ' + msg);
       }
     } catch (err) {
-      if (feedback) feedback.textContent = 'Erro de rede ou servidor. Tente novamente.';
-      else alert('Erro de rede ou servidor.');
-    } finally {
-      setBusy(false);
-    }
+      console.error('[submit] Falha:', err);
+      setMsg('Erro de rede/servidor. Veja o console.');
+      alert('Erro de rede/servidor. Veja o console.');
+    } finally { setBusy(false); }
   });
 })();
