@@ -1,4 +1,4 @@
-# PAVIE | Advocacia — Site Institucional d
+# PAVIE | Advocacia — Site Institucional
 Repositório oficial do **site institucional** da **PAVIE | Advocacia** (solo + parcerias). Foco em **confiança, clareza e conversão**, com observância à ética profissional (Prov. **OAB 205/2021**), **LGPD/GDPR**, **WCAG 2.2 AA**, **Core Web Vitals** e **SEO técnico** (Schema.org).
 
 - **Responsável técnico**: Fabio Mathias Pavie — OAB/RJ **134.947**
