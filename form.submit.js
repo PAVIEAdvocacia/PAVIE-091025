@@ -1,45 +1,38 @@
-// form.submit.js — envio com fetch e feedback ao usuário
 (function () {
-  const form = document.getElementById("contatoForm") || document.querySelector('form[action="/api/contato"]');
-  if (!form) return;
-
+  const form = document.getElementById("contatoForm");
   const btn = form.querySelector('button[type="submit"]');
   const statusEl = document.getElementById("formStatus");
 
   function setStatus(msg, type="info") {
-    if (!statusEl) return;
     statusEl.textContent = msg || "";
     statusEl.className = "text-sm mt-2 " + (type === "error" ? "text-red-600" : type === "success" ? "text-green-600" : "text-gray-600");
   }
-
   function lock(v) {
-    if (btn) { btn.disabled = !!v; btn.style.opacity = v ? "0.6" : "1"; }
+    btn.disabled = !!v;
+    btn.style.opacity = v ? "0.6" : "1";
   }
 
   form.addEventListener("submit", async (e) => {
-    const hasTokenField = !!document.querySelector('input[name="cf-turnstile-response"], textarea[name="cf-turnstile-response"]');
-    if (!window.__tsReady || !hasTokenField) {
-      e.preventDefault();
+    e.preventDefault();
+
+    if (!window.__tsReady) {
       alert("Validação de segurança ainda não carregou. Aguarde 1–2 segundos e clique em Enviar novamente.");
       return;
     }
 
-    e.preventDefault();
     setStatus("Enviando...");
     lock(true);
 
     try {
       const data = new FormData(form);
+      // adiciona token do Turnstile
       const tsInput = document.querySelector('input[name="cf-turnstile-response"], textarea[name="cf-turnstile-response"]');
-      if (tsInput) {
-        const token = tsInput.value || tsInput.textContent || "";
-        if (!data.get("cf-turnstile-response")) data.set("cf-turnstile-response", token);
-        if (!data.get("turnstileToken")) data.set("turnstileToken", token);
-      }
+      if (tsInput && !data.get("turnstile")) data.set("turnstile", tsInput.value || tsInput.textContent || "");
 
       const resp = await fetch("/api/contato", { method: "POST", body: data });
       const isJson = (resp.headers.get("content-type") || "").includes("application/json");
       const body = isJson ? await resp.json() : { ok: resp.ok };
+
       if (!resp.ok || !body.ok) throw body;
 
       alert("Solicitação enviada com sucesso! Já recebemos seus dados e entraremos em contato.");
