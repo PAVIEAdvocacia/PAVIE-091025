@@ -1,94 +1,117 @@
-/* contato.js - envia formulário de contato para /api/contato
- * Corrige o nome do token do Turnstile -> 'cf-turnstile-response'
- * e adiciona consent_timestamp/host. Exibe mensagens de status.
- */
-(function () {
-  const form =
-    document.getElementById("contato-form") ||
-    document.querySelector('form[action="/api/contato"]') ||
-    document.querySelector('[data-form="contato"]') ||
-    document.querySelector("form");
+// Cloudflare Pages Function: /api/contato
+// Recebe POST do formulário, valida Turnstile e envia e-mail via MailChannels.
+export async function onRequest(context) {
+  const { request, env } = context;
 
-  if (!form) return;
+  // Aceita apenas POST
+  if (request.method !== "POST") {
+    return new Response("Method Not Allowed", { status: 405 });
+  }
 
-  const statusEl =
-    document.getElementById("form-status") ||
-    form.querySelector('[data-role="form-status"]');
+  try {
+    const formData = await request.formData();
 
-  const setStatus = (msg, cls) => {
-    if (!statusEl) return;
-    statusEl.textContent = msg || "";
-    if (cls) statusEl.className = cls;
-  };
+    // Extrai campos do formulário (ajuste os nomes se necessário)
+    const get = (k) => {
+      const v = formData.get(k);
+      return (v === null || v === undefined) ? "" : String(v).trim();
+    };
 
-  form.addEventListener("submit", async (e) => {
-    e.preventDefault();
+    const nome = get("nome") || get("name");
+    const email = get("email");
+    const telefone = get("telefone") || get("phone") || get("fone");
+    const servico = get("servico") || get("service");
+    const mensagem = get("mensagem") || get("message");
+    const honeypot = get("company"); // deve ficar vazio para humanos
 
-    const btn = form.querySelector('[type="submit"]');
-    if (btn) btn.setAttribute("disabled", "disabled");
-    setStatus("Enviando...");
-    
-    // Validação simples do consentimento
-    const consent = form.querySelector('input[name="consent"]');
-    if (consent && !consent.checked) {
-      setStatus("Marque o aceite da Política de Privacidade.", "error");
-      if (btn) btn.removeAttribute("disabled");
-      return;
+    // Bloqueia bots simples (honeypot preenchido)
+    if (honeypot) {
+      // finge sucesso para não treinar o bot
+      return new Response("OK", { status: 200 });
     }
 
-    const fd = new FormData(form);
+    // Validação mínima
+        if (!nome || !email || !mensagem) {
+      return new Response("Campos obrigatórios ausentes.", { status: 400 });
+    }
 
-    // === Turnstile ===
-    // O Worker espera o campo 'cf-turnstile-response'. Garanta que vamos enviar nesse nome.
-    let token = "";
-    try {
-      if (window.turnstile && typeof window.turnstile.getResponse === "function") {
-        token = window.turnstile.getResponse();
-      }
-    } catch (_) {}
+    // === Turnstile (server-side) ===
+    const token = get("cf-turnstile-response") || get("turnstile");
     if (!token) {
-      // fallback: algum input hidden já preenchido pelo widget/callback
-      const h = form.querySelector('input[name="cf-turnstile-response"]');
-      if (h && h.value) token = h.value;
+      return new Response("Captcha ausente.", { status: 400 });
     }
-    // remova nome errado se existir
-    fd.delete("turnstile");
-    // define no nome correto
-    if (token) fd.set("cf-turnstile-response", token);
 
-    // Metadados úteis ao backend
-    fd.set("consent_timestamp", new Date().toISOString());
-    fd.set("company", location.hostname);
+    const ip = request.headers.get("CF-Connecting-IP") || "";
+    const turnstileResp = await fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
+      method: "POST",
+      body: new URLSearchParams({
+        secret: env.TURNSTILE_SECRET,
+        response: token,
+        remoteip: ip
+      })
+    });
+    const turnstileData = await turnstileResp.json();
+    if (!turnstileData.success) {
+      return new Response("Falha na verificação do captcha.", { status: 403 });
+    }
 
-    try {
-      const res = await fetch("/api/contato", {
-        method: "POST",
-        body: fd,
-        headers: { Accept: "application/json" },
-      });
+    // === Monta o e-mail (MailChannels) ===
+    const toEmail = env.CONTACT_TO_EMAIL;
+    const fromEmail = env.CONTACT_FROM_EMAIL;
 
-      // Tenta decodificar JSON, mas não quebra se vier outro tipo
-      let data = null;
-      try {
-        if ((res.headers.get("content-type") || "").includes("application/json")) {
-          data = await res.json();
+    if (!toEmail || !fromEmail) {
+      return new Response("Configuração de e-mail ausente.", { status: 500 });
+    }
+
+    const linhas = [
+      `Nome: ${nome}`,
+      `E-mail: ${email}`,
+      telefone ? `Telefone: ${telefone}` : null,
+      servico ? `Serviço: ${servico}` : null,
+      "",
+      "Mensagem:",
+      mensagem,
+      "",
+      `Origem: ${request.headers.get("Host") || env.DOMAIN || ""}`,
+      `Consentimento: ${get("consent_timestamp")}`
+    ].filter(Boolean);
+
+    const textBody = linhas.join("\n");
+
+    const mailBody = {
+      personalizations: [
+        {
+          to: [{ email: toEmail }],
+          // DKIM (recomendado): valores vindos do ambiente
+          dkim_domain: env.DOMAIN,
+          dkim_selector: env.DKIM_SELECTOR,
+          dkim_private_key: env.DKIM_PRIVATE_KEY
         }
-      } catch (_) {}
+      ],
+      from: {
+        email: fromEmail,
+        name: "Formulário do Site"
+      },
+      reply_to: { email: email, name: nome },
+      subject: "Novo contato via site",
+      content: [
+        { type: "text/plain", value: textBody }
+      ]
+    };
 
-      if (res.ok && data && data.ok) {
-        setStatus("Solicitação enviada com sucesso. Você receberá uma confirmação por e‑mail.", "success");
-        try { form.reset(); } catch (_) {}
-        try { window.turnstile && window.turnstile.reset && window.turnstile.reset(); } catch (_) {}
-      } else {
-        const msg = (data && (data.error || data.message)) || `Erro ao enviar: ${res.status} ${res.statusText || ""}`.trim();
-        alert(`Erro ao enviar: ${msg}`);
-        setStatus(msg, "error");
-      }
-    } catch (err) {
-      alert("Falha de rede ao enviar o formulário.");
-      setStatus("Falha de rede ao enviar o formulário.", "error");
-    } finally {
-      if (btn) btn.removeAttribute("disabled");
+    const emailResp = await fetch("https://api.mailchannels.net/tx/v1/send", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(mailBody)
+    });
+
+    if (!emailResp.ok) {
+      const errTxt = await emailResp.text().catch(() => "");
+      return new Response("Erro ao enviar e-mail. " + errTxt, { status: 502 });
     }
-  });
-})();
+
+    return new Response("Mensagem enviada com sucesso!", { status: 200 });
+  } catch (err) {
+    return new Response("Erro interno: " + (err && err.message ? err.message : String(err)), { status: 500 });
+  }
+}
