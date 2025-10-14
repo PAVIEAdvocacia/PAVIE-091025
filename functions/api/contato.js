@@ -106,7 +106,7 @@ export const onRequestPost = async ({ request, env }) => {
 
     // Token do Turnstile
     const turnstileToken =
-      data["cf-turnstile-response"] || data["turnstileToken"] || "";
+      data["cf-turnstile-response"] || data["turnstileToken"] || data["turnstile"] || "";
 
     // --- 3) Validação do Turnstile ---
     const verifyResp = await fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
