@@ -1,7 +1,7 @@
 (function () {
-  const form = document.getElementById("contatoForm");
+  const form = document.getElementById("contatoForm") || document.querySelector('form[action="/api/contato"]');
   const btn = form.querySelector('button[type="submit"]');
-  const statusEl = document.getElementById("formStatus");
+  const statusEl = document.getElementById("formStatus") || document.getElementById("form-status");
 
   function setStatus(msg, type="info") {
     statusEl.textContent = msg || "";
