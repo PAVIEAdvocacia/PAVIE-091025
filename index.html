@@ -478,7 +478,7 @@
 </div>
 <div class="bg-white rounded-xl p-8 text-slate-900">
 <h3 class="text-2xl font-bold mb-6">Formulário de Contato</h3>
-<form action="/api/contato" aria-describedby="aviso-lgpd" class="space-y-4 text-left" method="post">
+<form id="contatoForm" action="/api/contato" aria-describedby="aviso-lgpd" class="space-y-4 text-left" method="post">
 <input aria-hidden="true" autocomplete="off" class="sr-only" name="company" tabindex="-1" type="text"/>
 <div>
 <label class="block text-sm font-semibold mb-2" for="nome">Nome completo *</label>
@@ -523,7 +523,7 @@
 </label>
 <input name="consent_timestamp" type="hidden" value=""/>
 </div>
-<p class="text-sm mt-3 text-slate-600" id="form-status">Carregando segurança…</p><div data-sitekey="REPLACE_WITH_TURNSTILE_SITE_KEY" id="ts-container"></div><button class="w-full cta-button px-8 py-4 rounded-lg text-white font-bold text-lg shadow-lg" type="submit">Enviar Solicitação</button>
+<p class="text-sm mt-3 text-slate-600" id="formStatus">Carregando segurança…</p><div data-sitekey="0x4AAAAAAB6FBS0cTG_7KOYv" id="ts-container"></div><button class="w-full cta-button px-8 py-4 rounded-lg text-white font-bold text-lg shadow-lg" type="submit">Enviar Solicitação</button>
 </form>
 </div>
 </div>
@@ -646,19 +646,6 @@
       }
     })();
     </script>
-<script>
-(function(){
-  var form = document.querySelector('form[action="/api/contato"]');
-  if (!form) return;
-  form.addEventListener('submit', function(e){
-    var t = document.querySelector('input[name="cf-turnstile-response"]');
-    if (!t || !t.value) {
-      e.preventDefault();
-      alert('Validação de segurança ainda não carregou. Aguarde 1–2 segundos e clique em Enviar novamente.');
-    }
-  });
-})();
-</script>
 <script defer="" src="/form.turnstile.js"></script><script defer src="/form.submit.js"></script>
 </body>
 </html>
