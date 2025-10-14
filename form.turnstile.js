@@ -1,31 +1,28 @@
+/**
+ * Turnstile wiring for the contact form.
+ * Renders a managed widget and stores the token in a hidden input named "turnstile".
+ */
+(function () {
+  const widget = document.getElementById("cf-turnstile");
+  if (!widget) return;
 
-// Montagem explícita do Turnstile no container #ts-container
-window.tsOnload = function tsOnload() {
-  var container = document.getElementById('ts-container');
-  var statusEl = document.getElementById('form-status');
-  if (!container || typeof turnstile === 'undefined') {
-    if (statusEl) statusEl.textContent = 'Segurança indisponível.';
-    return;
+  // Ensure hidden input exists
+  let hidden = document.querySelector('input[name="turnstile"]');
+  if (!hidden) {
+    hidden = document.createElement("input");
+    hidden.type = "hidden";
+    hidden.name = "turnstile";
+    widget.appendChild(hidden);
   }
-  var sitekey = container.getAttribute('data-sitekey') || 'REPLACE_WITH_TURNSTILE_SITE_KEY';
-  if (!sitekey || sitekey === 'REPLACE_WITH_TURNSTILE_SITE_KEY') {
-    if (statusEl) statusEl.textContent = 'Defina a site key do Turnstile.';
-    return;
-  }
-  try {
-    turnstile.render('#ts-container', {
-      sitekey: sitekey,
-      theme: 'auto',
-      callback: function(){ if (statusEl) statusEl.textContent = 'Pronto para enviar.'; },
-      'expired-callback': function(){
-        if (statusEl) statusEl.textContent = 'Validação expirada. Aguarde recarregar.';
-        try { turnstile.reset(container); } catch(e){}
-      },
-      'error-callback': function(){
-        if (statusEl) statusEl.textContent = 'Erro ao validar segurança. Recarregue a página.';
-      }
-    });
-  } catch (e) {
-    if (statusEl) statusEl.textContent = 'Falha ao inicializar Turnstile.';
-  }
-};
+
+  window.TURNSTILE_READY = false;
+  window.onTurnstileSuccess = function (token) {
+    hidden.value = token || "";
+    window.TURNSTILE_READY = !!token;
+    document.dispatchEvent(new CustomEvent("turnstile-ready"));
+  };
+  window.onTurnstileExpire = function () {
+    hidden.value = "";
+    window.TURNSTILE_READY = false;
+  };
+})();

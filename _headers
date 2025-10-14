@@ -1,22 +1,13 @@
 /*
-  Security headers + caching for PAVIE
-*/
-X-Content-Type-Options: nosniff
-X-Frame-Options: DENY
-Referrer-Policy: strict-origin-when-cross-origin
-Permissions-Policy: camera=(), microphone=(), geolocation=()
+  X-Frame-Options: DENY
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: interest-cohort=(), geolocation=(), microphone=(), camera=()
+  Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
 
-# CSP
-Content-Security-Policy: default-src 'self' https://challenges.cloudflare.com; img-src 'self' data: https:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com https://cdn.tailwindcss.com; connect-src 'self' https://api.mailchannels.net; frame-ancestors 'none'; base-uri 'self'
-
-/assets/*
-  Cache-Control: public, max-age=31536000, immutable
-
-/form.turnstile.js
-  Cache-Control: public, max-age=600
-
-/form.submit.js
-  Cache-Control: public, max-age=600
-
-/api/contato
-  Access-Control-Allow-Origin: *
+/api/*
+  Access-Control-Allow-Origin: https://pavieadvocacia.com.br
+  Access-Control-Allow-Methods: POST, OPTIONS
+  Access-Control-Allow-Headers: content-type
+  Cache-Control: no-store
+  X-Robots-Tag: noindex

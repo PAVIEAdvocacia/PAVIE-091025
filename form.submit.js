@@ -1,55 +1,60 @@
-// /form.submit.js
-// Lida com o submit do formulário de contato e mostra feedback ao usuário.
-(() => {
-  const form = document.getElementById("contato-form") || document.querySelector('form[action="/api/contato"]');
+/**
+ * Handles submit for #contatoForm.
+ */
+(function () {
+  const form = document.getElementById("contatoForm");
   if (!form) return;
 
-  const btn = form.querySelector('button[type="submit"]');
-  const originalBtnText = btn ? btn.textContent : "Enviar";
+  const btn = form.querySelector("button[type=submit]");
+  const statusEl = document.getElementById("formStatus");
 
-  function setBusy(busy) {
-    if (!btn) return;
-    btn.disabled = !!busy;
-    btn.textContent = busy ? "Enviando..." : originalBtnText;
+  function setStatus(text) {
+    if (!statusEl) return;
+    statusEl.textContent = text || "";
+  }
+  function disable(v) {
+    if (btn) btn.disabled = v;
   }
 
-  async function submitHandler(ev) {
-    ev.preventDefault();
-    setBusy(true);
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    if (!window.TURNSTILE_READY) {
+      // Give Turnstile a little time to finish on very fast clicks
+      setStatus("Carregando segurança...");
+      await new Promise(r => setTimeout(r, 1200));
+      if (!window.TURNSTILE_READY) {
+        alert("Validação de segurança ainda não carregou. Aguarde 1–2 segundos e clique em Enviar novamente.");
+        return;
+      }
+    }
+
+    disable(true);
+    setStatus("Enviando...");
 
     try {
       const fd = new FormData(form);
+      // The hidden "turnstile" input is already in the form.
+      const res = await fetch("/api/contato", { method: "POST", body: fd, headers: { "Accept": "application/json" } });
+      const data = await res.json().catch(() => ({}));
 
-      // NÃO toque no honeypot "company" — deixe vazio.
-      // Turnstile: token deve estar em "cf-turnstile-response" ou "turnstile".
-      const token = fd.get("cf-turnstile-response") || fd.get("turnstile");
-      if (!token) {
-        alert("Por favor, confirme o desafio de verificação antes de enviar.");
-        return;
-      }
-
-      const resp = await fetch("/api/contato", {
-        method: "POST",
-        body: fd
-      });
-
-      const data = await resp.json().catch(() => ({}));
-
-      if (resp.ok && (data.ok || data.sent)) {
-        alert("Solicitação enviada com sucesso! Em breve entraremos em contato.");
-        form.reset();
-        // limpa token do Turnstile, se houver
-        try { window.turnstile && turnstile.reset && turnstile.reset(); } catch {}
+      if (!res.ok || !data.ok) {
+        const msg = (data && data.message) ? data.message : `Erro ao enviar. Código ${res.status}.`;
+        alert(msg);
+        setStatus("");
       } else {
-        const msg = (data && (data.message || data.error)) || `Falha HTTP ${resp.status}`;
-        alert("Erro ao enviar: " + msg);
+        form.reset();
+        setStatus("Obrigado! Sua solicitação foi enviada.");
+        if (window.turnstile && document.getElementById("cf-turnstile")) {
+          try { turnstile.reset("#cf-turnstile"); } catch {}
+        }
       }
     } catch (err) {
-      alert("Erro ao enviar: " + (err && err.message ? err.message : String(err)));
+      console.error("submit error", err);
+      alert("Erro inesperado ao enviar. Tente novamente.");
+      setStatus("");
     } finally {
-      setBusy(false);
+      disable(false);
     }
-  }
-
-  form.addEventListener("submit", submitHandler);
+  });
 })();
