@@ -44,7 +44,8 @@ export const onRequestGet = async ({ env }) => {
       {
         ok: Object.values(missing).every((v) => v === false),
         metodo: "GET",
-        missing_env: missing,
+        error: Object.values(missing).some(Boolean) ? "missing_env" : undefined,
+        missing: missing,
         hasSecret,
       },
       null,
@@ -106,7 +107,7 @@ export const onRequestPost = async ({ request, env }) => {
 
     // Token do Turnstile
     const turnstileToken =
-      data["cf-turnstile-response"] || data["turnstileToken"] || "";
+      data["cf-turnstile-response"] || data["turnstileToken"] || data["turnstile"] || "";
 
     // --- 3) Validação do Turnstile ---
     const verifyResp = await fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
@@ -158,7 +159,6 @@ export const onRequestPost = async ({ request, env }) => {
         { type: "text/plain", value: stripHtml(html) },
         { type: "text/html", value: html },
       ],
-      // Opcional: "reply_to" para responder ao visitante
       reply_to: email ? [{ email, name: nome || undefined }] : undefined,
     };
 
@@ -181,7 +181,6 @@ export const onRequestPost = async ({ request, env }) => {
       );
     }
 
-    // --- 5) Sucesso ---
     return new Response(
       JSON.stringify({ ok: true, message: "Mensagem enviada com sucesso." }),
       { headers: { "content-type": "application/json" } }

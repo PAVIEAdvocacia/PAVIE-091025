@@ -1,12 +1,8 @@
-/*
-  Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
-  X-Content-Type-Options: nosniff
-  X-Frame-Options: DENY
-  Referrer-Policy: strict-origin-when-cross-origin
-  Permissions-Policy: geolocation=(), camera=(), microphone=()
+/* 
+  Strict security headers for Cloudflare Pages
 */
-
-/api/contato
-  Access-Control-Allow-Origin: https://pavieadvocacia.com.br
-  Access-Control-Allow-Methods: POST, OPTIONS
-  Access-Control-Allow-Headers: Content-Type
+X-Frame-Options: SAMEORIGIN
+X-Content-Type-Options: nosniff
+Referrer-Policy: strict-origin-when-cross-origin
+Permissions-Policy: camera=(), microphone=(), geolocation=()
+Content-Security-Policy: default-src 'self' https:; script-src 'self' https://challenges.cloudflare.com 'unsafe-inline' 'unsafe-eval'; connect-src 'self' https://api.mailchannels.net https://challenges.cloudflare.com; img-src 'self' data: https:; style-src 'self' 'unsafe-inline' https:; font-src 'self' https: data:; frame-src https://challenges.cloudflare.com
