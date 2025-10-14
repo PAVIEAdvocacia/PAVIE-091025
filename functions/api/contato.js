@@ -1,151 +1,235 @@
-const JSON_HEADERS = { "content-type": "application/json; charset=UTF-8", "Access-Control-Allow-Origin": "*" };
-const jsonResponse = (obj, status = 200, extraHeaders = {}) =>
-  new Response(JSON.stringify(obj), { status, headers: { ...JSON_HEADERS, ...extraHeaders } });
+// /functions/api/contato.js  (Cloudflare Pages Function)
+// Envia mensagens do formulário para MailChannels com validação Turnstile.
 
-async function verifyTurnstile(token, secret, remoteip = "") {
-  const start = Date.now();
-  try {
-    if (!token) return { success: false, "error-codes": ["missing-input-response"] };
-    if (!secret) return { success: false, "error-codes": ["missing-input-secret"] };
-    const formData = new FormData();
-    formData.append("secret", secret);
-    formData.append("response", token);
-    if (remoteip) formData.append("remoteip", remoteip);
-    const resp = await fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify", { method: "POST", body: formData });
-    const json = await resp.json().catch(async ()=>({ parseError:true, raw: await resp.text() }));
-    console.log("[turnstile.verify] status:", resp.status, "elapsed(ms):", Date.now()-start, "resp:", json);
-    return json;
-  } catch (e) {
-    console.error("[turnstile.verify] exception:", e);
-    return { success:false, "error-codes":["exception"], detail: String(e && e.stack || e) };
-  }
-}
+const MC_ENDPOINT = "https://api.mailchannels.net/tx/v1/send";
 
-export const onRequestOptions = async () =>
-  new Response(null, { status: 204, headers: {
-    "Access-Control-Allow-Origin": "*",
-    "Access-Control-Allow-Methods": "POST, OPTIONS, GET",
-    "Access-Control-Allow-Headers": "Content-Type"
-  }});
-
-export const onRequestGet = async ({ env, request }) => {
-  const url = new URL(request.url);
-  return jsonResponse({
+export async function onRequestGet({ request, env }) {
+  const host = new URL(request.url).host;
+  const body = {
     ok: true,
     method: "GET",
-    host: url.hostname,
-    hasSecret: !!env.TURNSTILE_SECRET,
-    hasMailTo: !!env.MAIL_TO,
-    hasMailFrom: !!env.MAIL_FROM
-  });
-};
+    host,
+    hasSecret: Boolean(env.TURNSTILE_SECRET),
+    hasMailTo: Boolean(env.MAIL_TO),
+    hasMailFrom: Boolean(env.MAIL_FROM),
+  };
+  return json(body);
+}
 
-export const onRequestPost = async ({ request, env }) => {
-  const ray = request.headers.get("CF-RAY") || "";
-  const ip = request.headers.get("CF-Connecting-IP") || "";
-  const ua = request.headers.get("User-Agent") || "";
+export async function onRequestPost(ctx) {
+  const { request, env } = ctx;
   const url = new URL(request.url);
 
   try {
-    let fields = {};
-    const ctype = request.headers.get("content-type") || "";
-    if (ctype.includes("application/json")) {
-      fields = await request.json();
-    } else {
-      const form = await request.formData();
-      for (const [k, v] of form.entries()) fields[k] = v;
-    }
+    // 1) Lê o formulário (multipart/form-data)
+    const form = await request.formData();
 
-    console.log("[contato] CF-RAY:", ray, "IP:", ip, "UA:", ua);
-    console.log("[contato] Fields:", Object.keys(fields));
-    const name = (fields.name || fields.nome || "").toString().trim();
-    const email = (fields.email || "").toString().trim();
-    const phone = (fields.phone || fields.telefone || "").toString().trim();
-    const subject = (fields.subject || fields.assunto || "Contato via site").toString().trim();
-    const message = (fields.message || fields.mensagem || "").toString().trim();
-    const tsToken = (fields["cf-turnstile-response"] || fields["turnstile"] || "").toString().trim();
-    const honeypot = (fields.company || "").toString().trim();
-
-    if (honeypot) {
-      console.warn("[contato] Honeypot acionado, descartando.");
-      return jsonResponse({ success: true, detail: "Ok (honeypot)" }, 200);
-    }
-
-    if (!name || !email || !message) {
-      console.warn("[contato] Campos obrigatórios faltando:", { name:!!name, email:!!email, message:!!message });
-      return jsonResponse({ success: false, error: "ValidationError", detail: "Campos obrigatórios ausentes (nome, email, mensagem)." }, 400);
-    }
-
-    const ts = await verifyTurnstile(tsToken, env.TURNSTILE_SECRET, ip);
-    if (!ts?.success) {
-      console.warn("[contato] Turnstile falhou:", ts);
-      return jsonResponse({ success: false, error: "TurnstileFail", tsData: ts || {}, detail: "Falha na verificação anti-bot." }, 403);
-    }
-
-    const textContent = [
-      `Novo contato pelo site (${url.hostname})`,
-      ``,
-      `Nome: ${name}`,
-      `Email: ${email}`,
-      phone ? `Telefone: ${phone}` : null,
-      ``,
-      `Mensagem:`,
-      message,
-      ``,
-      `IP: ${ip}`
-    ].filter(Boolean).join("\\n");
-
-    const htmlContent = `\
-      <div style="font-family:system-ui, Arial, sans-serif; line-height:1.5; font-size:16px;">
-        <p><strong>Novo contato pelo site (${url.hostname})</strong></p>
-        <p><strong>Nome:</strong> ${escapeHtml(name)}<br/>
-           <strong>Email:</strong> ${escapeHtml(email)}<br/>
-           ${phone ? `<strong>Telefone:</strong> ${escapeHtml(phone)}<br/>` : ""}
-        </p>
-        <p><strong>Mensagem:</strong><br/>${escapeHtml(message).replace(/\\n/g, "<br/>")}</p>
-        <p style="color:#666;font-size:12px;margin-top:16px;">IP: ${escapeHtml(ip)}</p>
-      </div>`;
-
-    const mcEndpoint = "https://api.mailchannels.net/tx/v1/send";
-    const fromEmail = (env.MAIL_FROM && env.MAIL_FROM.trim()) ? env.MAIL_FROM.trim() : `no-reply@${url.hostname}`;
-
-    const payload = {
-      personalizations: [{ to: [{ email: env.MAIL_TO }]}],
-      from: { email: fromEmail, name: env.MAIL_FROM_NAME || "Formulário do Site" },
-      reply_to: { email, name },
-      subject: subject || "Contato via site",
-      content: [
-        { type: "text/plain", value: textContent },
-        { type: "text/html", value: htmlContent }
-      ],
-      headers: { "X-Entity-Ref-ID": cryptoRandomId() }
+    const data = {
+      company: (form.get("company") || "").toString().trim(),
+      nome: (form.get("nome") || "").toString().trim(),
+      email: (form.get("email") || "").toString().trim(),
+      telefone: (form.get("telefone") || "").toString().trim(),
+      servico: (form.get("servico") || "").toString().trim(),
+      mensagem: (form.get("mensagem") || "").toString().trim(),
+      consent: (form.get("consent") || "").toString().trim(),
+      consent_timestamp: (form.get("consent_timestamp") || "").toString().trim(),
+      turnstile: (form.get("cf-turnstile-response") || "").toString().trim(),
     };
 
-    console.log("[contato] Enviando via MailChannels. From:", fromEmail, "To:", env.MAIL_TO);
-    const mcResp = await fetch(mcEndpoint, { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(payload) });
-    const mcText = await mcResp.text();
-    console.log("[mailchannels] status:", mcResp.status, "body:", mcText.slice(0, 300));
+    console.log(
+      "[contato] CF-RAY:",
+      request.headers.get("CF-Ray"),
+      "IP:",
+      getClientIP(request),
+      "UA:",
+      request.headers.get("User-Agent")
+    );
+    console.log("[contato] Fields:", Object.keys(data));
 
-    if (!mcResp.ok) {
-      return jsonResponse({ success: false, error: "MailChannelsFail", status: mcResp.status, detail: mcText.slice(0, 2000), cfRay: ray }, 502);
+    // 2) Validações básicas
+    const problems = validate(data);
+    if (problems.length) {
+      return json({ ok: false, error: "validation_error", details: problems }, 400);
     }
-    return jsonResponse({ success: true, detail: "Mensagem enviada com sucesso.", cfRay: ray }, 200);
-  } catch (err) {
-    console.error("[contato] EXCEPTION:", err && err.stack || err);
-    return jsonResponse({ success: false, error: "ServerError", detail: String(err && err.stack || err) }, 500);
-  }
-};
 
-function escapeHtml(str = "") {
-  return String(str)
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;")
-    .replaceAll("'", "&#039;");
+    // 3) Verifica Turnstile
+    const t0 = Date.now();
+    const tsResp = await verifyTurnstile(env.TURNSTILE_SECRET, data.turnstile, getClientIP(request));
+    console.log("[turnstile.verify] status:", tsResp.status, "elapsed(ms):", Date.now() - t0, "resp:", tsResp.body);
+
+    if (!(tsResp.ok && tsResp.body?.success)) {
+      return json({ ok: false, error: "turnstile_failed", details: tsResp.body || null }, 429);
+    }
+
+    // 4) Monta e envia e-mail via MailChannels
+    const toEmail = env.MAIL_TO || "fabiopavie@pavieadvogado.com";
+    const fromEmail = env.MAIL_FROM || "contato@pavieadvocacia.com.br";
+    const fromName = env.MAIL_FROM_NAME || "PAVIE | Site";
+
+    const subject = `[PAVIE] Novo contato (${safe(data.servico) || "Formulário"}) – ${safe(
+      data.nome
+    )}`;
+
+    const plain = buildText(data, url.hostname);
+    const html = buildHTML(data, url.hostname);
+
+    const payload = {
+      personalizations: [
+        {
+          to: [{ email: toEmail }],
+        },
+      ],
+      from: { email: fromEmail, name: fromName },
+      subject,
+      headers: {
+        // maneira mais compatível de setar Reply-To no MailChannels
+        "Reply-To": data.email,
+      },
+      content: [
+        { type: "text/plain", value: plain },
+        { type: "text/html", value: html },
+      ],
+    };
+
+    // Cabeçalhos de IP — ESSENCIAIS p/ MailChannels (evita 401)
+    const clientIP = getClientIP(request);
+
+    console.log("[contato] Enviando via MailChannels. From:", fromEmail, "To:", toEmail);
+
+    const mc = await fetch(MC_ENDPOINT, {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+        "X-Forwarded-For": clientIP,
+        "CF-Connecting-IP": clientIP,
+      },
+      body: JSON.stringify(payload),
+    });
+
+    const mcBodyText = await mc.text();
+    console.log("[mailchannels] status:", mc.status, "body:", mcBodyText.slice(0, 400));
+
+    if (mc.status >= 200 && mc.status < 300) {
+      return json({ ok: true, message: "Mensagem enviada com sucesso." });
+    }
+
+    // Falha no envio
+    return json(
+      { ok: false, error: "mailchannels_error", status: mc.status, details: mcBodyText || null },
+      502
+    );
+  } catch (err) {
+    console.error("[contato] exception:", err);
+    return json({ ok: false, error: "server_error" }, 500);
+  }
 }
-function cryptoRandomId() {
-  const arr = new Uint8Array(16);
-  crypto.getRandomValues(arr);
-  return Array.from(arr).map(b => b.toString(16).padStart(2, "0")).join("");
+
+/* -------------------- helpers -------------------- */
+
+function json(obj, status = 200) {
+  return new Response(JSON.stringify(obj), {
+    status,
+    headers: { "content-type": "application/json; charset=utf-8" },
+  });
+}
+
+function getClientIP(request) {
+  return (
+    request.headers.get("CF-Connecting-IP") ||
+    request.headers.get("x-real-ip") ||
+    // pega o primeiro IP da lista (caso múltiplos em XFF)
+    (request.headers.get("x-forwarded-for") || "").split(",")[0].trim() ||
+    "0.0.0.0"
+  );
+}
+
+function validate(d) {
+  const errs = [];
+
+  if (!d.nome || d.nome.length < 2) errs.push({ field: "nome", message: "Informe seu nome." });
+
+  if (!d.email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(d.email))
+    errs.push({ field: "email", message: "E-mail inválido." });
+
+  if (!d.telefone || d.telefone.replace(/\D/g, "").length < 10)
+    errs.push({ field: "telefone", message: "Telefone inválido." });
+
+  if (!d.mensagem || d.mensagem.length < 5)
+    errs.push({ field: "mensagem", message: "Mensagem muito curta." });
+
+  if (!d.consent || !["on", "true", "1"].includes(d.consent.toLowerCase()))
+    errs.push({ field: "consent", message: "É necessário aceitar a Política de Privacidade." });
+
+  if (!d.turnstile) errs.push({ field: "cf-turnstile-response", message: "Validação de segurança ausente." });
+
+  return errs;
+}
+
+async function verifyTurnstile(secret, response, remoteip) {
+  try {
+    const form = new URLSearchParams();
+    form.set("secret", secret || "");
+    form.set("response", response || "");
+    if (remoteip) form.set("remoteip", remoteip);
+
+    const r = await fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
+      method: "POST",
+      body: form,
+    });
+
+    const body = await r.json().catch(() => ({}));
+    return { ok: r.ok, status: r.status, body };
+  } catch (e) {
+    return { ok: false, status: 0, body: { error: "network" } };
+  }
+}
+
+function buildText(d, host) {
+  const lines = [
+    `Novo contato recebido em ${host}`,
+    "",
+    `Nome:      ${d.nome}`,
+    `E-mail:    ${d.email}`,
+    `Telefone:  ${d.telefone}`,
+    `Serviço:   ${d.servico || "-"}`,
+    `Empresa:   ${d.company || "-"}`,
+    "",
+    "Mensagem:",
+    d.mensagem,
+    "",
+    `Consentimento: ${d.consent ? "sim" : "não"} (${d.consent_timestamp || "—"})`,
+  ];
+  return lines.join("\n");
+}
+
+function buildHTML(d, host) {
+  const row = (label, value) =>
+    `<tr><td style="padding:6px 10px;color:#555">${label}</td><td style="padding:6px 10px"><strong>${safe(
+      value || "-"
+    )}</strong></td></tr>`;
+
+  return `<!doctype html>
+<html><body style="font-family:Arial,Helvetica,sans-serif">
+  <h2>Novo contato – ${safe(host)}</h2>
+  <table cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse">
+    ${row("Nome", d.nome)}
+    ${row("E-mail", d.email)}
+    ${row("Telefone", d.telefone)}
+    ${row("Serviço", d.servico)}
+    ${row("Empresa", d.company)}
+    ${row("Consentimento", d.consent ? "Sim" : "Não")}
+    ${row("Timestamp", d.consent_timestamp || "—")}
+  </table>
+  <hr/>
+  <p><strong>Mensagem:</strong></p>
+  <pre style="white-space:pre-wrap;font:inherit">${safe(d.mensagem)}</pre>
+</body></html>`;
+}
+
+function safe(s) {
+  return String(s || "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
 }
