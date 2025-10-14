@@ -115,7 +115,7 @@
 <script type="application/ld+json">
     {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Como funciona o atendimento digital?","acceptedAnswer":{"@type":"Answer","text":"Atendimento 100% online: videochamada, assinatura eletrônica, upload seguro e comunicação por WhatsApp/e-mail. Reuniões presenciais no RJ/Maricá se preferir."}},{"@type":"Question","name":"Quanto tempo demora um inventário?","acceptedAnswer":{"@type":"Answer","text":"Extrajudicial: 60 a 120 dias (dependendo de documentos e cartório). Judicial: 12 a 24 meses em média, variando pela complexidade."}},{"@type":"Question","name":"Preciso ir ao cartório ou tribunal?","acceptedAnswer":{"@type":"Answer","text":"Inventário extrajudicial/divórcio consensual exigem ida ao cartório para assinatura. Processos judiciais costumam dispensar presença física; audiências podem ser on-line."}},{"@type":"Question","name":"Quais documentos preciso para iniciar?","acceptedAnswer":{"@type":"Answer","text":"RG/CPF, certidões atualizadas, documentos dos bens e, em inventário, a última declaração de IR do falecido. Enviamos checklist personalizado após o contato."}},{"@type":"Question","name":"Atendem fora do Rio de Janeiro?","acceptedAnswer":{"@type":"Answer","text":"Sim. Atendimento digital em todo o Brasil, com correspondentes locais quando necessário."}},{"@type":"Question","name":"Posso desistir após contratar?","acceptedAnswer":{"@type":"Answer","text":"Sim. Você pode encerrar o contrato a qualquer momento. Os honorários serão calculados proporcionalmente ao trabalho já realizado, conforme previsto no contrato. Garantimos total transparência e boa‑fé na apuração de valores."}},{"@type":"Question","name":"Como funciona o parcelamento?","acceptedAnswer":{"@type":"Answer","text":"Trabalhamos com entrada + parcelas mensais, sempre vinculadas a marcos do projeto. Ex.: 30% na assinatura, 40% após protocolo, 30% após conclusão. O número de parcelas varia conforme o valor total e a duração estimada do serviço; tudo é definido na proposta."}},{"@type":"Question","name":"Meus dados estão seguros?","acceptedAnswer":{"@type":"Answer","text":"Sim. Armazenamento em ambiente criptografado, acesso restrito com 2FA, LGPD e sigilo profissional. Política de Privacidade disponível no site."}}]}
     </script>
-<script defer="" src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit&amp;onload=tsOnload"></script>
+
 </head>
 <body class="antialiased">
 <!-- Top Bar Fixed -->
@@ -523,7 +523,7 @@
 </label>
 <input name="consent_timestamp" type="hidden" value=""/>
 </div>
-<p class="text-sm mt-3 text-slate-600" id="formStatus">Carregando segurança…</p><div data-sitekey="REPLACE_WITH_TURNSTILE_SITE_KEY" id="ts-container"></div><button class="w-full cta-button px-8 py-4 rounded-lg text-white font-bold text-lg shadow-lg" type="submit">Enviar Solicitação</button>
+<p class="text-sm mt-3 text-slate-600" id="formStatus">Carregando segurança…</p><div data-sitekey="0x4AAAAAAB6FBS0cTG_7KOYv" id="ts-container"></div><button class="w-full cta-button px-8 py-4 rounded-lg text-white font-bold text-lg shadow-lg" type="submit">Enviar Solicitação</button>
 </form>
 </div>
 </div>
@@ -646,6 +646,23 @@
       }
     })();
     </script>
-<script defer="" src="/form.turnstile.js"></script><script defer src="/form.submit.js"></script>
+<script>
+(function(){
+  var form = document.querySelector('form[action="/api/contato"]');
+  if (!form) return;
+  form.addEventListener('submit', function(e){
+    var t = document.querySelector('input[name="cf-turnstile-response"]');
+    if (!t || !t.value) {
+      e.preventDefault();
+      alert('Validação de segurança ainda não carregou. Aguarde 1–2 segundos e clique em Enviar novamente.');
+    }
+  });
+})();
+</script>
+
+
+  <script defer src="/form.turnstile.js"></script>
+  <script defer src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit&onload=tsOnload"></script>
+  <script defer src="/form.submit.js"></script>
 </body>
 </html>
