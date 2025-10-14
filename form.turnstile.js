@@ -1,28 +1,15 @@
-/**
- * Turnstile wiring for the contact form.
- * Renders a managed widget and stores the token in a hidden input named "turnstile".
- */
-(function () {
-  const widget = document.getElementById("cf-turnstile");
-  if (!widget) return;
+// turnstile: render explícito e status de carregamento
+window.__tsReady = false;
+window.__tsWidgetId = null;
 
-  // Ensure hidden input exists
-  let hidden = document.querySelector('input[name="turnstile"]');
-  if (!hidden) {
-    hidden = document.createElement("input");
-    hidden.type = "hidden";
-    hidden.name = "turnstile";
-    widget.appendChild(hidden);
-  }
-
-  window.TURNSTILE_READY = false;
-  window.onTurnstileSuccess = function (token) {
-    hidden.value = token || "";
-    window.TURNSTILE_READY = !!token;
-    document.dispatchEvent(new CustomEvent("turnstile-ready"));
-  };
-  window.onTurnstileExpire = function () {
-    hidden.value = "";
-    window.TURNSTILE_READY = false;
-  };
-})();
+window.tsOnload = function () {
+  const el = document.getElementById("ts-container");
+  if (!el) return;
+  const sitekey = el.getAttribute("data-sitekey");
+  window.__tsWidgetId = turnstile.render("#ts-container", {
+    sitekey,
+    callback: () => { window.__tsReady = true; },
+    "error-callback": () => { window.__tsReady = false; },
+    "timeout-callback": () => { window.__tsReady = false; }
+  });
+};

@@ -1,13 +1,12 @@
 /*
-  X-Frame-Options: DENY
-  X-Content-Type-Options: nosniff
-  Referrer-Policy: strict-origin-when-cross-origin
-  Permissions-Policy: interest-cohort=(), geolocation=(), microphone=(), camera=()
   Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: geolocation=(), camera=(), microphone=()
+*/
 
-/api/*
+/api/contato
   Access-Control-Allow-Origin: https://pavieadvocacia.com.br
   Access-Control-Allow-Methods: POST, OPTIONS
-  Access-Control-Allow-Headers: content-type
-  Cache-Control: no-store
-  X-Robots-Tag: noindex
+  Access-Control-Allow-Headers: Content-Type
