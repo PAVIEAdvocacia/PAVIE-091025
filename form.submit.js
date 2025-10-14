@@ -1,100 +1,55 @@
-
-/* form.submit.js (updated)
- * - Envia FormData para /api/contato (POST)
- * - Garante que os campos 'turnstile' e 'cf-turnstile-response' existam
- * - Preenche consent_timestamp
- * - Exibe mensagens de sucesso/erro amigáveis
- * - Traz logs úteis se o servidor retornar 400/401/405/5xx
- */
-
-(function () {
-  const form = document.getElementById('contato-form');
+// /form.submit.js
+// Lida com o submit do formulário de contato e mostra feedback ao usuário.
+(() => {
+  const form = document.getElementById("contato-form") || document.querySelector('form[action="/api/contato"]');
   if (!form) return;
 
   const btn = form.querySelector('button[type="submit"]');
-  const statusEl = document.getElementById('envio-status');
-  const setStatus = (msg) => { if (statusEl) statusEl.textContent = msg; };
+  const originalBtnText = btn ? btn.textContent : "Enviar";
 
-  async function submitForm(ev) {
+  function setBusy(busy) {
+    if (!btn) return;
+    btn.disabled = !!busy;
+    btn.textContent = busy ? "Enviando..." : originalBtnText;
+  }
+
+  async function submitHandler(ev) {
     ev.preventDefault();
+    setBusy(true);
 
-    // monta o payload
-    const fd = new FormData(form);
-
-    // timestamp LGPD
-    if (!fd.get('consent_timestamp')) {
-      fd.set('consent_timestamp', new Date().toISOString());
-    }
-
-    // Turnstile: garanta os dois nomes, para compatibilidade com o worker
-    const t1 = fd.get('cf-turnstile-response');
-    const t2 = fd.get('turnstile');
-    const token = t1 || t2 || (window.__turnstileToken || '');
-    if (token) {
-      fd.set('cf-turnstile-response', token);
-      fd.set('turnstile', token);
-    }
-
-    // empresa oculta (anti-spam)
-    if (!fd.get('company')) fd.set('company', 'pavieadvocacia.com.br');
-
-    // UI
-    btn && (btn.disabled = true);
-    setStatus('Enviando...');
-
-    let resp, bodyText;
     try {
-      resp = await fetch(form.action || '/api/contato', {
-        method: 'POST',
-        body: fd,
-        headers: { 'Accept': 'application/json' },
-        credentials: 'same-origin'
+      const fd = new FormData(form);
+
+      // NÃO toque no honeypot "company" — deixe vazio.
+      // Turnstile: token deve estar em "cf-turnstile-response" ou "turnstile".
+      const token = fd.get("cf-turnstile-response") || fd.get("turnstile");
+      if (!token) {
+        alert("Por favor, confirme o desafio de verificação antes de enviar.");
+        return;
+      }
+
+      const resp = await fetch("/api/contato", {
+        method: "POST",
+        body: fd
       });
 
-      bodyText = await resp.text();
-      let data;
-      try { data = JSON.parse(bodyText); } catch { data = { ok: false, raw: bodyText }; }
+      const data = await resp.json().catch(() => ({}));
 
-      if (!resp.ok) {
-        // mensagens específicas
-        if (resp.status === 400) throw new Error((data && (data.message || data.error)) || 'validation_error');
-        if (resp.status === 401) throw new Error('mailchannels_unauthorized');
-        if (resp.status === 405) throw new Error('method_not_allowed');
-        if (resp.status === 429) throw new Error('rate_limited');
-        throw new Error((data && (data.message || data.error)) || `http_${resp.status}`);
-      }
-
-      // sucesso!
-      alert('Solicitação enviada com sucesso! Já recebemos seus dados e entraremos em contato.');
-      setStatus('Enviado com sucesso.');
-      form.reset();
-      // reseta turnstile se existir
-      if (window.turnstile && typeof window.turnstile.reset === 'function') {
-        try { window.turnstile.reset(); } catch {}
+      if (resp.ok && (data.ok || data.sent)) {
+        alert("Solicitação enviada com sucesso! Em breve entraremos em contato.");
+        form.reset();
+        // limpa token do Turnstile, se houver
+        try { window.turnstile && turnstile.reset && turnstile.reset(); } catch {}
+      } else {
+        const msg = (data && (data.message || data.error)) || `Falha HTTP ${resp.status}`;
+        alert("Erro ao enviar: " + msg);
       }
     } catch (err) {
-      console.error('[contato.submit] falha:', err, bodyText);
-      let msg = 'Erro ao enviar.';
-      switch (String(err.message || '')) {
-        case 'validation_error':
-          msg = 'Erro ao enviar: validation_error — confira os campos e o captcha.'; break;
-        case 'mailchannels_unauthorized':
-          msg = 'Erro ao enviar: 401 na API de e-mail. Verifique SPF (include:spf.mailchannels.net) e o domínio do remetente.'; break;
-        case 'method_not_allowed':
-          msg = 'Erro ao enviar: HTTP 405. O endpoint /api/contato não está aceitando POST — certifique-se de que a Function está publicada.'; break;
-        case 'rate_limited':
-          msg = 'Muitas tentativas. Tente novamente em instantes.'; break;
-        default:
-          if ((err.message || '').startsWith('http_')) {
-            msg = `Erro ao enviar: ${err.message.replace('http_', 'HTTP ')}`;
-          }
-      }
-      alert(msg);
-      setStatus(msg);
+      alert("Erro ao enviar: " + (err && err.message ? err.message : String(err)));
     } finally {
-      btn && (btn.disabled = false);
+      setBusy(false);
     }
   }
 
-  form.addEventListener('submit', submitForm);
+  form.addEventListener("submit", submitHandler);
 })();
