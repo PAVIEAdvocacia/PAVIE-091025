@@ -1,5 +1,5 @@
+// form.submit.js — envio com fetch e feedback ao usuário
 (function () {
-  // Robust selector: prefer ID, fallback to the action
   const form = document.getElementById("contatoForm") || document.querySelector('form[action="/api/contato"]');
   if (!form) return;
 
@@ -13,14 +13,10 @@
   }
 
   function lock(v) {
-    if (btn) {
-      btn.disabled = !!v;
-      btn.style.opacity = v ? "0.6" : "1";
-    }
+    if (btn) { btn.disabled = !!v; btn.style.opacity = v ? "0.6" : "1"; }
   }
 
   form.addEventListener("submit", async (e) => {
-    // Block if token not ready
     const hasTokenField = !!document.querySelector('input[name="cf-turnstile-response"], textarea[name="cf-turnstile-response"]');
     if (!window.__tsReady || !hasTokenField) {
       e.preventDefault();
@@ -34,8 +30,6 @@
 
     try {
       const data = new FormData(form);
-
-      // Garantia extra: copie o token para um alias aceito pela API se necessário
       const tsInput = document.querySelector('input[name="cf-turnstile-response"], textarea[name="cf-turnstile-response"]');
       if (tsInput) {
         const token = tsInput.value || tsInput.textContent || "";
@@ -46,7 +40,6 @@
       const resp = await fetch("/api/contato", { method: "POST", body: data });
       const isJson = (resp.headers.get("content-type") || "").includes("application/json");
       const body = isJson ? await resp.json() : { ok: resp.ok };
-
       if (!resp.ok || !body.ok) throw body;
 
       alert("Solicitação enviada com sucesso! Já recebemos seus dados e entraremos em contato.");

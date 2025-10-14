@@ -1,4 +1,4 @@
-// turnstile: render explícito e status de carregamento
+// form.turnstile.js — render explícito e status
 window.__tsReady = false;
 window.__tsWidgetId = null;
 
