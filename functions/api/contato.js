@@ -1,208 +1,123 @@
-
 /**
- * Cloudflare Pages Function: /api/contato
- * - Validates Turnstile token
- * - Sends email via MailChannels with 401 fallback (domain-only X-AuthUser)
- * - Exposes GET for health/env check
+ * Cloudflare Pages Function: /api/contato (POST)
+ * - Verifica Turnstile
+ * - Envia e-mail via MailChannels
+ * 
+ * Variáveis esperadas em Settings > Environment variables:
+ * - MAIL_FROM          (ex.: "PAVIE | Advocacia <contato@pavieadvocacia.com.br>")
+ * - MAIL_FROM_NAME     (opcional, se MAIL_FROM for só endereço)
+ * - MAIL_TO            (destino principal)
+ * - TURNSTILE_SECRET   (ou CHAVE_SECRETA_DA_TORRE) — chave secreta do Turnstile
  */
-export const onRequestGet = async ({ env }) => {
-  const missing = {
-    MAIL_FROM: !env.MAIL_FROM,
-    MAIL_FROM_NAME: !env.MAIL_FROM_NAME,
-    MAIL_TO: !env.MAIL_TO,
-    CHAVE_SECRETA_DA_TORRE: !env.CHAVE_SECRETA_DA_TORRE,
-  };
-  return new Response(
-    JSON.stringify({
-      ok: true,
-      metodo: "GET",
-      missing_env: missing,
-      hasSecret: !!env.CHAVE_SECRETA_DA_TORRE,
-    }),
-    {
-      headers: { "content-type": "application/json; charset=utf-8" },
-    }
-  );
-};
 
 export const onRequestPost = async ({ request, env, cf }) => {
   try {
-    const url = new URL(request.url);
-    const domain = (url.hostname || "")
-      .replace(/^www\./i, "")
-      .toLowerCase();
-
-    // Parse form
-    const form = await request.formData();
-    const honeypot = (form.get("company") || "").toString().trim();
-    if (honeypot) {
-      return jsonErr(200, "ok:true (honeypot)"); // silently succeed
+    // ----- Lê dados do formulário -----
+    const contentType = request.headers.get('content-type') || '';
+    let data = {};
+    if (contentType.includes('application/json')) {
+      data = await request.json();
+    } else if (contentType.includes('multipart/form-data') || contentType.includes('application/x-www-form-urlencoded')) {
+      const formData = await request.formData();
+      data = Object.fromEntries(formData.entries());
+    } else {
+      return json({ ok: false, error: 'Unsupported content-type' }, 415);
     }
 
-    // Gather fields
-    const nome = str(form.get("nome"));
-    const email = str(form.get("email"));
-    const telefone = str(form.get("telefone") || form.get("fone"));
-    const servico = str(form.get("servico"));
-    const mensagem = str(form.get("mensagem"));
-    const consent = form.get("consent") ? "Sim" : "Não";
-    const consentTs = str(form.get("consent_timestamp"));
-    const tsToken =
-      str(form.get("cf-turnstile-response")) ||
-      str(form.get("turnstileToken")) ||
-      str(form.get("turnstile")) ||
-      "";
-
-    // Basic validation
-    if (!nome orEmpty(nome) || !email orEmpty(email) or !mensagem orEmpty(mensagem)):
-      return jsonError(400, "InvalidInput", { detail: "Campos obrigatórios ausentes." });
-
-    // Turnstile verification
-    const tsRes = await verifyTurnstile(tsToken, request, env);
-    if (!tsRes.success) {
-      return jsonError(400, "TurnstileFail", { tsData: tsRes });
+    const { nome = '', email = '', assunto = '', mensagem = '', **rest } = data;
+    const tsResponse = data['cf-turnstile-response'];
+    if (!tsResponse) {
+      return json({ ok: false, error: 'Turnstile token ausente.' }, 400);
     }
 
-    // Compose email
-    const fromEmail = env.MAIL_FROM || `contato@${domain}`;
-    const fromName =
-      env.MAIL_FROM_NAME || "Website — Formulário de Contato";
-    const toEmail = env.MAIL_TO || `contato@${domain}`;
+    // ----- Verificação Turnstile -----
+    const turnstileSecret = env.TURNSTILE_SECRET || env.CHAVE_SECRETA_DA_TORRE;
+    if (!turnstileSecret) {
+      return json({ ok: false, error: 'TURNSTILE_SECRET ausente na configuração.' }, 500);
+    }
 
-    const subject = `Novo contato do site — ${servico || "Sem assunto"} — ${nome}`.slice(0, 180);
-    const now = new Date().toISOString();
+    const verifyRes = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
+      method: 'POST',
+      body: new URLSearchParams({
+        secret: turnstileSecret,
+        response: tsResponse,
+        remoteip: request.headers.get('CF-Connecting-IP') || ''
+      })
+    });
+    const verifyData = await verifyRes.json();
 
-    const lines = [
-      `Nova solicitação pelo formulário (${url.hostname})`,
-      ``,
-      `Nome: ${nome}`,
-      `E-mail: ${email}`,
-      `Telefone/WhatsApp: ${telefone}`,
-      `Serviço: ${servico}`,
-      ``,
-      `Mensagem:`,
-      mensagem,
-      ``,
-      `Consentimento LGPD: ${consent}`,
-      `Timestamp do consentimento: ${consentTs}`,
-      ``,
-      `Turnstile: success=${tsRes.success} cdata=${tsRes["cdata"] || ""} action=${tsRes["action"] || ""}`,
-      `IP: ${(cf && cf.clientTcpRtt !== undefined) ? "" : ""}`,
-      `Data/Hora: ${now}`,
-    ];
-    const textBody = lines.join("\n");
+    if (!verifyData.success) {
+      return json({ ok: false, error: 'Falha na verificação Turnstile', tsData: verifyData }, 400);
+    }
 
-    const htmlBody = `
-      <div style="font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;font-size:15px;line-height:1.6;color:#0f172a">
-        <h2 style="margin:0 0 12px">Nova solicitação pelo formulário (${escapeHtml(url.hostname)})</h2>
-        <p><b>Nome:</b> ${escapeHtml(nome)}<br>
-           <b>E-mail:</b> ${escapeHtml(email)}<br>
-           <b>Telefone/WhatsApp:</b> ${escapeHtml(telefone)}<br>
-           <b>Serviço:</b> ${escapeHtml(servico)}</p>
-        <p><b>Mensagem:</b><br>${escapeHtml(mensagem).replace(/\n/g,"<br>")}</p>
-        <hr style="border:none;border-top:1px solid #e2e8f0;margin:16px 0">
-        <p><b>Consentimento LGPD:</b> ${escapeHtml(consent)}<br>
-           <b>Timestamp:</b> ${escapeHtml(consentTs || "-")}</p>
-        <p style="color:#64748b"><small>Turnstile: success=${tsRes.success} action=${escapeHtml(tsRes["action"] || "")}</small></p>
-        <p style="color:#64748b"><small>Enviado em: ${escapeHtml(now)}</small></p>
+    // ----- Sanitização simples -----
+    const safe = (s) => String(s || '').trim().replace(/[\r\n]+/g, ' ').slice(0, 1000);
+    const Nome = safe(nome);
+    const Email = safe(email);
+    const Assunto = safe(assunto || 'Contato do site');
+    const Mensagem = String(mensagem || '').slice(0, 5000);
+
+    // ----- Monta corpo do e-mail -----
+    const MAIL_FROM = env.MAIL_FROM || 'contato@pavieadvocacia.com.br';
+    const MAIL_TO = env.MAIL_TO || 'fabiopavie@pavieadvocacia.com.br';
+    const FROM_NAME = env.MAIL_FROM_NAME || 'PAVIE | Advocacia';
+    const subject = `📩 [Site] ${Assunto}`;
+
+    const html = `
+      <div style="font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;line-height:1.5">
+        <h2>Nova mensagem pelo site</h2>
+        <p><strong>Nome:</strong> ${escapeHtml(Nome)}</p>
+        <p><strong>E-mail:</strong> ${escapeHtml(Email)}</p>
+        <p><strong>Assunto:</strong> ${escapeHtml(Assunto)}</p>
+        <p style="white-space:pre-wrap"><strong>Mensagem:</strong>\n${escapeHtml(Mensagem)}</p>
+        <hr>
+        <p style="color:#666">IP: ${request.headers.get('CF-Connecting-IP') || '-'} · País: ${(cf && cf.country) || '-'}</p>
       </div>
     `;
 
-    const payload = {
-      personalizations: [{ to: [{ email: toEmail }] }],
-      from: { email: fromEmail, name: fromName },
-      reply_to: validEmail(email) ? { email, name: nome || undefined } : undefined,
+    const mailPayload = {
+      personalizations: [{ to: [{ email: MAIL_TO }] }],
+      from: { email: extractAddress(MAIL_FROM), name: FROM_NAME },
       subject,
-      content: [
-        { type: "text/plain", value: textBody },
-        { type: "text/html", value: htmlBody },
-      ],
-      headers: {
-        "List-Unsubscribe-Post": "List-Unsubscribe=One-Click",
-        "List-Unsubscribe": `<mailto:${fromEmail}?subject=unsubscribe>`,
-      },
-      dkim_domain: domain,
-      dkim_selector: env.DKIM_SELECTOR || "cf2024-1",
+      content: [{ type: "text/html; charset=utf-8", value: html }]
     };
 
-    // First attempt: user mailbox
-    let r = await fetchMC(payload, fromEmail);
-    if (r.status === 401) {
-      // Fallback: domain only
-      r = await fetchMC(payload, domain);
-    }
-    if (!r.ok) {
-      const detail = await r.text();
-      return jsonError(500, "MailChannelsFail", {
-        status: r.status,
-        detail,
-      });
+    // ----- Envio via MailChannels -----
+    const mailRes = await fetch('https://api.mailchannels.net/tx/v1/send', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify(mailPayload),
+    });
+
+    if (!mailRes.ok) {
+      const errText = await mailRes.text();
+      return json({ ok: false, error: 'MailChannelsFail', status: mailRes.status, detail: errText }, 502);
     }
 
-    return new Response(JSON.stringify({ ok: true }), {
-      headers: { "content-type": "application/json; charset=utf-8" },
-    });
+    return json({ ok: true, message: 'Email enviado.' });
   } catch (err) {
-    return jsonError(500, "ServerError", { detail: String(err && err.stack || err) });
+    return json({ ok: false, error: String(err && err.message || err) }, 500);
   }
 };
 
-/* Helpers */
-
-function str(v) {
-  return (v == null ? "" : String(v)).trim();
-}
-function orEmpty(v){ return !v || v.length === 0 }
-function validEmail(v) {
-  return /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v || "");
-}
-async function verifyTurnstile(token, request, env) {
-  const secret = env.CHAVE_SECRETA_DA_TORRE;
-  if (!secret) return { success: false, "error-codes": ["missing-secret"] };
-  if (!token) return { success: false, "error-codes": ["missing-input-response"] };
-
-  const form = new FormData();
-  form.append("secret", secret);
-  form.append("response", token);
-  try {
-    const ip = request.headers.get("cf-connecting-ip") || request.headers.get("x-real-ip") || "";
-    if (ip) form.append("remoteip", ip);
-  } catch (_) {}
-
-  const resp = await fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
-    method: "POST",
-    body: form,
-  });
-  const data = await resp.json().catch(() => ({}));
-  return data;
-}
-
-async function fetchMC(payload, authUser) {
-  return fetch("https://api.mailchannels.net/tx/v1/send", {
-    method: "POST",
-    headers: {
-      "content-type": "application/json",
-      "X-AuthUser": authUser,
-    },
-    body: JSON.stringify(payload),
+function json(obj, status = 200) {
+  return new Response(JSON.stringify(obj), {
+    status,
+    headers: { 'content-type': 'application/json; charset=utf-8' }
   });
 }
 
-function escapeHtml(str) {
-  return String(str || "")
+function escapeHtml(s) {
+  return String(s)
     .replace(/&/g, "&amp;")
     .replace(/</g, "&lt;")
     .replace(/>/g, "&gt;")
     .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#39;");
+    .replace(/'/g, "&#039;");
 }
 
-function jsonError(status, error, extra = {}) {
-  return new Response(JSON.stringify({ ok: false, error, ...extra }), {
-    status,
-    headers: { "content-type": "application/json; charset=utf-8" },
-  });
+function extractAddress(from) {
+  // Aceita "Nome <email@dominio>" ou apenas "email@dominio"
+  const m = String(from).match(/<([^>]+)>/);
+  return m ? m[1] : String(from);
 }
-
-// Small alias for backward compatibility with earlier typo
-const jsonErr = jsonError;

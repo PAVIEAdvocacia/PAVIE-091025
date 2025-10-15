@@ -1,23 +1,53 @@
-// form.turnstile.js — render explícito com response-field e feedback
-(function(){"use strict";
-  function setStatus(msg, type){ try{ var el = document.getElementById("formStatus"); if(!el) return; el.textContent = msg||""; el.className = "text-sm mt-2 " + (type==="error"?"text-red-600":type==="success"?"text-green-600":"text-gray-600"); }catch(_e){} }
-  window.tsOnload = function tsOnload(){ try{
-      var el = document.querySelector("#ts-container");
-      if(!el || !window.turnstile) return;
-      if (window.__tsWidgetId) try{ turnstile.remove(window.__tsWidgetId); }catch(_e){}
-      window.__tsWidgetId = turnstile.render("#ts-container", {
-        sitekey: "0x4AAAAAAB6FBS0cTG_7KOYv",
-        theme: "auto",
-        appearance: "always",
-        size: "normal",
-        'response-field': true,
-        'response-field-name': 'cf-turnstile-response',
-        'refresh-interval': 'auto',
-        'retry': 'auto',
-        callback: function(token){ window.__tsReady = true; setStatus("Segurança carregada.", "success"); },
-        'error-callback': function(){ setStatus("Erro ao carregar segurança. Recarregue a página.", "error"); },
-        'timeout-callback': function(){ setStatus("Tempo esgotado na verificação. Tente novamente.", "error"); }
+(function () {
+  const form = document.getElementById('contato');
+  const btn = document.getElementById('btnEnviar');
+  const statusEl = document.getElementById('status');
+
+  if (!form) return;
+
+  function setStatus(msg, ok) {
+    if (!statusEl) return;
+    statusEl.textContent = msg || '';
+    statusEl.className = 'text-sm ' + (ok ? 'text-green-600' : 'text-red-600');
+  }
+
+  form.addEventListener('submit', async function (e) {
+    e.preventDefault();
+    setStatus('Enviando...', true);
+    if (btn) btn.disabled = true;
+
+    try {
+      const fd = new FormData(form);
+      // Fail-fast se o Turnstile ainda não populou o token
+      if (!fd.get('cf-turnstile-response')) {
+        setStatus('Validação de segurança pendente. Aguarde o carregamento do Turnstile.', false);
+        if (btn) btn.disabled = false;
+        return;
+      }
+
+      const res = await fetch(form.action, {
+        method: 'POST',
+        body: fd,
+        headers: { 'Accept': 'application/json' },
       });
-    }catch(e){ console.error("Turnstile render error", e); }
-  };
+
+      const ct = res.headers.get('content-type') || '';
+      const isJSON = ct.includes('application/json');
+      const data = isJSON ? await res.json() : { ok: res.ok };
+
+      if (!res.ok || !data.ok) {
+        const msg = (data && (data.error || data.message)) || ('Erro ' + res.status + ' ao enviar.');
+        throw new Error(msg);
+      }
+
+      setStatus('Mensagem enviada com sucesso. Obrigado!', true);
+      form.reset();
+      // Turnstile deve reinserir novo token automaticamente após reset do form
+    } catch (err) {
+      console.error('Falha ao enviar o formulário:', err);
+      setStatus('Falha ao enviar. ' + (err && err.message ? err.message : 'Tente novamente.'), false);
+    } finally {
+      if (btn) btn.disabled = false;
+    }
+  });
 })();
