@@ -1,10 +1,8 @@
 /*
-  Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
-  X-Content-Type-Options: nosniff
-  X-Frame-Options: SAMEORIGIN
-  Referrer-Policy: strict-origin-when-cross-origin
-  Permissions-Policy: camera=(), microphone=(), geolocation=()
-
-  # CSP compatível com: Cloudflare Turnstile, Tailwind CDN e Google Fonts
-  # Permite fetch (connect) apenas para a própria origem (inclui /api/contato)
-  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.tailwindcss.com https://challenges.cloudflare.com; connect-src 'self'; img-src 'self' data: https:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; frame-src https://challenges.cloudflare.com; frame-ancestors 'self'; base-uri 'self'; form-action 'self'
+  Security headers for Cloudflare Pages (Turnstile + Tailwind + Google Fonts + MailChannels)
+*/
+X-Frame-Options: DENY
+X-Content-Type-Options: nosniff
+Referrer-Policy: strict-origin-when-cross-origin
+Permissions-Policy: geolocation=(), microphone=(), camera=(), payment=(), usb=()
+Content-Security-Policy: default-src 'self' https:; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests; img-src 'self' data: https:; script-src 'self' 'unsafe-inline' https://cdn.tailwindcss.com https://challenges.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.tailwindcss.com; font-src 'self' https://fonts.gstatic.com data:; frame-src https://challenges.cloudflare.com; connect-src 'self' https://api.mailchannels.net https://challenges.cloudflare.com;
