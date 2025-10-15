@@ -1,4 +1,12 @@
-// MailChannels hardening: DKIM signing + AuthUser header
+// functions/api/contato.js — MailChannels com DKIM + autenticação resiliente
+export const onRequestGet = async ({ env }) => {
+  const required = ["MAIL_FROM","MAIL_FROM_NAME","MAIL_TO","CHAVE_SECRETA_DA_TORRE"];
+  const aliases = { MAIL_FROM:"CORREIO_DE", MAIL_FROM_NAME:"CORREIO_DE_NOME", MAIL_TO:"ENVIAR_PARA", CHAVE_SECRETA_DA_TORRE:"SEGREDO_DA_CATRACA" };
+  const missing = {}; for (const k of required) missing[k] = !(env[k] ?? env[aliases[k]]);
+  const hasSecret = !!(env.CHAVE_SECRETA_DA_TORRE ?? env.SEGREDO_DA_CATRACA);
+  return new Response(JSON.stringify({ ok: Object.values(missing).every(v=>v===false), metodo:"GET", missing_env: missing, hasSecret }), { headers: { "content-type": "application/json; charset=utf-8" } });
+};
+
 export const onRequestPost = async ({ request, env }) => {
   try {
     const MAIL_FROM = env.MAIL_FROM ?? env.CORREIO_DE;
@@ -38,49 +46,53 @@ export const onRequestPost = async ({ request, env }) => {
     const verify = await verifyResp.json().catch(() => ({}));
     if (!verify.success) return json({ ok:false, error:"TurnstileFail", tsData: verify }, 400);
 
-    const domain = (MAIL_FROM.split("@")[1] || "").toLowerCase();
+    const dkim_domain = (MAIL_FROM.split("@")[1] || "").toLowerCase();
     const subject = `[Site] ${assunto || "Contato"}`;
     const html = `
       <div style="font-family:system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue',Arial,'Noto Sans','Liberation Sans',sans-serif;line-height:1.5">
         <h2 style="margin:0 0 12px 0">Novo contato pelo site</h2>
-        <p><strong>Nome:</strong> ${escapeHtml(nome) || "(não informado)"}</p>
-        <p><strong>E‑mail:</strong> ${escapeHtml(email) || "(não informado)"} </p>
-        <p><strong>Telefone:</strong> ${escapeHtml(telefone) || "(não informado)"} </p>
-        <p><strong>Assunto:</strong> ${escapeHtml(assunto || "Contato")}</p>
-        <p><strong>Mensagem:</strong><br>${nl2br(escapeHtml(mensagem))}</p>
-        <hr>
-        <p style="color:#666"><small>IP: ${escapeHtml(ip)} · Origem: ${escapeHtml(origem)} · UA: ${escapeHtml(userAgent)}</small></p>
+        <p><strong>Nome:</strong> ${nome || "(não informado)"} </p>
+        <p><strong>E‑mail:</strong> ${email || "(não informado)"} </p>
+        <p><strong>Telefone:</strong> ${telefone || "(não informado)"} </p>
+        <p><strong>Assunto:</strong> ${assunto || "Contato"} </p>
+        <p><strong>Mensagem:</strong><br>${(mensagem || "").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/\n/g,"<br>")}</p>
+        <hr><p style="color:#666"><small>IP: ${ip} · Origem: ${origem} · UA: ${userAgent}</small></p>
       </div>`;
 
     const payload = {
       from: { email: MAIL_FROM, name: MAIL_FROM_NAME },
       personalizations: [{
         to: [{ email: MAIL_TO }],
-        dkim_domain: domain,
+        dkim_domain,
         dkim_selector: DKIM_SELECTOR
       }],
       subject,
       content: [
-        { type: "text/plain", value: stripHtml(html) },
+        { type: "text/plain", value: html.replace(/<[^>]+>/g, "") },
         { type: "text/html", value: html }
-      ]
-    };
-    if (email) payload.reply_to = [{ email, name: nome || undefined }];
-
-    const headers = {
-      "content-type": "application/json",
-      "X-AuthUser": MAIL_FROM,
-      "X-Use-My-Own-DKIM": "true"
+      ],
+      reply_to: email ? [{ email, name: nome || undefined }] : undefined,
     };
 
-    const mcResp = await fetch("https://api.mailchannels.net/tx/v1/send", {
-      method: "POST", headers, body: JSON.stringify(payload)
-    });
-
-    const text = await mcResp.text();
-    if (!mcResp.ok) {
-      return json({ ok:false, error:"MailChannelsFail", status: mcResp.status, detail: text }, 500);
+    async function sendWith(authUser) {
+      const headers = {
+        "content-type": "application/json",
+        "X-AuthUser": authUser,
+        "X-Use-My-Own-DKIM": "true"
+      };
+      const resp = await fetch("https://api.mailchannels.net/tx/v1/send", {
+        method: "POST", headers, body: JSON.stringify(payload)
+      });
+      const text = await resp.text();
+      return { resp, text };
     }
+
+    // T1: X-AuthUser = e-mail completo
+    let { resp, text } = await sendWith(MAIL_FROM);
+    // T2: se 401, X-AuthUser = domínio
+    if (resp.status === 401) ({ resp, text } = await sendWith(dkim_domain));
+
+    if (!resp.ok) return json({ ok:false, error:"MailChannelsFail", status: resp.status, detail: text }, 500);
 
     return json({ ok:true, message:"Mensagem enviada com sucesso." }, 200);
   } catch (err) {
@@ -88,18 +100,6 @@ export const onRequestPost = async ({ request, env }) => {
   }
 };
 
-export const onRequestGet = async ({ env }) => {
-  const required = ["MAIL_FROM","MAIL_FROM_NAME","MAIL_TO","CHAVE_SECRETA_DA_TORRE"];
-  const aliases = { MAIL_FROM:"CORREIO_DE", MAIL_FROM_NAME:"CORREIO_DE_NOME", MAIL_TO:"ENVIAR_PARA", CHAVE_SECRETA_DA_TORRE:"SEGREDO_DA_CATRACA" };
-  const missing = {}; for (const k of required) missing[k] = !(env[k] ?? env[aliases[k]]);
-  const hasSecret = !!(env.CHAVE_SECRETA_DA_TORRE ?? env.SEGREDO_DA_CATRACA);
-  return json({ ok: Object.values(missing).every(v=>v===false), metodo:"GET", missing_env: missing, hasSecret });
-};
-
 function json(obj, status=200) {
   return new Response(JSON.stringify(obj), { status, headers: { "content-type":"application/json; charset=utf-8" } });
 }
-function escapeHtml(str=""){return String(str).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#039;");}
-function nl2br(str=""){return String(str).replace(/
-/g,"<br>");}
-function stripHtml(str=""){return String(str).replace(/<[^>]+>/g,"");}
