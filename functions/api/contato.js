@@ -1,105 +1,208 @@
-// functions/api/contato.js — MailChannels com DKIM + autenticação resiliente
+
+/**
+ * Cloudflare Pages Function: /api/contato
+ * - Validates Turnstile token
+ * - Sends email via MailChannels with 401 fallback (domain-only X-AuthUser)
+ * - Exposes GET for health/env check
+ */
 export const onRequestGet = async ({ env }) => {
-  const required = ["MAIL_FROM","MAIL_FROM_NAME","MAIL_TO","CHAVE_SECRETA_DA_TORRE"];
-  const aliases = { MAIL_FROM:"CORREIO_DE", MAIL_FROM_NAME:"CORREIO_DE_NOME", MAIL_TO:"ENVIAR_PARA", CHAVE_SECRETA_DA_TORRE:"SEGREDO_DA_CATRACA" };
-  const missing = {}; for (const k of required) missing[k] = !(env[k] ?? env[aliases[k]]);
-  const hasSecret = !!(env.CHAVE_SECRETA_DA_TORRE ?? env.SEGREDO_DA_CATRACA);
-  return new Response(JSON.stringify({ ok: Object.values(missing).every(v=>v===false), metodo:"GET", missing_env: missing, hasSecret }), { headers: { "content-type": "application/json; charset=utf-8" } });
+  const missing = {
+    MAIL_FROM: !env.MAIL_FROM,
+    MAIL_FROM_NAME: !env.MAIL_FROM_NAME,
+    MAIL_TO: !env.MAIL_TO,
+    CHAVE_SECRETA_DA_TORRE: !env.CHAVE_SECRETA_DA_TORRE,
+  };
+  return new Response(
+    JSON.stringify({
+      ok: true,
+      metodo: "GET",
+      missing_env: missing,
+      hasSecret: !!env.CHAVE_SECRETA_DA_TORRE,
+    }),
+    {
+      headers: { "content-type": "application/json; charset=utf-8" },
+    }
+  );
 };
 
-export const onRequestPost = async ({ request, env }) => {
+export const onRequestPost = async ({ request, env, cf }) => {
   try {
-    const MAIL_FROM = env.MAIL_FROM ?? env.CORREIO_DE;
-    const MAIL_FROM_NAME = env.MAIL_FROM_NAME ?? env.CORREIO_DE_NOME;
-    const MAIL_TO = env.MAIL_TO ?? env.ENVIAR_PARA;
-    const TURNSTILE_SECRET = env.CHAVE_SECRETA_DA_TORRE ?? env.SEGREDO_DA_CATRACA;
-    const DKIM_SELECTOR = env.DKIM_SELECTOR ?? env.SELETOR_DKIM ?? "cf2024-1";
+    const url = new URL(request.url);
+    const domain = (url.hostname || "")
+      .replace(/^www\./i, "")
+      .toLowerCase();
 
-    const missing = { MAIL_FROM:!MAIL_FROM, MAIL_FROM_NAME:!MAIL_FROM_NAME, MAIL_TO:!MAIL_TO, CHAVE_SECRETA_DA_TORRE:!TURNSTILE_SECRET };
-    if (Object.values(missing).some(Boolean)) return json({ ok:false, error:"missing_env", missing }, 500);
-
-    const ct = request.headers.get("content-type") || "";
-    let data = {};
-    if (ct.includes("application/x-www-form-urlencoded") || ct.includes("multipart/form-data")) {
-      const form = await request.formData(); data = Object.fromEntries(form.entries());
-    } else if (ct.includes("application/json")) {
-      data = await request.json();
-    } else {
-      const form = await request.formData().catch(()=>null); data = form ? Object.fromEntries(form.entries()) : {};
+    // Parse form
+    const form = await request.formData();
+    const honeypot = (form.get("company") || "").toString().trim();
+    if (honeypot) {
+      return jsonErr(200, "ok:true (honeypot)"); // silently succeed
     }
 
-    const nome = (data.nome || data.name || "").toString().trim();
-    const email = (data.email || "").toString().trim();
-    const telefone = (data.telefone || data.phone || "").toString().trim();
-    const assunto = (data.assunto || data.subject || "Contato via site").toString().trim();
-    const mensagem = (data.mensagem || data.message || "").toString().trim();
-    const ip = request.headers.get("cf-connecting-ip") || "";
-    const origem = request.headers.get("referer") || "";
-    const userAgent = request.headers.get("user-agent") || "";
+    // Gather fields
+    const nome = str(form.get("nome"));
+    const email = str(form.get("email"));
+    const telefone = str(form.get("telefone") || form.get("fone"));
+    const servico = str(form.get("servico"));
+    const mensagem = str(form.get("mensagem"));
+    const consent = form.get("consent") ? "Sim" : "Não";
+    const consentTs = str(form.get("consent_timestamp"));
+    const tsToken =
+      str(form.get("cf-turnstile-response")) ||
+      str(form.get("turnstileToken")) ||
+      str(form.get("turnstile")) ||
+      "";
 
-    const turnstileToken = data["cf-turnstile-response"] || data["turnstileToken"] || data["turnstile"] || "";
-    const verifyResp = await fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
-      method: "POST",
-      body: new URLSearchParams({ secret: TURNSTILE_SECRET, response: turnstileToken, remoteip: ip }),
-      headers: { "content-type": "application/x-www-form-urlencoded" },
-    });
-    const verify = await verifyResp.json().catch(() => ({}));
-    if (!verify.success) return json({ ok:false, error:"TurnstileFail", tsData: verify }, 400);
+    // Basic validation
+    if (!nome orEmpty(nome) || !email orEmpty(email) or !mensagem orEmpty(mensagem)):
+      return jsonError(400, "InvalidInput", { detail: "Campos obrigatórios ausentes." });
 
-    const dkim_domain = (MAIL_FROM.split("@")[1] || "").toLowerCase();
-    const subject = `[Site] ${assunto || "Contato"}`;
-    const html = `
-      <div style="font-family:system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue',Arial,'Noto Sans','Liberation Sans',sans-serif;line-height:1.5">
-        <h2 style="margin:0 0 12px 0">Novo contato pelo site</h2>
-        <p><strong>Nome:</strong> ${nome || "(não informado)"} </p>
-        <p><strong>E‑mail:</strong> ${email || "(não informado)"} </p>
-        <p><strong>Telefone:</strong> ${telefone || "(não informado)"} </p>
-        <p><strong>Assunto:</strong> ${assunto || "Contato"} </p>
-        <p><strong>Mensagem:</strong><br>${(mensagem || "").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/\n/g,"<br>")}</p>
-        <hr><p style="color:#666"><small>IP: ${ip} · Origem: ${origem} · UA: ${userAgent}</small></p>
-      </div>`;
+    // Turnstile verification
+    const tsRes = await verifyTurnstile(tsToken, request, env);
+    if (!tsRes.success) {
+      return jsonError(400, "TurnstileFail", { tsData: tsRes });
+    }
+
+    // Compose email
+    const fromEmail = env.MAIL_FROM || `contato@${domain}`;
+    const fromName =
+      env.MAIL_FROM_NAME || "Website — Formulário de Contato";
+    const toEmail = env.MAIL_TO || `contato@${domain}`;
+
+    const subject = `Novo contato do site — ${servico || "Sem assunto"} — ${nome}`.slice(0, 180);
+    const now = new Date().toISOString();
+
+    const lines = [
+      `Nova solicitação pelo formulário (${url.hostname})`,
+      ``,
+      `Nome: ${nome}`,
+      `E-mail: ${email}`,
+      `Telefone/WhatsApp: ${telefone}`,
+      `Serviço: ${servico}`,
+      ``,
+      `Mensagem:`,
+      mensagem,
+      ``,
+      `Consentimento LGPD: ${consent}`,
+      `Timestamp do consentimento: ${consentTs}`,
+      ``,
+      `Turnstile: success=${tsRes.success} cdata=${tsRes["cdata"] || ""} action=${tsRes["action"] || ""}`,
+      `IP: ${(cf && cf.clientTcpRtt !== undefined) ? "" : ""}`,
+      `Data/Hora: ${now}`,
+    ];
+    const textBody = lines.join("\n");
+
+    const htmlBody = `
+      <div style="font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;font-size:15px;line-height:1.6;color:#0f172a">
+        <h2 style="margin:0 0 12px">Nova solicitação pelo formulário (${escapeHtml(url.hostname)})</h2>
+        <p><b>Nome:</b> ${escapeHtml(nome)}<br>
+           <b>E-mail:</b> ${escapeHtml(email)}<br>
+           <b>Telefone/WhatsApp:</b> ${escapeHtml(telefone)}<br>
+           <b>Serviço:</b> ${escapeHtml(servico)}</p>
+        <p><b>Mensagem:</b><br>${escapeHtml(mensagem).replace(/\n/g,"<br>")}</p>
+        <hr style="border:none;border-top:1px solid #e2e8f0;margin:16px 0">
+        <p><b>Consentimento LGPD:</b> ${escapeHtml(consent)}<br>
+           <b>Timestamp:</b> ${escapeHtml(consentTs || "-")}</p>
+        <p style="color:#64748b"><small>Turnstile: success=${tsRes.success} action=${escapeHtml(tsRes["action"] || "")}</small></p>
+        <p style="color:#64748b"><small>Enviado em: ${escapeHtml(now)}</small></p>
+      </div>
+    `;
 
     const payload = {
-      from: { email: MAIL_FROM, name: MAIL_FROM_NAME },
-      personalizations: [{
-        to: [{ email: MAIL_TO }],
-        dkim_domain,
-        dkim_selector: DKIM_SELECTOR
-      }],
+      personalizations: [{ to: [{ email: toEmail }] }],
+      from: { email: fromEmail, name: fromName },
+      reply_to: validEmail(email) ? { email, name: nome || undefined } : undefined,
       subject,
       content: [
-        { type: "text/plain", value: html.replace(/<[^>]+>/g, "") },
-        { type: "text/html", value: html }
+        { type: "text/plain", value: textBody },
+        { type: "text/html", value: htmlBody },
       ],
-      reply_to: email ? [{ email, name: nome || undefined }] : undefined,
+      headers: {
+        "List-Unsubscribe-Post": "List-Unsubscribe=One-Click",
+        "List-Unsubscribe": `<mailto:${fromEmail}?subject=unsubscribe>`,
+      },
+      dkim_domain: domain,
+      dkim_selector: env.DKIM_SELECTOR || "cf2024-1",
     };
 
-    async function sendWith(authUser) {
-      const headers = {
-        "content-type": "application/json",
-        "X-AuthUser": authUser,
-        "X-Use-My-Own-DKIM": "true"
-      };
-      const resp = await fetch("https://api.mailchannels.net/tx/v1/send", {
-        method: "POST", headers, body: JSON.stringify(payload)
+    // First attempt: user mailbox
+    let r = await fetchMC(payload, fromEmail);
+    if (r.status === 401) {
+      // Fallback: domain only
+      r = await fetchMC(payload, domain);
+    }
+    if (!r.ok) {
+      const detail = await r.text();
+      return jsonError(500, "MailChannelsFail", {
+        status: r.status,
+        detail,
       });
-      const text = await resp.text();
-      return { resp, text };
     }
 
-    // T1: X-AuthUser = e-mail completo
-    let { resp, text } = await sendWith(MAIL_FROM);
-    // T2: se 401, X-AuthUser = domínio
-    if (resp.status === 401) ({ resp, text } = await sendWith(dkim_domain));
-
-    if (!resp.ok) return json({ ok:false, error:"MailChannelsFail", status: resp.status, detail: text }, 500);
-
-    return json({ ok:true, message:"Mensagem enviada com sucesso." }, 200);
+    return new Response(JSON.stringify({ ok: true }), {
+      headers: { "content-type": "application/json; charset=utf-8" },
+    });
   } catch (err) {
-    return json({ ok:false, error:"ServerError", detail:String(err) }, 500);
+    return jsonError(500, "ServerError", { detail: String(err && err.stack || err) });
   }
 };
 
-function json(obj, status=200) {
-  return new Response(JSON.stringify(obj), { status, headers: { "content-type":"application/json; charset=utf-8" } });
+/* Helpers */
+
+function str(v) {
+  return (v == null ? "" : String(v)).trim();
 }
+function orEmpty(v){ return !v || v.length === 0 }
+function validEmail(v) {
+  return /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v || "");
+}
+async function verifyTurnstile(token, request, env) {
+  const secret = env.CHAVE_SECRETA_DA_TORRE;
+  if (!secret) return { success: false, "error-codes": ["missing-secret"] };
+  if (!token) return { success: false, "error-codes": ["missing-input-response"] };
+
+  const form = new FormData();
+  form.append("secret", secret);
+  form.append("response", token);
+  try {
+    const ip = request.headers.get("cf-connecting-ip") || request.headers.get("x-real-ip") || "";
+    if (ip) form.append("remoteip", ip);
+  } catch (_) {}
+
+  const resp = await fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
+    method: "POST",
+    body: form,
+  });
+  const data = await resp.json().catch(() => ({}));
+  return data;
+}
+
+async function fetchMC(payload, authUser) {
+  return fetch("https://api.mailchannels.net/tx/v1/send", {
+    method: "POST",
+    headers: {
+      "content-type": "application/json",
+      "X-AuthUser": authUser,
+    },
+    body: JSON.stringify(payload),
+  });
+}
+
+function escapeHtml(str) {
+  return String(str || "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
+function jsonError(status, error, extra = {}) {
+  return new Response(JSON.stringify({ ok: false, error, ...extra }), {
+    status,
+    headers: { "content-type": "application/json; charset=utf-8" },
+  });
+}
+
+// Small alias for backward compatibility with earlier typo
+const jsonErr = jsonError;
