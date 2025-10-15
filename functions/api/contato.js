@@ -1,111 +1,94 @@
-// functions/api/contato.js (versão final corrigida)
-// Cloudflare Pages Function - Envio de formulário com validação Turnstile e MailChannels
-
 export const onRequestGet = async ({ env }) => {
-  const required = ["MAIL_FROM", "MAIL_FROM_NAME", "MAIL_TO", "CHAVE_SECRETA_DA_TORRE"];
-  const aliases = {
-    MAIL_FROM: "CORREIO_DE",
-    MAIL_FROM_NAME: "CORREIO_DE_NOME",
-    MAIL_TO: "ENVIAR_PARA",
-    CHAVE_SECRETA_DA_TORRE: "SEGREDO_DA_CATRACA"
-  };
-  const missing = {};
-  for (const key of required) missing[key] = !(env[key] || env[aliases[key]]);
-  const hasSecret = !!(env.CHAVE_SECRETA_DA_TORRE || env.SEGREDO_DA_CATRACA);
-
-  return new Response(
-    JSON.stringify({ ok: Object.values(missing).every(v => !v), metodo: "GET", missing_env: missing, hasSecret }, null, 2),
-    { headers: { "content-type": "application/json; charset=utf-8" } }
-  );
+  const required = ["MAIL_FROM","MAIL_FROM_NAME","MAIL_TO","CHAVE_SECRETA_DA_TORRE"];
+  const aliases = { MAIL_FROM:"CORREIO_DE", MAIL_FROM_NAME:"CORREIO_DE_NOME", MAIL_TO:"ENVIAR_PARA", CHAVE_SECRETA_DA_TORRE:"SEGREDO_DA_CATRACA" };
+  const missing = {}; for (const k of required) missing[k] = !(env[k] ?? env[aliases[k]]);
+  const hasSecret = !!(env.CHAVE_SECRETA_DA_TORRE ?? env.SEGREDO_DA_CATRACA);
+  return new Response(JSON.stringify({ ok: Object.values(missing).every(v=>v===false), metodo:"GET", missing_env: missing, hasSecret }, null, 2),
+    { headers: { "content-type": "application/json; charset=utf-8" } });
 };
 
 export const onRequestPost = async ({ request, env }) => {
   try {
-    const MAIL_FROM = env.MAIL_FROM || env.CORREIO_DE;
-    const MAIL_FROM_NAME = env.MAIL_FROM_NAME || env.CORREIO_DE_NOME;
-    const MAIL_TO = env.MAIL_TO || env.ENVIAR_PARA;
-    const TURNSTILE_SECRET = env.CHAVE_SECRETA_DA_TORRE || env.SEGREDO_DA_CATRACA;
+    const MAIL_FROM = env.MAIL_FROM ?? env.CORREIO_DE;
+    const MAIL_FROM_NAME = env.MAIL_FROM_NAME ?? env.CORREIO_DE_NOME;
+    const MAIL_TO = env.MAIL_TO ?? env.ENVIAR_PARA;
+    const TURNSTILE_SECRET = env.CHAVE_SECRETA_DA_TORRE ?? env.SEGREDO_DA_CATRACA;
 
-    if (!MAIL_FROM || !MAIL_FROM_NAME || !MAIL_TO || !TURNSTILE_SECRET) {
-      return new Response(JSON.stringify({ ok: false, error: "missing_env" }), { status: 500 });
+    const missing = { MAIL_FROM:!MAIL_FROM, MAIL_FROM_NAME:!MAIL_FROM_NAME, MAIL_TO:!MAIL_TO, CHAVE_SECRETA_DA_TORRE:!TURNSTILE_SECRET };
+    if (Object.values(missing).some(Boolean)) return json({ ok:false, error:"missing_env", missing }, 500);
+
+    const ct = request.headers.get("content-type") || "";
+    let data = {};
+    if (ct.includes("application/x-www-form-urlencoded") || ct.includes("multipart/form-data")) {
+      const form = await request.formData(); data = Object.fromEntries(form.entries());
+    } else if (ct.includes("application/json")) {
+      data = await request.json();
+    } else {
+      const form = await request.formData().catch(()=>null); data = form ? Object.fromEntries(form.entries()) : {};
     }
 
-    // Lê os dados do formulário
-    const formData = await request.formData();
-    const data = Object.fromEntries(formData.entries());
-    const nome = (data.nome || "").trim();
-    const email = (data.email || "").trim();
-    const telefone = (data.telefone || "").trim();
-    const assunto = (data.assunto || "Contato via site").trim();
-    const mensagem = (data.mensagem || "").trim();
+    const nome = (data.nome || data.name || "").toString().trim();
+    const email = (data.email || "").toString().trim();
+    const telefone = (data.telefone || data.phone || "").toString().trim();
+    const assunto = (data.assunto || data.subject || "Contato via site").toString().trim();
+    const mensagem = (data.mensagem || data.message || "").toString().trim();
     const ip = request.headers.get("cf-connecting-ip") || "";
     const origem = request.headers.get("referer") || "";
     const userAgent = request.headers.get("user-agent") || "";
 
-    // Valida Turnstile
-    const token = data["cf-turnstile-response"] || data["turnstileToken"] || data["turnstile"];
+    const turnstileToken = data["cf-turnstile-response"] || data["turnstileToken"] || data["turnstile"] || "";
+
     const verifyResp = await fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
       method: "POST",
-      body: new URLSearchParams({ secret: TURNSTILE_SECRET, response: token, remoteip: ip }),
-      headers: { "content-type": "application/x-www-form-urlencoded" }
+      body: new URLSearchParams({ secret: TURNSTILE_SECRET, response: turnstileToken, remoteip: ip }),
+      headers: { "content-type": "application/x-www-form-urlencoded" },
     });
-    const verify = await verifyResp.json();
-    if (!verify.success) {
-      return new Response(JSON.stringify({ ok: false, error: "TurnstileFail", tsData: verify }), { status: 400 });
-    }
+    const verify = await verifyResp.json().catch(() => ({}));
+    if (!verify.success) return json({ ok:false, error:"TurnstileFail", tsData: verify }, 400);
 
-    // Monta e envia e-mail via MailChannels
+    const subject = `[Site] ${assunto}`;
     const html = `
-      <div style="font-family:system-ui,sans-serif;line-height:1.5">
-        <h2>Novo contato pelo site</h2>
-        <p><strong>Nome:</strong> ${escapeHtml(nome)}</p>
-        <p><strong>Email:</strong> ${escapeHtml(email)}</p>
-        <p><strong>Telefone:</strong> ${escapeHtml(telefone)}</p>
+      <div style="font-family:system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue',Arial,'Noto Sans','Liberation Sans',sans-serif;line-height:1.5">
+        <h2 style="margin:0 0 12px 0">Novo contato pelo site</h2>
+        <p><strong>Nome:</strong> ${escapeHtml(nome) || "(não informado)"}</p>
+        <p><strong>E‑mail:</strong> ${escapeHtml(email) || "(não informado)"} </p>
+        <p><strong>Telefone:</strong> ${escapeHtml(telefone) || "(não informado)"} </p>
         <p><strong>Assunto:</strong> ${escapeHtml(assunto)}</p>
         <p><strong>Mensagem:</strong><br>${nl2br(escapeHtml(mensagem))}</p>
         <hr>
-        <p style="color:#666;font-size:0.9em">IP: ${escapeHtml(ip)} · Origem: ${escapeHtml(origem)} · UA: ${escapeHtml(userAgent)}</p>
+        <p style="color:#666"><small>IP: ${escapeHtml(ip)} · Origem: ${escapeHtml(origem)} · UA: ${escapeHtml(userAgent)}</small></p>
       </div>
     `;
 
-    const payload = {
+    const mcPayload = {
       from: { email: MAIL_FROM, name: MAIL_FROM_NAME },
-      personalizations: [{ to: [{ email: MAIL_TO }] }],
-      subject: `[Site] ${assunto}`,
+      personalizations: [ { to: [ { email: MAIL_TO } ] } ],
+      subject,
       content: [
         { type: "text/plain", value: stripHtml(html) },
-        { type: "text/html", value: html }
+        { type: "text/html", value: html },
       ],
-      ...(email ? { reply_to: { email, name: nome || undefined } } : {})
+      reply_to: email ? [{ email, name: nome || undefined }] : undefined,
     };
 
-    const mailResp = await fetch("https://api.mailchannels.net/tx/v1/send", {
+    const mcResp = await fetch("https://api.mailchannels.net/tx/v1/send", {
       method: "POST",
       headers: { "content-type": "application/json" },
-      body: JSON.stringify(payload)
+      body: JSON.stringify(mcPayload),
     });
+    const mcText = await mcResp.text();
+    if (!mcResp.ok) return json({ ok:false, error:"MailChannelsFail", status: mcResp.status, detail: mcText }, 500);
 
-    const mailText = await mailResp.text();
-    if (!mailResp.ok) {
-      return new Response(
-        JSON.stringify({ ok: false, error: "MailChannelsFail", status: mailResp.status, detail: mailText }),
-        { status: 500, headers: { "content-type": "application/json" } }
-      );
-    }
-
-    return new Response(JSON.stringify({ ok: true, message: "Mensagem enviada com sucesso." }), {
-      headers: { "content-type": "application/json" }
-    });
+    return json({ ok:true, message:"Mensagem enviada com sucesso." }, 200);
   } catch (err) {
-    return new Response(
-      JSON.stringify({ ok: false, error: "ServerError", detail: String(err) }),
-      { status: 500, headers: { "content-type": "application/json" } }
-    );
+    return json({ ok:false, error:"ServerError", detail:String(err) }, 500);
   }
 };
 
-function escapeHtml(str = "") {
-  return str.replace(/[&<>"']/g, m => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#039;" }[m]));
+function json(obj, status=200) {
+  return new Response(JSON.stringify(obj), { status, headers: { "content-type":"application/json; charset=utf-8" } });
 }
-function nl2br(str = "") { return str.replace(/\n/g, "<br>"); }
-function stripHtml(str = "") { return str.replace(/<[^>]+>/g, ""); }
+function escapeHtml(str=""){return String(str).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#039;");}
+function nl2br(str=""){return String(str).replace(/
+/g,"<br>");}
+function stripHtml(str=""){return String(str).replace(/<[^>]+>/g,"");}

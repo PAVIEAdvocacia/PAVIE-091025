@@ -3,47 +3,42 @@
   if (!form) return;
   const btn = form.querySelector('button[type="submit"]');
   const statusEl = document.getElementById("formStatus");
-
-  function setStatus(msg, type="info") {
-    if (!statusEl) return;
-    statusEl.textContent = msg || "";
-    statusEl.className = "text-sm mt-2 " + (type === "error" ? "text-red-600" : type === "success" ? "text-green-600" : "text-gray-600");
-  }
-  function lock(v) { if (btn) { btn.disabled = !!v; btn.style.opacity = v ? "0.6" : "1"; } }
-
+  function setStatus(msg, type){ if(statusEl){ statusEl.textContent=msg||""; statusEl.className = "text-sm mt-2 " + (type==="error"?"text-red-600":type==="success"?"text-green-600":"text-gray-600"); } }
+  function lock(v){ if(btn){ btn.disabled=!!v; btn.style.opacity = v? "0.6":"1"; } }
   form.addEventListener("submit", async (e) => {
-    const hasTokenField = !!document.querySelector('input[name="cf-turnstile-response"], textarea[name="cf-turnstile-response"]');
-    if (!window.__tsReady || !hasTokenField) {
+    const tokenInput = document.querySelector('input[name="cf-turnstile-response"], textarea[name="cf-turnstile-response"]');
+    if (!window.__tsReady || !tokenInput || !tokenInput.value) {
       e.preventDefault();
       alert("Validação de segurança ainda não carregou. Aguarde 1–2 segundos e clique em Enviar novamente.");
       return;
     }
-    e.preventDefault();
-    setStatus("Enviando..."); lock(true);
+    e.preventDefault(); setStatus("Enviando..."); lock(true);
     try {
       const data = new FormData(form);
-      const tsInput = document.querySelector('input[name="cf-turnstile-response"], textarea[name="cf-turnstile-response"]');
-      if (tsInput) {
-        const token = tsInput.value || tsInput.textContent || "";
-        if (!data.get("cf-turnstile-response")) data.set("cf-turnstile-response", token);
-        if (!data.get("turnstileToken")) data.set("turnstileToken", token);
-        if (!data.get("turnstile")) data.set("turnstile", token);
-      }
-      const resp = await fetch("/api/contato", { method: "POST", body: data });
-      const isJson = (resp.headers.get("content-type") || "").includes("application/json");
-      const body = isJson ? await resp.json() : { ok: resp.ok };
+      const token = tokenInput.value || tokenInput.textContent || "";
+      if (!data.get("cf-turnstile-response")) data.set("cf-turnstile-response", token);
+      if (!data.get("turnstileToken")) data.set("turnstileToken", token);
+      if (!data.get("turnstile")) data.set("turnstile", token);
+      const resp = await fetch("/api/contato", { method:"POST", body:data });
+      const ct = resp.headers.get("content-type") || "";
+      const body = ct.includes("application/json") ? await resp.json() : { ok: resp.ok };
+      console.debug("POST /api/contato →", resp.status, body);
       if (!resp.ok || !body.ok) {
-        console.error("Falha ao enviar:", body);
-        throw new Error((body && (body.error || body.detail)) || "Erro desconhecido");
+        let msg = "Não foi possível enviar. ";
+        if (body && body.error === "TurnstileFail") {
+          const errs = (body.tsData && body.tsData["error-codes"]) || body["error-codes"] || [];
+          msg += "Falha na validação de segurança" + (errs.length ? ` (${errs.join(", ")})` : "") + ".";
+        } else if (body && body.error === "MailChannelsFail") {
+          msg += "Falha ao enviar e-mail (MailChannels).";
+        } else if (body && body.error === "missing_env") {
+          msg += "Variáveis de ambiente faltando no servidor.";
+        } else { msg += "Tente novamente em instantes."; }
+        setStatus(msg, "error"); alert(msg); throw body;
       }
       alert("Solicitação enviada com sucesso! Já recebemos seus dados e entraremos em contato.");
-      form.reset();
+      setStatus("Enviado com sucesso.", "success"); form.reset();
       if (window.__tsWidgetId && window.turnstile) turnstile.reset(window.__tsWidgetId);
-      setStatus("Enviado com sucesso.", "success");
-    } catch (err) {
-      console.error(err);
-      setStatus("Não foi possível enviar. Tente novamente em instantes.", "error");
-      alert("Erro ao enviar. Tente novamente em instantes.");
-    } finally { lock(false); }
+    } catch (err) { console.error("Erro no envio do formulário:", err); }
+    finally { lock(false); }
   });
 })();

@@ -115,7 +115,7 @@
 <script type="application/ld+json">
     {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Como funciona o atendimento digital?","acceptedAnswer":{"@type":"Answer","text":"Atendimento 100% online: videochamada, assinatura eletrônica, upload seguro e comunicação por WhatsApp/e-mail. Reuniões presenciais no RJ/Maricá se preferir."}},{"@type":"Question","name":"Quanto tempo demora um inventário?","acceptedAnswer":{"@type":"Answer","text":"Extrajudicial: 60 a 120 dias (dependendo de documentos e cartório). Judicial: 12 a 24 meses em média, variando pela complexidade."}},{"@type":"Question","name":"Preciso ir ao cartório ou tribunal?","acceptedAnswer":{"@type":"Answer","text":"Inventário extrajudicial/divórcio consensual exigem ida ao cartório para assinatura. Processos judiciais costumam dispensar presença física; audiências podem ser on-line."}},{"@type":"Question","name":"Quais documentos preciso para iniciar?","acceptedAnswer":{"@type":"Answer","text":"RG/CPF, certidões atualizadas, documentos dos bens e, em inventário, a última declaração de IR do falecido. Enviamos checklist personalizado após o contato."}},{"@type":"Question","name":"Atendem fora do Rio de Janeiro?","acceptedAnswer":{"@type":"Answer","text":"Sim. Atendimento digital em todo o Brasil, com correspondentes locais quando necessário."}},{"@type":"Question","name":"Posso desistir após contratar?","acceptedAnswer":{"@type":"Answer","text":"Sim. Você pode encerrar o contrato a qualquer momento. Os honorários serão calculados proporcionalmente ao trabalho já realizado, conforme previsto no contrato. Garantimos total transparência e boa‑fé na apuração de valores."}},{"@type":"Question","name":"Como funciona o parcelamento?","acceptedAnswer":{"@type":"Answer","text":"Trabalhamos com entrada + parcelas mensais, sempre vinculadas a marcos do projeto. Ex.: 30% na assinatura, 40% após protocolo, 30% após conclusão. O número de parcelas varia conforme o valor total e a duração estimada do serviço; tudo é definido na proposta."}},{"@type":"Question","name":"Meus dados estão seguros?","acceptedAnswer":{"@type":"Answer","text":"Sim. Armazenamento em ambiente criptografado, acesso restrito com 2FA, LGPD e sigilo profissional. Política de Privacidade disponível no site."}}]}
     </script>
-
+<script defer="" src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit&amp;onload=tsOnload"></script>
 </head>
 <body class="antialiased">
 <!-- Top Bar Fixed -->
@@ -646,23 +646,38 @@
       }
     })();
     </script>
-<script>
-(function(){
-  var form = document.querySelector('form[action="/api/contato"]');
-  if (!form) return;
-  form.addEventListener('submit', function(e){
-    var t = document.querySelector('input[name="cf-turnstile-response"]');
-    if (!t || !t.value) {
-      e.preventDefault();
-      alert('Validação de segurança ainda não carregou. Aguarde 1–2 segundos e clique em Enviar novamente.');
-    }
-  });
-})();
-</script>
+<script defer="" src="/form.turnstile.js"></script><script defer src="/form.submit.js"></script>
 
+  <!-- MODO DIAGNÓSTICO: mostra JSON de erro do POST /api/contato no #formStatus -->
+  <script>
+  (function(){
+    var DIAGNOSTICO = true; // defina para false para desligar
+    if (!DIAGNOSTICO) return;
+    var originalFetch = window.fetch;
+    window.fetch = async function(input, init){
+      var res = await originalFetch(input, init);
+      try {
+        var url = (typeof input === "string") ? input : (input && input.url) || "";
+        var method = (init && (init.method || "GET")) || "GET";
+        if (url.indexOf("/api/contato") !== -1 && String(method).toUpperCase() === "POST") {
+          var clone = res.clone();
+          var ct = clone.headers.get("content-type") || "";
+          var body = ct.includes("application/json") ? await clone.json() : await clone.text();
+          if (!res.ok) {
+            var el = document.getElementById("formStatus");
+            if (el) {
+              var txt = "DIAGNÓSTICO: " + (typeof body === "string" ? body : JSON.stringify(body));
+              el.textContent = txt;
+              el.className = "text-sm mt-2 text-amber-600";
+            }
+            console.warn("Diagnóstico /api/contato falhou:", body);
+          }
+        }
+      } catch(e){}
+      return res;
+    };
+  })();
+  </script>
 
-  <script defer src="/form.turnstile.js"></script>
-  <script defer src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit&onload=tsOnload"></script>
-  <script defer src="/form.submit.js"></script>
 </body>
 </html>
