@@ -1,6 +1,6 @@
 # PAVIE | Advocacia — Deploy Cloudflare Pages
 
-Estrutura correta d:
+Estrutura correta:
 - `index.html` (raiz)
 - `form.turnstile.js` (raiz)
 - `form.submit.js` (raiz)
