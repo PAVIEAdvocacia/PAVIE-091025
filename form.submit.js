@@ -32,7 +32,10 @@
       const resp = await fetch("/api/contato", { method: "POST", body: data });
       const isJson = (resp.headers.get("content-type") || "").includes("application/json");
       const body = isJson ? await resp.json() : { ok: resp.ok };
-      if (!resp.ok || !body.ok) throw body;
+      if (!resp.ok || !body.ok) {
+        console.error("Falha ao enviar:", body);
+        throw new Error((body && (body.error || body.detail)) || "Erro desconhecido");
+      }
       alert("Solicitação enviada com sucesso! Já recebemos seus dados e entraremos em contato.");
       form.reset();
       if (window.__tsWidgetId && window.turnstile) turnstile.reset(window.__tsWidgetId);
