@@ -1,0 +1,74 @@
+<!-- Contact Widget (Turnstile + fallback) -->
+<link rel="preconnect" href="https://challenges.cloudflare.com">
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" defer></script>
+
+<form id="contato" style="max-width:560px">
+  <input name="nome" placeholder="Seu nome" required>
+  <input type="email" name="email" placeholder="Seu e-mail" required>
+  <input name="telefone" placeholder="Telefone (opcional)">
+  <textarea name="mensagem" placeholder="Mensagem" required></textarea>
+
+  <div class="cf-turnstile" data-sitekey="SUA_SITE_KEY_TURNSTILE"
+       data-callback="(t)=>window.__cfToken=t"></div>
+
+  <button type="submit">Enviar</button>
+  <p id="status" style="margin-top:8px"></p>
+  <div id="fallback" style="display:none;margin-top:8px">
+    <p>Se o envio falhar, use uma destas opções:</p>
+    <p><a id="mailtoLink">Enviar por e-mail</a></p>
+    <p><a id="waLink" target="_blank" rel="noopener">Falar no WhatsApp</a></p>
+  </div>
+</form>
+
+<script>
+  window.__cfToken = null;
+  const form = document.getElementById('contato');
+  const S = document.getElementById('status');
+  const F = document.getElementById('fallback');
+  const mailto = document.getElementById('mailtoLink');
+  const wa = document.getElementById('waLink');
+
+  function buildFallback(nome, email, telefone, mensagem) {
+    const subject = encodeURIComponent('Contato – Site PAVIE');
+    const body = encodeURIComponent(
+      'Nome: ' + (nome||'') + '\n' +
+      'E-mail: ' + (email||'') + '\n' +
+      'Telefone: ' + (telefone||'') + '\n\n' +
+      'Mensagem:\n' + (mensagem||'')
+    );
+    mailto.href = 'mailto:contato@pavieadvocacia.com.br?subject=' + subject + '&body=' + body;
+    // Substitua pelo número oficial
+    wa.href = 'https://wa.me/55DDDNUMERO?text=' + body;
+  }
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    S.textContent = 'Enviando...';
+    const fd = new FormData(form);
+    const data = Object.fromEntries(fd.entries());
+    buildFallback(data.nome, data.email, data.telefone, data.mensagem);
+
+    const token = window.__cfToken;
+    if (!token) { S.textContent = 'Valide o captcha antes de enviar.'; return; }
+
+    try {
+      const r = await fetch('/api/contato', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          nome: data.nome, email: data.email, telefone: data.telefone,
+          mensagem: data.mensagem, turnstileToken: token
+        })
+      });
+      const j = await r.json();
+      if (!r.ok || !j.ok) throw new Error(j.error || 'Falha no envio');
+      S.textContent = 'Mensagem enviada com sucesso!';
+      F.style.display = 'none';
+      form.reset();
+      window.__cfToken = null;
+    } catch (err) {
+      S.textContent = 'Erro no envio. Use uma das opções abaixo.';
+      F.style.display = 'block';
+    }
+  });
+</script>

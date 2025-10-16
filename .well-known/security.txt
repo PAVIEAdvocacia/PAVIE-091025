@@ -1,3 +1,2 @@
 Contact: mailto:contato@pavieadvogado.com
-Policy: https://www.pavieadvogado.com/politica-de-seguranca
 Preferred-Languages: pt, en

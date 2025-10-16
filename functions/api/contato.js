@@ -1,105 +1,63 @@
-// Cloudflare Pages Function: /api/contato
-export const onRequestOptions = () => {
-  return new Response(null, {
-    status: 204,
-    headers: {
-      "Access-Control-Allow-Origin": "https://www.pavieadvogado.com",
-      "Access-Control-Allow-Methods": "POST, OPTIONS",
-      "Access-Control-Allow-Headers": "Content-Type, Authorization",
-    },
-  });
+// /functions/api/contato.js (pavieadvocacia.com.br)
+export const onRequestOptions = async ({ request, env }) => {
+  return new Response(null, { status: 204, headers: cors(env) });
 };
 
 export const onRequestPost = async ({ request, env }) => {
-  const allowOrigin = "https://www.pavieadvogado.com";
-
   try {
-    const data = await request.json().catch(() => null);
-    if (!data) {
-      return new Response(JSON.stringify({ ok: false, error: "JSON inválido" }), {
-        status: 400,
-        headers: cors(allowOrigin),
-      });
+    const headers = cors(env);
+    if (!/application\/json/i.test(request.headers.get('content-type') || '')) {
+      return new Response(JSON.stringify({ ok:false, error:'Use application/json' }), { status:415, headers });
+    }
+    const body = await request.json().catch(() => null);
+    if (!body) return new Response(JSON.stringify({ ok:false, error:'JSON inválido' }), { status:400, headers });
+
+    const { nome, email, telefone, mensagem, turnstileToken } = body;
+    if (!nome || !email || !mensagem || !turnstileToken) {
+      return new Response(JSON.stringify({ ok:false, error:'Campos obrigatórios ausentes' }), { status:422, headers });
     }
 
-    const { nome, email, telefone, mensagem, cfToken } = data;
+    // Verify Turnstile
+    const ts = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams({ secret: env.TURNSTILE_SECRET, response: turnstileToken }),
+    }).then(r => r.json());
 
-    if (!nome || !email || !mensagem || !cfToken) {
-      return new Response(JSON.stringify({ ok: false, error: "Campos obrigatórios ausentes." }), {
-        status: 422,
-        headers: cors(allowOrigin),
-      });
+    if (!ts?.success) {
+      return new Response(JSON.stringify({ ok:false, error:'Falha Turnstile', details: ts?.['error-codes'] || [] }), { status:403, headers });
     }
 
-    // 1) Verifica Turnstile
-    const secret = env.TURNSTILE_SECRET;
-    if (!secret) {
-      return new Response(JSON.stringify({ ok: false, error: "TURNSTILE_SECRET ausente." }), {
-        status: 500,
-        headers: cors(allowOrigin),
-      });
-    }
-
-    const verifyRes = await fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
-      method: "POST",
-      headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: new URLSearchParams({ secret, response: cfToken }),
+    // Forward to Apps Script
+    const payload = { nome, email, telefone, mensagem, site: 'pavieadvocacia.com.br', score: ts?.score };
+    const resp = await fetch(env.SCRIPT_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
     });
-
-    const verifyJson = await verifyRes.json();
-    if (!verifyJson.success) {
-      return new Response(JSON.stringify({ ok: false, error: "Falha na verificação do Turnstile.", details: verifyJson }), {
-        status: 403,
-        headers: cors(allowOrigin),
-      });
+    const text = await resp.text();
+    if (!resp.ok) {
+      return new Response(JSON.stringify({ ok:false, error:'Apps Script erro', status: resp.status, body: text }), { status:502, headers });
     }
+    let result; try { result = JSON.parse(text) } catch { result = { text } }
 
-    // 2) Encaminha ao Google Apps Script (deployment público que aceita POST JSON)
-    const scriptUrl = env.SCRIPT_URL;
-    if (!scriptUrl) {
-      return new Response(JSON.stringify({ ok: false, error: "SCRIPT_URL ausente." }), {
-        status: 500,
-        headers: cors(allowOrigin),
-      });
-    }
-
-    const payload = { nome, email, telefone, mensagem, ts: new Date().toISOString() };
-    const gsRes = await fetch(scriptUrl, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload),
-    });
-
-    const text = await gsRes.text();
-    if (!gsRes.ok) {
-      return new Response(JSON.stringify({ ok: false, error: "Apps Script retornou erro.", status: gsRes.status, body: text }), {
-        status: 502,
-        headers: cors(allowOrigin),
-      });
-    }
-
-    // Tenta parsear JSON, mas aceita texto
-    let result;
-    try { result = JSON.parse(text); } catch { result = { result: text }; }
-
-    return new Response(JSON.stringify({ ok: true, result }), {
-      status: 200,
-      headers: cors(allowOrigin),
-    });
-
-  } catch (err) {
-    return new Response(JSON.stringify({ ok: false, error: err?.message || String(err) }), {
-      status: 500,
-      headers: cors(allowOrigin),
-    });
+    return new Response(JSON.stringify({ ok:true, result }), { status:200, headers });
+  } catch (e) {
+    return new Response(JSON.stringify({ ok:false, error:String(e) }), { status:500, headers: cors(env) });
   }
 };
 
-function cors(origin) {
+function cors(env) {
+  const allow = env.ALLOWED_ORIGIN || 'https://www.pavieadvocacia.com.br';
   return {
-    "Access-Control-Allow-Origin": origin,
-    "Access-Control-Allow-Methods": "POST, OPTIONS",
-    "Access-Control-Allow-Headers": "Content-Type, Authorization",
-    "Content-Type": "application/json; charset=utf-8"
+    'Access-Control-Allow-Origin': allow,
+    'Vary': 'Origin',
+    'Access-Control-Allow-Methods': 'POST, OPTIONS',
+    'Access-Control-Allow-Headers': 'Content-Type',
+    'Access-Control-Max-Age': '86400',
+    'Content-Type': 'application/json; charset=utf-8',
+    'Cache-Control': 'no-store',
+    'Referrer-Policy': 'no-referrer',
+    'X-Content-Type-Options': 'nosniff'
   };
 }
