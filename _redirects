@@ -1,0 +1,2 @@
+# Canonical hostname -> use www
+https://pavieadvogado.com/*   https://www.pavieadvogado.com/:splat   301!

@@ -1,4 +1,3 @@
-Contact: mailto:fabiopavie@pavieadvogado.com
-Expires: 2026-10-16
-Policy: https://www.pavieadvocacia.com.br/
+Contact: mailto:contato@pavieadvogado.com
+Policy: https://www.pavieadvogado.com/politica-de-seguranca
 Preferred-Languages: pt, en
