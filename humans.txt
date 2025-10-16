@@ -1,0 +1,13 @@
+/* TEAM */
+Developer: PAVIE | Advocacia
+Contact: fabiopavie@pavieadvogado.com
+From: Rio de Janeiro, Brazil
+
+/* SITE */
+Standards: HTML5, CSS3, ES2020
+Components: Cloudflare Pages, Workers (Functions), Turnstile
+Accessibility: WCAG 2.2 AA
+Legal: Prov. OAB 205/2021, LGPD, GDPR
+
+/* THANKS */
+Tools: GitHub, Cloudflare, Google Fonts
