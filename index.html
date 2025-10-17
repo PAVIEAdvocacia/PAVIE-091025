@@ -683,5 +683,42 @@
   <script defer src="/form.turnstile.js"></script>
   <script defer src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit&onload=tsOnload"></script>
   <script defer src="/form.submit.js"></script>
+<script>
+// Turnstile explicit render + token bridge (não altera layout)
+(function(){
+  // token compartilhado em window (lido por form.submit.js)
+  window.__cfToken = window.__cfToken || "";
+  window.getCfToken = window.getCfToken || function(){ return window.__cfToken || ""; };
+
+  // Callback padrão quando o desafio é resolvido
+  function onTsSuccess(token){ try { window.__cfToken = token; } catch(_e) {} }
+
+  // Chamado pelo onload do script do Turnstile (se presente no HTML)
+  window.tsOnload = function() {
+    try {
+      if (window.turnstile) {
+        var container = document.getElementById('ts-container') || document.querySelector('.cf-turnstile');
+        if (container) {
+          // Evita múltiplos renders no mesmo container
+          if (!container.__rendered) {
+            window.turnstile.render(container, {
+              sitekey: "0x4AAAAAAB6FBS0cTG_7KOYv",
+              callback: onTsSuccess
+            });
+            container.__rendered = true;
+          }
+        }
+      }
+    } catch(_e) {}
+  };
+
+  // Fallback: se o onload não disparar, tenta renderizar após DOM pronto
+  document.addEventListener('DOMContentLoaded', function() {
+    if (typeof window.tsOnload === 'function') {
+      try { window.tsOnload(); } catch(_e) { }
+    }
+  });
+})();
+</script>
 </body>
 </html>
