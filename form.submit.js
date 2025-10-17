@@ -1,66 +1,60 @@
 // form.submit.js
-// Place at site root and include after form.turnstile.js and turnstile client script.
-// It expects a form with id="contatoForm", a status element id="formStatus" and a div#ts-container for Turnstile.
-//
-// Reads Turnstile token via window.getCfToken()
-// Sends JSON to /api/contato (Cloudflare Pages Function)
-//
-// No module syntax (no export); safe for browsers.
+// Submissão do formulário utilizando o token entregue por form.turnstile.js
+(function () {
+  var form = document.querySelector("#contatoForm");
+  var statusEl = document.querySelector("#formStatus");
+  if (!form) { console.error("Formulário #contatoForm não encontrado."); return; }
 
-(function(){
-  var form = document.querySelector('#contatoForm');
-  var status = document.querySelector('#formStatus');
-  if (!form) { console.error('Formulário #contatoForm não encontrado.'); return; }
+  function setStatus(msg) { if (statusEl) statusEl.textContent = msg; }
 
-  form.addEventListener('submit', async function(ev){
+  form.addEventListener("submit", async function (ev) {
     ev.preventDefault();
-    if (status) status.textContent = 'Enviando...';
+    setStatus("Enviando…");
 
     var fd = new FormData(form);
-    var body = Object.fromEntries(fd.entries());
+    var data = Object.fromEntries(fd.entries());
 
-    // honeypot
-    if (body.company) {
-      if (status) status.textContent = 'Bloqueado por proteção anti-spam.'; 
-      return;
-    }
+    // Honeypot
+    if (data.company) { setStatus("Bloqueado por proteção anti‑spam."); return; }
 
-    var cfToken = (window.getCfToken && window.getCfToken()) || null;
-    if (!cfToken) {
-      if (status) status.textContent = 'Valide a segurança antes de enviar (captcha).';
-      return;
-    }
+    // Token Turnstile
+    var token = (window.getCfToken && window.getCfToken()) || "";
+    if (!token) { setStatus("Valide a segurança antes de enviar."); return; }
 
     var payload = {
-      nome: body.nome || '',
-      email: body.email || '',
-      telefone: body.telefone || body.fone || '',
-      mensagem: body.mensagem || '',
-      servico: body.servico || '',
-      consent: !!body.consent,
-      consent_timestamp: body.consent_timestamp || null,
-      turnstileToken: cfToken
+      nome: data.nome || "",
+      email: data.email || "",
+      telefone: data.telefone || data.fone || "",
+      mensagem: data.mensagem || "",
+      servico: data.servico || "",
+      consent: !!data.consent,
+      consent_timestamp: data.consent_timestamp || null,
+      turnstileToken: token
     };
 
     try {
-      var res = await fetch('/api/contato', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      var res = await fetch("/api/contato", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "Accept": "application/json" },
         body: JSON.stringify(payload),
-        credentials: 'same-origin'
+        credentials: "same-origin"
       });
-      var json = await res.json().catch(function(){ return {}; });
+
+      var json = {};
+      try { json = await res.json(); } catch (_e) {}
+
       if (!res.ok || !json.ok) {
-        var msg = (json && (json.error || json.details)) || ('HTTP ' + res.status);
-        throw new Error(Array.isArray(msg) ? msg.join(', ') : msg);
+        var msg = (json && (json.error || json.details)) || ("HTTP " + res.status);
+        throw new Error(Array.isArray(msg) ? msg.join(", ") : msg);
       }
-      if (status) status.textContent = 'Mensagem enviada. Obrigado!';
+
+      setStatus("Mensagem enviada. Obrigado! Você receberá um e‑mail de confirmação.");
       form.reset();
-      // clear internal token
-      try { if (window.__cfToken) window.__cfToken = ''; } catch(e){}
+      try { window.__cfToken = ""; } catch (_e) {}
+      // Re-render Turnstile para novo envio
+      try { window.turnstile && window.turnstile.reset(); } catch (_e) {}
     } catch (err) {
-      if (status) status.textContent = 'Erro no envio: ' + (err && err.message ? err.message : String(err));
-      console.error('form submit error', err);
+      setStatus("Erro no envio: " + (err && err.message ? err.message : String(err)));
     }
   });
 })();
