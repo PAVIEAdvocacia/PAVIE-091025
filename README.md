@@ -1,4 +1,4 @@
-# Projeto PAVIE – Cloudflare Pag
+# Projeto PAVIE – Cloudflare Pag d
 
 Este repositório contém a estrutura do site estático hospedado no **Cloudflare Pages** com:
 - redirecionamentos canônicos
