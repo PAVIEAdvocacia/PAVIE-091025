@@ -1,60 +1,110 @@
-// form.submit.js
-// Submissão do formulário utilizando o token entregue por form.turnstile.js
-(function () {
-  var form = document.querySelector("#contatoForm");
-  var statusEl = document.querySelector("#formStatus");
-  if (!form) { console.error("Formulário #contatoForm não encontrado."); return; }
+// assets/js/form.submit.js
+(() => {
+  const FORM_SELECTOR = 'form[action="/api/contato"]';
+  const form = document.querySelector(FORM_SELECTOR);
+  if (!form) return;
 
-  function setStatus(msg) { if (statusEl) statusEl.textContent = msg; }
+  // Reutiliza #form-status se existir, senão #formStatus, senão cria um novo
+  let statusEl = document.getElementById('form-status') || document.getElementById('formStatus');
+  if (!statusEl) {
+    statusEl = document.createElement('div');
+    statusEl.id = 'form-status';
+    statusEl.setAttribute('role', 'status');
+    statusEl.setAttribute('aria-live', 'polite');
+    statusEl.style.marginTop = '0.75rem';
+    form.appendChild(statusEl);
+  }
 
-  form.addEventListener("submit", async function (ev) {
-    ev.preventDefault();
-    setStatus("Enviando…");
+  function getTurnstileToken() {
+    const i = form.querySelector('input[name="cf-turnstile-response"]');
+    return i && i.value ? i.value.trim() : '';
+  }
 
-    var fd = new FormData(form);
-    var data = Object.fromEntries(fd.entries());
-
-    // Honeypot
-    if (data.company) { setStatus("Bloqueado por proteção anti‑spam."); return; }
-
-    // Token Turnstile
-    var token = (window.getCfToken && window.getCfToken()) || "";
-    if (!token) { setStatus("Valide a segurança antes de enviar."); return; }
-
-    var payload = {
-      nome: data.nome || "",
-      email: data.email || "",
-      telefone: data.telefone || data.fone || "",
-      mensagem: data.mensagem || "",
-      servico: data.servico || "",
-      consent: !!data.consent,
-      consent_timestamp: data.consent_timestamp || null,
-      turnstileToken: token
+  function buildPayload() {
+    const fd = new FormData(form);
+    const payload = {
+      nome: (fd.get('nome') || '').toString().trim(),
+      email: (fd.get('email') || '').toString().trim(),
+      telefone: (fd.get('telefone') || '').toString().trim(),
+      servico: (fd.get('servico') || '').toString().trim(),
+      mensagem: (fd.get('mensagem') || '').toString().trim(),
+      company: (fd.get('company') || '').toString().trim(), // honeypot
+      turnstileToken: getTurnstileToken(),
     };
+    return payload;
+  }
+
+  function setStatus(html, isError = false) {
+    statusEl.innerHTML = html;
+    statusEl.style.color = isError ? 'crimson' : 'inherit';
+  }
+
+  async function submitHandler(ev) {
+    ev.preventDefault();
+    const btn = form.querySelector('[type="submit"]');
+    const originalText = btn ? btn.textContent : '';
+    if (btn) { btn.disabled = true; btn.textContent = 'Enviando...'; }
+    setStatus('Processando seu envio...');
+
+    const payload = buildPayload();
 
     try {
-      var res = await fetch("/api/contato", {
+      const res = await fetch("/api/contato", {
         method: "POST",
-        headers: { "Content-Type": "application/json", "Accept": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+        },
         body: JSON.stringify(payload),
         credentials: "same-origin"
       });
 
-      var json = {};
-      try { json = await res.json(); } catch (_e) {}
+      const raw = await res.text();
+      let json = {};
+      try { json = JSON.parse(raw); } catch (_e) {}
 
-      if (!res.ok || !json.ok) {
-        var msg = (json && (json.error || json.details)) || ("HTTP " + res.status);
-        throw new Error(Array.isArray(msg) ? msg.join(", ") : msg);
+      const primaryMsg = json.error || json.msg || json.message || `HTTP ${res.status}`;
+      const details = json.details;
+
+      if (!res.ok || json.ok === false) {
+        let detailsBlock = '';
+        if (details) {
+          const pretty = typeof details === 'string' ? details : JSON.stringify(details, null, 2);
+          detailsBlock = `
+            <details style="margin-top:.5rem">
+              <summary>Detalhes técnicos</summary>
+              <pre style="white-space:pre-wrap;overflow:auto;margin:.5rem 0 0">${escapeHtml(pretty)}</pre>
+            </details>`;
+        }
+        throw new Error(primaryMsg + (details ? '\n' + (typeof details === 'string' ? details : JSON.stringify(details)) : ''));
       }
 
-      setStatus("Mensagem enviada. Obrigado! Você receberá um e‑mail de confirmação.");
+      const okMsg = json.msg || 'Enviado com sucesso.';
+      setStatus(`<strong>${escapeHtml(okMsg)}</strong>`);
       form.reset();
-      try { window.__cfToken = ""; } catch (_e) {}
-      // Re-render Turnstile para novo envio
-      try { window.turnstile && window.turnstile.reset(); } catch (_e) {}
+
+      const tsHidden = form.querySelector('#cf-turnstile-response');
+      if (tsHidden) tsHidden.value = '';
+      if (window.turnstile && typeof window.turnstile.reset === 'function') {
+        window.turnstile.reset();
+      }
     } catch (err) {
-      setStatus("Erro no envio: " + (err && err.message ? err.message : String(err)));
+      const safe = (err && err.message) ? err.message : 'Falha ao enviar.';
+      const detailsMatch = safe.split('\n').slice(1).join('\n').trim();
+      const detailsBlock = detailsMatch
+        ? `<details style="margin-top:.5rem"><summary>Detalhes técnicos</summary><pre style="white-space:pre-wrap;overflow:auto;margin:.5rem 0 0">${escapeHtml(detailsMatch)}</pre></details>`
+        : '';
+      setStatus(`<strong>Não foi possível enviar.</strong><br>${escapeHtml(safe.split('\n')[0])}${detailsBlock}`, true);
+    } finally {
+      if (btn) { btn.disabled = false; btn.textContent = originalText; }
     }
-  });
+  }
+
+  form.addEventListener('submit', submitHandler);
+
+  function escapeHtml(s) {
+    return String(s).replace(/[&<>"']/g, (m) => ({
+      '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+    })[m]);
+  }
 })();
