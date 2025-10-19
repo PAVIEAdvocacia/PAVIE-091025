@@ -556,7 +556,8 @@
 </label>
 <input name="consent_timestamp" type="hidden" value=""/>
 </div>
-<p class="text-sm mt-3 text-slate-600" id="formStatus">Carregando segurança…</p><div data-sitekey="0x4AAAAAAB6FBS0cTG_7KOYv" id="ts-container"></div><button class="w-full cta-button px-8 py-4 rounded-lg text-white font-bold text-lg shadow-lg" type="submit">Enviar Solicitação</button>
+<p class="text-sm mt-3 text-slate-600" id="formStatus">Carregando segurança…</p><div data-sitekey="0x4AAAAAAB6FBS0cTG_7KOYv" id="ts-container"></div>
+  <input type="hidden" name="cf-turnstile-response" id="cf-turnstile-response"><button class="w-full cta-button px-8 py-4 rounded-lg text-white font-bold text-lg shadow-lg" type="submit">Enviar Solicitação</button>
 </form>
 </div>
 </div>
@@ -682,6 +683,44 @@
 
   <script defer src="/form.turnstile.js"></script>
   <script defer src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit&onload=tsOnload"></script>
-  <script defer src="/form.submit.js"></script>
+  
+<script>
+// Turnstile explicit render + token bridge (não altera layout)
+(function(){
+  // token compartilhado em window (lido por form.submit.js)
+  window.__cfToken = window.__cfToken || "";
+  window.getCfToken = window.getCfToken || function(){ return window.__cfToken || ""; };
+
+  // Callback padrão quando o desafio é resolvido
+  function onTsSuccess(token){ try { window.__cfToken = token; } catch(_e) {} }
+
+  // Chamado pelo onload do script do Turnstile (se presente no HTML)
+  window.tsOnload = function() {
+    try {
+      if (window.turnstile) {
+        var container = document.getElementById('ts-container') || document.querySelector('.cf-turnstile');
+        if (container) {
+          // Evita múltiplos renders no mesmo container
+          if (!container.__rendered) {
+            window.turnstile.render(container, {
+              sitekey: "0x4AAAAAAB6FBS0cTG_7KOYv",
+              callback: onTsSuccess
+            });
+            container.__rendered = true;
+          }
+        }
+      }
+    } catch(_e) {}
+  };
+
+  // Fallback: se o onload não disparar, tenta renderizar após DOM pronto
+  document.addEventListener('DOMContentLoaded', function() {
+    if (typeof window.tsOnload === 'function') {
+      try { window.tsOnload(); } catch(_e) { }
+    }
+  });
+})();
+</script>
+  <script defer src="/assets/js/form.submit.js"></script>
 </body>
 </html>

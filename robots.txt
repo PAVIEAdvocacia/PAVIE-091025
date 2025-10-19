@@ -1,3 +1,4 @@
 User-agent: *
 Allow: /
-Sitemap: https://www.pavieadvocacia.com.br/sitemap.xml
+
+Sitemap: https://pavieadvocacia.com.br/sitemap.xml

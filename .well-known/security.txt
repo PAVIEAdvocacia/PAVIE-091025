@@ -1,2 +1,4 @@
-Contact: mailto:contato@pavieadvogado.com
+# security.txt para pavieadvocacia.com.br
+Contact: mailto:postmaster@pavieadvocacia.com.br
 Preferred-Languages: pt, en
+Policy: https://pavieadvocacia.com.br/
