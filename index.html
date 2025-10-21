@@ -60,7 +60,21 @@
         .step-number { background: linear-gradient(135deg,#1e3a5f 0%,#2d5a7b 100%); color:white; width:48px; height:48px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:900; font-size:1.5rem; }
         .timeline-line { position:absolute; left:24px; top:60px; bottom:-40px; width:2px; background:#e5e7eb; }
         .sr-only { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
-    </style>
+    
+
+  /* --- Form UX injected --- */
+  .form-field { background:#ffffff !important; color:#0f172a !important; }
+  .form-field::placeholder { color:#94a3b8; }
+  .form-field:focus {
+    outline: none;
+    box-shadow: 0 0 0 4px rgba(234,88,12,0.2);
+    border-color:#f59e0b !important;
+  }
+  .selectlike { appearance: none; background-color: white; }
+  .flag-ddi { min-width: 9.5rem; }
+  .input-group { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: .5rem; align-items: center; }
+  /* --- end --- */
+</style>
 <!-- Schema.org JSON-LD: LegalService (entidade principal) -->
 <script type="application/ld+json">
     {
@@ -174,7 +188,7 @@
 <a class="text-slate-700 hover:text-orange-600 transition" href="#sobre">Sobre</a>
 <a class="text-slate-700 hover:text-orange-600 transition" href="#servicos">Serviços</a>
 <a class="text-slate-700 hover:text-orange-600 transition" href="#como-contratar">Como Contratar</a>
-<a class="text-slate-700 hover:text-orange-600 transition" href="#honorarios">Honorários</a>
+<a class="text-slate-700 hover:text-orange-600 transition" href="#honorarios" aria-label="Ir para Política de Honorários">Honorários</a>
 <a class="text-slate-700 hover:text-orange-600 transition" href="#faq">FAQ</a>
 <a class="text-slate-700 hover:text-orange-600 transition" href="#contato">Contato</a>
 </div>
@@ -446,6 +460,56 @@
 </div>
 </section>
 <!-- Honorários -->
+
+<!-- Honorários -->
+<section class="py-20 bg-white" id="honorarios" aria-labelledby="titulo-honorarios">
+  <div class="max-w-6xl mx-auto px-4">
+    <div class="text-center mb-12">
+      <div class="section-accent mx-auto mb-6"></div>
+      <h2 id="titulo-honorarios" class="text-4xl md:text-5xl font-bold text-slate-900 mb-3">
+        Política de Honorários
+      </h2>
+      <p class="text-xl text-slate-600 max-w-3xl mx-auto">
+        Transparência, moderação e contrato claro — sem divulgação de valores no site, conforme normas da OAB.
+      </p>
+    </div>
+    <div class="grid md:grid-cols-2 gap-8">
+      <div class="bg-slate-50 rounded-2xl p-8 border border-slate-200">
+        <h3 class="text-2xl font-bold text-slate-900 mb-4">Como definimos os honorários</h3>
+        <ul class="space-y-3 text-slate-700">
+          <li class="check-icon">Natureza, complexidade e dificuldade do caso</li>
+          <li class="check-icon">Trabalho e tempo necessários</li>
+          <li class="check-icon">Local da prestação e eventuais deslocamentos</li>
+        </ul>
+        <p class="mt-4 text-sm text-slate-500">
+          Parâmetro: Tabelas de Honorários das Seccionais da OAB (ex.: OABRJ). Os valores finais são definidos caso a caso em proposta escrita.
+        </p>
+        <a href="https://www.oabrj.org.br/tabela-de-honorarios" target="_blank" rel="noopener"
+           class="inline-block mt-2 text-orange-600 font-semibold hover:text-orange-700">
+          Consultar Tabela OABRJ →
+        </a>
+      </div>
+      <div class="bg-white rounded-2xl p-8 border border-slate-200">
+        <h3 class="text-2xl font-bold text-slate-900 mb-4">Fluxo ético de contratação</h3>
+        <ol class="space-y-3 text-slate-700">
+          <li class="check-icon">Consulta diagnóstica (pode ser abatida do contrato, quando cabível)</li>
+          <li class="check-icon">Proposta escrita com escopo, prazos e honorários</li>
+          <li class="check-icon">Contrato e assinatura eletrônica (D4Sign)</li>
+          <li class="check-icon">Parcelamento vinculado a marcos do projeto</li>
+        </ol>
+        <div class="mt-6 flex gap-3">
+          <a href="#agendar" class="cta-button px-6 py-3 rounded-lg text-white font-semibold shadow">Solicitar Proposta</a>
+          <a href="#faq" class="px-6 py-3 rounded-lg border border-slate-300 text-slate-700 font-semibold hover:bg-slate-50">Dúvidas frequentes</a>
+        </div>
+        <p class="mt-6 text-xs text-slate-500">
+          Avisos éticos: não divulgamos preços, descontos ou garantias de resultado; cada caso é único e exige análise prévia.
+          Contratos e recibos detalham valores, condições e eventuais despesas.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- FAQ -->
 <section class="py-20 bg-slate-50" id="faq">
 <div class="max-w-4xl mx-auto px-4">
@@ -512,53 +576,111 @@
 <div class="bg-white rounded-xl p-8 text-slate-900">
 <h3 class="text-2xl font-bold mb-6">Formulário de Contato</h3>
 <form id="contatoForm" action="/api/contato" aria-describedby="aviso-lgpd" class="space-y-4 text-left" method="post">
-<input aria-hidden="true" autocomplete="off" class="sr-only" name="company" tabindex="-1" type="text"/>
-<div>
-<label class="block text-sm font-semibold mb-2" for="nome">Nome completo *</label>
-<input autocomplete="name" class="w-full px-4 py-3 rounded-lg border border-slate-300 focus:border-orange-500 focus:ring-2 focus:ring-orange-200 outline-none transition" id="nome" name="nome" required="" type="text"/>
-</div>
-<div class="grid md:grid-cols-2 gap-4">
-<div>
-<label class="block text-sm font-semibold mb-2" for="email">E-mail *</label>
-<input autocomplete="email" class="w-full px-4 py-3 rounded-lg border border-slate-300 focus:border-orange-500 focus:ring-2 focus:ring-orange-200 outline-none transition" id="email" name="email" required="" type="email"/>
-</div>
-<div>
-<label class="block text-sm font-semibold mb-2" for="fone">Telefone/WhatsApp *</label>
-<input class="w-full px-4 py-3 rounded-lg border border-slate-300 focus:border-orange-500 focus:ring-2 focus:ring-orange-200 outline-none transition" id="fone" inputmode="tel" name="telefone" pattern="^\+?\d{8,15}$" placeholder="+55..." required="" type="tel"/>
-</div>
-</div>
-<div>
-<label class="block text-sm font-semibold mb-2" for="servico">Serviço de interesse</label>
-<select class="w-full px-4 py-3 rounded-lg border border-slate-300 focus:border-orange-500 focus:ring-2 focus:ring-orange-200 outline-none transition" id="servico" name="servico">
-<option>Selecione...</option>
-<option>Planejamento Sucessório</option>
-<option>Inventário</option>
-<option>Divórcio/Dissolução</option>
-<option>Família Binacional</option>
-<option>Imobiliário &amp; Registral</option>
-<option>Consumidor, Contratos &amp; RC</option>
-<option>Previdenciário</option>
-<option>Trabalhista</option>
-<option>Tributário</option>
-<option>Fazenda Pública</option>
-<option>Consulta Diagnóstica</option>
-<option>Outro</option>
-</select>
-</div>
-<div>
-<label class="block text-sm font-semibold mb-2" for="mensagem">Descreva brevemente sua situação *</label>
-<textarea class="w-full px-4 py-3 rounded-lg border border-slate-300 focus:border-orange-500 focus:ring-2 focus:ring-orange-200 outline-none transition" id="mensagem" name="mensagem" required="" rows="4"></textarea>
-</div>
-<div class="text-sm text-slate-600" id="aviso-lgpd">
-<label class="flex items-start gap-2">
-<input class="mt-1" name="consent" required="" type="checkbox"/>
-<span>Li e concordo com a <a class="text-orange-600 underline" href="#privacidade">Política de Privacidade</a> e autorizo o contato para resposta à minha solicitação.</span>
-</label>
-<input name="consent_timestamp" type="hidden" value=""/>
-</div>
-<p class="text-sm mt-3 text-slate-600" id="formStatus">Carregando segurança…</p><div data-sitekey="0x4AAAAAAB6FBS0cTG_7KOYv" id="ts-container"></div>
-  <input type="hidden" name="cf-turnstile-response" id="cf-turnstile-response"><button class="w-full cta-button px-8 py-4 rounded-lg text-white font-bold text-lg shadow-lg" type="submit">Enviar Solicitação</button>
-</form>
+        <input aria-hidden="true" autocomplete="off" class="sr-only" name="company" tabindex="-1" type="text"/>
+
+        <div>
+          <label class="block text-sm font-semibold mb-2" for="nome">Nome completo *</label>
+          <input autocomplete="name" class="form-field w-full px-4 py-3 rounded-lg border border-slate-300 focus:border-orange-500 focus:ring-2 focus:ring-orange-200 transition" id="nome" name="nome" required type="text"/>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-sm font-semibold mb-2" for="email">E-mail *</label>
+            <input autocomplete="email" class="form-field w-full px-4 py-3 rounded-lg border border-slate-300 focus:border-orange-500 focus:ring-2 focus:ring-orange-200 transition" id="email" name="email" required type="email"/>
+          </div>
+
+          <!-- TELEFONE APRIMORADO: DDI + nacional + E.164 -->
+          <div>
+            <label class="block text-sm font-semibold mb-2" for="fone">Telefone/WhatsApp *</label>
+            <div class="input-group">
+              <select id="ddi" name="ddi" class="flag-ddi selectlike form-field w-full px-4 py-3 rounded-lg border border-slate-300 focus:border-orange-500 focus:ring-2 focus:ring-orange-200 transition" aria-label="Código do país" title="Código do país">
+                <!-- América do Sul -->
+                <option value="+55"  data-mask="(##) #####-####"      data-example="(21) 91234-5678">🇧🇷 +55 Brasil</option>
+                <option value="+54"  data-mask="## ####-####"         data-example="11 4123-4567">🇦🇷 +54 Argentina</option>
+                <option value="+56"  data-mask="(#) #### ####"        data-example="9 6123 4567">🇨🇱 +56 Chile</option>
+                <option value="+57"  data-mask="### #### ###"         data-example="310 123 4567">🇨🇴 +57 Colômbia</option>
+                <option value="+598" data-mask="# ### ## ##"          data-example="9 123 45 67">🇺🇾 +598 Uruguai</option>
+                <option value="+51"  data-mask="### ### ###"          data-example="912 345 678">🇵🇪 +51 Peru</option>
+                <option value="+593" data-mask="## ### ####"          data-example="99 123 4567">🇪🇨 +593 Equador</option>
+
+                <!-- América do Norte -->
+                <option value="+1"   data-mask="(###) ###-####"       data-example="(415) 555-2671">🇺🇸 +1 EUA</option>
+                <option value="+1"   data-mask="(###) ###-####"       data-example="(416) 555-2671" data-iso="CA">🇨🇦 +1 Canadá</option>
+                <option value="+52"  data-mask="## #### ####"         data-example="55 1234 5678">🇲🇽 +52 México</option>
+
+                <!-- Europa Ocidental -->
+                <option value="+33"  data-mask="## ## ## ## ##"       data-example="06 12 34 56 78">🇫🇷 +33 França</option>
+                <option value="+351" data-mask="### ### ###"          data-example="912 345 678">🇵🇹 +351 Portugal</option>
+                <option value="+34"  data-mask="### ### ###"          data-example="612 345 678">🇪🇸 +34 Espanha</option>
+                <option value="+39"  data-mask="### #### ###"         data-example="331 1234 567">🇮🇹 +39 Itália</option>
+                <option value="+44"  data-mask="#### ### ####"        data-example="07123 456 789">🇬🇧 +44 Reino Unido</option>
+                <option value="+49"  data-mask="#### ########"        data-example="0151 23456789">🇩🇪 +49 Alemanha</option>
+
+                <!-- Europa Setentrional/Oriental (amostra) -->
+                <option value="+41"  data-mask="## ### ## ##"         data-example="79 123 45 67">🇨🇭 +41 Suíça</option>
+                <option value="+31"  data-mask="## ### ####"          data-example="6 123 4567">🇳🇱 +31 Países Baixos</option>
+                <option value="+32"  data-mask="### ## ## ##"         data-example="470 12 34 56">🇧🇪 +32 Bélgica</option>
+
+                <!-- África/Ásia/Oceania (amostra) -->
+                <option value="+213" data-mask="## ### ####"          data-example="55 123 4567">🇩🇿 +213 Argélia</option>
+                <option value="+966" data-mask="5## ######"           data-example="55 123 4567">🇸🇦 +966 Arábia Saudita</option>
+                <option value="+971" data-mask="5# ### ####"          data-example="50 123 4567">🇦🇪 +971 EAU</option>
+                <option value="+81"  data-mask="## #### ####"         data-example="70 1234 5678">🇯🇵 +81 Japão</option>
+                <option value="+82"  data-mask="## #### ####"         data-example="10 1234 5678">🇰🇷 +82 Coreia do Sul</option>
+                <option value="+86"  data-mask="1## #### ####"        data-example="138 0013 8000">🇨🇳 +86 China</option>
+                <option value="+91"  data-mask="#####-#####"          data-example="91234-56789">🇮🇳 +91 Índia</option>
+                <option value="+61"  data-mask="4## ### ###"          data-example="412 345 678">🇦🇺 +61 Austrália</option>
+                <option value="+64"  data-mask="2## ### ####"         data-example="21 123 4567">🇳🇿 +64 Nova Zelândia</option>
+              </select>
+
+              <!-- Campo nacional/local -->
+              <input
+                class="form-field w-full px-4 py-3 rounded-lg border border-slate-300 focus:border-orange-500 focus:ring-2 focus:ring-orange-200 transition"
+                id="fone" inputmode="tel" name="telefone"
+                placeholder="ex.: (21) 91234-5678"
+                required type="tel"
+                aria-describedby="hint-fone"/>
+            </div>
+            <p id="hint-fone" class="text-xs text-slate-500 mt-1">Selecione o país. Digite apenas o número local; o DDI é aplicado automaticamente.</p>
+            <!-- Hidden com composição E.164 -->
+            <input type="hidden" id="telefone_full" name="telefone_full" value=""/>
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-sm font-semibold mb-2" for="servico">Serviço de interesse</label>
+          <select class="form-field w-full px-4 py-3 rounded-lg border border-slate-300 focus:border-orange-500 focus:ring-2 focus:ring-orange-200 transition" id="servico" name="servico">
+            <option selected>Selecione...</option>
+            <option>1. Família &amp; Patrimônio Seguro</option>
+            <option>2. Sucessões &amp; Inventário</option>
+            <option>3. Divórcios &amp; Dissoluções</option>
+            <option>4. Família Binacional</option>
+            <option>5. Contratos, Obrigações &amp; Negócios</option>
+            <option>6. Trabalho, Previdência &amp; Saúde Suplementar</option>
+            <option>7. Tributos &amp; Fazenda Pública</option>
+            <option>8. Imobiliário, Condomínios &amp; Regularização</option>
+            <option>9. Compliance, Governança &amp; Integridade (PJ/OSCs)</option>
+            <option>10. Consultas &amp; Assessoria</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="block text-sm font-semibold mb-2" for="mensagem">Descreva brevemente sua situação *</label>
+          <textarea class="form-field w-full px-4 py-3 rounded-lg border border-slate-300 focus:border-orange-500 focus:ring-2 focus:ring-orange-200 transition" id="mensagem" name="mensagem" required rows="4"></textarea>
+        </div>
+
+        <div class="text-sm text-slate-600" id="aviso-lgpd">
+          <label class="flex items-start gap-2">
+            <input class="mt-1" name="consent" required type="checkbox"/>
+            <span>Li e concordo com a <a class="text-orange-600 underline" href="#privacidade">Política de Privacidade</a> e autorizo o contato para resposta à minha solicitação.</span>
+          </label>
+          <input name="consent_timestamp" type="hidden" value=""/>
+        </div>
+
+        <p class="text-sm mt-3 text-slate-600" id="formStatus">Carregando segurança…</p>
+        <div data-sitekey="0x4AAAAAAB6FBS0cTG_7KOYv" id="ts-container"></div>
+        <button class="w-full cta-button px-8 py-4 rounded-lg text-white font-bold text-lg shadow-lg" type="submit">Enviar Solicitação</button>
+      </form>
 </div>
 </div>
 </section>
@@ -591,7 +713,7 @@
 <h4 class="font-bold mb-4">Informações</h4>
 <ul class="space-y-2 text-sm text-slate-400">
 <li><a class="hover:text-orange-400 transition" href="#como-contratar">Como Contratar</a></li>
-<li><a class="hover:text-orange-400 transition" href="#honorarios">Honorários</a></li>
+<li><a class="hover:text-orange-400 transition" href="#honorarios" aria-label="Ir para Política de Honorários">Honorários</a></li>
 <li><a class="hover:text-orange-400 transition" href="#faq">FAQ</a></li>
 <li><a class="hover:text-orange-400 transition" href="#privacidade">Política de Privacidade</a></li>
 </ul>
@@ -722,5 +844,102 @@
 })();
 </script>
   <script defer src="/assets/js/form.submit.js"></script>
+<!-- Lógica do seletor de país + composição E.164 -->
+<script>
+(function(){
+  var sel    = document.getElementById('ddi');
+  var num    = document.getElementById('fone');
+  var hidden = document.getElementById('telefone_full');
+  var form   = document.getElementById('contatoForm');
+
+  function updatePlaceholder() {
+    if (!sel || !num) return;
+    var opt = sel.options[sel.selectedIndex];
+    var example = opt.getAttribute('data-example');
+    var mask    = opt.getAttribute('data-mask');
+    if (example) {
+      num.placeholder = "ex.: " + example;
+    } else if (mask) {
+      num.placeholder = "ex.: " + mask.replace(/#/g, '0');
+    } else {
+      num.placeholder = "ex.: (21) 91234-5678";
+    }
+  }
+
+  function buildE164() {
+    if (!sel || !num || !hidden) return null;
+    var ddi     = (sel.value || '').trim();             // “+55”
+    var digits  = (num.value || '').replace(/\D+/g, ''); // só números
+    var joined  = (ddi || '') + digits;
+    var onlyDig = joined.replace(/\D+/g, '');
+    if (onlyDig.length < 8 || onlyDig.length > 15) return null;
+    return joined.startsWith('+') ? joined : ('+' + joined);
+  }
+
+  if (sel) { sel.addEventListener('change', updatePlaceholder); updatePlaceholder(); }
+
+  if (form) {
+    form.addEventListener('submit', function(e){
+      var composed = buildE164();
+      if (!composed) {
+        e.preventDefault();
+        alert('Verifique o telefone: selecione o país e informe um número válido.');
+        num.focus();
+        return false;
+      }
+      hidden.value = composed;
+    });
+  }
+})();
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "CreativeWork",
+  "name": "Política de Honorários",
+  "url": "https://www.pavieadvocacia.com.br/#honorarios",
+  "inLanguage": "pt-BR",
+  "audience": {
+    "@type": "Audience",
+    "audienceType": "Clientes e interessadas(os)"
+  },
+  "description": "Critérios de definição de honorários advocatícios e fluxo contratual, sem divulgação de valores, observando o Estatuto da Advocacia, Código de Ética e Provimento 205/2021.",
+  "about": {
+    "@id": "#org"
+  }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Divulgam valores de honorários no site?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Não. Em observância às normas éticas da OAB (Provimento 205/2021), não divulgamos preços, descontos ou formas de pagamento em publicidade. Os valores são definidos caso a caso e informados em proposta escrita após análise diagnóstica."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Quais critérios são considerados para definir honorários?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Consideramos a natureza e complexidade do caso, o trabalho e o tempo necessários e o local da prestação, observadas as Tabelas da OAB."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "É possível parcelar?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Sim. O parcelamento pode ser vinculado a marcos do projeto (ex.: assinatura, protocolo, conclusão), a ser definido em contrato."
+      }
+    }
+  ]
+}
+</script>
 </body>
 </html>
