@@ -84,7 +84,7 @@
       "name":"PAVIE | Advocacia",
       "url":"https://pavieadvocacia.com.br",
       "description":"Advocacia em Família, Sucessões, Imobiliário, Consumidor & Contratos, Previdenciário, Trabalhista, Tributário, Fazenda Pública e Internacional.",
-      "telephone":"+5521964382263",
+      "telephone":"<a href="tel:+5521964382263">+55 (21) 96438-2263</a>",
       "email":"fabiopavie@pavieadvogado.com",
       "areaServed":["Rio de Janeiro","Maricá","Brasil"],
       "knowsAbout":["Direito de Família","Sucessões","Inventário","Contratos","Imobiliário","Responsabilidade Civil","Direito do Consumidor","Previdenciário","Trabalhista","Tributário","Fazenda Pública","Família Binacional","Cooperação Internacional"],
@@ -97,7 +97,7 @@
         "addressCountry":"BR"
       },
       "openingHoursSpecification":[{"@type":"OpeningHoursSpecification","dayOfWeek":["Monday","Tuesday","Wednesday","Thursday","Friday"],"opens":"09:00","closes":"18:00"}],
-      "contactPoint":[{"@type":"ContactPoint","contactType":"customer service","telephone":"+5521964382263","areaServed":["BR"],"availableLanguage":["Portuguese"]}],
+      "contactPoint":[{"@type":"ContactPoint","contactType":"customer service","telephone":"<a href="tel:+5521964382263">+55 (21) 96438-2263</a>","areaServed":["BR"],"availableLanguage":["Portuguese"]}],
       "hasOfferCatalog":{
         "@type":"OfferCatalog",
         "name":"Portfólio de Serviços",
@@ -135,12 +135,13 @@
 <!-- Schema.org JSON-LD: WebSite -->
 <script type="application/ld+json">
     {
-      "@context":"https://schema.org",
-      "@type":"WebSite",
-      "@id":"#website",
-      "name":"PAVIE | Advocacia",
-      "url":"https://pavieadvocacia.com.br"
-    }
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "@id": "#website",
+  "name": "PAVIE | Advocacia",
+  "url": "https://pavieadvocacia.com.br",
+  "inLanguage": "pt-BR"
+}
     </script>
 <!-- Schema.org JSON-LD: HowTo (Como contratar) -->
 <script type="application/ld+json">
@@ -151,7 +152,7 @@
       "description":"Processo digital e transparente em cinco etapas.",
       "provider":{"@id":"#org"},
       "step":[
-        {"@type":"HowToStep","position":1,"name":"Primeiro contato","text":"WhatsApp, e-mail ou formulário. Retorno em até 24h úteis."},
+        {"@type":"HowToStep","position":1,"name":"Primeiro contato","text":"WhatsApp, e-mail ou formulário. Retorno em até <time datetime="P1D">24h</time> úteis."},
         {"@type":"HowToStep","position":2,"name":"Triagem e consulta diagnóstica","text":"Videochamada de 60–90 min para análise e definição de estratégia."},
         {"@type":"HowToStep","position":3,"name":"Proposta e contrato","text":"Proposta com escopo, prazos e honorários. Assinatura via D4Sign."},
         {"@type":"HowToStep","position":4,"name":"Execução com acompanhamento","text":"Relatórios quinzenais, pasta segura e canal direto de comunicação."},
@@ -169,8 +170,8 @@
 <div aria-label="Atalho de contato" class="bg-slate-900 text-white py-2 fixed w-full top-0 z-50" role="region">
 <div class="max-w-7xl mx-auto px-4 flex justify-between items-center text-sm">
 <div class="flex gap-6">
-<a aria-label="Ligar para (21) 96438-2263" class="hover:text-orange-400 transition" href="tel:+5521964382263">📞 (21) 96438-2263</a>
-<a aria-label="Conversar no WhatsApp" class="hover:text-orange-400 transition" href="https://wa.me/5521964382263">💬 WhatsApp</a>
+<a aria-label="Ligar para (21) 96438-2263" class="hover:text-orange-400 transition" href="tel:<a href="tel:+5521964382263">+55 (21) 96438-2263</a>">📞 (21) 96438-2263</a>
+<a aria-label="Conversar no WhatsApp" class="hover:text-orange-400 transition" href="https://wa.me/<a href="tel:+5521964382263">+55 (21) 96438-2263</a>">💬 WhatsApp</a>
 </div>
 <a class="bg-orange-600 hover:bg-orange-700 px-4 py-1 rounded text-white font-semibold transition" href="#agendar">
                 Agendar Consulta
@@ -563,8 +564,8 @@
 <div aria-hidden="true" class="text-3xl mb-4">📞</div>
 <h3 class="text-xl font-bold mb-2">Contato Direto</h3>
 <p class="text-slate-200 mb-4">Fale por telefone ou WhatsApp</p>
-<a class="block text-orange-400 font-semibold hover:text-orange-300 transition mb-2" href="tel:+5521964382263">(21) 96438-2263</a>
-<a class="block text-orange-400 font-semibold hover:text-orange-300 transition" href="https://wa.me/5521964382263">WhatsApp →</a>
+<a class="block text-orange-400 font-semibold hover:text-orange-300 transition mb-2" href="tel:<a href="tel:+5521964382263">+55 (21) 96438-2263</a>">(21) 96438-2263</a>
+<a class="block text-orange-400 font-semibold hover:text-orange-300 transition" href="https://wa.me/<a href="tel:+5521964382263">+55 (21) 96438-2263</a>">WhatsApp →</a>
 </div>
 <div class="bg-white/10 backdrop-blur-sm rounded-xl p-8 border border-white/20 text-left">
 <div aria-hidden="true" class="text-3xl mb-4">📧</div>
@@ -677,7 +678,7 @@
           <input name="consent_timestamp" type="hidden" value=""/>
         </div>
 
-        <p class="text-sm mt-3 text-slate-600" id="formStatus">Carregando segurança…</p>
+        <p class="text-sm mt-3 text-slate-600" id="formStatus" role="status" aria-live="polite">Carregando segurança…</p>
         <div data-sitekey="0x4AAAAAAB6FBS0cTG_7KOYv" id="ts-container"></div>
         <button class="w-full cta-button px-8 py-4 rounded-lg text-white font-bold text-lg shadow-lg" type="submit">Enviar Solicitação</button>
       </form>
@@ -721,7 +722,7 @@
 <div>
 <h4 class="font-bold mb-4">Contato</h4>
 <ul class="space-y-2 text-sm text-slate-400">
-<li>📞 +55 (21) 96438-2263</li>
+<li>📞 <a href="tel:+5521964382263">+55 (21) 96438-2263</a></li>
 <li>📧 fabiopavie@pavieadvogado.com</li>
 <li>📍 Av. Ataulfo de Paiva, 1235 — Leblon, RJ</li>
 <li>⏰ Seg-Sex: 9h-18h</li>
