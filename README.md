@@ -1,47 +1,45 @@
-# PAVIE | Advocacia — Kit de Publicação (Cloudflare Pages + Functions + Turnstile + Apps Script)
+# PAVIE | Advocacia — Kit pronto (Turnstile inline + Apps Script)
+
+## Preencha estes **placeholders no HTML** (substituir no arquivo `index.final.html` → renomeie para `index.html`)
+- `0xSITE_KEY_TURNSTILE_AQUI` → cole aqui a **Chave do site** do Turnstile (pública).
+
+## Variáveis de ambiente (Cloudflare Pages → Preview e Production)
+```
+TURNSTILE_SECRET=<COLE A "Chave secreta" do Turnstile>
+SCRIPT_URL=https://script.google.com/macros/s/AKfycbw0thrDSzI3CmfJGNFvgJvXyFX3PNpSFyJ2aeyFcMaM/exec
+MAIL_FROM=no-reply@pavieadvocacia.com.br
+MAIL_FROM_NAME=PAVIE | Advocacia – Fabio Pavie
+MAIL_TO=fabiopavie@pavieadvogado.com,contato@pavieadvocacia.com.br
+SITE_BASE=https://pavieadvocacia.com.br
+# (opcional) autenticação extra no Apps Script
+APPSCRIPT_SECRET=<OPCIONAL_SEU_SEGREDO_PRIVADO>
+# (opcional Preview) bypass de captcha
+DEV_BYPASS_TURNSTILE=true
+```
 
 ## Estrutura
 ```
 /
-├─ index.final.html
+├─ index.html                   (use o arquivo gerado `index.final.html` renomeado)
 ├─ _headers
 ├─ robots.txt
 ├─ sitemap.xml
+├─ form.turnstile.js
+├─ assets/
+│  └─ js/
+│     └─ form.submit.js
 └─ functions/
    └─ api/
       └─ contato.js
 ```
 
-## Variáveis de Ambiente (Pages → Settings → Environment Variables)
-```
-TURNSTILE_SITE_KEY=<site_key_do_turnstile>
-TURNSTILE_SECRET=<secret_do_turnstile>
-APP_SCRIPT_WEBAPP_URL=<URL_exec_do_Apps_Script>
-CONTACT_TO="fabiopavie@pavieadvogado.com,contato@pavieadvocacia.com.br"
-MAIL_FROM=no-reply@pavieadvocacia.com.br
-REPLY_TO=
-SITE_BASE=https://pavieadvocacia.com.br
-DEV_BYPASS_TURNSTILE=true   # (opcional, somente em PREVIEW)
-```
-
-## Teste de API
-Produção:
+## Testes
 ```bash
 curl -i https://pavieadvocacia.com.br/api/contato   -H "Content-Type: application/json"   -d '{
-    "nome":"Teste Integração",
+    "nome":"Teste",
     "email":"teste@example.com",
     "telefone_full":"+55 21 96438-2263",
-    "mensagem":"Validação do fluxo.",
-    "turnstileToken":"<TOKEN_TURNSTILE>"
-  }'
-```
-
-Preview (com bypass opcional):
-```bash
-curl -i https://<seu-preview>.pages.dev/api/contato   -H "Content-Type: application/json"   -d '{
-    "nome":"Teste Preview",
-    "email":"teste@example.com",
-    "telefone_full":"+55 21 96438-2263",
-    "mensagem":"Fluxo sem Turnstile (preview)"
+    "mensagem":"Validação E2E.",
+    "turnstileToken":"<TOKEN_TURNSTILE_DO_WIDGET>"
   }'
 ```

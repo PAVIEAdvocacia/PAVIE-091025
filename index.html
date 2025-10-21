@@ -576,7 +576,12 @@
 <div class="bg-white rounded-xl p-8 text-slate-900">
 <h3 class="text-2xl font-bold mb-6">Formulário de Contato</h3>
 <form id="contatoForm" action="/api/contato" aria-describedby="aviso-lgpd" class="space-y-4 text-left" method="post">
-  <div class="cf-turnstile" data-sitekey="0xSITE_KEY_TURNSTILE" data-theme="auto"></div>
+  <!-- Turnstile: site key inline (substitua 0xSITE_KEY_TURNSTILE_AQUI pela sua chave do site) -->
+  <input type="hidden" name="turnstileToken" id="turnstileToken" />
+  <div class="cf-turnstile" data-sitekey="0xSITE_KEY_TURNSTILE_AQUI" data-theme="auto"
+       data-callback="onTsDone" data-expired-callback="onTsExpired" data-error-callback="onTsError"></div>
+
+  
 
         <input aria-hidden="true" autocomplete="off" class="sr-only" name="company" tabindex="-1" type="text"/>
 
@@ -680,7 +685,7 @@
         </div>
 
         <p class="text-sm mt-3 text-slate-600" id="formStatus">Carregando segurança…</p>
-        <div data-sitekey="0x4AAAAAAB6FBS0cTG_7KOYv" id="ts-container"></div>
+        <div data-sitekey="0x4AAAAAAB6FBS0cTG_7KOYv" 
         <button class="w-full cta-button px-8 py-4 rounded-lg text-white font-bold text-lg shadow-lg" type="submit">Enviar Solicitação</button>
       </form>
 </div>
