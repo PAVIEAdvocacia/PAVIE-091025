@@ -1,102 +1,94 @@
-// functions/api/contato.js — Cloudflare Pages Function (POST/OPTIONS)
-// Valida Turnstile no servidor e encaminha dados ao Google Apps Script (ou outro backend)
-export const onRequestOptions = async ({ request }) => {
-  return new Response(null, {
-    status: 204,
-    headers: {
-      "Access-Control-Allow-Origin": "*",
-      "Access-Control-Allow-Methods": "POST, OPTIONS",
-      "Access-Control-Allow-Headers": "Content-Type",
-    },
-  });
-};
+// /functions/api/contato.js — HOTFIX (Apps Script only)
+// Aceita: SCRIPT_URL, APP_SCRIPT_WEBAPP_URL, APP_SCRIPT_URL, GAS_WEBAPP_URL
+// Valida Turnstile no servidor e aceita JSON ou x-www-form-urlencoded.
 
-export const onRequestPost = async (ctx) => {
-  const { request, env } = ctx;
-  const url = new URL(request.url);
+const ALLOWED_ORIGINS = [
+  "https://pavieadvocacia.com.br",
+  "https://www.pavieadvocacia.com.br",
+  "https://pavie-091025.pages.dev"
+];
 
-  // Helpers
-  const json = async () => {
-    try { return await request.json(); } catch { return null; }
+function corsHeaders(origin) {
+  const allow = ALLOWED_ORIGINS.includes(origin) ? origin : ALLOWED_ORIGINS[0];
+  return {
+    "Access-Control-Allow-Origin": allow,
+    "Vary": "Origin",
+    "Access-Control-Allow-Methods": "POST, OPTIONS",
+    "Access-Control-Allow-Headers": "Content-Type",
+    "Access-Control-Max-Age": "86400"
   };
-  const form = async () => {
-    try { return Object.fromEntries(await request.formData()); } catch { return {}; }
-  };
+}
 
-  // Parse body (JSON first, then form-encoded)
-  let body = await json();
-  if (!body) body = await form();
+function pickScriptUrl(env) {
+  return (
+    env.SCRIPT_URL ||
+    env.APP_SCRIPT_WEBAPP_URL ||
+    env.APP_SCRIPT_URL ||
+    env.GAS_WEBAPP_URL ||
+    ""
+  );
+}
 
-  // Basic validation
-  const nome = (body?.nome || "").toString().trim();
-  const email = (body?.email || "").toString().trim();
-  const mensagem = (body?.mensagem || "").toString().trim();
-  const telefone_full = (body?.telefone_full || body?.telefone || "").toString().trim();
+export const onRequestOptions = async ({ request }) =>
+  new Response(null, { status: 204, headers: corsHeaders(request.headers.get("Origin") || "") });
 
-  if (!nome || !email || !mensagem) {
-    return jsonResp({ ok: false, error: "Campos obrigatórios ausentes." }, 400);
-  }
+export const onRequestPost = async ({ request, env }) => {
+  const origin = request.headers.get("Origin") || "";
+  const headers = { "Content-Type": "application/json", ...corsHeaders(origin) };
 
-  // Bypass opcional em PREVIEW/dev
-  const bypass = (env.DEV_BYPASS_TURNSTILE || "").toString().toLowerCase() === "true";
-
-  // Turnstile server-side verification
-  if (!bypass) {
-    const token = body?.turnstileToken || body?.["cf-turnstile-response"];
-    if (!token) {
-      return jsonResp({ ok: false, error: "Token Turnstile ausente." }, 400);
-    }
-    const tsRes = await fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
-      method: "POST",
-      headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: new URLSearchParams({
-        secret: env.TURNSTILE_SECRET || "",
-        response: token,
-        remoteip: ctx.request.headers.get("CF-Connecting-IP") || ""
-      })
-    });
-    const tsJSON = await tsRes.json().catch(() => null);
-    if (!tsJSON?.success) {
-      return jsonResp({ ok: false, error: "Falha na verificação do Turnstile." }, 403);
-    }
-  }
-
-  // Montar payload para backend (Apps Script)
-  const payload = {
-    nome, email, telefone_full, mensagem,
-    site: env.SITE_BASE || url.origin,
-    ip: request.headers.get("CF-Connecting-IP") || "",
-    ua: request.headers.get("User-Agent") || ""
-  };
-
-  // Encaminhar ao Apps Script (ou outro) via JSON
   try {
-    const endpoint = env.APP_SCRIPT_WEBAPP_URL;
-    if (!endpoint) return jsonResp({ ok: false, error: "APP_SCRIPT_WEBAPP_URL não configurado." }, 500);
+    let payload = null;
+    const ctype = (request.headers.get("Content-Type") || "").toLowerCase();
+    if (ctype.includes("application/json")) {
+      payload = await request.json();
+    } else if (ctype.includes("application/x-www-form-urlencoded")) {
+      const form = await request.formData();
+      payload = Object.fromEntries(form.entries());
+    } else {
+      return new Response(JSON.stringify({ ok: false, error: "Unsupported Content-Type" }), { status: 415, headers });
+    }
 
-    const upstream = await fetch(endpoint, {
+    const clean = (s) => typeof s === "string" ? s.trim() : s;
+    const data = Object.fromEntries(Object.entries(payload || {}).map(([k,v]) => [k, clean(v)]));
+    const { nome, email, telefone = "", mensagem, turnstileToken } = data;
+
+    if (!nome || !email || !mensagem) {
+      return new Response(JSON.stringify({ ok: false, error: "Campos obrigatórios ausentes" }), { status: 400, headers });
+    }
+    if (!turnstileToken) {
+      return new Response(JSON.stringify({ ok: false, error: "Token Turnstile ausente" }), { status: 400, headers });
+    }
+
+    // Turnstile verification
+    const ts = await fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
+      method: "POST",
+      body: new URLSearchParams({ secret: env.TURNSTILE_SECRET || "", response: turnstileToken })
+    }).then(r=>r.json());
+    if (!ts.success) {
+      const code = (ts["error-codes"] || []).join(",");
+      return new Response(JSON.stringify({ ok: false, error: `Falha na verificação Turnstile: ${code||"unknown"}` }), { status: 400, headers });
+    }
+
+    // Apps Script endpoint
+    const scriptUrl = pickScriptUrl(env);
+    if (!scriptUrl) {
+      return new Response(JSON.stringify({ ok: false, error: "SCRIPT_URL/APP_SCRIPT_WEBAPP_URL ausente" }), { status: 500, headers });
+    }
+
+    const auth = env.APPSCRIPT_SECRET || env.SEGREDO_DA_CATRACA || "";
+    const gasRes = await fetch(scriptUrl, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload)
+      body: JSON.stringify({ ...data, auth })
     });
-    const text = await upstream.text();
-    let data = null; try { data = JSON.parse(text); } catch {}
-    if (upstream.ok && data && data.ok) {
-      return jsonResp({ ok: true });
-    } else {
-      return jsonResp({ ok: false, error: data?.error || text || "Falha no backend." }, 502);
+
+    if (gasRes.ok) {
+      return new Response(JSON.stringify({ ok: true, via: "apps-script" }), { status: 200, headers });
     }
-  } catch (e) {
-    return jsonResp({ ok: false, error: e?.message || "Erro desconhecido." }, 502);
+    const t = await gasRes.text().catch(()=> "");
+    return new Response(JSON.stringify({ ok: false, error: `Apps Script falhou: ${t}` }), { status: 502, headers });
+
+  } catch (err) {
+    return new Response(JSON.stringify({ ok: false, error: err.message || String(err) }), { status: 500, headers });
   }
 };
-
-function jsonResp(obj, status=200){
-  return new Response(JSON.stringify(obj), {
-    status,
-    headers: {
-      "Content-Type": "application/json; charset=utf-8",
-      "Access-Control-Allow-Origin": "*"
-    }
-  });
-}
