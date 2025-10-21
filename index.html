@@ -78,59 +78,135 @@
 <!-- Schema.org JSON-LD: LegalService (entidade principal) -->
 <script type="application/ld+json">
     {
-      "@context":"https://schema.org",
-      "@type":"LegalService",
-      "@id":"#org",
-      "name":"PAVIE | Advocacia",
-      "url":"https://pavieadvocacia.com.br",
-      "description":"Advocacia em Família, Sucessões, Imobiliário, Consumidor & Contratos, Previdenciário, Trabalhista, Tributário, Fazenda Pública e Internacional.",
-      "telephone":"<a href="tel:+5521964382263">+55 (21) 96438-2263</a>",
-      "email":"fabiopavie@pavieadvogado.com",
-      "areaServed":["Rio de Janeiro","Maricá","Brasil"],
-      "knowsAbout":["Direito de Família","Sucessões","Inventário","Contratos","Imobiliário","Responsabilidade Civil","Direito do Consumidor","Previdenciário","Trabalhista","Tributário","Fazenda Pública","Família Binacional","Cooperação Internacional"],
-      "address":{
-        "@type":"PostalAddress",
-        "streetAddress":"Av. Ataulfo de Paiva, 1235, Sala 303/191 – Leblon Office Tower – Leblon",
-        "addressLocality":"Rio de Janeiro",
-        "addressRegion":"RJ",
-        "postalCode":"22440-034",
-        "addressCountry":"BR"
-      },
-      "openingHoursSpecification":[{"@type":"OpeningHoursSpecification","dayOfWeek":["Monday","Tuesday","Wednesday","Thursday","Friday"],"opens":"09:00","closes":"18:00"}],
-      "contactPoint":[{"@type":"ContactPoint","contactType":"customer service","telephone":"<a href="tel:+5521964382263">+55 (21) 96438-2263</a>","areaServed":["BR"],"availableLanguage":["Portuguese"]}],
-      "hasOfferCatalog":{
-        "@type":"OfferCatalog",
-        "name":"Portfólio de Serviços",
-        "itemListElement":[
-          {"@type": "Offer", "name": "Família & Patrimônio Seguro"},
-          {"@type": "Offer", "name": "Sucessões & Inventário"},
-          {"@type": "Offer", "name": "Divórcios & Dissoluções"},
-          {"@type": "Offer", "name": "Família Binacional"},
-          {"@type": "Offer", "name": "Contratos, Obrigações & Negócios"},
-          {"@type": "Offer", "name": "Trabalho, Previdência & Saúde Suplementar"},
-          {"@type": "Offer", "name": "Tributos & Fazenda Pública"},
-          {"@type": "Offer", "name": "Imobiliário, Condomínios & Regularização"},
-          {"@type": "Offer", "name": "Compliance, Governança & Integridade (PJ/OSCs)"}
-        ]
-      }
+  "@context": "https://schema.org",
+  "@type": "LegalService",
+  "@id": "#org",
+  "name": "PAVIE | Advocacia",
+  "url": "https://pavieadvocacia.com.br",
+  "description": "Advocacia em Família, Sucessões, Imobiliário, Consumidor & Contratos, Previdenciário, Trabalhista, Tributário, Fazenda Pública e Internacional.",
+  "telephone": "+5521964382263",
+  "email": "fabiopavie@pavieadvogado.com",
+  "areaServed": [
+    "Rio de Janeiro",
+    "Maricá",
+    "Brasil"
+  ],
+  "knowsAbout": [
+    "Direito de Família",
+    "Sucessões",
+    "Inventário",
+    "Contratos",
+    "Imobiliário",
+    "Responsabilidade Civil",
+    "Direito do Consumidor",
+    "Previdenciário",
+    "Trabalhista",
+    "Tributário",
+    "Fazenda Pública",
+    "Família Binacional",
+    "Cooperação Internacional"
+  ],
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Av. Ataulfo de Paiva, 1235, Sala 303/191 – Leblon Office Tower – Leblon",
+    "addressLocality": "Rio de Janeiro",
+    "addressRegion": "RJ",
+    "postalCode": "22440-034",
+    "addressCountry": "BR"
+  },
+  "openingHoursSpecification": [
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": [
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday"
+      ],
+      "opens": "09:00",
+      "closes": "18:00"
     }
+  ],
+  "contactPoint": [
+    {
+      "@type": "ContactPoint",
+      "contactType": "customer service",
+      "telephone": "+5521964382263",
+      "areaServed": [
+        "BR"
+      ],
+      "availableLanguage": [
+        "Portuguese"
+      ]
+    }
+  ],
+  "hasOfferCatalog": {
+    "@type": "OfferCatalog",
+    "name": "Portfólio de Serviços",
+    "itemListElement": [
+      {
+        "@type": "Offer",
+        "name": "Família & Patrimônio Seguro"
+      },
+      {
+        "@type": "Offer",
+        "name": "Sucessões & Inventário"
+      },
+      {
+        "@type": "Offer",
+        "name": "Divórcios & Dissoluções"
+      },
+      {
+        "@type": "Offer",
+        "name": "Família Binacional"
+      },
+      {
+        "@type": "Offer",
+        "name": "Contratos, Obrigações & Negócios"
+      },
+      {
+        "@type": "Offer",
+        "name": "Trabalho, Previdência & Saúde Suplementar"
+      },
+      {
+        "@type": "Offer",
+        "name": "Tributos & Fazenda Pública"
+      },
+      {
+        "@type": "Offer",
+        "name": "Imobiliário, Condomínios & Regularização"
+      },
+      {
+        "@type": "Offer",
+        "name": "Compliance, Governança & Integridade (PJ/OSCs)"
+      }
+    ]
+  },
+  "inLanguage": "pt-BR"
+}
     </script>
 <!-- Schema.org JSON-LD: Person (responsável técnico) -->
 <script type="application/ld+json">
     {
-      "@context":"https://schema.org",
-      "@type":"Person",
-      "@id":"#fabio",
-      "name":"Fabio Mathias Pavie",
-      "jobTitle":"Advogado",
-      "worksFor":{"@id":"#org"},
-      "hasCredential":{
-        "@type":"EducationalOccupationalCredential",
-        "credentialCategory":"ProfessionalLicense",
-        "identifier":"OAB/RJ 134.947",
-        "recognizedBy":{"@type":"Organization","name":"OAB Seção RJ"}
-      }
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "@id": "#fabio",
+  "name": "Fabio Mathias Pavie",
+  "jobTitle": "Advogado",
+  "worksFor": {
+    "@id": "#org"
+  },
+  "hasCredential": {
+    "@type": "EducationalOccupationalCredential",
+    "credentialCategory": "ProfessionalLicense",
+    "identifier": "OAB/RJ 134.947",
+    "recognizedBy": {
+      "@type": "Organization",
+      "name": "OAB Seção RJ"
     }
+  }
+}
     </script>
 <!-- Schema.org JSON-LD: WebSite -->
 <script type="application/ld+json">
@@ -162,7 +238,76 @@
     </script>
 <!-- Schema.org JSON-LD: FAQPage -->
 <script type="application/ld+json">
-    {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Como funciona o atendimento digital?","acceptedAnswer":{"@type":"Answer","text":"Atendimento 100% online: videochamada, assinatura eletrônica, upload seguro e comunicação por WhatsApp/e-mail. Reuniões presenciais no RJ/Maricá se preferir."}},{"@type":"Question","name":"Quanto tempo demora um inventário?","acceptedAnswer":{"@type":"Answer","text":"Extrajudicial: 60 a 120 dias (dependendo de documentos e cartório). Judicial: 12 a 24 meses em média, variando pela complexidade."}},{"@type":"Question","name":"Preciso ir ao cartório ou tribunal?","acceptedAnswer":{"@type":"Answer","text":"Inventário extrajudicial/divórcio consensual exigem ida ao cartório para assinatura. Processos judiciais costumam dispensar presença física; audiências podem ser on-line."}},{"@type":"Question","name":"Quais documentos preciso para iniciar?","acceptedAnswer":{"@type":"Answer","text":"RG/CPF, certidões atualizadas, documentos dos bens e, em inventário, a última declaração de IR do falecido. Enviamos checklist personalizado após o contato."}},{"@type":"Question","name":"Atendem fora do Rio de Janeiro?","acceptedAnswer":{"@type":"Answer","text":"Sim. Atendimento digital em todo o Brasil, com correspondentes locais quando necessário."}},{"@type":"Question","name":"Posso desistir após contratar?","acceptedAnswer":{"@type":"Answer","text":"Sim. Você pode encerrar o contrato a qualquer momento. Os honorários serão calculados proporcionalmente ao trabalho já realizado, conforme previsto no contrato. Garantimos total transparência e boa‑fé na apuração de valores."}},{"@type":"Question","name":"Como funciona o parcelamento?","acceptedAnswer":{"@type":"Answer","text":"Trabalhamos com entrada + parcelas mensais, sempre vinculadas a marcos do projeto. Ex.: 30% na assinatura, 40% após protocolo, 30% após conclusão. O número de parcelas varia conforme o valor total e a duração estimada do serviço; tudo é definido na proposta."}},{"@type":"Question","name":"Meus dados estão seguros?","acceptedAnswer":{"@type":"Answer","text":"Sim. Armazenamento em ambiente criptografado, acesso restrito com 2FA, LGPD e sigilo profissional. Política de Privacidade disponível no site."}}]}
+    {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Como funciona o atendimento digital?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Atendimento 100% online: videochamada, assinatura eletrônica, upload seguro e comunicação por WhatsApp/e-mail. Reuniões presenciais no RJ/Maricá se preferir."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Quanto tempo demora um inventário?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Extrajudicial: 60 a 120 dias (dependendo de documentos e cartório). Judicial: 12 a 24 meses em média, variando pela complexidade."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Preciso ir ao cartório ou tribunal?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Inventário extrajudicial/divórcio consensual exigem ida ao cartório para assinatura. Processos judiciais costumam dispensar presença física; audiências podem ser on-line."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Quais documentos preciso para iniciar?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "RG/CPF, certidões atualizadas, documentos dos bens e, em inventário, a última declaração de IR do falecido. Enviamos checklist personalizado após o contato."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Atendem fora do Rio de Janeiro?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Sim. Atendimento digital em todo o Brasil, com correspondentes locais quando necessário."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Posso desistir após contratar?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Sim. Você pode encerrar o contrato a qualquer momento. Os honorários serão calculados proporcionalmente ao trabalho já realizado, conforme previsto no contrato. Garantimos total transparência e boa‑fé na apuração de valores."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Como funciona o parcelamento?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Trabalhamos com entrada + parcelas mensais, sempre vinculadas a marcos do projeto. Ex.: 30% na assinatura, 40% após protocolo, 30% após conclusão. O número de parcelas varia conforme o valor total e a duração estimada do serviço; tudo é definido na proposta."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Meus dados estão seguros?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Sim. Armazenamento em ambiente criptografado, acesso restrito com 2FA, LGPD e sigilo profissional. Política de Privacidade disponível no site."
+      }
+    }
+  ]
+}
     </script>
 </head>
 <body class="antialiased">
@@ -170,8 +315,8 @@
 <div aria-label="Atalho de contato" class="bg-slate-900 text-white py-2 fixed w-full top-0 z-50" role="region">
 <div class="max-w-7xl mx-auto px-4 flex justify-between items-center text-sm">
 <div class="flex gap-6">
-<a aria-label="Ligar para (21) 96438-2263" class="hover:text-orange-400 transition" href="tel:<a href="tel:+5521964382263">+55 (21) 96438-2263</a>">📞 (21) 96438-2263</a>
-<a aria-label="Conversar no WhatsApp" class="hover:text-orange-400 transition" href="https://wa.me/<a href="tel:+5521964382263">+55 (21) 96438-2263</a>">💬 WhatsApp</a>
+<a aria-label="Ligar para (21) 96438-2263" class="hover:text-orange-400 transition" href="tel:+5521964382263">📞 (21) 96438-2263</a>
+<a aria-label="Conversar no WhatsApp" class="hover:text-orange-400 transition" href="https://wa.me/5521964382263">💬 WhatsApp</a>
 </div>
 <a class="bg-orange-600 hover:bg-orange-700 px-4 py-1 rounded text-white font-semibold transition" href="#agendar">
                 Agendar Consulta
@@ -564,8 +709,8 @@
 <div aria-hidden="true" class="text-3xl mb-4">📞</div>
 <h3 class="text-xl font-bold mb-2">Contato Direto</h3>
 <p class="text-slate-200 mb-4">Fale por telefone ou WhatsApp</p>
-<a class="block text-orange-400 font-semibold hover:text-orange-300 transition mb-2" href="tel:<a href="tel:+5521964382263">+55 (21) 96438-2263</a>">(21) 96438-2263</a>
-<a class="block text-orange-400 font-semibold hover:text-orange-300 transition" href="https://wa.me/<a href="tel:+5521964382263">+55 (21) 96438-2263</a>">WhatsApp →</a>
+<a class="block text-orange-400 font-semibold hover:text-orange-300 transition mb-2" href="tel:+5521964382263">(21) 96438-2263</a>
+<a class="block text-orange-400 font-semibold hover:text-orange-300 transition" href="https://wa.me/5521964382263">WhatsApp →</a>
 </div>
 <div class="bg-white/10 backdrop-blur-sm rounded-xl p-8 border border-white/20 text-left">
 <div aria-hidden="true" class="text-3xl mb-4">📧</div>
@@ -941,6 +1086,53 @@
     }
   ]
 }
+</script>
+<script>
+(function(){
+  const form = document.querySelector('form[action="/api/contato"], form#contato, form#contact') || document.querySelector('form');
+  if(!form) return;
+  const statusEl = document.getElementById('formStatus');
+
+  function setStatus(msg){ if(statusEl){ statusEl.textContent = msg; } }
+
+  form.addEventListener('submit', async (e) => {
+    try{
+      setStatus('Enviando…'); 
+      e.preventDefault();
+      const fd = new FormData(form);
+      const payload = {
+        nome: fd.get('nome') || fd.get('name') || '',
+        email: fd.get('email') || '',
+        telefone_full: fd.get('telefone_full') || fd.get('telefone') || fd.get('phone') || '',
+        mensagem: fd.get('mensagem') || fd.get('message') || fd.get('menssage') || ''
+      };
+      // Turnstile: pegar token quando presente
+      const tsField = document.querySelector('input[name="cf-turnstile-response"]');
+      if(tsField && tsField.value){ payload.turnstileToken = tsField.value; }
+
+      const res = await fetch('/api/contato', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      const text = await res.text();
+      let json = null;
+      try{ json = JSON.parse(text); }catch(_){}
+      if(res.ok && json && json.ok){
+        setStatus('Mensagem enviada com sucesso. Obrigado!');
+        if(form.reset) form.reset();
+        if(window.turnstile && typeof window.turnstile.reset === 'function'){
+          window.turnstile.reset();
+        }
+      }else{
+        const msg = (json && (json.error||json.message)) || text || 'Falha no envio.';
+        setStatus('Erro: ' + msg);
+      }
+    }catch(err){
+      setStatus('Erro inesperado. Tente novamente.');
+    }
+  });
+})();
 </script>
 </body>
 </html>
