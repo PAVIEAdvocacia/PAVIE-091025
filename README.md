@@ -1,4 +1,4 @@
-# PAVIE | Advocacia — Kit de Publicação (Cloudflare Pages + Functions + Turnstile + Apps Script)
+# PAVIE | Advocacia — Kit de Publicação (Cloudflare Pages + Functions + Turnstile + Apps Script) D
 
 ## Estrutura
 ```
