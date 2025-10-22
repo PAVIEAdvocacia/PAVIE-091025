@@ -161,7 +161,7 @@
     </script>
 <!-- Schema.org JSON-LD: FAQPage -->
 <script type="application/ld+json">
-    {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Como funciona o atendimento digital?","acceptedAnswer":{"@type":"Answer","text":"Atendimento 100% online: videochamada, assinatura eletrônica, upload seguro e comunicação por WhatsApp/e-mail. Reuniões presenciais no RJ/Maricá se preferir."}},{"@type":"Question","name":"Quanto tempo demora um inventário?","acceptedAnswer":{"@type":"Answer","text":"Extrajudicial: 60 a 120 dias (dependendo de documentos e cartório). Judicial: 12 a 24 meses em média, variando pela complexidade."}},{"@type":"Question","name":"Preciso ir ao cartório ou tribunal?","acceptedAnswer":{"@type":"Answer","text":"Inventário extrajudicial/divórcio consensual exigem ida ao cartório para assinatura. Processos judiciais costumam dispensar presença física; audiências podem ser on-line."}},{"@type":"Question","name":"Quais documentos preciso para iniciar?","acceptedAnswer":{"@type":"Answer","text":"RG/CPF, certidões atualizadas, documentos dos bens e, em inventário, a última declaração de IR do falecido. Enviamos checklist personalizado após o contato."}},{"@type":"Question","name":"Atendem fora do Rio de Janeiro?","acceptedAnswer":{"@type":"Answer","text":"Sim. Atendimento digital em todo o Brasil, com correspondentes locais quando necessário."}},{"@type":"Question","name":"Posso desistir após contratar?","acceptedAnswer":{"@type":"Answer","text":"Sim. Você pode encerrar o contrato a qualquer momento. Os honorários serão calculados proporcionalmente ao trabalho já realizado, conforme previsto no contrato. Garantimos total transparência e boa‑fé na apuração de valores."}},{"@type":"Question","name":"Como funciona o parcelamento?","acceptedAnswer":{"@type":"Answer","text":"Trabalhamos com entrada + parcelas mensais, sempre vinculadas a marcos do projeto. Ex.: 30% na assinatura, 40% após protocolo, 30% após conclusão. O número de parcelas varia conforme o valor total e a duração estimada do serviço; tudo é definido na proposta."}},{"@type":"Question","name":"Meus dados estão seguros?","acceptedAnswer":{"@type":"Answer","text":"Sim. Armazenamento em ambiente criptografado, acesso restrito com 2FA, LGPD e sigilo profissional. Política de Privacidade disponível no site."}}]}
+    {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Como funciona o atendimento digital?","acceptedAnswer":{"@type":"Answer","text":"Atendimento 100% online: videochamada, assinatura eletrônica, upload seguro e comunicação por WhatsApp/e-mail. Reuniões presenciais no RJ/Maricá se preferir."}},{"@type":"Question","name":"Quanto tempo demora um inventário?","acceptedAnswer":{"@type":"Answer","text":"Extrajudicial: 60 a 120 dias (dependendo de documentos e cartório). Judicial: 12 a 24 meses em média, variando pela complexidade."}},{"@type":"Question","name":"Preciso ir ao cartório ou tribunal?","acceptedAnswer":{"@type":"Answer","text":"Inventário extrajudicial/divórcios consensuais exigem ida ao cartório para assinatura. Processos judiciais costumam dispensar presença física; audiências podem ser on-line."}},{"@type":"Question","name":"Quais documentos preciso para iniciar?","acceptedAnswer":{"@type":"Answer","text":"RG/CPF, certidões atualizadas, documentos dos bens e, em inventário, a última declaração de IR do falecido. Enviamos checklist personalizado após o contato."}},{"@type":"Question","name":"Atendem fora do Rio de Janeiro?","acceptedAnswer":{"@type":"Answer","text":"Sim. Atendimento digital em todo o Brasil, com correspondentes locais quando necessário."}},{"@type":"Question","name":"Posso desistir após contratar?","acceptedAnswer":{"@type":"Answer","text":"Sim. Você pode encerrar o contrato a qualquer momento. Os honorários serão calculados proporcionalmente ao trabalho já realizado, conforme previsto no contrato. Garantimos total transparência e boa-fé na apuração de valores."}},{"@type":"Question","name":"Como funciona o parcelamento?","acceptedAnswer":{"@type":"Answer","text":"Trabalhamos com entrada + parcelas mensais, sempre vinculadas a marcos do projeto. Por exemplo: 30% na assinatura, 40% após protocolo, 30% após conclusão. O número de parcelas varia conforme o valor total e a duração estimada do serviço. Tudo é definido na proposta."}},{"@type":"Question","name":"Meus dados estão seguros?","acceptedAnswer":{"@type":"Answer","text":"Sim. Armazenamento em ambiente criptografado, acesso restrito com 2FA, LGPD e sigilo profissional. Política de Privacidade disponível no site."}}]}
     </script>
 </head>
 <body class="antialiased">
@@ -540,7 +540,7 @@
 </details>
 <details class="bg-white rounded-xl p-6 shadow-sm border border-slate-200">
 <summary class="font-bold text-lg text-slate-900 cursor-pointer">Posso desistir após contratar?</summary>
-<p class="mt-4 text-slate-600 leading-relaxed">Sim. Você pode encerrar o contrato a qualquer momento. Os honorários serão calculados proporcionalmente ao trabalho já realizado, conforme previsto no contrato. Garantimos total transparência e boa‑fé na apuração de valores.</p>
+<p class="mt-4 text-slate-600 leading-relaxed">Sim. Você pode encerrar o contrato a qualquer momento. Os honorários serão calculados proporcionalmente ao trabalho já realizado, conforme previsto no contrato. Garantimos total transparência e boa-fé na apuração de valores.</p>
 </details>
 <details class="bg-white rounded-xl p-6 shadow-sm border border-slate-200">
 <summary class="font-bold text-lg text-slate-900 cursor-pointer">Como funciona o parcelamento?</summary>
@@ -685,7 +685,7 @@
         </div>
 
         <p class="text-sm mt-3 text-slate-600" id="formStatus">Carregando segurança…</p>
-        <div data-sitekey="0x4AAAAAAB6FBS0cTG_7KOYv" 
+        <!-- linha órfã removida aqui -->
         <button class="w-full cta-button px-8 py-4 rounded-lg text-white font-bold text-lg shadow-lg" type="submit">Enviar Solicitação</button>
       </form>
 </div>
@@ -821,7 +821,10 @@
   window.getCfToken = window.getCfToken || function(){ return window.__cfToken || ""; };
 
   // Callback padrão quando o desafio é resolvido
-  function onTsSuccess(token){ try { window.__cfToken = token; } catch(_e) {} }
+  function onTsSuccess(token){
+    try { window.__cfToken = token; } catch(_e) {}
+    try { if (typeof window.onTsDone === 'function') window.onTsDone(token); } catch(_e) {}
+  }
 
   // Chamado pelo onload do script do Turnstile (se presente no HTML)
   window.tsOnload = function() {
