@@ -1,45 +1,32 @@
-          # PAVIE | Advocacia — Kit pronto (Turnstile inline + Apps Script) 
+# PAVIE | Advocacia — Site Institucional (HTML estático)
 
-## Preencha estes **placeholders no HTML** (substituir no arquivo `index.final.html` → renomeie para `index.html`)
-- `0xSITE_KEY_TURNSTILE_AQUI` → cole aqui a **Chave do site** do Turnstile (pública).
+Este pacote contém ajustes **não intrusivos** para SEO, Schema, Acessibilidade, Performance, Segurança e Métricas, **sem alterar layout/copy**. O formulário com Turnstile permanece intacto.
 
-## Variáveis de ambiente (Cloudflare Pages → Preview e Production)
-```
-TURNSTILE_SECRET=<COLE A "Chave secreta" do Turnstile>
-SCRIPT_URL=https://script.google.com/macros/s/AKfycbw0thrDSzI3CmfJGNFvgJvXyFX3PNpSFyJ2aeyFcMaM/exec
-MAIL_FROM=no-reply@pavieadvocacia.com.br
-MAIL_FROM_NAME=PAVIE | Advocacia – Fabio Pavie
-MAIL_TO=fabiopavie@pavieadvogado.com,contato@pavieadvocacia.com.br
-SITE_BASE=https://pavieadvocacia.com.br
-# (opcional) autenticação extra no Apps Script
-APPSCRIPT_SECRET=<OPCIONAL_SEU_SEGREDO_PRIVADO>
-# (opcional Preview) bypass de captcha
-DEV_BYPASS_TURNSTILE=true
-```
+## O que foi aprimorado
+- Canonical/hreflang, OG/Twitter, preconnect/preload de fontes (já existentes foram mantidos).
+- **Cloudflare Web Analytics** (cookieless): inserir token em `data-cf-beacon`.
+- Marcação **Schema.org** (já existia: `LegalService`, `Person`, `WebSite`, `FAQPage`). Mantida e validável.
+- Atributos `data-track` em CTAs, WhatsApp e telefone (para eventos opcionais via `/api/event`).
+- `_headers` com CSP compatível (Turnstile, Google Fonts, Insights) e políticas modernas.
+- `robots.txt` e `sitemap.xml` coerentes com domínio apex `https://pavieadvocacia.com.br`.
 
-## Estrutura
-```
-/
-├─ index.html                   (use o arquivo gerado `index.final.html` renomeado)
-├─ _headers
-├─ robots.txt
-├─ sitemap.xml
-├─ form.turnstile.js
-├─ assets/
-│  └─ js/
-│     └─ form.submit.js
-└─ functions/
-   └─ api/
-      └─ contato.js
-```
+## Variáveis/ajustes necessários
+- **Analytics:** edite `index.html` e substitua `{CF_WEB_ANALYTICS_TOKEN}` pelo token do Cloudflare Web Analytics.
+- **Turnstile:** já funcional via `<div class="cf-turnstile"...>` e `form.turnstile.js`.
+- **/api/contato:** mantenha `APP_SCRIPT_WEBAPP_URL` (ou `SCRIPT_URL`) no ambiente do Pages. Opcional: `APPSCRIPT_SECRET`, `MAIL_TO`, `MAIL_FROM`, `MAIL_FROM_NAME`.
+- **/api/event (opcional):** se desejar coletar eventos customizados, crie uma função Pages `functions/api/event.js` que aceite POST JSON e retorne `{ ok: true }`.
 
-## Testes
-```bash
-curl -i https://pavieadvocacia.com.br/api/contato   -H "Content-Type: application/json"   -d '{
-    "nome":"Teste",
-    "email":"teste@example.com",
-    "telefone_full":"+55 21 96438-2263",
-    "mensagem":"Validação E2E.",
-    "turnstileToken":"<TOKEN_TURNSTILE_DO_WIDGET>"
-  }'
-```
+## Publicação (Cloudflare Pages)
+1. Suba estes arquivos ao repositório conectado ao Pages.
+2. Garanta os headers via arquivo `/_headers` (raiz).
+3. Configure as variáveis de ambiente no projeto (Settings → Environment variables).
+4. Valide:
+   - `/robots.txt` e `/sitemap.xml`
+   - Formulário: envio 200/`{"ok":true}`
+   - CSP no console (sem bloqueios indevidos)
+   - Schema (Rich Results) e PageSpeed (CWV).
+
+## Observações
+- Não foram feitas mudanças em textos/estilos/estrutura visual.
+- Mantivemos o Turnstile e submissão via `fetch` (sem MailChannels).
+
