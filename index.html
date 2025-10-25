@@ -163,6 +163,42 @@
 <script type="application/ld+json">
     {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Como funciona o atendimento digital?","acceptedAnswer":{"@type":"Answer","text":"Atendimento 100% online: videochamada, assinatura eletrônica, upload seguro e comunicação por WhatsApp/e-mail. Reuniões presenciais no RJ/Maricá se preferir."}},{"@type":"Question","name":"Quanto tempo demora um inventário?","acceptedAnswer":{"@type":"Answer","text":"Extrajudicial: 60 a 120 dias (dependendo de documentos e cartório). Judicial: 12 a 24 meses em média, variando pela complexidade."}},{"@type":"Question","name":"Preciso ir ao cartório ou tribunal?","acceptedAnswer":{"@type":"Answer","text":"Inventário extrajudicial/divórcios consensuais exigem ida ao cartório para assinatura. Processos judiciais costumam dispensar presença física; audiências podem ser on-line."}},{"@type":"Question","name":"Quais documentos preciso para iniciar?","acceptedAnswer":{"@type":"Answer","text":"RG/CPF, certidões atualizadas, documentos dos bens e, em inventário, a última declaração de IR do falecido. Enviamos checklist personalizado após o contato."}},{"@type":"Question","name":"Atendem fora do Rio de Janeiro?","acceptedAnswer":{"@type":"Answer","text":"Sim. Atendimento digital em todo o Brasil, com correspondentes locais quando necessário."}},{"@type":"Question","name":"Posso desistir após contratar?","acceptedAnswer":{"@type":"Answer","text":"Sim. Você pode encerrar o contrato a qualquer momento. Os honorários serão calculados proporcionalmente ao trabalho já realizado, conforme previsto no contrato. Garantimos total transparência e boa-fé na apuração de valores."}},{"@type":"Question","name":"Como funciona o parcelamento?","acceptedAnswer":{"@type":"Answer","text":"Trabalhamos com entrada + parcelas mensais, sempre vinculadas a marcos do projeto. Por exemplo: 30% na assinatura, 40% após protocolo, 30% após conclusão. O número de parcelas varia conforme o valor total e a duração estimada do serviço. Tudo é definido na proposta."}},{"@type":"Question","name":"Meus dados estão seguros?","acceptedAnswer":{"@type":"Answer","text":"Sim. Armazenamento em ambiente criptografado, acesso restrito com 2FA, LGPD e sigilo profissional. Política de Privacidade disponível no site."}}]}
     </script>
+<!-- Google Analytics 4 | Consent Mode v2 (LGPD) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-M3GZYKWF2P"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){ dataLayer.push(arguments); }
+  gtag('js', new Date());
+
+  // 1) Estado padrão: negado (sem cookies)
+  gtag('consent', 'default', {
+    'ad_storage': 'denied',
+    'analytics_storage': 'denied',
+    'ad_user_data': 'denied',
+    'ad_personalization': 'denied',
+    'wait_for_update': 500
+  });
+
+  // 2) Inicializa a propriedade
+  gtag('config', 'G-M3GZYKWF2P', {
+    anonymize_ip: true,
+    cookie_flags: 'SameSite=None;Secure',
+    debug_mode: true
+  });
+
+  // 3) Se já havia consentimento salvo, atualiza para granted
+  try {
+    if (localStorage.getItem('pavie_cookie_consent') === 'accepted') {
+      gtag('consent', 'update', {
+        'ad_storage': 'granted',
+        'analytics_storage': 'granted',
+        'ad_user_data': 'granted',
+        'ad_personalization': 'granted'
+      });
+    }
+  } catch(e){}
+</script>
+
 </head>
 <body class="antialiased">
 <!-- Top Bar Fixed -->
@@ -951,5 +987,38 @@
   ]
 }
 </script>
+<!-- Atualiza Consent Mode ao aceitar cookies -->
+<script>
+(function(){
+  function updateConsentGranted(){
+    if (typeof gtag === 'function') {
+      gtag('consent', 'update', {
+        'ad_storage': 'granted',
+        'analytics_storage': 'granted',
+        'ad_user_data': 'granted',
+        'ad_personalization': 'granted'
+      });
+    }
+  }
+  document.addEventListener('DOMContentLoaded', function(){
+    var btn = document.getElementById('cookie-accept');
+    if (btn) btn.addEventListener('click', updateConsentGranted);
+  });
+})();
+</script>
+
+<!-- GA4: eventos de conversão -->
+<script>
+(function(){
+  function ev(name, params){ if(typeof gtag==='function'){ gtag('event', name, params||{}); } }
+  var form = document.getElementById('contatoForm');
+  if(form){ form.addEventListener('submit', function(){ ev('form_submit', {form_id: 'contatoForm'}); }); }
+  var wa = document.querySelectorAll('a[href*="wa.me"]');
+  wa.forEach(function(a){ a.addEventListener('click', function(){ ev('click_whatsapp'); }); });
+  var ag = document.querySelectorAll('a[href="#agendar"], button[href="#agendar"]');
+  ag.forEach(function(b){ b.addEventListener('click', function(){ ev('click_agendar'); }); });
+})();
+</script>
+
 </body>
 </html>
