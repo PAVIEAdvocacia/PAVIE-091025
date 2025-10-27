@@ -1,0 +1,4 @@
+Contact: mailto:contato@pavieadvocacia.com.br
+Expires: 2026-04-26T00:00:00Z
+Policy: https://www.pavieadvocacia.com.br/privacidade/privacidade.html
+Preferred-Languages: pt-BR, en
