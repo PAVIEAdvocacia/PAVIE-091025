@@ -57,3 +57,12 @@
   .pv-col-contact{border-top:none;padding-top:0}
   .pv-acc{border-top:1px solid var(--pv-border);padding-top:.5rem}
 }
+
+
+/* === 4ª coluna: Informação legal === */
+.pv-col-legal .pv-legal{font-size:.9rem;line-height:1.4;color:var(--pv-muted)}
+.pv-col-legal .pv-legal__line{margin:.15rem 0 .35rem}
+.pv-col-legal .pv-legal__text{margin:0}
+/* Centralizar copyright da faixa final */
+.pv-subfoot{display:flex;justify-content:center;text-align:center}
+.pv-subfoot__copy{margin:.35rem 0 0}
