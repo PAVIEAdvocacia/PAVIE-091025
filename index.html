@@ -95,7 +95,7 @@
       "url":"https://pavieadvocacia.com.br",
       "description":"Advocacia em Família, Sucessões, Imobiliário, Consumidor & Contratos, Previdenciário, Trabalhista, Tributário, Fazenda Pública e Internacional.",
       "telephone":"+5521964382263",
-      "email":"fabiopavie@pavieadvogado.com",
+      "email":"contato@pavieadvocacia.com.br",
       "areaServed":["Rio de Janeiro","Maricá","Brasil"],
       "knowsAbout":["Direito de Família","Sucessões","Inventário","Contratos","Imobiliário","Responsabilidade Civil","Direito do Consumidor","Previdenciário","Trabalhista","Tributário","Fazenda Pública","Família Binacional","Cooperação Internacional"],
       "address":{
@@ -106,7 +106,7 @@
         "postalCode":"22440-034",
         "addressCountry":"BR"
       },
-      "openingHoursSpecification":[{"@type":"OpeningHoursSpecification","dayOfWeek":["Monday","Tuesday","Wednesday","Thursday","Friday"],"opens":"09:00","closes":"18:00"}],
+      "openingHoursSpecification":[{"@type":"OpeningHoursSpecification","dayOfWeek":["Monday","Tuesday","Wednesday","Thursday","Friday"],"opens":"08:00","closes":"18:00"},{"@type":"OpeningHoursSpecification","dayOfWeek":["Saturday"],"opens":"08:00","closes":"12:00"}],"opens":"09:00","closes":"18:00"}],
       "contactPoint":[{"@type":"ContactPoint","contactType":"customer service","telephone":"+5521964382263","areaServed":["BR"],"availableLanguage":["Portuguese"]}],
       "hasOfferCatalog":{
         "@type":"OfferCatalog",
@@ -173,7 +173,10 @@
 <script type="application/ld+json">
     {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Como funciona o atendimento digital?","acceptedAnswer":{"@type":"Answer","text":"Atendimento 100% online: videochamada, assinatura eletrônica, upload seguro e comunicação por WhatsApp/e-mail. Reuniões presenciais no RJ/Maricá se preferir."}},{"@type":"Question","name":"Quanto tempo demora um inventário?","acceptedAnswer":{"@type":"Answer","text":"Extrajudicial: 60 a 120 dias (dependendo de documentos e cartório). Judicial: 12 a 24 meses em média, variando pela complexidade."}},{"@type":"Question","name":"Preciso ir ao cartório ou tribunal?","acceptedAnswer":{"@type":"Answer","text":"Inventário extrajudicial/divórcios consensuais exigem ida ao cartório para assinatura. Processos judiciais costumam dispensar presença física; audiências podem ser on-line."}},{"@type":"Question","name":"Quais documentos preciso para iniciar?","acceptedAnswer":{"@type":"Answer","text":"RG/CPF, certidões atualizadas, documentos dos bens e, em inventário, a última declaração de IR do falecido. Enviamos checklist personalizado após o contato."}},{"@type":"Question","name":"Atendem fora do Rio de Janeiro?","acceptedAnswer":{"@type":"Answer","text":"Sim. Atendimento digital em todo o Brasil, com correspondentes locais quando necessário."}},{"@type":"Question","name":"Posso desistir após contratar?","acceptedAnswer":{"@type":"Answer","text":"Sim. Você pode encerrar o contrato a qualquer momento. Os honorários serão calculados proporcionalmente ao trabalho já realizado, conforme previsto no contrato. Garantimos total transparência e boa-fé na apuração de valores."}},{"@type":"Question","name":"Como funciona o parcelamento?","acceptedAnswer":{"@type":"Answer","text":"Trabalhamos com entrada + parcelas mensais, sempre vinculadas a marcos do projeto. Por exemplo: 30% na assinatura, 40% após protocolo, 30% após conclusão. O número de parcelas varia conforme o valor total e a duração estimada do serviço. Tudo é definido na proposta."}},{"@type":"Question","name":"Meus dados estão seguros?","acceptedAnswer":{"@type":"Answer","text":"Sim. Armazenamento em ambiente criptografado, acesso restrito com 2FA, LGPD e sigilo profissional. Política de Privacidade disponível no site."}}]}
     </script>
-</link></head>
+</link>
+  <link rel="preload" href="/assets/footer.css" as="style" id="pv-footer-preload">
+  <link rel="stylesheet" href="/assets/footer.css" id="pv-footer-css">
+</head>
 <body class="antialiased">
 <!-- Top Bar Fixed -->
 <div aria-label="Atalho de contato" class="bg-slate-900 text-white py-2 fixed w-full top-0 z-50" role="region">
@@ -577,7 +580,7 @@
 <div aria-hidden="true" class="text-3xl mb-4">📧</div>
 <h3 class="text-xl font-bold mb-2">E-mail</h3>
 <p class="text-slate-200 mb-4">Envie sua dúvida ou solicite proposta</p>
-<a class="block text-orange-400 font-semibold hover:text-orange-300 transition" href="mailto:fabiopavie@pavieadvogado.com">fabiopavie@pavieadvogado.com</a>
+<a class="block text-orange-400 font-semibold hover:text-orange-300 transition" href="mailto:contato@pavieadvocacia.com.br">contato@pavieadvocacia.com.br</a>
 </div>
 </div>
 <div class="bg-white rounded-xl p-8 text-slate-900">
@@ -677,65 +680,72 @@
 </div>
 </div>
 </section>
-<!-- Política de Privacidade (âncora) -->
-<section class="py-16 bg-white" id="privacidade">
-<div class="max-w-4xl mx-auto px-4">
-<h2 class="text-3xl font-bold text-slate-900 mb-4">Política de Privacidade (resumo)</h2>
-<p class="text-slate-700 mb-4">Coletamos dados estritamente necessários para responder à sua solicitação e prestar serviços jurídicos, com base no consentimento e no legítimo interesse (art. 7º, LGPD), observando sigilo profissional. Armazenamento seguro e retenção pelo prazo legal. Você pode solicitar acesso, correção e eliminação quando aplicável.</p>
-<p class="text-slate-700">Consulte a versão completa mediante solicitação por e-mail.</p>
-</div>
-</section>
 <!-- Footer -->
 
-<footer class="bg-slate-900 text-white py-12 mt-16" role="contentinfo" aria-label="Rodapé institucional">
-  <div class="container mx-auto px-4 grid gap-8 md:grid-cols-4">
-    <div>
-      <h3 class="text-xl font-semibold">PAVIE | Advocacia</h3>
-      <p class="text-slate-300 mt-2">Clareza e segurança jurídica. Onde você estiver.</p>
+<!-- Footer | PAVIE | Compact per log 02:31 -->
+<footer class="pv-footer pv-footer--compact" role="contentinfo" aria-label="Rodapé institucional">
+  <div class="pv-footer__container">
+    <div class="pv-footer__grid">
+
+      <!-- Contato primeiro -->
+      <div class="pv-footer__col pv-col-contact" aria-label="Contato rápido">
+        <h3 class="pv-footer__title">Contato</h3>
+        <address class="pv-footer__address">
+          <p class="pv-icn"><span aria-hidden="true">📞</span> <a href="tel:+5521964382263">+55 (21) 96438-2263</a></p>
+          <p class="pv-icn"><span aria-hidden="true">✉️</span> <a href="mailto:contato@pavieadvocacia.com.br">contato@pavieadvocacia.com.br</a></p>
+          <p class="pv-icn"><span aria-hidden="true">📍</span> Av. Ataulfo de Paiva, Leblon — Rio de Janeiro, RJ</p>
+          <p class="pv-icn"><span aria-hidden="true">🕘</span> Seg–Sex: 8h–18h | Sáb: 8h–12h</p>
+        </address>
+      </div>
+
+      <!-- Serviços reduzidos (4 + ver todas) -->
+      <div class="pv-footer__col pv-col-services" aria-label="Serviços">
+        <details class="pv-acc" open role="group">
+          <summary class="pv-acc__summary">Serviços</summary>
+          <div class="pv-collapse">
+            <ul class="pv-footer__list">
+              <li><a href="/#atuacao-familia-patrimonio">Família &amp; Patrimônio</a></li>
+              <li><a href="/#atuacao-sucessoes-inventario">Sucessões &amp; Inventário</a></li>
+              <li><a href="/#atuacao-familia-binacional">Família Binacional</a></li>
+              <li><a href="/#atuacao-consumidor-contratos">Consumidor &amp; Contratos</a></li>
+              <li class="pv-more"><a href="/#servicos">Ver todas as áreas</a></li>
+            </ul>
+          </div>
+        </details>
+      </div>
+
+      <!-- Informações -->
+      <div class="pv-footer__col pv-col-info" aria-label="Links institucionais">
+        <details class="pv-acc" open role="group">
+          <summary class="pv-acc__summary">Informações</summary>
+          <div class="pv-collapse">
+            <nav aria-label="Links institucionais">
+              <ul class="pv-footer__list">
+                <li><a href="/#como-contratar">Como Contratar</a></li>
+                <li><a href="/#honorarios">Honorários</a></li>
+                <li><a href="/#faq">FAQ</a></li>
+                <li><a href="/privacidade/privacidade.html">Política de Privacidade</a></li>
+                <li><a href="/termos/termos.html">Termos de Serviço</a></li>
+              </ul>
+            </nav>
+          </div>
+        </details>
+      </div>
+
     </div>
-    <div>
-      <h3 class="text-xl font-semibold">Serviços</h3>
-      <ul class="mt-3 space-y-2">
-        <li><a class="hover:underline" href="/#atuacao-familia-patrimonio">Família & Patrimônio</a></li>
-<li><a class="hover:underline" href="/#atuacao-sucessoes-inventario">Sucessões & Inventário</a></li>
-<li><a class="hover:underline" href="/#atuacao-divorcios-dissolucoes">Divórcios & Dissoluções</a></li>
-<li><a class="hover:underline" href="/#atuacao-familia-binacional">Família Binacional</a></li>
-<li><a class="hover:underline" href="/#atuacao-contratos-obrigacoes-negocios">Contratos, Obrigações & Negócios</a></li>
-<li><a class="hover:underline" href="/#atuacao-trabalho-previdencia-saude">Trabalho, Previdência & Saúde Suplementar</a></li>
-<li><a class="hover:underline" href="/#atuacao-tributos-fazenda">Tributos & Fazenda Pública</a></li>
-<li><a class="hover:underline" href="/#atuacao-imobiliario-condominios-regularizacao">Imobiliário, Condomínios & Regularização</a></li>
-<li><a class="hover:underline" href="/#atuacao-consumidor-contratos">Consumidor & Contratos</a></li>
-<li><a class="hover:underline" href="/#atuacao-compliance-governanca-integridade">Compliance, Governança & Integridade (PJ/OSCs)</a></li>
-      </ul>
+
+    <!-- Sub-rodapé jurídico -->
+    <div class="pv-subfoot" aria-label="Informação legal">
+      <p class="pv-subfoot__line">OAB/RJ 134.947 · CNPJ 61.489.144/0001-48</p>
+      <p class="pv-subfoot__line">
+        Este site é informativo. Cada caso é único e não há garantia de resultado.
+        A contratação depende de análise prévia e proposta formal, conforme Prov. OAB 205/2021.
+      </p>
+      <p class="pv-subfoot__copy">© 2025 PAVIE Advocacia. Todos os direitos reservados.</p>
     </div>
-    <div>
-      <h3 class="text-xl font-semibold">Informações</h3>
-      <ul class="mt-3 space-y-2">
-        <li><a class="hover:underline" href="/#como-contratar">Como Contratar</a></li>
-        <li><a class="hover:underline" href="/#honorarios">Honorários</a></li>
-        <li><a class="hover:underline" href="/#faq">FAQ</a></li>
-        <li><a class="hover:underline" href="/privacidade/privacidade.html">Política de Privacidade</a></li>
-        <li><a class="hover:underline" href="/termos/termos.html">Termos de Serviço</a></li>
-      </ul>
-    </div>
-    <div>
-      <h3 class="text-xl font-semibold">Contato</h3>
-      <ul class="mt-3 space-y-2 text-slate-300">
-        <li><a class="hover:underline" href="tel:+5521964382263">+55 (21) 96438-2263</a></li>
-        <li><a class="hover:underline" href="mailto:fabiopavie@pavieadvogado.com">fabiopavie@pavieadvogado.com</a></li>
-        <li>Av. Ataulfo de Paiva, 1235 — Leblon, RJ</li>
-        <li>Seg–Sex: 9h–18h</li>
-      </ul>
-    </div>
-  </div>
-  <hr class="border-slate-700 my-8">
-  <div class="container mx-auto px-4 text-center text-slate-400 text-sm space-y-3">
-    <p>OAB/RJ 134.947 | CNPJ 61.489.144/0001-48</p>
-    <p>Este site é meramente informativo. Cada caso é único e não há garantia de resultado. A contratação depende de análise prévia e proposta formal, conforme Prov. OAB 205/2021.</p>
-    <p>© 2025 PAVIE Advocacia. Todos os direitos reservados.</p>
-    <p>· <a class="underline" href="/privacidade/privacidade.html">Política de Privacidade</a> · <a class="underline" href="/termos/termos.html">Termos de Serviço</a></p>
   </div>
 </footer>
+
 
 <!-- Cookie Banner -->
 <div aria-label="Aviso de cookies" aria-live="polite" class="fixed bottom-0 left-0 right-0 bg-slate-900 text-white p-4 shadow-lg z-50" id="cookie-banner" role="dialog">
