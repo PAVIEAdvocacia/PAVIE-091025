@@ -683,11 +683,21 @@
 <!-- Footer -->
 
 <!-- Footer | PAVIE | Compact per log 02:31 -->
+<!-- Footer | PAVIE | 4 columns (Brand | Contato | Serviços | Informações) -->
 <footer class="pv-footer pv-footer--compact" role="contentinfo" aria-label="Rodapé institucional">
   <div class="pv-footer__container">
-    <div class="pv-footer__grid">
+    <div class="pv-footer__grid pv-footer__grid--4">
+      <!-- Brand -->
+      <div class="pv-footer__col pv-col-brand" aria-label="Identidade">
+        <p class="pv-brand">
+          <span class="pv-brand__name">PAVIE</span>
+          <span class="pv-brand__bar">|</span>
+          <span class="pv-brand__name">Advocacia</span>
+        </p>
+        <p class="pv-brand__tag">Clareza e segurança jurídica. Onde você estiver.</p>
+      </div>
 
-      <!-- Contato primeiro -->
+      <!-- Contato -->
       <div class="pv-footer__col pv-col-contact" aria-label="Contato rápido">
         <h3 class="pv-footer__title">Contato</h3>
         <address class="pv-footer__address">
@@ -698,7 +708,7 @@
         </address>
       </div>
 
-      <!-- Serviços reduzidos (4 + ver todas) -->
+      <!-- Serviços (recolhível no mobile) -->
       <div class="pv-footer__col pv-col-services" aria-label="Serviços">
         <details class="pv-acc" open role="group">
           <summary class="pv-acc__summary">Serviços</summary>
@@ -714,8 +724,8 @@
         </details>
       </div>
 
-      <!-- Informações -->
-      <div class="pv-footer__col pv-col-info" aria-label="Links institucionais">
+      <!-- Informações (recolhível no mobile) -->
+      <div class="pv-footer__col pv-col-info" aria-label="Informações do Escritório">
         <details class="pv-acc" open role="group">
           <summary class="pv-acc__summary">Informações</summary>
           <div class="pv-collapse">
@@ -731,7 +741,6 @@
           </div>
         </details>
       </div>
-
     </div>
 
     <!-- Sub-rodapé jurídico -->
@@ -745,6 +754,7 @@
     </div>
   </div>
 </footer>
+
 
 
 <!-- Cookie Banner -->
