@@ -23,7 +23,13 @@ export const onRequestPost = async (ctx) => {
   try {
     body = await request.json();
   } catch {
-    return new Response(JSON.stringify({ ok: false, error: "JSON inválido" }), { status: 400, headers });
+    // Fallback para x-www-form-urlencoded ou multipart/form-data
+    try {
+      const form = await request.formData();
+      body = Object.fromEntries(form.entries());
+    } catch {
+      return new Response(JSON.stringify({ ok: false, error: "Payload inválido" }), { status: 400, headers });
+    }
   }
 
   const nome          = (body.nome || "").trim();
@@ -73,7 +79,7 @@ export const onRequestPost = async (ctx) => {
     auth: env.APPSCRIPT_SECRET || "",
 
     // >>> campos de e-mail que o Apps Script usará <<<
-    to:        env.MAIL_TO || "fabiopavie@pavieadvogado.com",
+    to:        env.MAIL_TO || "contato@pavieadvocacia.com.br",
     from:      env.MAIL_FROM || "",                  // se vazio, o Script usa o padrão da conta
     from_name: env.MAIL_FROM_NAME || "Site PAVIE",
     subject:   `Contato pelo site – ${nome}`,

@@ -33,3 +33,41 @@
   .pv-footer__list--grid2{grid-template-columns:1fr}
   .pv-meta-disclaimer{flex-basis:100%}
 }
+
+
+/* ===== PAVIE Footer Compact ===== */
+:root{--pv-bg:#0e1e2b;--pv-fg:#f8fafc;--pv-muted:#cbd5e1;--pv-accent:#ea580c;--pv-link:#f59e0b;--pv-border:rgba(255,255,255,.12);}
+.pv-footer{background:var(--pv-bg);color:var(--pv-fg)}
+.pv-footer a{color:var(--pv-link);text-decoration:none}
+.pv-footer a:hover{text-decoration:underline;opacity:.95}
+.pv-sep{opacity:.6;margin:0 .35rem}
+
+.pv-footer--compact{padding:1.6rem 0 .5rem}
+.pv-footer__container{max-width:1120px;margin:0 auto;padding:0 1rem}
+.pv-footer__grid{display:grid;grid-template-columns:1.1fr 1fr 1fr;gap:1.1rem}
+.pv-footer__logo{font-weight:700;font-size:1.1rem;letter-spacing:.02em}
+.pv-footer__tagline{margin:.125rem 0 .6rem;font-size:.92rem;opacity:.9}
+.pv-footer__title{margin:0 0 .5rem;font-size:.95rem;color:#fff}
+.pv-footer__list{margin:0;padding:0;list-style:none}
+.pv-footer__list a{display:inline-block;padding:.08rem 0;font-size:.93rem;line-height:1.32}
+/* two-column list for services */
+.pv-footer__list--grid2{display:grid;grid-template-columns:repeat(2,minmax(210px,1fr));gap:.25rem .9rem}
+.pv-footer__address{font-style:normal}
+.pv-icn{margin:.1rem 0}
+.pv-footer__cta{margin-top:.35rem;display:flex;gap:.5rem;flex-wrap:wrap}
+.pv-btn{display:inline-block;border:1px solid var(--pv-border);padding:.4rem .7rem;border-radius:.5rem;color:var(--pv-fg)}
+.pv-btn--primary{background:var(--pv-accent);border-color:transparent;color:#fff}
+/* Single meta row */
+.pv-footer__meta{margin-top:.75rem;padding-top:.55rem;border-top:1px solid var(--pv-border);display:flex;flex-wrap:wrap;align-items:center;gap:.45rem;color:var(--pv-muted);font-size:.86rem}
+.pv-footer__meta p{margin:0}
+.pv-flex-spacer{flex:1}
+
+@media (max-width: 920px){
+  .pv-footer__grid{grid-template-columns:1fr 1fr}
+  .pv-footer__list--grid2{grid-template-columns:1fr 1fr}
+}
+@media (max-width: 640px){
+  .pv-footer--compact{padding:1.2rem 0 .5rem}
+  .pv-footer__grid{grid-template-columns:1fr;gap:.9rem}
+  .pv-footer__list--grid2{grid-template-columns:1fr}
+}
