@@ -1,41 +1,7 @@
-
-/* PAVIE | Advocacia — Footer styles (scoped) */
-:root{
-  --pv-bg:#0e1e2b;
-  --pv-fg:#f8fafc;
-  --pv-muted:#cbd5e1;
-  --pv-accent:#ea580c;
-  --pv-link:#f59e0b;
-  --pv-border:rgba(255,255,255,.12);
-}
-.pv-footer{background:var(--pv-bg);color:var(--pv-fg);padding:3rem 1rem 1.25rem;margin-top:3rem}
-.pv-footer a{color:var(--pv-link);text-decoration:none}
-.pv-footer a:hover{opacity:.9;text-decoration:underline}
-.pv-footer__container{max-width:1120px;margin:0 auto}
-.pv-footer__logo{font-weight:700;letter-spacing:.02em;font-size:1.125rem}
-.pv-sep{opacity:.6;margin:0 .375rem}
-.pv-footer__tagline{color:var(--pv-muted);margin:.25rem 0 1.5rem}
-.pv-footer__grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;align-items:flex-start;margin-top:.5rem}
-.pv-footer__title{font-size:.95rem;font-weight:700;margin:0 0 .75rem;color:#fff}
-.pv-footer__list{list-style:none;padding:0;margin:0}
-.pv-footer__list li{margin:.35rem 0}
-.pv-footer__list a{font-size:.95rem}
-.pv-footer__address{font-style:normal;color:var(--pv-fg)}
-.pv-icn{margin:.25rem 0}
-.pv-icn__svg{margin-right:.5rem}
-.pv-legal-id{margin-top:.5rem;color:var(--pv-muted);font-size:.9rem}
-.pv-footer__cta{margin-top:1rem;display:flex;gap:.5rem;flex-wrap:wrap}
-.pv-btn{display:inline-block;border:1px solid var(--pv-border);padding:.5rem .875rem;border-radius:.625rem;color:var(--pv-fg);text-decoration:none}
-.pv-btn--primary{background:var(--pv-accent);border-color:transparent;color:#fff}
-.pv-disclaimer{margin:2rem 0 1.25rem;color:var(--pv-muted);font-size:.9rem;line-height:1.5}
-.pv-footer__bar{display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--pv-border);padding-top:.75rem;gap:1rem;flex-wrap:wrap}
-.pv-footer__bar p{margin:0;color:var(--pv-muted);font-size:.9rem}
-.pv-footer__bar nav a{margin-right:.5rem}
-.pv-to-top{font-size:.9rem}
-.pv-visually-hidden{position:absolute!important;height:1px;width:1px;overflow:hidden;clip:rect(1px,1px,1px,1px);white-space:nowrap}
-@media (max-width: 900px){ .pv-footer__grid{grid-template-columns:1fr 1fr} }
-@media (max-width: 640px){
-  .pv-footer{padding:2rem 1rem .75rem}
-  .pv-footer__grid{grid-template-columns:1fr;gap:1.25rem}
-  .pv-footer__tagline{margin-bottom:1rem}
-}
+:root{--pv-bg:#0e1e2b;--pv-fg:#f8fafc;--pv-muted:#cbd5e1;--pv-accent:#ea580c;--pv-link:#f59e0b;--pv-border:rgba(255,255,255,.12);}
+/* Enhancements */
+.pv-footer a:focus-visible{outline:2px dashed var(--pv-link); outline-offset:2px; text-decoration:underline}
+.pv-footer__list a{padding:.125rem 0; display:inline-block}
+.pv-footer__bar{margin-top:1rem}
+.pv-footer__container{padding-left:1rem;padding-right:1rem}
+.pv-footer__title{letter-spacing:.01em}

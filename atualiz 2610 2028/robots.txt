@@ -1,7 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://www.pavieadvocacia.com.br/sitemap.xml
-Disallow: /api/
-Disallow: /admin/
-Disallow: /drafts/
