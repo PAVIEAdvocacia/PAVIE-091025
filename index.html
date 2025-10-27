@@ -684,36 +684,35 @@
 
 <!-- Footer | PAVIE | Compact per log 02:31 -->
 <!-- Footer | PAVIE | 4 columns (Brand | Contato | Serviços | Informações) -->
-<footer class="pv-footer pv-footer--compact" role="contentinfo" aria-label="Rodapé institucional">
+<!-- Footer | PAVIE — UX/IX v2 -->
+<footer class="pv-footer pv-footer--v2" role="contentinfo" aria-label="Rodapé institucional">
   <div class="pv-footer__container">
     <div class="pv-footer__grid pv-footer__grid--4">
-      <!-- Brand -->
+      <!-- Marca -->
       <div class="pv-footer__col pv-col-brand" aria-label="Identidade">
         <p class="pv-brand">
-          <span class="pv-brand__name">PAVIE</span>
-          <span class="pv-brand__bar">|</span>
-          <span class="pv-brand__name">Advocacia</span>
+          <span class="pv-brand__name">PAVIE</span><span class="pv-brand__bar" aria-hidden="true">|</span><span class="pv-brand__name">Advocacia</span>
         </p>
         <p class="pv-brand__tag">Clareza e segurança jurídica. Onde você estiver.</p>
       </div>
 
       <!-- Contato -->
-      <div class="pv-footer__col pv-col-contact" aria-label="Contato rápido">
-        <h3 class="pv-footer__title">Contato</h3>
-        <address class="pv-footer__address">
-          <p class="pv-icn"><span aria-hidden="true">📞</span> <a href="tel:+5521964382263">+55 (21) 96438-2263</a></p>
-          <p class="pv-icn"><span aria-hidden="true">✉️</span> <a href="mailto:contato@pavieadvocacia.com.br">contato@pavieadvocacia.com.br</a></p>
-          <p class="pv-icn"><span aria-hidden="true">📍</span> Av. Ataulfo de Paiva, Leblon — Rio de Janeiro, RJ</p>
-          <p class="pv-icn"><span aria-hidden="true">🕘</span> Seg–Sex: 8h–18h | Sáb: 8h–12h</p>
+      <div class="pv-footer__col pv-col-contact" aria-label="Contato">
+        <h3 class="pv-title">Contato</h3>
+        <address class="pv-address">
+          <a class="pv-item" href="tel:+5521964382263"><span aria-hidden="true" class="pv-ic">📞</span> +55 (21) 96438-2263</a>
+          <a class="pv-item" href="mailto:contato@pavieadvocacia.com.br"><span aria-hidden="true" class="pv-ic">✉️</span> contato@pavieadvocacia.com.br</a>
+          <p class="pv-item"><span aria-hidden="true" class="pv-ic">📍</span> Av. Ataulfo de Paiva, Leblon — Rio de Janeiro, RJ</p>
+          <p class="pv-item"><span aria-hidden="true" class="pv-ic">🕘</span> Seg–Sex: 8h–18h &nbsp;|&nbsp; Sáb: 8h–12h</p>
         </address>
       </div>
 
       <!-- Serviços (recolhível no mobile) -->
       <div class="pv-footer__col pv-col-services" aria-label="Serviços">
         <details class="pv-acc" open role="group">
-          <summary class="pv-acc__summary">Serviços</summary>
+          <summary class="pv-title pv-acc__summary">Serviços</summary>
           <div class="pv-collapse">
-            <ul class="pv-footer__list">
+            <ul class="pv-list">
               <li><a href="/#atuacao-familia-patrimonio">Família &amp; Patrimônio</a></li>
               <li><a href="/#atuacao-sucessoes-inventario">Sucessões &amp; Inventário</a></li>
               <li><a href="/#atuacao-familia-binacional">Família Binacional</a></li>
@@ -724,13 +723,13 @@
         </details>
       </div>
 
-      <!-- Informações (recolhível no mobile) -->
+      <!-- Informações (com legal dentro) -->
       <div class="pv-footer__col pv-col-info" aria-label="Informações do Escritório">
         <details class="pv-acc" open role="group">
-          <summary class="pv-acc__summary">Informações</summary>
+          <summary class="pv-title pv-acc__summary">Informações</summary>
           <div class="pv-collapse">
             <nav aria-label="Links institucionais">
-              <ul class="pv-footer__list">
+              <ul class="pv-list">
                 <li><a href="/#como-contratar">Como Contratar</a></li>
                 <li><a href="/#honorarios">Honorários</a></li>
                 <li><a href="/#faq">FAQ</a></li>
@@ -738,18 +737,9 @@
                 <li><a href="/termos/termos.html">Termos de Serviço</a></li>
               </ul>
             </nav>
-          </div>
-        </details>
-      </div>
-
-      <!-- Informação legal -->
-      <div class="pv-footer__col pv-col-legal" aria-label="Informação legal e compliance">
-        <details class="pv-acc" open role="group">
-          <summary class="pv-acc__summary">Informação legal</summary>
-          <div class="pv-collapse">
             <div class="pv-legal">
               <p class="pv-legal__line"><strong>OAB/RJ 134.947</strong> · <strong>CNPJ 61.489.144/0001-48</strong></p>
-              <p class="pv-legal__text">
+              <p class="pv-legal__txt">
                 Este site é informativo. Cada caso é único e não há garantia de resultado.
                 A contratação depende de análise prévia e proposta formal, conforme Prov. OAB 205/2021.
               </p>
@@ -757,15 +747,21 @@
           </div>
         </details>
       </div>
-
     </div>
 
-    <!-- Sub-rodapé jurídico -->
+    <!-- CTA reduzido (opcional, não intrusivo) -->
+    <div class="pv-cta">
+      <a class="pv-btn pv-btn--primary" href="https://wa.me/5521964382263" target="_blank" rel="noopener">WhatsApp</a>
+      <a class="pv-btn" href="/#contato">Agendar contato</a>
+    </div>
+
+    <!-- Faixa final -->
     <div class="pv-subfoot" aria-label="Assinatura e direitos">
-      <p class="pv-subfoot__copy">© 2025 PAVIE Advocacia. Todos os direitos reservados.</p>
+      <p class="pv-copy">© 2025 PAVIE Advocacia. Todos os direitos reservados.</p>
     </div>
   </div>
 </footer>
+
 
 
 
