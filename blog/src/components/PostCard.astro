@@ -1,0 +1,14 @@
+---
+const { post } = Astro.props;
+const url = `/blog/${post.slug}/`;
+const cover = post.data.cover;
+---
+<article class="panel card" itemscope itemtype="https://schema.org/BlogPosting">
+  {cover && <img src={cover} alt="" loading="lazy" width="800" height="450" />}
+  <div style="padding:16px">
+    <span class="meta">{post.data.categorias?.join(' · ')} • {post.data.date.toLocaleDateString('pt-BR')}</span>
+    <h3 style="margin:.2rem 0 .4rem"><a href={url}>{post.data.title}</a></h3>
+    <p>{post.data.description}</p>
+    <a href={url}>Ler mais →</a>
+  </div>
+</article>

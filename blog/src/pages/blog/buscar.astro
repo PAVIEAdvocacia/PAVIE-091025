@@ -1,0 +1,37 @@
+---
+import Layout from "../../components/Layout.astro";
+import Breadcrumbs from "../../components/Breadcrumbs.astro";
+---
+<Layout title="Buscar — Blog PAVIE" description="Encontre artigos por tema, órgão, palavra-chave">
+  <Breadcrumbs trail={[{href:"/",label:"Início"},{href:"/blog/",label:"Blog"},{label:"Buscar"}]} />
+  <input id="q" type="search" placeholder="Buscar por tema, tribunal, termo…" aria-label="Buscar" style="width:100%;padding:12px;border:1px solid #ccd;border-radius:10px" />
+  <ul id="r" aria-live="polite" aria-label="Resultados"></ul>
+  <script>
+    (async function(){
+      const q = document.getElementById('q'), r = document.getElementById('r');
+      const data = await (await fetch('/blog/search.json',{cache:'no-store'})).json();
+      function score(item,term){
+        const t = term.toLowerCase();
+        let s=0;
+        if(item.title.toLowerCase().includes(t)) s+=3;
+        if((item.summary||'').toLowerCase().includes(t)) s+=2;
+        const bag = [...(item.tags||[]),(item.categorias||[])].join(' ').toLowerCase();
+        if(bag.includes(t)) s+=1;
+        return s;
+      }
+      q.addEventListener('input', ()=>{
+        const term = q.value.trim(); r.innerHTML='';
+        if(term.length<2) return;
+        const out = data.map(d=>({d, s:score(d,term)})).filter(x=>x.s>0)
+                       .sort((a,b)=> b.s===a.s ? (a.d.date < b.d.date ? 1 : -1) : (b.s-a.s)).slice(0,30);
+        out.forEach(x=>{
+          const li=document.createElement('li');
+          li.innerHTML = `<a href="${x.d.url}"><strong>${x.d.title}</strong></a><br>
+                          <small>${x.d.summary||''}</small><br>
+                          <small>${[...(x.d.categorias||[]),...(x.d.tags||[])].join(' · ')}</small>`;
+          r.appendChild(li);
+        });
+      });
+    })();
+  </script>
+</Layout>

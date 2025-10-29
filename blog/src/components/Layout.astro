@@ -1,0 +1,44 @@
+---
+import "../styles/global.css";
+import Header from "./Header.astro";
+import Footer from "./Footer.astro";
+const { title = "PAVIE | Blog", description = "Conteúdo jurídico com base legal e leitura agradável.", canonical } = Astro.props;
+---
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    {canonical && <link rel="canonical" href={canonical} />}
+    <meta name="theme-color" content="#0e1b2c" />
+    <meta property="og:site_name" content="PAVIE Advocacia" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+  </head>
+  <body>
+    <Header />
+    <main id="main" class="wrap" role="main">
+      <slot />
+    </main>
+    <Footer />
+    <script type="application/ld+json" set:html={`{
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "url": "https://www.pavieadvocacia.com.br",
+      "name": "PAVIE Advocacia",
+      "potentialAction": {"@type":"SearchAction","target":"https://www.pavieadvocacia.com.br/blog/buscar?q={query}","query-input":"required name=query"},
+      "inLanguage": "pt-BR"
+    }`}></script>
+    <script type="application/ld+json" set:html={`{
+      "@context":"https://schema.org",
+      "@type":"Blog",
+      "name":"PAVIE | Blog",
+      "url":"https://www.pavieadvocacia.com.br/blog/",
+      "inLanguage":"pt-BR",
+      "publisher":{"@type":"Organization","name":"PAVIE Advocacia"}
+    }`}></script>
+  </body>
+</html>

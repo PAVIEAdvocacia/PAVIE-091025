@@ -1,0 +1,51 @@
+---
+import Layout from "../../components/Layout.astro";
+import Breadcrumbs from "../../components/Breadcrumbs.astro";
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+  return posts.map((p) => ({ params: { slug: p.slug }, props: { post: p } }));
+}
+
+const { post } = Astro.props;
+const url = `https://www.pavieadvocacia.com.br/blog/${post.slug}/`;
+const title = post.data.title;
+const desc = post.data.description ?? "";
+---
+<Layout title={`${title} — Blog PAVIE`} description={desc} canonical={url}>
+  <Breadcrumbs trail={[{href:"/",label:"Início"},{href:"/blog/",label:"Blog"},{label:title}]} />
+  <article class="panel" style="padding:22px" itemScope itemType="https://schema.org/BlogPosting">
+    <header>
+      <h1 itemProp="headline">{post.data.title}</h1>
+      <p class="meta">
+        <time itemProp="datePublished" dateTime={post.data.date.toISOString()}>{post.data.date.toLocaleDateString('pt-BR')}</time>
+        {post.data.author && <> · <span itemProp="author">{post.data.author}</span></>}
+      </p>
+      {post.data.cover && <img src={post.data.cover} alt="" loading="lazy" style="margin:10px 0;border-radius:12px;width:100%;height:auto" itemProp="image" />}
+    </header>
+    <div itemProp="articleBody"><Content /></div>
+    {post.data.tags?.length && <p class="meta">Tags: {post.data.tags.join(' · ')}</p>}
+  </article>
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context":"https://schema.org",
+    "@type":"BlogPosting",
+    headline: post.data.title,
+    mainEntityOfPage: url,
+    datePublished: post.data.date,
+    dateModified: post.data.updated ?? post.data.date,
+    author: {"@type":"Person","name": post.data.author || "PAVIE"},
+    publisher: {"@type":"Organization","name":"PAVIE Advocacia"},
+    image: post.data.cover || "",
+    articleSection: (post.data.categorias && post.data.categorias[0]) || "",
+    keywords: (post.data.tags || []).join(", "),
+    inLanguage: "pt-BR",
+    description: desc
+  })}></script>
+  <script>
+    const headings = Array.from(document.querySelectorAll('article h2, article h3'));
+    if (headings.length) {
+      headings.forEach(h=>{ if(!h.id){ h.id = h.textContent.toLowerCase().trim().replace(/\s+/g,'-').replace(/[^\w\-]/g,''); } });
+    }
+  </script>
+</Layout>

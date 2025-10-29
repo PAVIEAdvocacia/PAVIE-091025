@@ -1,0 +1,9 @@
+---
+const { page } = Astro.props;
+---
+{page?.lastPage > 1 && (
+  <nav class="pager" aria-label="Paginação" style="display:flex;gap:8px;justify-content:flex-end">
+    {page.currentPage > 1 && <a href={page.url.prev}>← Anterior</a>}
+    {page.currentPage < page.lastPage && <a href={page.url.next}>Próximo →</a>}
+  </nav>
+)}

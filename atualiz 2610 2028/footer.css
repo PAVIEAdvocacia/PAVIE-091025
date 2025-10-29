@@ -1,7 +1,0 @@
-:root{--pv-bg:#0e1e2b;--pv-fg:#f8fafc;--pv-muted:#cbd5e1;--pv-accent:#ea580c;--pv-link:#f59e0b;--pv-border:rgba(255,255,255,.12);}
-/* Enhancements */
-.pv-footer a:focus-visible{outline:2px dashed var(--pv-link); outline-offset:2px; text-decoration:underline}
-.pv-footer__list a{padding:.125rem 0; display:inline-block}
-.pv-footer__bar{margin-top:1rem}
-.pv-footer__container{padding-left:1rem;padding-right:1rem}
-.pv-footer__title{letter-spacing:.01em}

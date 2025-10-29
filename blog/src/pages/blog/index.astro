@@ -1,0 +1,70 @@
+---
+import Layout from "../../components/Layout.astro";
+import Breadcrumbs from "../../components/Breadcrumbs.astro";
+import PostCard from "../../components/PostCard.astro";
+import { getCollection } from 'astro:content';
+const all = (await getCollection('blog')).filter(p => !p.data.draft).sort((a,b)=> b.data.date.valueOf() - a.data.date.valueOf());
+const highlight = all[0];
+const rest = all.slice(1, 10);
+---
+<Layout title="Blog PAVIE — Conteúdo Jurídico" description="Direito Civil, Constitucional, Internacional e Setor Público — artigos com base legal, leitura agradável e utilidade prática." canonical="https://www.pavieadvocacia.com.br/blog/">
+  <Breadcrumbs trail={[{href:"/",label:"Início"},{label:"Blog"}]} />
+  <section class="hero panel" aria-labelledby="h1">
+    <h1 id="h1">Blog PAVIE</h1>
+    <p class="meta">Direito Civil, Constitucional, Internacional e Setor Público — artigos com base legal, leitura agradável e utilidade prática.</p>
+    <div aria-label="Filtros de temas">
+      <a class="chip" href="/blog/categorias/Constituição/">⚖️ Constitucional</a>
+      <a class="chip" href="/blog/categorias/Civil/">📚 Civil</a>
+      <a class="chip" href="/blog/categorias/Internacional/">🌍 Internacional</a>
+      <a class="chip" href="/blog/categorias/Poder%20Público/">🏛️ Poder Público</a>
+      <a class="chip" href="/blog/categorias/Sucessões/">💼 Sucessões</a>
+      <a class="chip" href="/blog/categorias/Família/">👨‍👩‍👧 Família</a>
+    </div>
+    <p><a class="btn" href="/blog/buscar">🔎 Buscar artigos</a></p>
+  </section>
+  <section class="grid grid-2" style="margin-top:20px">
+    {highlight && (
+      <article class="panel card" itemscope itemtype="https://schema.org/BlogPosting">
+        {highlight.data.cover && <img src={highlight.data.cover} width="1280" height="720" alt="" loading="lazy" />}
+        <div style="padding:18px">
+          <span class="meta">{highlight.data.categorias?.[0]} • {highlight.data.date.toLocaleDateString('pt-BR')}</span>
+          <h2 style="margin:.4rem 0 0.6rem"><a href={`/blog/${highlight.slug}/`}>{highlight.data.title}</a></h2>
+          <p>{highlight.data.description}</p>
+          <a class="btn" href={`/blog/${highlight.slug}/`}>Ler artigo completo →</a>
+        </div>
+      </article>
+    )}
+    <aside class="panel" aria-labelledby="news">
+      <div style="padding:24px">
+        <h2 id="news" style="margin-top:0">📬 Receba conteúdo exclusivo</h2>
+        <p class="meta">Sem spam. Cancele quando quiser.</p>
+        <form action="https://example.com/newsletter" method="post" aria-label="Assinar newsletter">
+          <label class="sr-only" for="email">Seu melhor e-mail</label>
+          <input id="email" name="email" type="email" required placeholder="email@exemplo.com"
+                 style="width:100%;padding:12px;border:1px solid var(--line);border-radius:10px;margin-bottom:10px">
+          <button class="btn" type="submit">Quero receber</button>
+        </form>
+      </div>
+    </aside>
+  </section>
+  <section aria-label="Artigos recentes" style="margin-top:24px">
+    <header style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+      <h2 style="margin:0">Artigos recentes</h2>
+    </header>
+    <div class="grid grid-3">
+      {rest.map((p) => <PostCard post={p} />)}
+    </div>
+  </section>
+  <section style="margin-top:26px" class="panel">
+    <div style="padding:18px">
+      <h2 style="margin-top:0">Base legal e órgãos</h2>
+      <ul style="list-style:none;display:grid;gap:10px;grid-template-columns:repeat(2,minmax(0,1fr));padding:0;margin:0">
+        <li><a rel="nofollow" href="https://www.planalto.gov.br/ccivil_03/constituicao/constituicao.htm">Constituição Federal de 1988</a></li>
+        <li><a rel="nofollow" href="https://www.stf.jus.br/">STF</a></li>
+        <li><a rel="nofollow" href="https://www.stj.jus.br/">STJ</a></li>
+        <li><a rel="nofollow" href="https://portal.stf.jus.br/jurisprudencia/">Jurisprudência STF</a></li>
+        <li><a rel="nofollow" href="https://www4.planalto.gov.br/legislacao/">Leis e decretos (Planalto)</a></li>
+      </ul>
+    </div>
+  </section>
+</Layout>

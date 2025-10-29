@@ -1,0 +1,17 @@
+:root{--brand:#0e1b2c;--ink:#132237;--muted:#5a6a7a;--acc:#e96b2f;--bg:#fff;--soft:#f7f9fc;--line:#e6ecf2;--radius:14px;--max:1140px;--shadow:0 8px 24px rgba(0,0,0,.08)}
+*{box-sizing:border-box} html{scroll-behavior:smooth}
+body{margin:0;color:var(--ink);background:var(--soft);font:16px/1.65 system-ui,-apple-system,Segoe UI,Inter,Roboto,Arial;text-rendering:optimizeLegibility;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+h1,h2,h3{font-family: ui-serif, Georgia, 'Times New Roman', serif;line-height:1.25;margin:.2rem 0 .6rem;color:var(--ink)}
+h1{font-size:2rem} h2{font-size:1.4rem} h3{font-size:1.15rem}
+p{margin:.6rem 0 1rem} a{color:#0a4db3;text-decoration:none} a:hover{text-decoration:underline} img{max-width:100%;height:auto}
+.wrap{max-width:var(--max);margin:auto;padding:24px}
+header.top{background:var(--brand);color:#fff} header.top a{color:#cfe0f7}
+nav.primary a{margin-right:14px} nav.primary a[aria-current="page"]{color:#fff;font-weight:600}
+.panel{background:#fff;border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow)}
+.grid{display:grid;gap:18px} @media(min-width:960px){.grid-3{grid-template-columns:repeat(3,1fr)} .grid-2{grid-template-columns:1.15fr .85fr}}
+.card img{display:block;width:100%;border-bottom:1px solid var(--line)} .meta{color:var(--muted);font-size:.92rem}
+.chip{display:inline-block;background:#fff;border:1px solid var(--line);border-radius:999px;padding:8px 14px;margin:6px 6px 0 0;color:#0b1b2b;font-weight:600}
+.btn{display:inline-block;background:var(--acc);color:#fff;border:0;border-radius:10px;padding:10px 16px;font-weight:700} .btn:hover{filter:saturate(1.08)}
+.hero{background:linear-gradient(135deg,#2c4a6d 0%, #1a2f4a 100%);color:#fff;border-radius:var(--radius);padding:48px 24px;margin-top:16px} .hero h1{margin:.2rem 0 1rem;font-size:2.2rem}
+:focus-visible{outline:3px solid #58a;outline-offset:2px} footer{background:var(--brand);color:#cfe0f7;margin-top:42px} footer a{color:#fff}
+.crumbs{font-size:.9rem;color:var(--muted);margin:10px 0 0}
