@@ -6,11 +6,46 @@
     <title>PAVIE Advocacia — Admin Blog</title>
   </head>
   <body>
-    <script>
-      // Força o Decap a buscar sempre a versão mais recente do config.yml
-      // Se alterar o config, mude o sufixo ?v=7 para ?v=8, etc.
-      window.CMS_CONFIG_PATH = '/blog/public/admin/config.yml?v=7';
-    </script>
+    <!-- Decap CMS -->
     <script src="https://cdn.jsdelivr.net/npm/decap-cms@3.0.0/dist/decap-cms.js"></script>
+
+    <script>
+      // Inicialização MANUAL para evitar qualquer cache ou caminho incorreto de config.yml
+      window.CMS_MANUAL_INIT = true;
+      CMS.init({
+        config: {
+          backend: {
+            name: "github",
+            repo: "PAVIEAdvocacia/PAVIE-091025",
+            branch: "main",
+            base_url: "https://pavieadvocacia.com.br",
+            auth_endpoint: "/api/github-oauth"
+          },
+          media_folder: "public/uploads",
+          public_folder: "/blog/uploads",
+          collections: [
+            {
+              name: "posts",
+              label: "Artigos",
+              folder: "src/content/posts",
+              create: true,
+              slug: "{{year}}-{{month}}-{{day}}-{{slug}}",
+              fields: [
+                { label: "Título", name: "title", widget: "string" },
+                { label: "Resumo", name: "description", widget: "text" },
+                { label: "Data", name: "pubDate", widget: "datetime" },
+                {
+                  label: "Categoria",
+                  name: "category",
+                  widget: "select",
+                  options: ["Inventário", "Família", "Internacional", "Imobiliário", "Contratos", "Consumidor", "Tributário"]
+                },
+                { label: "Conteúdo", name: "body", widget: "markdown" }
+              ]
+            }
+          ]
+        }
+      });
+    </script>
   </body>
 </html>
