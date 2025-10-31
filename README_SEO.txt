@@ -1,5 +1,5 @@
 
-PAVIE | Advocacia — Ajustes SEO/Search Console (2025-10-29) D
+PAVIE | Advocacia — Ajustes SEO/Search Console (2025-10-29)
 -----------------------------------------------------------
 Este pacote inclui:
 - _redirects: regras para forçar não-www → domínio raiz (use também uma Redirect Rule no painel da Cloudflare).
