@@ -1,0 +1,19 @@
+---
+type Row = { caso: string; tribunal: string; data: string; resumo: string; link?: string; };
+const { data = [] as Row[] } = Astro.props;
+---
+<table class="card" style="width:100%">
+  <thead>
+    <tr><th style="text-align:left">Caso</th><th>Tribunal</th><th>Data</th><th style="text-align:left">Decisão</th></tr>
+  </thead>
+  <tbody>
+    {data.map(r => (
+      <tr>
+        <td>{r.link ? <a href={r.link}>{r.caso}</a> : r.caso}</td>
+        <td style="text-align:center">{r.tribunal}</td>
+        <td style="text-align:center">{new Date(r.data).toLocaleDateString('pt-BR')}</td>
+        <td>{r.resumo}</td>
+      </tr>
+    ))}
+  </tbody>
+</table>

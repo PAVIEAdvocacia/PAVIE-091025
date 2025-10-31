@@ -1,18 +1,21 @@
-# PAVIE | Blog — Astro (Cloudflare Pages)
+# PAVIE | Blog em Astro (/blog)
 
-Projeto Astro com blog institucional subordinado ao site estático, pronto para SEO, JSON-LD, busca leve, RSS e Decap CMS.
-
-## Rodar local
+## Como rodar local
+```bash
 npm install
 npm run dev
-# http://localhost:4321/blog/
+```
+Abra o endereço impresso no terminal (geralmente http://localhost:4321/blog/).
 
 ## Build
+```bash
 npm run build
-npm run preview
+```
+Saída em `dist/` (publicar como /blog no seu site/Pages).
 
-## Cloudflare Pages
-- Build command: npm run build
-- Output: dist
-
-Ajuste `public/admin/config.yml` (campo `repo`) para o seu GitHub.
+## Estrutura
+- `src/content/blog/*.md` — posts
+- `src/pages/blog/` — roteamento
+- `src/layouts/Post.astro` — layout de artigo
+- `src/components/` — componentes
+- `src/styles/global.css` — estilos básicos

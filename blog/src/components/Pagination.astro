@@ -1,9 +1,11 @@
 ---
-const { page } = Astro.props;
+const { page = 1, totalPages = 1, base = '/blog/' } = Astro.props;
+const pageHref = (n:number) => n===1 ? base : `${base}page/${n}/`;
 ---
-{page?.lastPage > 1 && (
-  <nav class="pager" aria-label="Paginação" style="display:flex;gap:8px;justify-content:flex-end">
-    {page.currentPage > 1 && <a href={page.url.prev}>← Anterior</a>}
-    {page.currentPage < page.lastPage && <a href={page.url.next}>Próximo →</a>}
-  </nav>
-)}
+<nav class="pagination" aria-label="Paginação">
+  {page > 1 && <a href={pageHref(page-1)}>« Anterior</a>}
+  {Array.from({length: totalPages}, (_,i)=>i+1).map(n=>(
+    <span class={n===page?'active':''}><a href={pageHref(n)} aria-current={n===page?'page':undefined}>{n}</a></span>
+  ))}
+  {page < totalPages && <a href={pageHref(page+1)}>Próxima »</a>}
+</nav>

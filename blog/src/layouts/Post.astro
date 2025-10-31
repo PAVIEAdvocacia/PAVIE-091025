@@ -1,0 +1,23 @@
+---
+const { title = 'Artigo', description = '', pubDate } = Astro.props;
+---
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <title>{title} | PAVIE | Blog</title>
+    {description && <meta name="description" content={description} />}
+  </head>
+  <body>
+    <main class="container">
+      <header>
+        <h1>{title}</h1>
+        {pubDate && (
+          <p><time datetime={pubDate.toISOString()}>
+            {pubDate.toLocaleDateString('pt-BR')}
+          </time></p>
+        )}
+      </header>
+      <slot />
+    </main>
+  </body>
+</html>
