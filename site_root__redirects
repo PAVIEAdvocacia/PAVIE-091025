@@ -1,0 +1,11 @@
+# _redirects — Cloudflare Pages (raiz do site)
+# Canonicaliza WWW para apex (com "pass-through" de :splat)
+https://www.pavieadvocacia.com.br/*  https://pavieadvocacia.com.br/:splat  301!
+http://www.pavieadvocacia.com.br/*   https://pavieadvocacia.com.br/:splat  301!
+http://pavieadvocacia.com.br/*       https://pavieadvocacia.com.br/:splat  301!
+
+# (opcional) Aliases de caminhos. Deixe comentado até precisar.
+# /privacidade   /privacidade/privacidade.html   301
+
+# Observação: nenhuma regra especial é necessária para /blog/.
+# Basta publicar a pasta /blog (HTML estático) no repositório raiz do site.

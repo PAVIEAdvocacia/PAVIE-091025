@@ -1,0 +1,24 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const posts = [
+  {
+    title: 'Hello, Blog — bem-vindo ao espaço de artigos',
+    href: '/blog/posts/hello-blog/',
+    excerpt: 'Como funcionará o blog jurídico da PAVIE | Advocacia: linguagem clara, ética OAB, LGPD e foco em decisões seguras.',
+    date: '2025-10-31'
+  }
+];
+---
+<BaseLayout title="Blog — PAVIE | Advocacia" description="Artigos objetivos sobre Família, Sucessões e Patrimônio — com ética OAB e LGPD.">
+  <section class="post-list" aria-label="Lista de artigos">
+    {posts.map(p => (
+      <article class="card">
+        <h2><a href={p.href}>{p.title}</a></h2>
+        <p class="muted">{p.date}</p>
+        <p>{p.excerpt}</p>
+        <p><a href={p.href} aria-label={`Ler: ${p.title}`}>Ler artigo →</a></p>
+      </article>
+    ))}
+  </section>
+</BaseLayout>
