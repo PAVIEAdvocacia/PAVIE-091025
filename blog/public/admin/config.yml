@@ -1,7 +1,9 @@
 backend:
   name: github
-  repo: pavieadvocacia/PAVIE-091025 # confirme o nome exato do seu repositório
+  repo: PAVIEAdvocacia/PAVIE-091025
   branch: main
+  base_url: https://pavieadvocacia.com.br/blog
+  auth_endpoint: /blog/functions/auth/github
 
 media_folder: "public/uploads"
 public_folder: "/blog/uploads"
@@ -18,3 +20,4 @@ collections:
       - { label: "Data", name: "pubDate", widget: "datetime" }
       - { label: "Categoria", name: "category", widget: "select", options: ["Inventário", "Família", "Internacional", "Imobiliário", "Contratos", "Consumidor", "Tributário"] }
       - { label: "Conteúdo", name: "body", widget: "markdown" }
+
