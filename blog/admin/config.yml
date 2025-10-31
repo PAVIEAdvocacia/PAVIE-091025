@@ -1,0 +1,20 @@
+backend:
+  name: github
+  repo: pavieadvocacia/PAVIE-091025 # confirme o nome exato do seu repositório
+  branch: main
+
+media_folder: "public/uploads"
+public_folder: "/blog/uploads"
+
+collections:
+  - name: "posts"
+    label: "Artigos"
+    folder: "src/content/posts"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - { label: "Título", name: "title", widget: "string" }
+      - { label: "Resumo", name: "description", widget: "text" }
+      - { label: "Data", name: "pubDate", widget: "datetime" }
+      - { label: "Categoria", name: "category", widget: "select", options: ["Inventário", "Família", "Internacional", "Imobiliário", "Contratos", "Consumidor", "Tributário"] }
+      - { label: "Conteúdo", name: "body", widget: "markdown" }
