@@ -5,6 +5,10 @@
     <title>PAVIE Advocacia — Admin Blog</title>
   </head>
   <body>
+    <script>
+      // força o Decap a carregar este config (evita cache antigo)
+      window.CMS_CONFIG_PATH = '/blog/public/admin/config.yml?v=5';
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/decap-cms@3.0.0/dist/decap-cms.js"></script>
   </body>
 </html>
