@@ -1,13 +1,15 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="pt-br">
   <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>PAVIE Advocacia — Admin Blog</title>
   </head>
   <body>
     <script>
-      // força o Decap a carregar este config (evita cache antigo)
-      window.CMS_CONFIG_PATH = '/blog/public/admin/config.yml?v=5';
+      // Força o Decap a buscar sempre a versão mais recente do config.yml
+      // Se alterar o config, mude o sufixo ?v=7 para ?v=8, etc.
+      window.CMS_CONFIG_PATH = '/blog/public/admin/config.yml?v=7';
     </script>
     <script src="https://cdn.jsdelivr.net/npm/decap-cms@3.0.0/dist/decap-cms.js"></script>
   </body>
