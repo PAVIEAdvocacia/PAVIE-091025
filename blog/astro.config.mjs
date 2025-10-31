@@ -1,13 +1,10 @@
-// astro.config.mjs — PAVIE Blog
-// Coloque este arquivo na pasta do projeto do blog (…/blog/)
 import { defineConfig } from 'astro/config';
+import sitemap from '@astrojs/sitemap';
+
+// https://docs.astro.build
 export default defineConfig({
-  // Domínio principal do site (sem / no final)
   site: 'https://pavieadvocacia.com.br',
-  // O blog deve viver em /blog/
-  base: '/blog/',
-  // Saída 100% estática p/ publicar dentro do site raiz
+  base: '/blog',
   output: 'static',
-  // Recomendo manter URLs com barra final por consistência
-  trailingSlash: 'always',
+  integrations: [sitemap()],
 });
