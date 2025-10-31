@@ -1,8 +1,0 @@
-# ---- Cloudflare Pages Redirects ----
-# Força não-www → raiz (algumas instalações exigem regra no painel; mantenha isto como fallback)
-https://www.pavieadvocacia.com.br/*  https://pavieadvocacia.com.br/:splat  301!
-http://www.pavieadvocacia.com.br/*   https://pavieadvocacia.com.br/:splat  301!
-http://pavieadvocacia.com.br/*       https://pavieadvocacia.com.br/:splat  301!
-
-# Exemplo de alias de caminhos (mantenha comentado até precisar)
-# /privacidade   /privacidade/privacidade.html   301
