@@ -1,0 +1,38 @@
+backend:
+  name: github
+  repo: PAVIEAdvocacia/PAVIE-091025   # ⚠️ use exatamente o nome do seu repositório no GitHub (case-sensitive)
+  branch: main
+  base_url: https://pavieadvocacia.com.br
+  auth_endpoint: /api/auth
+
+media_folder: "public/blog/uploads"     # Onde os arquivos serão armazenados no repositório
+public_folder: "/blog/uploads"          # Caminho público para acessar as mídias
+
+publish_mode: editorial_workflow        # Permite revisão antes de publicar (opcional)
+locale: "pt"
+
+collections:
+  - name: "posts"
+    label: "Artigos"
+    folder: "src/content/posts"
+    create: true
+    slug: "{{slug}}"
+    editor:
+      preview: true
+    fields:
+      - { label: "Título", name: "title", widget: "string" }
+      - { label: "Data", name: "date", widget: "datetime", format: "YYYY-MM-DD" }
+      - { label: "Resumo", name: "description", widget: "text", required: false }
+      - { label: "Corpo do texto", name: "body", widget: "markdown" }
+      - { label: "Imagem de capa", name: "image", widget: "image", required: false }
+
+  - name: "config"
+    label: "Configurações do Site"
+    files:
+      - file: "src/config/site.yml"
+        label: "Informações gerais"
+        name: "siteinfo"
+        fields:
+          - { label: "Título do site", name: "title", widget: "string" }
+          - { label: "Descrição", name: "description", widget: "text" }
+          - { label: "Contato principal", name: "contact", widget: "string" }
