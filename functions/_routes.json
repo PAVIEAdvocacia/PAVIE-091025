@@ -1,4 +1,4 @@
 {
   "version": 1,
-  "include": ["/*"]
+  "include": ["/diag", "/ping", "/api/*"]
 }
