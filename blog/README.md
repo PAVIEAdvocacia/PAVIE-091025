@@ -1,4 +1,4 @@
-# PAVIE | Blog Astro — /blog
+# PAVIE | Blog Astro — /blog d
 
 Este projeto cria um blog Astro publicado em **/blog** do domínio `https://pavieadvocacia.com.br`.
 
