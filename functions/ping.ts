@@ -1,2 +1,3 @@
-export const onRequest: PagesFunction = () =>
-  new Response("pong", { headers: { "content-type": "text/plain" } });
+export function onRequest() {
+  return new Response("pong-js", { headers: { "content-type": "text/plain" } });
+}

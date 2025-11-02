@@ -1,5 +1,5 @@
-export const onRequest: PagesFunction = async () => {
-  return new Response(JSON.stringify({ ok: true, where: "Pages Functions" }), {
-    headers: { "content-type": "application/json" },
+export function onRequest() {
+  return new Response(JSON.stringify({ ok: true, where: "Pages Functions (JS)" }), {
+    headers: { "content-type": "application/json" }
   });
-};
+}
