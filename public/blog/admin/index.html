@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Admin | Pavie Advocacia</title>
+    <meta name="robots" content="noindex, nofollow" />
+  </head>
+  <body>
+    <!-- Decap CMS -->
+    <script src="https://unpkg.com/decap-cms@^3/dist/decap-cms.js"></script>
+
+    <!-- Diagnóstico (pode remover depois): mostra a mensagem do OAuth no console -->
+    <script>
+      window.addEventListener('message', (e) => {
+        if (typeof e.data === 'string' && e.data.startsWith('authorization:')) {
+          console.log('[ADMIN] mensagem OAuth:', e.origin, e.data.slice(0, 120) + '…');
+        }
+      });
+    </script>
+  </body>
+</html>

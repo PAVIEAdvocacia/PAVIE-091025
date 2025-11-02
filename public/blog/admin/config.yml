@@ -1,0 +1,30 @@
+backend:
+  name: github
+  repo: PAVIEAdvocacia/PAVIE-091025   # ajuste se o nome do repo for outro
+  branch: main
+  base_url: /api                      # Cloudflare Pages Functions
+  auth_endpoint: auth                 # /api/auth
+  site_domain: pavieadvocacia.com.br  # sem https, sem barra
+
+locale: pt
+
+media_folder: "public/uploads"        # onde as imagens/arquivos são gravados no repo
+public_folder: "/uploads"             # como o site serve esses arquivos
+
+publish_mode: editorial_workflow      # rascunho → revisão → publicado
+
+collections:
+  - name: "posts"
+    label: "Posts"
+    label_singular: "Post"
+    folder: "blog/src/content/blog"   # ← caminho real dos .md no repo
+    extension: "md"                   # ← conforme você pediu
+    create: true
+    slug: "{{slug}}"
+    summary: "{{title}} — {{pubDate}}"
+    fields:
+      - { label: "Título", name: "title", widget: "string" }
+      - { label: "Descrição", name: "description", widget: "text", required: false }
+      - { label: "Data de publicação", name: "pubDate", widget: "datetime" }
+      - { label: "Imagem de capa", name: "heroImage", widget: "image", required: false }
+      - { label: "Conteúdo", name: "body", widget: "markdown" }
