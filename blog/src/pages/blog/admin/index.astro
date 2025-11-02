@@ -1,0 +1,27 @@
+---
+// nada no frontmatter
+---
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Admin | Pavie Advocacia</title>
+  </head>
+  <body>
+    <!-- Ponto de montagem do Decap -->
+    <script src="https://unpkg.com/decap-cms@^3/dist/decap-cms.js"></script>
+    <!-- Diz ao Decap onde está o config -->
+    <script>
+      // Garante que o Decap carregue o YAML exposto pelo endpoint abaixo
+      window.CMS_MANUAL_INIT = true;
+      fetch('/blog/admin/config.yml', { cache: 'no-store' })
+        .then(r => r.text())
+        .then(yaml => {
+          // @ts-ignore
+          CMS.init({ config: yaml });
+        })
+        .catch(err => console.error('Falha ao carregar config.yml', err));
+    </script>
+  </body>
+</html>
