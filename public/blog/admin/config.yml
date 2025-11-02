@@ -1,6 +1,6 @@
 backend:
   name: github
-  repo: PAVIEAdvocacia/PAVIE-091025   # ⚠️ use exatamente o nome do seu repositório no GitHub (case-sensitive)
+  repo: PAVIEAdvocacia/PAVIE-311025   # ⚠️ use exatamente o nome do seu repositório no GitHub (case-sensitive)
   branch: main
   base_url: https://pavieadvocacia.com.br
   auth_endpoint: /api/auth
