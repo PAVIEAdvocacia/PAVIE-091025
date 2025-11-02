@@ -1,4 +1,12 @@
 {
   "version": 1,
-  "include": ["/*"]
+  "include": [
+    "/api/*",
+    "/ping",
+    "/diag"
+  ],
+  "exclude": [
+    "/_assets/*",
+    "/favicon.ico"
+  ]
 }
