@@ -1,22 +1,23 @@
 backend:
   name: github
-  repo: PAVIEAdvocacia/PAVIE-091025
-  branch: main
-  base_url: https://pavieadvocacia.com.br
-  auth_endpoint: /api/auth
+  repo: PAVIEAdvocacia/PAVIE-091025      # Repositório do site
+  branch: main                           # Branch principal
+  base_url: /api                         # Endpoint base hospedado no Cloudflare Pages
+  auth_endpoint: auth                    # Caminho da função de autenticação
+  site_domain: pavieadvocacia.com.br     # Domínio do site em produção
 
-media_folder: "public/uploads"
-public_folder: "/uploads"
+media_folder: "public/uploads"           # Onde os arquivos enviados serão salvos no repositório
+public_folder: "/uploads"                # Caminho público dos arquivos
 
-publish_mode: editorial_workflow        # Permite revisão antes de publicar (opcional)
-locale: "pt"
+publish_mode: editorial_workflow         # Ativa revisão antes da publicação
+locale: "pt"                             # Define idioma padrão para português
 
 collections:
   - name: "posts"
     label: "Artigos"
-    folder: "src/content/posts"
+    folder: "src/content/posts"          # Pasta onde ficam os artigos
     create: true
-    slug: "{{slug}}"
+    slug: "{{slug}}"                     # Nome do arquivo baseado no slug
     editor:
       preview: true
     fields:
