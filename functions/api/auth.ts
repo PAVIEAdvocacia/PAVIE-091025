@@ -1,24 +1,36 @@
 // functions/api/auth.ts
+
 export async function onRequestGet({ request, env }: { request: Request; env: any }) {
   const url = new URL(request.url);
   const code = url.searchParams.get("code");
 
-  // Esta rota é o callback do GitHub.
-  // Se não veio "code", não é para responder nada especial – o Decap
-  // é quem inicia o authorize no GitHub e manda redirecionar para cá.
+  // 1) PRIMEIRA ETAPA: iniciar OAuth (sem "code")
   if (!code) {
-    return new Response(
-      JSON.stringify({ error: "No code provided (JS)" }),
-      { headers: { "content-type": "application/json" }, status: 400 }
-    );
+    // callback = este mesmo endpoint, sem querystring
+    const callback = `${url.origin}/api/auth`;
+
+    // opcional: gerar um state para CSRF; pode guardar em cookie se quiser validar depois
+    const state = crypto.randomUUID();
+
+    const params = new URLSearchParams({
+      client_id: env.GITHUB_CLIENT_ID,
+      redirect_uri: callback,
+      scope: "repo",
+      state,
+      // esse parâmetro melhora a UX quando a conta correta já está logada
+      // skip_account_picker: "true"  // (GitHub aceita; comente se não quiser)
+    });
+
+    const authorizeUrl = `https://github.com/login/oauth/authorize?${params.toString()}`;
+    return Response.redirect(authorizeUrl, 302);
   }
 
-  // Troca o "code" por access_token
-  const r = await fetch("https://github.com/login/oauth/access_token", {
+  // 2) SEGUNDA ETAPA: voltou do GitHub com "code" → trocar por access_token
+  const tokenRes = await fetch("https://github.com/login/oauth/access_token", {
     method: "POST",
     headers: {
       "content-type": "application/json",
-      "accept": "application/json",
+      accept: "application/json",
     },
     body: JSON.stringify({
       client_id: env.GITHUB_CLIENT_ID,
@@ -27,15 +39,12 @@ export async function onRequestGet({ request, env }: { request: Request; env: an
     }),
   });
 
-  const data = await r.json();
+  const data = await tokenRes.json();
   const token = data?.access_token ?? "";
 
-  // O Decap espera um HTML que faça postMessage para a janela de origem
-  // Formato de mensagem aceito: 'authorization:github:success:<token>'
-  // (ou 'authorization:github:error:<msg>').
-  const html = `
-<!doctype html>
-<meta charset="utf-8" />
+  // HTML que devolve o token ao Decap via postMessage e fecha o popup
+  const html = `<!doctype html>
+<meta charset="utf-8">
 <title>Auth</title>
 <script>
 (function () {
@@ -45,10 +54,9 @@ export async function onRequestGet({ request, env }: { request: Request; env: an
   }
   var token = ${JSON.stringify(token)};
   if (token) {
-    send('authorization:github:success:' + token);
+    send("authorization:github:success:" + token);
   } else {
-    var err = ${JSON.stringify(data)};
-    send('authorization:github:error:' + JSON.stringify(err));
+    send("authorization:github:error:" + ${JSON.stringify(JSON.stringify(data))});
   }
 })();
 </script>`;
