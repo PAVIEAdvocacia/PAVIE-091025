@@ -3,7 +3,7 @@ export const onRequestGet: PagesFunction = async (ctx) => {
   const code = url.searchParams.get("code");
   const { GITHUB_CLIENT_ID, GITHUB_CLIENT_SECRET } = ctx.env as any;
 
-  // 1) Início -> GitHub
+  // 1) Sem "code" -> redireciona ao GitHub
   if (!code) {
     const authorize = new URL("https://github.com/login/oauth/authorize");
     authorize.searchParams.set("client_id", GITHUB_CLIENT_ID);
@@ -12,7 +12,7 @@ export const onRequestGet: PagesFunction = async (ctx) => {
     return Response.redirect(authorize.toString(), 302);
   }
 
-  // 2) Volta -> troca code por token
+  // 2) Com "code" -> troca por access_token
   const tokenRes = await fetch("https://github.com/login/oauth/access_token", {
     method: "POST",
     headers: { "Accept": "application/json", "Content-Type": "application/json" },
@@ -23,18 +23,16 @@ export const onRequestGet: PagesFunction = async (ctx) => {
       redirect_uri: `${url.origin}/api/auth`,
     }),
   });
-
   const tokenJson = await tokenRes.json() as { access_token?: string; error?: string; error_description?: string; };
   const token = tokenJson.access_token || "";
-
-  // 3) HTML -> postMessage e fecha
   const ok = !!token;
+
   const html = `<!doctype html>
 <meta charset="utf-8">
-<title>${ok ? "Autenticação realizada" : "Falha na autenticação"}</title>
+<title>${ok ? "Autenticação ok" : "Falha na autenticação"}</title>
 <body style="display:grid;place-items:center;height:100vh;font:16px system-ui;background:#fff">
   <div style="padding:16px 20px;border:1px solid #eee;border-radius:10px;color:#111">
-    ${ok ? "Autenticação realizada. Você pode fechar esta janela." : "Não foi possível autenticar. Tente novamente."}
+    ${ok ? "Autenticação concluída. Você pode fechar esta janela." : "Não foi possível autenticar. Tente novamente."}
   </div>
   <script>
     (function () {
@@ -51,5 +49,13 @@ export const onRequestGet: PagesFunction = async (ctx) => {
     })();
   </script>
 </body>`;
-  return new Response(html, { headers: { "Content-Type": "text/html; charset=utf-8" } });
+
+  return new Response(html, {
+    headers: {
+      "Content-Type": "text/html; charset=utf-8",
+      // garantir acesso ao window.opener no popup
+      "Cross-Origin-Opener-Policy": "unsafe-none",
+      "Cross-Origin-Embedder-Policy": "unsafe-none"
+    }
+  });
 };

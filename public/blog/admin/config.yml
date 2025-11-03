@@ -1,163 +1,27 @@
-locale: "pt"
-publish_mode: editorial_workflow
-
 backend:
   name: github
   repo: PAVIEAdvocacia/PAVIE-091025
   branch: main
-  # Use caminhos curtos: o Decap monta {base_url}/{auth_endpoint}
   base_url: /api
   auth_endpoint: auth
   site_domain: pavieadvocacia.com.br
-  commit_messages:
-    create: "cms(post): criar {{collection}}/{{slug}}"
-    update: "cms(post): atualizar {{collection}}/{{slug}}"
-    delete: "cms(post): remover {{collection}}/{{slug}}"
-    uploadMedia: "cms(media): enviar {{path}}"
-    deleteMedia: "cms(media): remover {{path}}"
 
-media_folder: "public/uploads"   # arquivo vai para o repo
-public_folder: "/uploads"        # URL pública
+media_folder: "public/uploads"
+public_folder: "/uploads"
 
-# Estratégia: 5 "coleções" filtradas por campo `type`, todas em blog/src/content/posts
-# Isso mantém a UX do CMS organizada e a árvore de conteúdo simples no Astro.
+publish_mode: editorial_workflow
+locale: "pt"
+
 collections:
-  - name: "post-autoridade"
-    label: "Artigo de Autoridade"
-    folder: "blog/src/content/posts"
+  - name: "posts"
+    label: "Artigos"
+    folder: "blog/src/content/posts"   # <- aqui é o ajuste
     create: true
     slug: "{{slug}}"
-    summary: "{{title}} — {{date}}"
-    filter: { field: "type", value: "autoridade" }
     editor: { preview: true }
     fields:
-      - { label: "Tipo", name: "type", widget: "hidden", default: "autoridade" }
-      - { label: "Título", name: "title", widget: "string" }
-      - { label: "Resumo (≤ 320)", name: "description", widget: "text", required: false }
-      - { label: "Autor", name: "author", widget: "string", default: "Fabio Mathias Pavie" }
-      - { label: "Data", name: "pubDate", widget: "datetime", format: "YYYY-MM-DD" }
-      - { label: "Tags", name: "tags", widget: "list", required: false }
-      - { label: "Imagem destacada", name: "heroImage", widget: "image", required: false }
-      - { label: "Idioma", name: "lang", widget: "select", options: ["pt-BR","en","de"], default: "pt-BR" }
-      - { label: "Cluster de serviço", name: "service_cluster", widget: "select", options: ["sucessoes","familia","contratos","imobiliario","consumidor","internacional","previdenciario","tributario","compliance"], required: false }
-      - { label: "Jurisd.", name: "jurisdiction", widget: "select", options: ["BR","EU","DE","PT"], default: "BR" }
-      - { label: "TOC (sumário)", name: "toc", widget: "boolean", default: true }
-      - label: "CTA"
-        name: "cta"
-        widget: "object"
-        collapsed: true
-        required: false
-        fields:
-          - { label: "Texto", name: "label", widget: "string", default: "Fale com um advogado" }
-          - { label: "URL", name: "url", widget: "string", default: "/contato" }
-      - label: "SEO"
-        name: "seo"
-        widget: "object"
-        collapsed: true
-        required: false
-        fields:
-          - { label: "Schema Type", name: "schema_type", widget: "select", options: ["Article","BlogPosting"], default: "Article" }
-      - { label: "Conteúdo", name: "body", widget: "markdown" }
-
-  - name: "post-guia"
-    label: "Guia Prático"
-    folder: "blog/src/content/posts"
-    create: true
-    slug: "{{slug}}"
-    summary: "Guia · {{title}} — {{date}}"
-    filter: { field: "type", value: "guia" }
-    editor: { preview: true }
-    fields:
-      - { label: "Tipo", name: "type", widget: "hidden", default: "guia" }
-      - { label: "Título", name: "title", widget: "string" }
-      - { label: "Resumo (≤ 320)", name: "description", widget: "text", required: false }
-      - { label: "Autor", name: "author", widget: "string", default: "Fabio Mathias Pavie" }
-      - { label: "Data", name: "pubDate", widget: "datetime", format: "YYYY-MM-DD" }
-      - { label: "Tags", name: "tags", widget: "list", required: false }
-      - { label: "Imagem destacada", name: "heroImage", widget: "image", required: false }
-      - { label: "Idioma", name: "lang", widget: "select", options: ["pt-BR","en","de"], default: "pt-BR" }
-      - { label: "TOC (sumário)", name: "toc", widget: "boolean", default: true }
-      - label: "SEO"
-        name: "seo"
-        widget: "object"
-        collapsed: true
-        required: false
-        fields:
-          - { label: "Schema Type", name: "schema_type", widget: "select", options: ["Article","HowTo","BlogPosting"], default: "HowTo" }
-      - { label: "Conteúdo", name: "body", widget: "markdown" }
-
-  - name: "post-jurisprudencia"
-    label: "Jurisprudência Comentada"
-    folder: "blog/src/content/posts"
-    create: true
-    slug: "{{slug}}"
-    summary: "Jurisprudência · {{title}} — {{date}}"
-    filter: { field: "type", value: "jurisprudencia" }
-    editor: { preview: true }
-    fields:
-      - { label: "Tipo", name: "type", widget: "hidden", default: "jurisprudencia" }
-      - { label: "Título", name: "title", widget: "string" }
-      - { label: "Resumo (≤ 320)", name: "description", widget: "text", required: false }
-      - { label: "Autor", name: "author", widget: "string", default: "Fabio Mathias Pavie" }
-      - { label: "Data", name: "pubDate", widget: "datetime", format: "YYYY-MM-DD" }
-      - { label: "Referências (ementas/links)", name: "case_refs", widget: "list", required: false }
-      - { label: "Tags", name: "tags", widget: "list", required: false }
-      - { label: "Imagem destacada", name: "heroImage", widget: "image", required: false }
-      - { label: "Idioma", name: "lang", widget: "select", options: ["pt-BR","en","de"], default: "pt-BR" }
-      - { label: "TOC (sumário)", name: "toc", widget: "boolean", default: true }
-      - label: "SEO"
-        name: "seo"
-        widget: "object"
-        collapsed: true
-        required: false
-        fields:
-          - { label: "Schema Type", name: "schema_type", widget: "select", options: ["Article","BlogPosting"], default: "Article" }
-      - { label: "Conteúdo", name: "body", widget: "markdown" }
-
-  - name: "post-noticia"
-    label: "Notícia / Atualização"
-    folder: "blog/src/content/posts"
-    create: true
-    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
-    summary: "Notícia · {{title}} — {{date}}"
-    filter: { field: "type", value: "noticia" }
-    editor: { preview: true }
-    fields:
-      - { label: "Tipo", name: "type", widget: "hidden", default: "noticia" }
-      - { label: "Título", name: "title", widget: "string" }
-      - { label: "Resumo (≤ 320)", name: "description", widget: "text", required: false }
-      - { label: "Data", name: "pubDate", widget: "datetime", format: "YYYY-MM-DD" }
-      - { label: "Fonte", name: "source_url", widget: "string", required: false }
-      - { label: "Imagem", name: "heroImage", widget: "image", required: false }
-      - label: "SEO"
-        name: "seo"
-        widget: "object"
-        collapsed: true
-        required: false
-        fields:
-          - { label: "Schema Type", name: "schema_type", widget: "select", options: ["NewsArticle","Article"], default: "NewsArticle" }
-      - { label: "Conteúdo", name: "body", widget: "markdown" }
-
-  - name: "post-opiniao"
-    label: "Opinião / Editorial"
-    folder: "blog/src/content/posts"
-    create: true
-    slug: "{{slug}}"
-    summary: "Opinião · {{title}} — {{date}}"
-    filter: { field: "type", value: "opiniao" }
-    editor: { preview: true }
-    fields:
-      - { label: "Tipo", name: "type", widget: "hidden", default: "opiniao" }
-      - { label: "Título", name: "title", widget: "string" }
-      - { label: "Resumo (≤ 320)", name: "description", widget: "text", required: false }
-      - { label: "Autor", name: "author", widget: "string", default: "Fabio Mathias Pavie" }
-      - { label: "Data", name: "pubDate", widget: "datetime", format: "YYYY-MM-DD" }
-      - { label: "Imagem", name: "heroImage", widget: "image", required: false }
-      - label: "SEO"
-        name: "seo"
-        widget: "object"
-        collapsed: true
-        required: false
-        fields:
-          - { label: "Schema Type", name: "schema_type", widget: "select", options: ["Article","BlogPosting"], default: "BlogPosting" }
-      - { label: "Conteúdo", name: "body", widget: "markdown" }
+      - { label: "Título",  name: "title", widget: "string" }
+      - { label: "Data",    name: "pubDate", widget: "datetime", format: "YYYY-MM-DD" }
+      - { label: "Resumo",  name: "description", widget: "text", required: false }
+      - { label: "Corpo do texto", name: "body", widget: "markdown" }
+      - { label: "Imagem de capa",  name: "heroImage", widget: "image", required: false }
