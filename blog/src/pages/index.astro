@@ -1,24 +1,30 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
-
-const posts = [
-  {
-    title: 'Hello, Blog — bem-vindo ao espaço de artigos',
-    href: '/blog/posts/hello-blog/',
-    excerpt: 'Como funcionará o blog jurídico da PAVIE | Advocacia: linguagem clara, ética OAB, LGPD e foco em decisões seguras.',
-    date: '2025-10-31'
-  }
-];
+import { getCollection } from 'astro:content';
+const posts = (await getCollection('posts'))
+  .map(p => {
+    const d = p.data.pubDate ?? p.data.date;
+    return { ...p, _date: d ? new Date(d) : new Date(0) };
+  })
+  .sort((a,b) => +b._date - +a._date);
 ---
-<BaseLayout title="Blog — PAVIE | Advocacia" description="Artigos objetivos sobre Família, Sucessões e Patrimônio — com ética OAB e LGPD.">
-  <section class="post-list" aria-label="Lista de artigos">
-    {posts.map(p => (
-      <article class="card">
-        <h2><a href={p.href}>{p.title}</a></h2>
-        <p class="muted">{p.date}</p>
-        <p>{p.excerpt}</p>
-        <p><a href={p.href} aria-label={`Ler: ${p.title}`}>Ler artigo →</a></p>
-      </article>
-    ))}
-  </section>
-</BaseLayout>
+<html lang="pt-br">
+  <head>
+    <meta charset="utf-8" />
+    <title>Blog | PAVIE Advocacia</title>
+    <meta name="description" content="Conteúdo jurídico com foco em sucessões, patrimônio e direito civil com repercussão internacional.">
+  </head>
+  <body>
+    <main>
+      <h1>Blog</h1>
+      <ul>
+        {posts.map((p) => (
+          <li>
+            <a href={`/blog/${p.slug}/`}>{p.data.title}</a>
+            <small> — {p._date.toLocaleDateString('pt-BR')}</small>
+            <em> · {p.data.type}</em>
+          </li>
+        ))}
+      </ul>
+    </main>
+  </body>
+</html>

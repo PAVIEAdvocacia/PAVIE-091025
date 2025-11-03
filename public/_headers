@@ -31,3 +31,9 @@
 
 /.well-known/security.txt
   Cache-Control: public, max-age=3600
+
+/api/auth
+  Cross-Origin-Opener-Policy: unsafe-none
+  Cross-Origin-Embedder-Policy: unsafe-none
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline'; connect-src 'self' https://github.com https://api.github.com; img-src 'self' data: https:;
+

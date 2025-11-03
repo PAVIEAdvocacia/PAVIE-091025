@@ -9,12 +9,12 @@
   <body>
     <!-- Decap CMS -->
     <script src="https://unpkg.com/decap-cms@^3/dist/decap-cms.js"></script>
-
-    <!-- Diagnóstico (pode remover depois): mostra a mensagem do OAuth no console -->
     <script>
+      if (window.CMS && typeof CMS.init === 'function') CMS.init();
+      // Debug: remove após validar
       window.addEventListener('message', (e) => {
         if (typeof e.data === 'string' && e.data.startsWith('authorization:')) {
-          console.log('[ADMIN] mensagem OAuth:', e.origin, e.data.slice(0, 120) + '…');
+          console.log('[ADMIN] OAuth:', e.origin, e.data.slice(0, 120) + '…');
         }
       });
     </script>
