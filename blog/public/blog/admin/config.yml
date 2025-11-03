@@ -1,0 +1,45 @@
+site_url: "https://pavieadvocacia.com.br"
+locale: "pt"
+publish_mode: editorial_workflow
+
+backend:
+  name: github
+  # ATENÇÃO: ajuste para o dono/ORG correto do SEU repo
+  repo: PAVIEAdvocacia/PAVIE-091025
+  branch: main
+  # o OAuth vai rodar no MESMO domínio do site
+  base_url: https://pavieadvocacia.com.br
+  # endpoint das Functions do Cloudflare Pages (ver Seção 3)
+  auth_endpoint: api/auth
+  # ajuda no local dev e em popups
+  site_domain: pavieadvocacia.com.br
+
+media_folder: "public/uploads"   # onde os arquivos serão versionados no git
+public_folder: "/uploads"        # URL pública resultante
+
+collections:
+  - name: "posts"
+    label: "Artigos"
+    folder: "src/content/posts"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    editor: { preview: true }
+    fields:
+      - { label: "Tipo", name: "type", widget: "select", options: ["autoridade","guia","jurisprudencia","caso","faq"], default: "autoridade" }
+      - { label: "Título", name: "title", widget: "string" }
+      - { label: "Resumo (SEO ≤ 320)", name: "description", widget: "text" }
+      - { label: "Autor", name: "author", widget: "string", default: "Fabio Mathias Pavie" }
+      - { label: "Data", name: "date", widget: "datetime", format: "YYYY-MM-DD" }
+      - { label: "Tags", name: "tags", widget: "list", default: ["Direito Civil"] }
+      - { label: "Imagem destacada", name: "featuredImage", widget: "image" }
+      - { label: "Idioma", name: "lang", widget: "select", options: ["pt-BR","en","de"], default: "pt-BR" }
+      - { label: "Cluster de serviço", name: "service_cluster", widget: "select", options: ["familia","sucessoes","contratos","consumidor","compliance","tributario"] }
+      - { label: "Jurisd.", name: "jurisdiction", widget: "select", options: ["BR","EU","DE","PT"], default: "BR" }
+      - { label: "TOC (sumário)", name: "toc", widget: "boolean", default: true }
+      - label: "CTA"
+        name: "cta"
+        widget: "object"
+        fields:
+          - { label: "Texto", name: "label", widget: "string", default: "Fale com um advogado" }
+          - { label: "URL", name: "url", widget: "string", default: "/contato" }
+      - { label: "Conteúdo", name: "body", widget: "markdown" }

@@ -1,30 +1,170 @@
+site_url: "https://pavieadvocacia.com.br"
+locale: "pt"
+publish_mode: editorial_workflow
+
 backend:
   name: github
-  repo: PAVIEAdvocacia/PAVIE-091025   # ajuste se o nome do repo for outro
+  repo: PAVIEAdvocacia/PAVIE-091025   # ⬅️ confirme/dedique o repo certo
   branch: main
-  base_url: /api                      # Cloudflare Pages Functions
-  auth_endpoint: auth                 # /api/auth
-  site_domain: pavieadvocacia.com.br  # sem https, sem barra
+  base_url: https://pavieadvocacia.com.br
+  auth_endpoint: api/auth
+  site_domain: pavieadvocacia.com.br
+  commit_messages:
+    create: "cms(post): criar {{collection}}/{{slug}}"
+    update: "cms(post): atualizar {{collection}}/{{slug}}"
+    delete: "cms(post): remover {{collection}}/{{slug}}"
+    uploadMedia: "cms(media): enviar {{path}}"
+    deleteMedia: "cms(media): remover {{path}}"
 
-locale: pt
+media_folder: "public/uploads"
+public_folder: "/uploads"
 
-media_folder: "public/uploads"        # onde as imagens/arquivos são gravados no repo
-public_folder: "/uploads"             # como o site serve esses arquivos
-
-publish_mode: editorial_workflow      # rascunho → revisão → publicado
+# ⚠️ Usamos 5 "coleções" filtradas, todas no MESMO folder, cada uma com
+# um campo "type" oculto e predefinido. (Decap suporta filter em folder
+# collections; "hidden" não aparece na UI e aceita default) :contentReference[oaicite:0]{index=0}
 
 collections:
-  - name: "posts"
-    label: "Posts"
-    label_singular: "Post"
-    folder: "blog/src/content/blog"   # ← caminho real dos .md no repo
-    extension: "md"                   # ← conforme você pediu
+  - name: "post-autoridade"
+    label: "Artigo de Autoridade"
+    folder: "src/content/posts"
     create: true
-    slug: "{{slug}}"
-    summary: "{{title}} — {{pubDate}}"
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    summary: "{{title}} — {{date}}"
+    filter: { field: "type", value: "autoridade" }    # :contentReference[oaicite:1]{index=1}
+    editor: { preview: true }
     fields:
+      - { label: "Tipo", name: "type", widget: "hidden", default: "autoridade" }  # :contentReference[oaicite:2]{index=2}
       - { label: "Título", name: "title", widget: "string" }
-      - { label: "Descrição", name: "description", widget: "text", required: false }
-      - { label: "Data de publicação", name: "pubDate", widget: "datetime" }
-      - { label: "Imagem de capa", name: "heroImage", widget: "image", required: false }
+      - { label: "Resumo (≤ 320)", name: "description", widget: "text" }
+      - { label: "Autor", name: "author", widget: "string", default: "Fabio Mathias Pavie" }
+      - { label: "Data", name: "date", widget: "datetime", format: "YYYY-MM-DD" }
+      - { label: "Tags", name: "tags", widget: "list", default: ["Direito Civil"] }
+      - { label: "Imagem destacada", name: "featuredImage", widget: "image" }
+      - { label: "Idioma", name: "lang", widget: "select", options: ["pt-BR","en","de"], default: "pt-BR" }
+      - { label: "Cluster de serviço", name: "service_cluster", widget: "select", options: ["familia","sucessoes","contratos","consumidor","compliance","tributario"], default: "contratos" }
+      - { label: "Jurisd.", name: "jurisdiction", widget: "select", options: ["BR","EU","DE","PT"], default: "BR" }
+      - { label: "TOC (sumário)", name: "toc", widget: "boolean", default: true }
+      - label: "CTA"
+        name: "cta"
+        widget: "object"
+        collapsed: true
+        fields:
+          - { label: "Texto", name: "label", widget: "string", default: "Fale com um advogado" }
+          - { label: "URL", name: "url", widget: "string", default: "/contato" }
+      - { label: "Conteúdo", name: "body", widget: "markdown" }
+
+  - name: "post-guia"
+    label: "Guia Prático"
+    folder: "src/content/posts"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    summary: "Guia · {{title}} — {{date}}"
+    filter: { field: "type", value: "guia" }
+    editor: { preview: true }
+    fields:
+      - { label: "Tipo", name: "type", widget: "hidden", default: "guia" }
+      - { label: "Título", name: "title", widget: "string" }
+      - { label: "Resumo (≤ 320)", name: "description", widget: "text" }
+      - { label: "Autor", name: "author", widget: "string", default: "Fabio Mathias Pavie" }
+      - { label: "Data", name: "date", widget: "datetime", format: "YYYY-MM-DD" }
+      - { label: "Tags", name: "tags", widget: "list", default: ["Guia"] }
+      - { label: "Imagem destacada", name: "featuredImage", widget: "image" }
+      - { label: "Idioma", name: "lang", widget: "select", options: ["pt-BR","en","de"], default: "pt-BR" }
+      - { label: "Cluster de serviço", name: "service_cluster", widget: "select", options: ["familia","sucessoes","contratos","consumidor","compliance","tributario"], default: "consumidor" }
+      - { label: "Jurisd.", name: "jurisdiction", widget: "select", options: ["BR","EU","DE","PT"], default: "BR" }
+      - { label: "TOC (sumário)", name: "toc", widget: "boolean", default: true }
+      - label: "CTA"
+        name: "cta"
+        widget: "object"
+        collapsed: true
+        fields:
+          - { label: "Texto", name: "label", widget: "string", default: "Fale com um advogado" }
+          - { label: "URL", name: "url", widget: "string", default: "/contato" }
+      - { label: "Conteúdo", name: "body", widget: "markdown" }
+
+  - name: "post-jurisprudencia"
+    label: "Análise de Jurisprudência"
+    folder: "src/content/posts"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    summary: "Juris · {{title}} — {{date}}"
+    filter: { field: "type", value: "jurisprudencia" }
+    editor: { preview: true }
+    fields:
+      - { label: "Tipo", name: "type", widget: "hidden", default: "jurisprudencia" }
+      - { label: "Título", name: "title", widget: "string" }
+      - { label: "Resumo (≤ 320)", name: "description", widget: "text" }
+      - { label: "Autor", name: "author", widget: "string", default: "Fabio Mathias Pavie" }
+      - { label: "Data", name: "date", widget: "datetime", format: "YYYY-MM-DD" }
+      - { label: "Tags", name: "tags", widget: "list", default: ["Jurisprudência"] }
+      - { label: "Imagem destacada", name: "featuredImage", widget: "image" }
+      - { label: "Idioma", name: "lang", widget: "select", options: ["pt-BR","en","de"], default: "pt-BR" }
+      - { label: "Cluster de serviço", name: "service_cluster", widget: "select", options: ["familia","sucessoes","contratos","consumidor","compliance","tributario"], default: "sucessoes" }
+      - { label: "Jurisd.", name: "jurisdiction", widget: "select", options: ["BR","EU","DE","PT"], default: "BR" }
+      - { label: "TOC (sumário)", name: "toc", widget: "boolean", default: true }
+      - label: "CTA"
+        name: "cta"
+        widget: "object"
+        collapsed: true
+        fields:
+          - { label: "Texto", name: "label", widget: "string", default: "Agendar consulta" }
+          - { label: "URL", name: "url", widget: "string", default: "/contato" }
+      - { label: "Conteúdo", name: "body", widget: "markdown" }
+
+  - name: "post-caso"
+    label: "Estudo de Caso"
+    folder: "src/content/posts"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    summary: "Caso · {{title}} — {{date}}"
+    filter: { field: "type", value: "caso" }
+    editor: { preview: true }
+    fields:
+      - { label: "Tipo", name: "type", widget: "hidden", default: "caso" }
+      - { label: "Título", name: "title", widget: "string" }
+      - { label: "Resumo (≤ 320)", name: "description", widget: "text" }
+      - { label: "Autor", name: "author", widget: "string", default: "Fabio Mathias Pavie" }
+      - { label: "Data", name: "date", widget: "datetime", format: "YYYY-MM-DD" }
+      - { label: "Tags", name: "tags", widget: "list", default: ["Caso"] }
+      - { label: "Imagem destacada", name: "featuredImage", widget: "image" }
+      - { label: "Idioma", name: "lang", widget: "select", options: ["pt-BR","en","de"], default: "pt-BR" }
+      - { label: "Cluster de serviço", name: "service_cluster", widget: "select", options: ["familia","sucessoes","contratos","consumidor","compliance","tributario"], default: "familia" }
+      - { label: "Jurisd.", name: "jurisdiction", widget: "select", options: ["BR","EU","DE","PT"], default: "BR" }
+      - { label: "TOC (sumário)", name: "toc", widget: "boolean", default: true }
+      - label: "CTA"
+        name: "cta"
+        widget: "object"
+        collapsed: true
+        fields:
+          - { label: "Texto", name: "label", widget: "string", default: "Converse com o advogado" }
+          - { label: "URL", name: "url", widget: "string", default: "/contato" }
+      - { label: "Conteúdo", name: "body", widget: "markdown" }
+
+  - name: "post-faq"
+    label: "FAQ Explicativa"
+    folder: "src/content/posts"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    summary: "FAQ · {{title}} — {{date}}"
+    filter: { field: "type", value: "faq" }
+    editor: { preview: true }
+    fields:
+      - { label: "Tipo", name: "type", widget: "hidden", default: "faq" }
+      - { label: "Título (pergunta-chave)", name: "title", widget: "string" }
+      - { label: "Resumo (≤ 320)", name: "description", widget: "text" }
+      - { label: "Autor", name: "author", widget: "string", default: "Fabio Mathias Pavie" }
+      - { label: "Data", name: "date", widget: "datetime", format: "YYYY-MM-DD" }
+      - { label: "Tags", name: "tags", widget: "list", default: ["FAQ"] }
+      - { label: "Imagem destacada", name: "featuredImage", widget: "image" }
+      - { label: "Idioma", name: "lang", widget: "select", options: ["pt-BR","en","de"], default: "pt-BR" }
+      - { label: "Cluster de serviço", name: "service_cluster", widget: "select", options: ["familia","sucessoes","contratos","consumidor","compliance","tributario"], default: "consumidor" }
+      - { label: "Jurisd.", name: "jurisdiction", widget: "select", options: ["BR","EU","DE","PT"], default: "BR" }
+      - { label: "TOC (sumário)", name: "toc", widget: "boolean", default: true }
+      - label: "CTA"
+        name: "cta"
+        widget: "object"
+        collapsed: true
+        fields:
+          - { label: "Texto", name: "label", widget: "string", default: "Fale com um advogado" }
+          - { label: "URL", name: "url", widget: "string", default: "/contato" }
       - { label: "Conteúdo", name: "body", widget: "markdown" }
