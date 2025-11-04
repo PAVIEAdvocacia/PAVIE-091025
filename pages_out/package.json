@@ -1,0 +1,9 @@
+{
+  "name": "pavie-site-root",
+  "private": true,
+  "version": "1.0.1",
+  "type": "module",
+  "scripts": {
+    "build": "node ./tools/build.cjs"
+  }
+}

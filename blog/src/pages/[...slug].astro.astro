@@ -1,0 +1,140 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('posts');
+  return posts.map(post => ({
+    params: { slug: post.slug },
+    props: { post }
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await post.render();
+const { title, description, pubDate, author, type, tags, cover, canonical } = post.data;
+---
+
+<BaseLayout title={title} description={description} canonical={canonical}>
+  <!-- Schema.org JSON-LD -->
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": title,
+    "description": description,
+    "datePublished": pubDate.toISOString(),
+    "image": cover.src,
+    "author": {
+      "@type": "Organization",
+      "name": author
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "PAVIE | Advocacia"
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": canonical || `https://pavieadvocacia.com.br/blog/${post.slug}/`
+    }
+  })} />
+  
+  <article class="max-w-3xl mx-auto">
+    <!-- Header -->
+    <header class="mb-8">
+      <div class="flex gap-2 mb-4">
+        <span class="inline-block px-3 py-1 bg-orange-100 text-orange-700 text-sm font-semibold rounded-full">
+          {type}
+        </span>
+      </div>
+      
+      <h1 class="text-4xl md:text-5xl font-bold mb-4">{title}</h1>
+      
+      <div class="flex items-center gap-4 text-sm text-slate-600 mb-4">
+        <time datetime={pubDate.toISOString()}>
+          {pubDate.toLocaleDateString('pt-BR', { 
+            year: 'numeric', 
+            month: 'long', 
+            day: 'numeric' 
+          })}
+        </time>
+        <span>•</span>
+        <span>{author}</span>
+      </div>
+      
+      <div class="flex flex-wrap gap-2">
+        {tags.map(tag => (
+          <span class="px-3 py-1 bg-slate-100 text-slate-700 text-sm rounded">
+            {tag}
+          </span>
+        ))}
+      </div>
+    </header>
+    
+    <!-- Cover Image -->
+    {cover && (
+      <figure class="mb-8 rounded-xl overflow-hidden">
+        <img 
+          src={cover.src} 
+          alt={cover.alt} 
+          class="w-full h-auto"
+          loading="lazy"
+        />
+      </figure>
+    )}
+    
+    <!-- Content -->
+    <div class="prose prose-lg max-w-none mb-12">
+      <Content />
+    </div>
+    
+    <!-- CTA -->
+    <div class="bg-slate-50 rounded-xl p-8 text-center">
+      <h3 class="text-2xl font-bold mb-4">Precisa de orientação jurídica?</h3>
+      <p class="text-slate-600 mb-6">
+        Entre em contato para uma consulta diagnóstica personalizada.
+      </p>
+      <a 
+        href="/#agendar" 
+        class="inline-block px-8 py-3 bg-orange-600 hover:bg-orange-700 text-white font-bold rounded-lg transition"
+      >
+        Solicitar Proposta
+      </a>
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .prose {
+    color: #334155;
+  }
+  .prose h2 {
+    font-size: 1.875rem;
+    font-weight: 700;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+  }
+  .prose h3 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-top: 1.5rem;
+    margin-bottom: 0.75rem;
+  }
+  .prose p {
+    margin-bottom: 1.25rem;
+    line-height: 1.75;
+  }
+  .prose ul, .prose ol {
+    margin-bottom: 1.25rem;
+    padding-left: 1.5rem;
+  }
+  .prose li {
+    margin-bottom: 0.5rem;
+  }
+  .prose a {
+    color: #d97706;
+    text-decoration: underline;
+  }
+  .prose a:hover {
+    color: #b45309;
+  }
+</style>

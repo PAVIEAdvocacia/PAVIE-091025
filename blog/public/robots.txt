@@ -1,6 +1,0 @@
-User-agent: *
-Allow: /
-
-# Sitemaps (gerados por @astrojs/sitemap após o build)
-Sitemap: https://pavieadvocacia.com.br/blog/sitemap-index.xml
-Sitemap: https://pavieadvocacia.com.br/blog/sitemap.xml

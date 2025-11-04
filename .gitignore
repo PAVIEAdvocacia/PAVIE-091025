@@ -1,2 +1,7 @@
-pages_out/
-node_modules/
+gitignore# Blog build artifacts
+blog/dist/
+blog/.astro/
+blog/node_modules/
+
+# Blog dev vars (OAuth local)
+blog/functions/.dev.vars
