@@ -1,11 +1,11 @@
-# forçar www -> apex / http -> https
-https://www.pavieadvocacia.com.br/*  https://pavieadvocacia.com.br/:splat  301!
-http://www.pavieadvocacia.com.br/*   https://pavieadvocacia.com.br/:splat  301!
-http://pavieadvocacia.com.br/*       https://pavieadvocacia.com.br/:splat  301!
+# 1) Exceções — NADA deve capturar /api/* (Functions) e /blog/admin/*
+/api/*            /api/:splat           200
+/blog/admin/*     /blog/admin/:splat    200
 
-# exceções para functions e decap
-/api/*          /api/:splat           200
-/blog/admin/*   /blog/admin/:splat    200
+# 2) Canonical: www -> apex e http -> https
+https://www.pavieadvocacia.com.br/*   https://pavieadvocacia.com.br/:splat   301
+http://www.pavieadvocacia.com.br/*    https://pavieadvocacia.com.br/:splat   301
+http://pavieadvocacia.com.br/*        https://pavieadvocacia.com.br/:splat   301
 
-# fallback SPA (opcional; se usar, mantenha POR ÚLTIMO)
-# /*            /index.html           200
+# 3) Fallback SPA — SOMENTE se você usa SPA. Se usar, mantenha por último.
+# /*                 /index.html          200
