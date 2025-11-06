@@ -1,8 +1,0 @@
-{
-  "name": "pavie-advocacia-site",
-  "private": true,
-  "scripts": {
-    "build": "node tools/build.js"
-  },
-  "devDependencies": {}
-}
