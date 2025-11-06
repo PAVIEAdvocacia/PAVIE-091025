@@ -1,0 +1,18 @@
+﻿{
+  "name": "pavie-blog",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "postbuild": "pagefind --site dist",
+    "preview": "astro preview"
+  },
+  "devDependencies": {
+    "astro": "^4.14.0",
+    "@astrojs/sitemap": "^3.1.0",
+    "pagefind": "^1.1.0",
+    "zod": "^3.23.8"
+  }
+}
