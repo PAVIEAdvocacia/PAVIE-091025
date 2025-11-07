@@ -1,14 +1,20 @@
 ---
-// src/pages/index.astro
+// blog/src/pages/admin.astro
+// Redirecionamento client-side para o CMS
+if (typeof window !== 'undefined') {
+  window.location.href = '/blog/admin/index.html';
+}
 ---
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blog PAVIE Advocacia</title>
-</head>
-<body>
-    <h1>Blog PAVIE Advocacia</h1>
-    <p>Site em construção...</p>
-</body>
+
+<html>
+  <head>
+    <title>Redirecionando para o CMS</title>
+    <meta http-equiv="refresh" content="0; url=/blog/admin/index.html">
+  </head>
+  <body>
+    <p>Redirecionando para o <a href="/blog/admin/index.html">CMS do Blog</a>...</p>
+    <script>
+      window.location.href = '/blog/admin/index.html';
+    </script>
+  </body>
 </html>
