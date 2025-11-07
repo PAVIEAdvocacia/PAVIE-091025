@@ -1,5 +1,18 @@
-{
-  "dependencies": {
-    "fs-extra": "^11.3.2"
-  }
-}
+diff --git a/package.json b/package.json
+index 4869d93af9384e732de3decc0547c949a212b79e..b2342de95021b46c44bcbf58a1a6d83388c99842 100644
+--- a/package.json
++++ b/package.json
+@@ -1,9 +1,10 @@
+ {
+   "name": "pavie-site-root",
+   "private": true,
+   "version": "1.0.1",
+   "type": "module",
+   "scripts": {
+-    "build": "node ./tools/build.cjs"
++    "build": "node ./tools/build.cjs",
++    "audit:decap": "node ./tools/decap_audit.cjs"
+   }
+-}
+\ No newline at end of file
++}
