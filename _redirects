@@ -1,6 +1,7 @@
-# Exceções (devem vir primeiro)
- /api/*            /api/:splat           200
- /blog/admin/*     /blog/admin/:splat    200
+# Redirecionamentos para o CMS Admin
+/blog/admin/*    /blog/admin/index.html    200
+/blog/admin      /blog/admin/index.html    200
 
-# Fallback SPA (opcional). Mantenha por último se precisar.
-# /*                 /index.html          200
+# Redirecionamentos do site principal
+/api/*          /api/:splat               200
+/blog/admin/+   /blog/admin/:splat        200
