@@ -1,0 +1,6 @@
+# Redirecionamentos do Blog
+/blog/admin/*    /blog/admin/index.html    200
+/blog/admin      /blog/admin/index.html    200
+
+# Fallback para SPA (se necessário)
+/*    /index.html    200

@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Admin — PAVIE | Advocacia</title>
+  <style>
+    body{font-family:system-ui,Segoe UI,Roboto,Arial;margin:24px}
+    #boot{padding:12px 16px;border:1px solid #ddd;border-radius:8px;background:#fafafa}
+    #boot.ok{display:none}
+    .muted{color:#666;font-size:14px}
+  </style>
+</head>
+<body>
+  <div id="boot">Carregando CMS… <span class="muted">(se ficar em branco, veja o Console)</span></div>
+
+  <script>window.CMS_MANUAL_INIT = true;</script>
+
+  <!-- CDN principal -->
+  <script
+    src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"
+    defer
+    onload="window.__DECAP_OK__=true"
+    onerror="console.error('Falha ao carregar Decap via unpkg');">
+  </script>
+
+  <!-- CDN reserva: jsDelivr (só executa se o 1º falhar em 2s) -->
+  <script>
+    setTimeout(() => {
+      if (!window.__DECAP_OK__) {
+        const s = document.createElement('script');
+        s.src = 'https://cdn.jsdelivr.net/npm/decap-cms@3/dist/decap-cms.js';
+        s.defer = true;
+        s.onload = () => { window.__DECAP_OK__=true; boot.classList.add('ok'); initCMS(); };
+        s.onerror = () => console.error('Falha também no jsDelivr');
+        document.body.appendChild(s);
+      }
+    }, 2000);
+
+    window.addEventListener('error', (e) => {
+      console.error('Erro global:', e.error || e.message);
+    });
+  </script>
+
+  <script>
+    function initCMS(){
+      try {
+        CMS.init({
+          config: {
+            backend: {
+              name: "github",
+              repo: "PAVIEAdvocacia/PAVIE-091025",
+              branch: "main",
+              base_url: "https://blog.pavieadvocacia.com.br",
+              auth_endpoint: "/api/auth/github-oauth"
+            },
+            site_url: "https://blog.pavieadvocacia.com.br",
+            locale: "pt",
+            publish_mode: "editorial_workflow",
+            media_folder: "blog/public/uploads",
+            public_folder: "/blog/uploads",
+            collections: [{
+              name: "posts",
+              label: "Artigos",
+              folder: "blog/src/content/posts",
+              create: true,
+              slug: "{{year}}-{{month}}-{{day}}-{{slug}}",
+              editor: { preview: true },
+              fields: [
+                { label: "Título", name: "title", widget: "string" },
+                { label: "Data", name: "pubDate", widget: "datetime", format: "YYYY-MM-DD" },
+                { label: "Resumo", name: "description", widget: "text" },
+                { label: "Autor", name: "author", widget: "string", default: "PAVIE | Advocacia" },
+                { label: "Corpo", name: "body", widget: "markdown" }
+              ]
+            }]
+          }
+        });
+        document.getElementById('boot')?.classList.add('ok');
+      } catch (err) {
+        console.error('Falha ao inicializar CMS:', err);
+      }
+    }
+    // tenta iniciar quando o bundle carregar
+    document.addEventListener('DOMContentLoaded', () => {
+      if (window.CMS) initCMS();
+      else window.addEventListener('load', () => window.CMS && initCMS());
+    });
+  </script>
+</body>
+</html>
