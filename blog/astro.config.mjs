@@ -1,14 +1,8 @@
-import { defineConfig } from 'astro/config'; 
-import sitemap from '@astrojs/sitemap'; 
- 
-export default defineConfig({ 
-  site: 'https://blog.pavieadvocacia.com.br', 
-  base: '/', 
-  build: { 
-    outDir: 'dist', 
-  }, 
-  integrations: [ 
-    sitemap(), 
-  ], 
-  trailingSlash: 'always', 
-}); 
+// blog/astro.config.mjs
+import { defineConfig } from 'astro/config';
+export default defineConfig({
+  site: 'https://blog.pavieadvocacia.com.br',
+  base: '/',                 // <- raiz do subdomínio
+  trailingSlash: 'always',
+  build: { outDir: 'dist' },
+});

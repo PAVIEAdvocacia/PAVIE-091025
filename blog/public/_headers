@@ -14,7 +14,3 @@
     frame-ancestors 'none';
     base-uri 'self';
     form-action 'self';
-
-/_pagefind/*
-  Cache-Control: public, max-age=31536000, immutable
-
