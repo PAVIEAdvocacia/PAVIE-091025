@@ -4,12 +4,15 @@ backend:
   branch: main 
   base_url: https://blog.pavieadvocacia.com.br 
   auth_endpoint: /api/auth/github-oauth 
+ 
 site_url: https://blog.pavieadvocacia.com.br 
 logo_url: https://pavieadvocacia.com.br/assets/logo.png 
 locale: pt 
 publish_mode: editorial_workflow 
+ 
 media_folder: "blog/public/uploads" 
 public_folder: "/blog/uploads" 
+ 
 collections: 
   - name: posts 
     label: Artigos 
@@ -17,7 +20,8 @@ collections:
     create: true 
     slug: "{{year}}-{{month}}-{{day}}-{{slug}}" 
     preview_path: "blog/{{slug}}/" 
-    editor: { preview: true } 
+    editor: 
+      preview: true 
     fields: 
       - { label: "Título", name: "title", widget: "string" } 
       - { label: "Data", name: "pubDate", widget: "datetime", format: "YYYY-MM-DD" } 
