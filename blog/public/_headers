@@ -3,14 +3,8 @@
   Referrer-Policy: strict-origin-when-cross-origin
   Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
 
-/admin/*
+/*
   Cache-Control: no-store
-  Content-Security-Policy: default-src 'self';
-    script-src 'self' 'unsafe-inline' 'unsafe-eval' https://unpkg.com https://cdn.jsdelivr.net;
-    style-src 'self' 'unsafe-inline';
-    img-src 'self' data: blob: https:;
-    font-src 'self' data: https:;
-    connect-src 'self' https://api.github.com https://github.com https://raw.githubusercontent.com https://blog.pavieadvocacia.com.br;
-    frame-ancestors 'none';
-    base-uri 'self';
-    form-action 'self';
+
+/*
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://unpkg.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https:; font-src 'self' data: https:; connect-src 'self' https://api.github.com https://github.com https://raw.githubusercontent.com https://blog.pavieadvocacia.com.br; frame-ancestors 'none'; base-uri 'self'; form-action 'self'
