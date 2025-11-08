@@ -1,23 +1,32 @@
-diff --git a/blog/src/pages/admin.astro b/blog/src/pages/admin.astro
-index 91678c98deef5730a6a8a6049bb36ebd3d7157f5..16db2c93b4caad166d266949b1cb208abc9f7d35 100644
---- a/blog/src/pages/admin.astro
-+++ b/blog/src/pages/admin.astro
-@@ -1,4 +1,13 @@
-----
--import { Redirect } from 'astro-redirects';
-----
--<Redirect to="/blog/public/admin/" />
-\ No newline at end of file
-+<!doctype html>
-+<html lang="pt-BR">
-+  <head>
-+    <meta charset="utf-8" />
-+    <title>Redirecionando…</title>
-+    <meta http-equiv="refresh" content="0; url=/blog/admin/" />
-+    <link rel="canonical" href="/blog/admin/" />
-+    <script>window.location.replace('/blog/admin/');</script>
-+  </head>
-+  <body>
-+    <p>Redirecionando para <a href="/blog/admin/">/blog/admin/</a>…</p>
-+  </body>
-+</html>
+---
+import { getCollection } from 'astro:content';
+const posts = await getCollection('posts', ({ data }) => !data.draft);
+---
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>PAVIE | Blog</title>
+    <meta name="description" content="Blog jurídico da PAVIE | Advocacia." />
+    <link rel="canonical" href="https://blog.pavieadvocacia.com.br/" />
+  </head>
+  <body>
+    <header>
+      <h1>PAVIE | Blog</h1>
+      <nav><a href="/about">Sobre</a></nav>
+    </header>
+    <main>
+      <ul>
+        {posts
+          .sort((a,b) => b.data.date.getTime() - a.data.date.getTime())
+          .map((post) => (
+            <li>
+              <a href={`/blog/${post.slug}/`}>{post.data.title}</a>
+              <p>{post.data.description}</p>
+            </li>
+          ))}
+      </ul>
+    </main>
+  </body>
+</html>

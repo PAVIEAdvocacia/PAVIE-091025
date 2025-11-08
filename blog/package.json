@@ -7,16 +7,13 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "postbuild": "pagefind --site dist || echo 'Pagefind skipped'"
+    "postbuild": "bash ./scripts/postbuild.sh"
   },
-  "dependencies": {
-    "astro": "^4.10.0",
-    "@astrojs/rss": "^4.0.0",
-    "@astrojs/sitemap": "^3.1.0",
-    "pagefind": "^1.2.0",
-    "zod": "^3.23.8"
-  },
+  "dependencies": {},
   "devDependencies": {
-    "typescript": "^5.3.3"
+    "astro": "latest",
+    "@astrojs/sitemap": "latest",
+    "zod": "latest",
+    "pagefind": "latest"
   }
 }

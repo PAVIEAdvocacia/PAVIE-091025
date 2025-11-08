@@ -1,6 +1,2 @@
-# Redirecionamentos do Blog
-/blog/admin/*    /blog/admin/index.html    200
-/blog/admin      /blog/admin/index.html    200
-
-# Fallback para SPA (se necessário)
-/*    /index.html    200
+# (opcional) redirecionamentos 301/302. Um por linha. Ex.:
+# /antigo-artigo  /novo-artigo  301

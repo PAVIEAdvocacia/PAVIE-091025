@@ -1,0 +1,28 @@
+---
+import { getCollection } from 'astro:content';
+export async function getStaticPaths() {
+  const posts = await getCollection('posts');
+  return posts.map((post) => ({
+    params: { slug: post.slug },
+    props: { post },
+  }));
+}
+const { post } = Astro.props;
+---
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{post.data.title} — PAVIE | Blog</title>
+    <meta name="description" content={post.data.description} />
+    <link rel="canonical" href={`https://blog.pavieadvocacia.com.br/blog/${post.slug}/`} />
+  </head>
+  <body>
+    <article>
+      <h1>{post.data.title}</h1>
+      <p><small>{post.data.date.toISOString().slice(0,10)}</small></p>
+      <slot />
+    </article>
+  </body>
+</html>

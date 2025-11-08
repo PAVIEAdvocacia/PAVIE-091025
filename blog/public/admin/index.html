@@ -1,68 +1,15 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="pt-BR">
   <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>PAVIE Blog CMS</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Admin — PAVIE | Blog</title>
     <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
-    <style>
-      body { 
-        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; 
-        margin: 0; 
-        padding: 20px; 
-        background: #f5f5f5; 
-      }
-      .loading { 
-        text-align: center; 
-        padding: 50px; 
-        color: #666; 
-      }
-    </style>
   </head>
   <body>
-    <div id="cms-loading" class="loading">
-      <h2>Carregando CMS do Blog PAVIE...</h2>
-      <p>Se esta mensagem persistir, verifique o console do navegador (F12)</p>
-    </div>
-
     <script>
-      // Configuração INLINE para evitar problemas com config.yml
-      CMS.init({
-        config: {
-          backend: {
-            name: "github",
-            repo: "PAVIEAdvocacia/PAVIE-091025",
-            branch: "main",
-            base_url: "https://pavieadvocacia.com.br",
-            auth_endpoint: "/api/auth/github-oauth"
-          },
-          locale: "pt-br",
-          media_folder: "src/assets/images",
-          public_folder: "/assets/images",
-          site_url: "https://pavieadvocacia.com.br",
-          display_url: "https://pavieadvocacia.com.br",
-          collections: [
-            {
-              name: "blog",
-              label: "Posts do Blog",
-              folder: "src/content/blog",
-              create: true,
-              slug: "{{slug}}",
-              fields: [
-                { label: "Título", name: "title", widget: "string", required: true },
-                { label: "Data de Publicação", name: "date", widget: "datetime", required: true },
-                { label: "Descrição", name: "description", widget: "string", required: false },
-                { label: "Conteúdo", name: "body", widget: "markdown", required: true }
-              ]
-            }
-          ]
-        }
-      });
-      
-      // Esconder mensagem de carregamento quando o CMS iniciar
-      setTimeout(() => {
-        document.getElementById('cms-loading').style.display = 'none';
-      }, 2000);
+      // Inicialização manual; o config.yml fará a maior parte do trabalho
+      CMS.init();
     </script>
   </body>
 </html>

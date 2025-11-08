@@ -1,8 +1,9 @@
-// blog/astro.config.mjs
-import { defineConfig } from 'astro/config';
+import { defineConfig } from "astro/config";
+import sitemap from "@astrojs/sitemap";
+
+// Ajuste 'site' para o seu domínio definitivo em produção.
 export default defineConfig({
-  site: 'https://blog.pavieadvocacia.com.br',
-  base: '/',                 // <- raiz do subdomínio
-  trailingSlash: 'always',
-  build: { outDir: 'dist' },
+  site: "https://blog.pavieadvocacia.com.br",
+  base: "/",
+  integrations: [sitemap()],
 });
