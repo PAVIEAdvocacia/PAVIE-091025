@@ -7,13 +7,24 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "postbuild": "bash ./scripts/postbuild.sh"
+    "postbuild": "bash ./scripts/postbuild.sh",
+    "lint": "eslint \"src/**/*.{js,ts,astro,md}\" --fix",
+    "format": "prettier --write \"src/**/*.{js,ts,astro,md,css}\""
   },
-  "dependencies": {},
+  "dependencies": {
+    "zod": "latest"
+  },
   "devDependencies": {
     "astro": "latest",
     "@astrojs/sitemap": "latest",
-    "zod": "latest",
-    "pagefind": "latest"
+    "pagefind": "latest",
+    "eslint": "latest",
+    "prettier": "latest",
+    "eslint-plugin-astro": "latest",
+    "@typescript-eslint/parser": "latest",
+    "@typescript-eslint/eslint-plugin": "latest"
+  },
+  "engines": {
+    "node": ">=18"
   }
 }
