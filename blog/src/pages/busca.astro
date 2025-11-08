@@ -1,0 +1,28 @@
+---
+// src/pages/busca.astro
+const title = "Buscar no blog";
+---
+<html lang="pt-br">
+  <head>
+    <meta charset="utf-8" />
+    <title>{title}</title>
+
+    <!-- UI padrão do Pagefind -->
+    <link href="/pagefind/pagefind-ui.css" rel="stylesheet" />
+    <script src="/pagefind/pagefind-ui.js"></script>
+  </head>
+  <body>
+    <h1>{title}</h1>
+    <div id="search"></div>
+
+    <script>
+      window.addEventListener('DOMContentLoaded', () => {
+        new PagefindUI({
+          element: "#search",
+          showSubResults: true
+          // Ex.: translations: { placeholder: "Pesquisar..." }
+        });
+      });
+    </script>
+  </body>
+</html>

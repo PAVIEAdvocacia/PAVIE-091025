@@ -2,6 +2,7 @@
 import { getCollection } from 'astro:content';
 const posts = await getCollection('posts', ({ data }) => !data.draft);
 ---
+
 <!doctype html>
 <html lang="pt-BR">
   <head>
@@ -18,14 +19,16 @@ const posts = await getCollection('posts', ({ data }) => !data.draft);
     </header>
     <main>
       <ul>
-        {posts
-          .sort((a,b) => b.data.date.getTime() - a.data.date.getTime())
-          .map((post) => (
-            <li>
-              <a href={`/blog/${post.slug}/`}>{post.data.title}</a>
-              <p>{post.data.description}</p>
-            </li>
-          ))}
+        {
+          posts
+            .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
+            .map((post) => (
+              <li>
+                <a href={`/blog/${post.slug}/`}>{post.data.title}</a>
+                <p>{post.data.description}</p>
+              </li>
+            ))
+        }
       </ul>
     </main>
   </body>

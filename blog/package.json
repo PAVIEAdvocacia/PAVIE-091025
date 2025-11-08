@@ -7,7 +7,7 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "postbuild": "bash ./scripts/postbuild.sh",
+    "postbuild": "pagefind --site dist",
     "lint": "eslint \"src/**/*.{js,ts,astro,md}\" --fix",
     "format": "prettier --write \"src/**/*.{js,ts,astro,md,css}\""
   },
@@ -15,15 +15,19 @@
     "zod": "latest"
   },
   "devDependencies": {
-    "astro": "latest",
     "@astrojs/sitemap": "latest",
+    "@eslint/js": "^9.39.1",
+    "@typescript-eslint/eslint-plugin": "^8.46.3",
+    "@typescript-eslint/parser": "^8.46.3",
+    "astro": "latest",
+    "astro-eslint-parser": "^1.2.2",
+    "eslint": "^9.39.1",
+    "eslint-plugin-astro": "^1.5.0",
+    "eslint-plugin-jsx-a11y": "^6.10.2",
     "pagefind": "latest",
-    "eslint": "latest",
-    "prettier": "latest",
-    "eslint-plugin-astro": "latest",
-    "@typescript-eslint/parser": "latest",
-    "@typescript-eslint/eslint-plugin": "latest",
-    "prettier-plugin-astro": "latest"
+    "prettier": "^3.6.2",
+    "prettier-plugin-astro": "^0.14.1",
+    "typescript-eslint": "^8.46.3"
   },
   "engines": {
     "node": ">=18"
