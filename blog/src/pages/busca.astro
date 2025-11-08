@@ -1,5 +1,4 @@
 ---
-// src/pages/busca.astro
 const title = "Buscar no blog";
 ---
 <html lang="pt-br">
@@ -7,20 +6,20 @@ const title = "Buscar no blog";
     <meta charset="utf-8" />
     <title>{title}</title>
 
-    <!-- UI padrão do Pagefind -->
+    <!-- Pagefind UI (gerado após indexação) -->
     <link href="/pagefind/pagefind-ui.css" rel="stylesheet" />
-    <script src="/pagefind/pagefind-ui.js"></script>
+    <script src="/pagefind/pagefind-ui.js" is:inline></script>
   </head>
   <body>
     <h1>{title}</h1>
     <div id="search"></div>
 
-    <script>
+    <script is:inline>
       window.addEventListener('DOMContentLoaded', () => {
         new PagefindUI({
           element: "#search",
-          showSubResults: true
-          // Ex.: translations: { placeholder: "Pesquisar..." }
+          showSubResults: true,
+          // translations: { placeholder: "Pesquisar..." }
         });
       });
     </script>
