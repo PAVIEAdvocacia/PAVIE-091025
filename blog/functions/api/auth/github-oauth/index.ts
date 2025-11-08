@@ -1,14 +1,7 @@
-// Autoriza no GitHub e redireciona para o callback do seu domínio.
-export const onRequestGet: PagesFunction = async (ctx) => {
-  const url = new URL(ctx.request.url);
-  const origin = `${url.protocol}//${url.host}`;
-  const clientId = ctx.env.GITHUB_CLIENT_ID as string;
-  if (!clientId) {
-    return new Response("GITHUB_CLIENT_ID ausente", { status: 500 });
-  }
-
-  const redirectUri = `${origin}/api/auth/github-oauth/callback`;
-  const scope = "repo,user:email"; // para repositório privado use 'repo'; público: 'public_repo' também funciona
+export const onRequestGet: PagesFunction = async ({ env, request }) => {
+  const clientId = env.GITHUB_CLIENT_ID as string;
+  const redirectUri = new URL("/api/auth/github-oauth/callback", new URL(request.url).origin).toString();
+  const scope = "repo user:email";
 
   const authorize = new URL("https://github.com/login/oauth/authorize");
   authorize.searchParams.set("client_id", clientId);
