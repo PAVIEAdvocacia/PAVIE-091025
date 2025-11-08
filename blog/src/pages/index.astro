@@ -1,20 +1,23 @@
----
-// blog/src/pages/admin.astro
-// Redirecionamento client-side para o CMS
-if (typeof window !== 'undefined') {
-  window.location.href = '/blog/admin/index.html';
-}
----
-
-<html>
-  <head>
-    <title>Redirecionando para o CMS</title>
-    <meta http-equiv="refresh" content="0; url=/blog/admin/index.html">
-  </head>
-  <body>
-    <p>Redirecionando para o <a href="/blog/admin/index.html">CMS do Blog</a>...</p>
-    <script>
-      window.location.href = '/blog/admin/index.html';
-    </script>
-  </body>
-</html>
+diff --git a/blog/src/pages/admin.astro b/blog/src/pages/admin.astro
+index 91678c98deef5730a6a8a6049bb36ebd3d7157f5..16db2c93b4caad166d266949b1cb208abc9f7d35 100644
+--- a/blog/src/pages/admin.astro
++++ b/blog/src/pages/admin.astro
+@@ -1,4 +1,13 @@
+----
+-import { Redirect } from 'astro-redirects';
+----
+-<Redirect to="/blog/public/admin/" />
+\ No newline at end of file
++<!doctype html>
++<html lang="pt-BR">
++  <head>
++    <meta charset="utf-8" />
++    <title>Redirecionando…</title>
++    <meta http-equiv="refresh" content="0; url=/blog/admin/" />
++    <link rel="canonical" href="/blog/admin/" />
++    <script>window.location.replace('/blog/admin/');</script>
++  </head>
++  <body>
++    <p>Redirecionando para <a href="/blog/admin/">/blog/admin/</a>…</p>
++  </body>
++</html>

@@ -1,8 +1,8 @@
 diff --git a/package.json b/package.json
-index 4869d93af9384e732de3decc0547c949a212b79e..b2342de95021b46c44bcbf58a1a6d83388c99842 100644
+index 4869d93af9384e732de3decc0547c949a212b79e..3c59f58e0aa238943c3ccc9feccf7c1bcbfb56e8 100644
 --- a/package.json
 +++ b/package.json
-@@ -1,9 +1,10 @@
+@@ -1,9 +1,11 @@
  {
    "name": "pavie-site-root",
    "private": true,
@@ -11,7 +11,8 @@ index 4869d93af9384e732de3decc0547c949a212b79e..b2342de95021b46c44bcbf58a1a6d833
    "scripts": {
 -    "build": "node ./tools/build.cjs"
 +    "build": "node ./tools/build.cjs",
-+    "audit:decap": "node ./tools/decap_audit.cjs"
++    "audit:decap": "node ./tools/decap_audit.cjs",
++    "fix:decap": "node ./tools/decap_fix.cjs"
    }
 -}
 \ No newline at end of file
