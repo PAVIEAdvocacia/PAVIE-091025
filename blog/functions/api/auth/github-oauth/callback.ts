@@ -1,29 +1,56 @@
-export const onRequestGet: PagesFunction = async ({ env, request }) => {
-  const url = new URL(request.url);
-  const code = url.searchParams.get("code");
-  if (!code) return new Response("Missing code", { status: 400 });
+export interface Env {
+  GITHUB_CLIENT_ID: string;
+  GITHUB_CLIENT_SECRET: string;
+}
 
-  const body = new URLSearchParams({
-    client_id: env.GITHUB_CLIENT_ID as string,
-    client_secret: env.GITHUB_CLIENT_SECRET as string,
-    code,
+export const onRequest: PagesFunction<Env> = async (ctx) => {
+  const url = new URL(ctx.request.url);
+  const code = url.searchParams.get('code');
+  if (!code) return new Response('Missing code', { status: 400 });
+
+  const redirectUri = `${url.origin}/api/auth/github-oauth/callback`;
+
+  const resp = await fetch('https://github.com/login/oauth/access_token', {
+    method: 'POST',
+    headers: { 'content-type': 'application/json', 'accept': 'application/json' },
+    body: JSON.stringify({
+      client_id: ctx.env.GITHUB_CLIENT_ID,
+      client_secret: ctx.env.GITHUB_CLIENT_SECRET,
+      code,
+      redirect_uri: redirectUri,
+    }),
   });
 
-  // Troca code -> token no GitHub
-  const gh = await fetch("https://github.com/login/oauth/access_token", {
-    method: "POST",
-    headers: { "Accept": "application/json" },
-    body,
-  });
-  if (!gh.ok) return new Response("OAuth exchange failed", { status: 502 });
+  const data = await resp.json();
+  if (!resp.ok || !data.access_token) {
+    return new Response(
+      `OAuth error: ${data.error_description || resp.statusText || 'no token'}`,
+      { status: 401 }
+    );
+  }
 
-  const json = await gh.json<any>();
-  if (!json.access_token) return new Response("No token", { status: 500 });
+  const payload = JSON.stringify({ token: data.access_token });
 
-  // O backend GitHub do Decap aceita JSON { token: "<access_token>" }
-  // (padrão de OAuth server para Decap/Netlify CMS).
-  // Referências de backend e exemplos com Cloudflare Workers/Pages: :contentReference[oaicite:3]{index=3}
-  return new Response(JSON.stringify({ token: json.access_token }), {
-    headers: { "Content-Type": "application/json", "Cache-Control": "no-store" },
-  });
+  // Handshake exigido pelo Decap: enviar o token ao Admin e fechar o popup
+  const html = `<!doctype html>
+<html><body>
+<script>
+(function () {
+  try {
+    var msg = 'authorization:github:' + ${JSON.stringify(payload)};
+    if (window.opener && typeof window.opener.postMessage === 'function') {
+      window.opener.postMessage(msg, '*');
+      window.close();
+      return;
+    }
+    // Fallback: exibe o JSON se não houver window.opener
+    document.body.innerText = ${JSON.stringify(payload)};
+  } catch (e) {
+    document.body.innerText = 'Callback error: ' + (e && e.message ? e.message : e);
+  }
+})();
+</script>
+</body></html>`;
+
+  return new Response(html, { headers: { 'content-type': 'text/html; charset=utf-8' } });
 };

@@ -1,12 +1,14 @@
-export const onRequestGet: PagesFunction = async ({ env, request }) => {
-  const clientId = env.GITHUB_CLIENT_ID as string;
-  const redirectUri = new URL("/api/auth/github-oauth/callback", new URL(request.url).origin).toString();
-  const scope = "repo user:email";
+export interface Env { GITHUB_CLIENT_ID: string }
 
-  const authorize = new URL("https://github.com/login/oauth/authorize");
-  authorize.searchParams.set("client_id", clientId);
-  authorize.searchParams.set("redirect_uri", redirectUri);
-  authorize.searchParams.set("scope", scope);
+export const onRequest: PagesFunction<Env> = async (ctx) => {
+  const url = new URL(ctx.request.url);
+  const redirectUri = `${url.origin}/api/auth/github-oauth/callback`;
 
-  return Response.redirect(authorize.toString(), 302);
+  const qs = new URLSearchParams({
+    client_id: ctx.env.GITHUB_CLIENT_ID,
+    redirect_uri: redirectUri,
+    scope: 'repo user:email',
+  });
+
+  return Response.redirect(`https://github.com/login/oauth/authorize?${qs.toString()}`, 302);
 };
