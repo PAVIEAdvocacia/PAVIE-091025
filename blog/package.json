@@ -22,7 +22,8 @@
     "prettier": "latest",
     "eslint-plugin-astro": "latest",
     "@typescript-eslint/parser": "latest",
-    "@typescript-eslint/eslint-plugin": "latest"
+    "@typescript-eslint/eslint-plugin": "latest",
+    "prettier-plugin-astro": "latest"
   },
   "engines": {
     "node": ">=18"
