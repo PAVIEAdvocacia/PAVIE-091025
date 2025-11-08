@@ -1,6 +1,6 @@
 backend:
   name: github
-  repo: SEU_USUARIO/SEU_REPO
+  repo: PAVIEAdvocacia/PAVIE-091025
   branch: main
   base_url: https://blog.pavieadvocacia.com.br
   auth_endpoint: /api/auth/github-oauth
