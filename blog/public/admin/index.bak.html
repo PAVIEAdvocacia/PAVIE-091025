@@ -1,17 +1,66 @@
 <!doctype html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>PAVIE | Admin (Decap CMS)</title>
-  <!-- Decap (pinar versão) -->
-  <script src="https://unpkg.com/decap-cms@3.6.2/dist/decap-cms.js"></script>
-  <script>
-    // Inicialização mínima; se usar OAuth externo, basta o config.yml
-    window.CMS && CMS.init();
-  </script>
+  <!-- CSS do Decap (CDN) -->
+  <link rel="stylesheet" href="https://unpkg.com/decap-cms@^3/dist/decap-cms.css">
 </head>
 <body>
-  <!-- O app React do Decap rende aqui -->
+  <!-- JS do Decap (CDN) -->
+  <script src="https://unpkg.com/decap-cms@^3/dist/decap-cms.js"></script>
+
+  <script>
+    // MODO INLINE ONLY — não use config.yml em paralelo
+    window.CMS.init({
+      config: {
+        backend: {
+          name: "github",
+          repo: "PAVIEAdvocacia/PAVIE-091025",
+          branch: "main",
+          auth_endpoint: "/api/auth/github-oauth"
+        },
+
+        site_url: "https://blog.pavieadvocacia.com.br",
+        locale: "pt",
+        publish_mode: "editorial_workflow",
+
+        // Caminhos em relação ao repositório e à URL pública do projeto do blog
+        media_folder: "blog/public/uploads",
+        public_folder: "/uploads",
+
+        collections: [
+          {
+            name: "posts",
+            label: "Posts",
+            folder: "blog/src/content/posts",
+            create: true,
+            slug: "{{year}}-{{month}}-{{day}}-{{slug}}",
+            editor: { preview: true },
+            fields: [
+              { label: "Título", name: "title", widget: "string" },
+              { label: "Descrição (resumo)", name: "description", widget: "text" },
+              { label: "Data de publicação", name: "pubDate", widget: "datetime", format: "YYYY-MM-DD" },
+              { label: "Autor", name: "author", widget: "string", default: "PAVIE | Advocacia" },
+              { label: "Tags", name: "tags", widget: "list", required: false },
+              {
+                label: "Capa",
+                name: "cover",
+                widget: "object",
+                collapsed: true,
+                fields: [
+                  { label: "Imagem", name: "src", widget: "image" },
+                  { label: "Alt (acessível)", name: "alt", widget: "string" }
+                ]
+              },
+              { label: "Noindex", name: "noindex", widget: "boolean", required: false, default: false },
+              { label: "Corpo", name: "body", widget: "markdown" }
+            ]
+          }
+        ]
+      }
+    });
+  </script>
 </body>
 </html>
