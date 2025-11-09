@@ -29,4 +29,3 @@ collections:
       - { label: "Rascunho", name: "draft", widget: "boolean", default: true }
       - { label: "Conteúdo", name: "body", widget: "markdown" }
 '@ | Set-Content -Encoding UTF8 "blog/public/admin/config.yml"
-
