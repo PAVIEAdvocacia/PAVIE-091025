@@ -2,14 +2,13 @@
 /*
   Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
   X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
   Referrer-Policy: strict-origin-when-cross-origin
-  Permissions-Policy: geolocation=(), microphone=(), camera=()
+  Permissions-Policy: geolocation=(), microphone=(), camera=(), interest-cohort=()
 
-# Admin (Decap)
-# OBS: uma única linha para a CSP; NADA de quebras por diretiva
-/blog/admin/*
+/admin/*
   Cache-Control: no-store
-  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://unpkg.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https:; font-src 'self' data: https:; connect-src 'self' https://api.github.com https://github.com https://raw.githubusercontent.com https://unpkg.com https://cdn.jsdelivr.net; frame-ancestors 'none'; base-uri 'self'; form-action 'self'
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://unpkg.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://avatars.githubusercontent.com https://raw.githubusercontent.com; font-src 'self' data: https:; connect-src 'self' https://api.github.com https://github.com https://raw.githubusercontent.com https://unpkg.com https://cdn.jsdelivr.net; frame-ancestors 'none'; base-uri 'self'; form-action 'self'
 
 # (Opcional) Funções do projeto (OAuth etc.) — desabilitar cache
  /api/*
