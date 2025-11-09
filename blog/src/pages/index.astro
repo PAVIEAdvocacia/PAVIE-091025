@@ -1,35 +1,259 @@
 ---
 import { getCollection } from 'astro:content';
-const posts = await getCollection('posts', ({ data }) => !data.draft);
+
+// Coleta e ordena posts publicados (noindex = false)
+const all = await getCollection('posts');
+const posts = all
+  .filter((p) => !p.data.noindex)
+  .sort((a, b) => new Date(b.data.pubDate).getTime() - new Date(a.data.pubDate).getTime());
+
+// Destaques editoriais (3 mais recentes, qualquer tipo permitido)
+const destaques = posts.slice(0, 3);
+
+// Eixos (tags principais) — slugs estáveis e acessíveis
+const EIXOS: Array<{ title: string; slug: string; desc: string }>= [
+  { title:'Sucessões & Inventário', slug:'sucessoes-inventario', desc:'Planejamento sucessório, testamentos, inventário nacional e binacional.' },
+  { title:'Família & Patrimônio', slug:'familia-patrimonio', desc:'Regimes de bens, divórcio, dissolução, partilhas e proteção patrimonial.' },
+  { title:'Imobiliário & Urbanístico', slug:'imobiliario-urbanistico', desc:'Aquisição, regularização, locação e due diligence de imóveis.' },
+  { title:'Contratos & Obrigações', slug:'contratos-obrigacoes', desc:'Contratos civis e empresariais com foco em segurança jurídica.' },
+  { title:'Consumidor & Danos', slug:'consumidor-danos', desc:'Direitos do consumidor, transportes, responsabilidade civil.' },
+  { title:'Compliance & Governança', slug:'compliance-governanca', desc:'LGPD, Lei 14.133/21, integridade, transparência e riscos.' },
+  { title:'Tributário & Previdenciário', slug:'tributario-previdenciario', desc:'Tributos, benefícios e regimes, estratégia e contencioso.' },
+  { title:'Internacional (BR–UE)', slug:'internacional', desc:'Conflitos de leis, cooperação jurídica, Alemanha/Portugal/UE.' }
+];
+
+const site = (Astro.site?.toString() ?? 'https://pavieadvocacia.com.br').replace(/\/$/, '');
+const CANONICAL = `${site}/blog/`;
 ---
 
-<!doctype html>
-<html lang="pt-BR">
+<html lang="pt-br">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>PAVIE | Blog</title>
-    <meta name="description" content="Blog jurídico da PAVIE | Advocacia." />
-    <link rel="canonical" href="https://blog.pavieadvocacia.com.br/" />
+    <title>Blog PAVIE | Advocacia — Direito, Internacionalidade e Patrimônio</title>
+    <meta name="description" content="Análises jurídicas e guias práticos com rigor técnico, ética OAB e acessibilidade. Sucessões, família, imobiliário, contratos, consumidor, compliance, tributário e internacional." />
+    <link rel="canonical" href={CANONICAL} />
+    <link rel="alternate" type="application/rss+xml" title="RSS — Blog PAVIE" href="/blog/rss.xml" />
+    <!-- Pagefind UI (de forma resiliente ao primeiro deploy sem índice) -->
+    <link rel="stylesheet" href="/blog/_pagefind/pagefind.css" />
+    <script defer src="/blog/_pagefind/pagefind.js"></script>
+
+    <!-- JSON-LD: Blog + Breadcrumb + LegalService -->
+    <script type="application/ld+json" set:html={`{
+      "@context":"https://schema.org",
+      "@type":"Blog",
+      "name":"Blog PAVIE | Advocacia",
+      "url":"${CANONICAL}",
+      "inLanguage":"pt-BR",
+      "publisher":{"@type":"Organization","name":"PAVIE | Advocacia"}
+    }`}></script>
+    <script type="application/ld+json" set:html={`{
+      "@context":"https://schema.org",
+      "@type":"BreadcrumbList",
+      "itemListElement":[{"@type":"ListItem","position":1,"name":"Blog","item":"${CANONICAL}"}]
+    }`}></script>
+    <script type="application/ld+json" set:html={`{
+      "@context":"https://schema.org",
+      "@type":"LegalService",
+      "name":"PAVIE | Advocacia",
+      "url":"https://pavieadvocacia.com.br/",
+      "areaServed":["Brasil","Alemanha","Portugal","União Europeia"],
+      "serviceType":["Sucessões & Inventário","Família & Patrimônio","Imobiliário & Urbanístico","Contratos & Obrigações","Consumidor & Danos","Compliance & Governança","Tributário & Previdenciário","Internacional"]
+    }`}></script>
+
+    <style>
+      :root{
+        /* Paleta institucional (site) */
+        --brand-primary: #0E3A4E; /* azul-petróleo */
+        --brand-accent: #FF6A00; /* laranja da marca */
+        /* Cor alternativa sutil (blog) */
+        --blog-accent: #0A7C7A; /* teal discreto para diferenciação */
+        /* Suporte */
+        --bg: #0b0f12;
+        --fg: #e8eef2;
+        --muted: #93a3ad;
+        --card: #12171b;
+        --card-border: #22303a;
+        --focus: #9AD0C9; /* alto contraste para foco */
+      }
+      html{color-scheme: dark light}
+      body{margin:0;background:var(--bg);color:var(--fg);font:400 16px/1.6 system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Arial, "Apple Color Emoji","Segoe UI Emoji"}
+      a{color:var(--blog-accent);text-decoration:underline;text-underline-offset: .15em}
+      a:hover{opacity:.9}
+      .container{max-width:1120px;margin-inline:auto;padding:24px}
+      .skip{position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden}
+      .skip:focus{left:16px;top:16px;width:auto;height:auto;background:#fff;color:#000;padding:.6rem 1rem;z-index:1000;border-radius:.5rem}
+
+      header.hero{background:linear-gradient(180deg, rgba(14,58,78,.85), rgba(11,15,18,.7)), radial-gradient(1200px 400px at 10% -20%, rgba(10,124,122,.25), transparent 60%)}
+      .brand{display:flex;gap:.75rem;align-items:center}
+      .brand__mark{inline-size:36px;block-size:36px;border-radius:10px;background:linear-gradient(160deg,var(--blog-accent),var(--brand-primary));display:grid;place-items:center;color:#fff;font-weight:700}
+      .hero__grid{display:grid;grid-template-columns:1.2fr .8fr;gap:24px}
+      @media (max-width:900px){.hero__grid{grid-template-columns:1fr}}
+      .hero h1{font-size:clamp(1.8rem,3.5vw,2.6rem);line-height:1.2;margin:.5rem 0}
+      .hero p{color:var(--fg);opacity:.9}
+      .cta{display:flex;gap:.75rem;flex-wrap:wrap;margin-top:1rem}
+      .btn{appearance:none;border:1px solid var(--card-border);background:var(--blog-accent);color:#fff;border-radius:.8rem;padding:.65rem 1rem;font-weight:600;text-decoration:none}
+      .btn--ghost{background:transparent;color:var(--fg)}
+      .btn:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+
+      .section{padding:48px 0;border-top:1px solid var(--card-border);background:color-mix(in srgb, var(--bg) 94%, var(--blog-accent) 6%)}
+      .section h2{font-size:1.5rem;margin:.2rem 0 1rem}
+      .grid{display:grid;gap:16px}
+      .grid--eixos{grid-template-columns:repeat(4,1fr)}
+      .grid--posts{grid-template-columns:repeat(3,1fr)}
+      @media (max-width:1000px){.grid--eixos{grid-template-columns:repeat(2,1fr)}.grid--posts{grid-template-columns:1fr}}
+
+      .card{background:var(--card);border:1px solid var(--card-border);border-radius:1rem;padding:16px}
+      .card h3{font-size:1.05rem;margin:.2rem 0}
+      .card p{color:var(--muted);margin:.25rem 0 .5rem}
+      .card a.more{display:inline-flex;align-items:center;gap:.4rem;font-weight:600}
+      .chip{display:inline-block;background:color-mix(in srgb, var(--blog-accent) 20%, #000);color:#d1fffa;border:1px solid color-mix(in srgb, var(--blog-accent) 55%, #000);padding:.18rem .5rem;border-radius:999px;font-size:.75rem}
+
+      .search{display:flex;gap:.5rem;align-items:center}
+      .search input[type="text"]{flex:1;min-width:220px;border-radius:.6rem;border:1px solid var(--card-border);padding:.6rem .8rem;background:#0d1317;color:var(--fg)}
+
+      .about{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+      @media (max-width:900px){.about{grid-template-columns:1fr}}
+
+      footer{padding:36px 0;border-top:1px solid var(--card-border);background:#0a0f12}
+      .muted{color:var(--muted)}
+    </style>
   </head>
   <body>
-    <header>
-      <h1>PAVIE | Blog</h1>
-      <nav><a href="/about">Sobre</a></nav>
+    <a href="#conteudo" class="skip">Ir direto ao conteúdo</a>
+
+    <header class="hero">
+      <div class="container">
+        <nav class="brand" aria-label="Principal">
+          <div class="brand__mark" aria-hidden="true">PV</div>
+          <div>
+            <strong>PAVIE | Advocacia</strong><br />
+            <span class="muted">Blog institucional</span>
+          </div>
+        </nav>
+        <div class="hero__grid" style="margin-top:24px">
+          <div>
+            <h1 id="conteudo">Direito, internacionalidade e patrimônio — com rigor técnico e ética</h1>
+            <p>
+              Publicações editoriais com base em jurisprudência, doutrina moderna e práticas de
+              Visual Law, sob governança ética (OAB), LGPD e acessibilidade (WCAG 2.2 AA).
+            </p>
+            <div class="cta" role="group" aria-label="Chamadas">
+              <a class="btn" href="#eixos" onclick="window.sendLead && sendLead({cta_type:'explorar_eixos',page_category:'blog_home'})">Explorar temas</a>
+              <a class="btn btn--ghost" href="/blog/sobre/" onclick="window.sendLead && sendLead({cta_type:'sobre_blog',page_category:'blog_home'})">Sobre o projeto editorial</a>
+            </div>
+            <div class="search" style="margin-top:18px" aria-label="Busca no Blog">
+              <input type="text" aria-label="Pesquisar" placeholder="Pesquisar no blog…" data-pagefind-search />
+              <span class="muted" aria-live="polite">Pressione Enter para buscar</span>
+            </div>
+            <noscript><p class="muted">A busca requer JavaScript. Você ainda pode acessar o <a href="/blog/rss.xml">RSS</a>.</p></noscript>
+          </div>
+          <div class="card" aria-labelledby="aviso">
+            <h3 id="aviso">Aviso ético e de privacidade</h3>
+            <p class="muted">
+              Conteúdo informativo, sem promessa de resultado. O contato configura tratamento de dados com base
+              pré-contratual e consentimento — consulte a Política Editorial e de Privacidade.
+            </p>
+            <a class="more" href="/blog/sobre/politica-editorial/">Ver política completa →</a>
+          </div>
+        </div>
+      </div>
     </header>
+
     <main>
-      <ul>
-        {
-          posts
-            .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
-            .map((post) => (
-              <li>
-                <a href={`/blog/${post.slug}/`}>{post.data.title}</a>
-                <p>{post.data.description}</p>
-              </li>
-            ))
-        }
-      </ul>
+      <!-- Eixos / tags principais -->
+      <section id="eixos" class="section" aria-labelledby="eixos-title">
+        <div class="container">
+          <h2 id="eixos-title">Áreas de especialização</h2>
+          <div class="grid grid--eixos" role="list">
+            {EIXOS.map((eixo) => (
+              <article class="card" role="listitem">
+                <span class="chip" aria-hidden="true">Tema</span>
+                <h3><a href={`/blog/tags/${eixo.slug}/`}>{eixo.title}</a></h3>
+                <p>{eixo.desc}</p>
+                <a class="more" href={`/blog/tags/${eixo.slug}/`} aria-label={`Ver posts em ${eixo.title}`}>Ver artigos →</a>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <!-- Destaques editoriais -->
+      <section class="section" aria-labelledby="destaques-title">
+        <div class="container">
+          <h2 id="destaques-title">Destaques editoriais</h2>
+          <div class="grid grid--posts" role="list">
+            {destaques.map((post) => {
+              const url = `/blog/${post.slug}/`;
+              const { title, description, pubDate, type, cover } = post.data as any;
+              return (
+                <article class="card" role="listitem">
+                  <span class="chip" aria-label={`Tipo: ${type}`}>{type}</span>
+                  <h3><a href={url}>{title}</a></h3>
+                  <p>{description}</p>
+                  <p class="muted" aria-label="Data de publicação">{new Date(pubDate).toLocaleDateString('pt-BR')}</p>
+                  <a class="more" href={url} aria-label={`Ler “${title}”`}>Ler artigo →</a>
+                </article>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      <!-- Sobre o Blog -->
+      <section class="section" aria-labelledby="sobre-title">
+        <div class="container about">
+          <div>
+            <h2 id="sobre-title">Sobre o Blog PAVIE | Advocacia</h2>
+            <p>
+              Este blog institucional consolida análises jurídicas com ênfase em sucessões, família e patrimônio,
+              contratos, imobiliário, consumo, compliance e internacional (Brasil–UE), seguindo um Documento‑Mestre (RFC‑000)
+              e registros de decisão (ADRs), com foco em governança, SEO, A11Y e LGPD.
+            </p>
+            <p>
+              Pautas e publicações observam revisão técnica (LAW‑CIV/INT), compliance ético (OAB) e critérios de aceite
+              objetivos (Core Web Vitals, dados estruturados e acessibilidade).
+            </p>
+            <div class="cta">
+              <a class="btn" href="/blog/sobre/">Conheça a governança editorial</a>
+              <a class="btn btn--ghost" href="/blog/rss.xml">Assinar RSS</a>
+            </div>
+          </div>
+          <div class="card">
+            <h3>Transparência editorial</h3>
+            <ul>
+              <li>Sem comentários públicos; foco em contato qualificado.</li>
+              <li>Dados estruturados (BlogPosting, FAQ, Breadcrumb, LegalService).</li>
+              <li>Consent Mode v2 no GA4 e coleta mínima de dados.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- Newsletter ética (opcional, via RSS/integrações) -->
+      <section class="section" aria-labelledby="news-title">
+        <div class="container">
+          <h2 id="news-title">Atualizações éticas</h2>
+          <p class="muted">Receba novidades por RSS ou acompanhe pelos canais institucionais (LinkedIn/Google Business). Nenhuma publicidade, nenhum spam.</p>
+          <div class="cta">
+            <a class="btn" href="/blog/rss.xml" onclick="window.sendLead && sendLead({cta_type:'rss',page_category:'blog_home'})">Assinar RSS</a>
+            <a class="btn btn--ghost" href="https://www.linkedin.com/company/pavie-advocacia" rel="noopener" target="_blank">Seguir no LinkedIn</a>
+          </div>
+        </div>
+      </section>
     </main>
+
+    <footer>
+      <div class="container">
+        <nav aria-label="Rodapé" class="muted" style="display:flex;gap:1rem;flex-wrap:wrap">
+          <a href="/blog/sobre/">Sobre</a>
+          <a href="/blog/sobre/politica-editorial/">Política Editorial</a>
+          <a href="/blog/sobre/privacidade/">Privacidade</a>
+          <a href="/blog/sobre/acessibilidade/">Acessibilidade</a>
+          <a href="/blog/contato/">Contato</a>
+        </nav>
+        <p class="muted" style="margin-top:12px">© {new Date().getFullYear()} PAVIE | Advocacia — Conteúdo informativo, sem promessa de resultado.</p>
+      </div>
+    </footer>
   </body>
 </html>
