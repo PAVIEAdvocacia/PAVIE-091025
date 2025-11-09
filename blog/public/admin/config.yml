@@ -2,39 +2,35 @@ backend:
   name: github
   repo: PAVIEAdvocacia/PAVIE-091025
   branch: main
-  base_url: https://blog.pavieadvocacia.com.br
   auth_endpoint: /api/auth/github-oauth
 
-site_url: https://pavieadvocacia.com.br/blog
-logo_url: https://pavieadvocacia.com.br/assets/logo.png
+site_url: https://blog.pavieadvocacia.com.br
 locale: pt
 publish_mode: editorial_workflow
 
-# Alinhado à árvore real do projeto
+# Caminhos RELATIVOS à raiz do repositório (commit via Decap)
 media_folder: "blog/public/uploads"
-public_folder: "/blog/uploads"
+public_folder: "/uploads"
 
 collections:
   - name: posts
-    label: Artigos
+    label: "Posts"
     folder: "blog/src/content/posts"
     create: true
     slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
-    preview_path: "blog/{{slug}}/"
     editor: { preview: true }
     fields:
       - { label: "Título", name: "title", widget: "string" }
-      - { label: "Data", name: "pubDate", widget: "datetime", format: "YYYY-MM-DD" }
-      - { label: "Resumo", name: "description", widget: "text" }
+      - { label: "Descrição (resumo)", name: "description", widget: "text" }
+      - { label: "Data de publicação", name: "pubDate", widget: "datetime", format: "YYYY-MM-DD" }
       - { label: "Autor", name: "author", widget: "string", default: "PAVIE | Advocacia" }
-      - { label: "Tipo", name: "type", widget: "select", options: ["autoridade","guia","jurisprudencia","noticia","opiniao"] }
-      - { label: "Tags", name: "tags", widget: "list" }
-      - label: "Imagem de capa"
+      - { label: "Tags", name: "tags", widget: "list", required: false }
+      - label: "Capa"
         name: "cover"
         widget: "object"
+        collapsed: true
         fields:
-          - { label: "Arquivo", name: "src", widget: "image" }
+          - { label: "Imagem", name: "src", widget: "image" }
           - { label: "Alt (acessível)", name: "alt", widget: "string" }
-      - { label: "Canonical (opcional)", name: "canonical", widget: "string", required: false }
-      - { label: "Noindex", name: "noindex", widget: "boolean", default: false, required: false }
+      - { label: "Noindex", name: "noindex", widget: "boolean", required: false, default: false }
       - { label: "Corpo", name: "body", widget: "markdown" }
