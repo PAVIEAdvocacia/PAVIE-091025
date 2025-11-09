@@ -1,40 +1,94 @@
 ---
 import { getCollection } from 'astro:content';
 
-// Coleta e ordena posts publicados (noindex = false)
+// Coleta posts publicados (noindex = false) e ordena por data desc
 const all = await getCollection('posts');
 const posts = all
   .filter((p) => !p.data.noindex)
   .sort((a, b) => new Date(b.data.pubDate).getTime() - new Date(a.data.pubDate).getTime());
 
-// Destaques editoriais (3 mais recentes, qualquer tipo permitido)
+// Destaques editoriais (3 mais recentes)
 const destaques = posts.slice(0, 3);
 
-// Eixos (tags principais) — slugs estáveis e acessíveis
-const EIXOS: Array<{ title: string; slug: string; desc: string }>= [
-  { title:'Sucessões & Inventário', slug:'sucessoes-inventario', desc:'Planejamento sucessório, testamentos, inventário nacional e binacional.' },
-  { title:'Família & Patrimônio', slug:'familia-patrimonio', desc:'Regimes de bens, divórcio, dissolução, partilhas e proteção patrimonial.' },
-  { title:'Imobiliário & Urbanístico', slug:'imobiliario-urbanistico', desc:'Aquisição, regularização, locação e due diligence de imóveis.' },
-  { title:'Contratos & Obrigações', slug:'contratos-obrigacoes', desc:'Contratos civis e empresariais com foco em segurança jurídica.' },
-  { title:'Consumidor & Danos', slug:'consumidor-danos', desc:'Direitos do consumidor, transportes, responsabilidade civil.' },
-  { title:'Compliance & Governança', slug:'compliance-governanca', desc:'LGPD, Lei 14.133/21, integridade, transparência e riscos.' },
-  { title:'Tributário & Previdenciário', slug:'tributario-previdenciario', desc:'Tributos, benefícios e regimes, estratégia e contencioso.' },
-  { title:'Internacional (BR–UE)', slug:'internacional', desc:'Conflitos de leis, cooperação jurídica, Alemanha/Portugal/UE.' }
+// Eixos (tags principais) — slugs estáveis
+const EIXOS: Array<{ title: string; slug: string; desc: string; topics?: string[] }> = [
+  {
+    title: 'Família & Patrimônio Seguro',
+    slug: 'familia-patrimonio-seguro',
+    desc: 'Planejamento familiar e proteção de bens com previsibilidade e segurança.',
+    topics: ['Regime de bens e pactos', 'Planejamento patrimonial', 'Doações e cláusulas', 'Holding familiar']
+  },
+  {
+    title: 'Sucessões & Inventário',
+    slug: 'sucessoes-inventario',
+    desc: 'Testamentos e inventários judicial/extrajudicial, inclusive com bens no exterior.',
+    topics: ['Testamento público/particular', 'Inventário judicial e extrajudicial', 'Nomeação de inventariante/testamenteiro', 'Partilha internacional']
+  },
+  {
+    title: 'Divórcios & Dissoluções',
+    slug: 'divorcios-dissolucoes',
+    desc: 'Dissolução de casamento/união estável, partilha de bens, guarda e alimentos.',
+    topics: ['Divórcio consensual/contencioso', 'Partilha', 'Alimentos/revisional', 'Guarda e convivência']
+  },
+  {
+    title: 'Família Binacional',
+    slug: 'familia-binacional',
+    desc: 'Casos com elementos de conexão internacionais (Brasil–UE).',
+    topics: ['Apostila de Haia', 'Reconhecimento de casamento/união', 'Guarda internacional', 'Regulamento (UE) 650/2012']
+  },
+  {
+    title: 'Contratos, Obrigações & Negócios',
+    slug: 'contratos-obrigacoes-negocios',
+    desc: 'Contratos civis/empresariais com foco em riscos, garantias e performance.',
+    topics: ['Due diligence', 'Responsabilidade e garantias', 'Inadimplemento', 'Contratos internacionais']
+  },
+  {
+    title: 'Trabalho, Previdência & Saúde Suplementar',
+    slug: 'trabalho-previdencia-saude-suplementar',
+    desc: 'Direitos trabalhistas essenciais, benefícios do INSS e cobertura de planos.',
+    topics: ['Verbas rescisórias', 'Pensão/aposentadorias', 'Índices de revisão', 'Coberturas e negativas']
+  },
+  {
+    title: 'Tributos & Fazenda Pública',
+    slug: 'tributos-fazenda-publica',
+    desc: 'Defesas fiscais, recuperação de crédito e controvérsias públicas.',
+    topics: ['Execução fiscal', 'Repetição de indébito', 'Regimes/benefícios', 'Precatórios e RPV']
+  },
+  {
+    title: 'Imobiliário, Condomínios & Regularização',
+    slug: 'imobiliario-condominios-regularizacao',
+    desc: 'Aquisição, locação, condomínio edilício e saneamento registral.',
+    topics: ['Due diligence imobiliária', 'Locação e garantias', 'Usucapião extrajudicial', 'Retificação/registro']
+  },
+  {
+    title: 'Compliance, Governança & Integridade (PJ/OSCs)',
+    slug: 'compliance-governanca-integridade',
+    desc: 'Programas de integridade, LGPD e governança para empresas e organizações.',
+    topics: ['LGPD (bases e mapeamento)', 'Lei 14.133/2021', 'Gestão de riscos', 'Transparência e relatórios']
+  },
+  {
+    title: 'Consultas & Assessoria',
+    slug: 'consultas-assessoria',
+    desc: 'Pareceres, segunda opinião e orientação estratégica preventiva.',
+    topics: ['Parecer jurídico', 'Análise de risco', 'Planejamento patrimonial', 'Mediação e composição']
+  }
 ];
 
 const site = (Astro.site?.toString() ?? 'https://pavieadvocacia.com.br').replace(/\/$/, '');
 const CANONICAL = `${site}/blog/`;
+const ROOT_CONTACT = `${site}/#contato`; // vínculo direto com o site institucional
 ---
 
 <html lang="pt-br">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Blog PAVIE | Advocacia — Direito, Internacionalidade e Patrimônio</title>
-    <meta name="description" content="Análises jurídicas e guias práticos com rigor técnico, ética OAB e acessibilidade. Sucessões, família, imobiliário, contratos, consumidor, compliance, tributário e internacional." />
+    <title>Blog PAVIE | Advocacia — Sucessões, Família, Imobiliário e Internacional</title>
+    <meta name="description" content="Guias e análises para decisões jurídicas seguras em sucessões, família, imobiliário, contratos e casos Brasil–UE. Conteúdo ético, acessível e orientado à prática." />
     <link rel="canonical" href={CANONICAL} />
     <link rel="alternate" type="application/rss+xml" title="RSS — Blog PAVIE" href="/blog/rss.xml" />
-    <!-- Pagefind UI (de forma resiliente ao primeiro deploy sem índice) -->
+
+    <!-- Pagefind UI (resiliente ao 1º deploy sem índice) -->
     <link rel="stylesheet" href="/blog/_pagefind/pagefind.css" />
     <script defer src="/blog/_pagefind/pagefind.js"></script>
 
@@ -56,66 +110,74 @@ const CANONICAL = `${site}/blog/`;
       "@context":"https://schema.org",
       "@type":"LegalService",
       "name":"PAVIE | Advocacia",
-      "url":"https://pavieadvocacia.com.br/",
+      "url":"${site}/",
       "areaServed":["Brasil","Alemanha","Portugal","União Europeia"],
       "serviceType":["Sucessões & Inventário","Família & Patrimônio","Imobiliário & Urbanístico","Contratos & Obrigações","Consumidor & Danos","Compliance & Governança","Tributário & Previdenciário","Internacional"]
     }`}></script>
 
     <style>
       :root{
-        /* Paleta institucional (site) */
-        --brand-primary: #0E3A4E; /* azul-petróleo */
-        --brand-accent: #FF6A00; /* laranja da marca */
-        /* Cor alternativa sutil (blog) */
-        --blog-accent: #0A7C7A; /* teal discreto para diferenciação */
-        /* Suporte */
-        --bg: #0b0f12;
-        --fg: #e8eef2;
-        --muted: #93a3ad;
-        --card: #12171b;
-        --card-border: #22303a;
-        --focus: #9AD0C9; /* alto contraste para foco */
+        /* Paleta “espaço café” — outono amadeirado (AA) */
+        --brand-primary: #3E2F23; /* espresso */
+        --brand-accent:  #C06E3E; /* canela */
+        --blog-accent:   #8A5A44; /* chocolate */
+        --bg:            #F6F1E7; /* creme */
+        --fg:            #2D241F; /* café escuro */
+        --muted:         #6E5A4E; /* mocha */
+        --card:          #FCFAF7; /* papel */
+        --card-border:   #D8C9BB; /* fibra clara */
+        --focus:         #E2A46D; /* caramelo */
       }
-      html{color-scheme: dark light}
-      body{margin:0;background:var(--bg);color:var(--fg);font:400 16px/1.6 system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Arial, "Apple Color Emoji","Segoe UI Emoji"}
-      a{color:var(--blog-accent);text-decoration:underline;text-underline-offset: .15em}
+      html{color-scheme: light}
+      body{margin:0;background:var(--bg);color:var(--fg);font:400 16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,Arial,"Apple Color Emoji","Segoe UI Emoji"}
+      a{color:var(--brand-accent);text-decoration:underline;text-underline-offset:.15em}
       a:hover{opacity:.9}
       .container{max-width:1120px;margin-inline:auto;padding:24px}
       .skip{position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden}
       .skip:focus{left:16px;top:16px;width:auto;height:auto;background:#fff;color:#000;padding:.6rem 1rem;z-index:1000;border-radius:.5rem}
 
-      header.hero{background:linear-gradient(180deg, rgba(14,58,78,.85), rgba(11,15,18,.7)), radial-gradient(1200px 400px at 10% -20%, rgba(10,124,122,.25), transparent 60%)}
+      /* Hero com sensação de madeira aquecida */
+      header.hero{
+        background:
+          linear-gradient(180deg, rgba(198,150,110,.25), rgba(246,241,231,0) 55%),
+          radial-gradient(900px 360px at 10% -20%, rgba(192,110,62,.18), transparent 60%),
+          linear-gradient(135deg, #E8D6C2 0%, #F6F1E7 60%)
+      }
       .brand{display:flex;gap:.75rem;align-items:center}
-      .brand__mark{inline-size:36px;block-size:36px;border-radius:10px;background:linear-gradient(160deg,var(--blog-accent),var(--brand-primary));display:grid;place-items:center;color:#fff;font-weight:700}
+      .brand__mark{inline-size:36px;block-size:36px;border-radius:10px;background:linear-gradient(160deg,var(--brand-accent),var(--brand-primary));display:grid;place-items:center;color:#fff;font-weight:700}
       .hero__grid{display:grid;grid-template-columns:1.2fr .8fr;gap:24px}
       @media (max-width:900px){.hero__grid{grid-template-columns:1fr}}
-      .hero h1{font-size:clamp(1.8rem,3.5vw,2.6rem);line-height:1.2;margin:.5rem 0}
-      .hero p{color:var(--fg);opacity:.9}
+      .hero h1{font-size:clamp(1.9rem,3.8vw,2.7rem);line-height:1.2;margin:.5rem 0}
+      .hero p{color:var(--fg);opacity:.95}
       .cta{display:flex;gap:.75rem;flex-wrap:wrap;margin-top:1rem}
-      .btn{appearance:none;border:1px solid var(--card-border);background:var(--blog-accent);color:#fff;border-radius:.8rem;padding:.65rem 1rem;font-weight:600;text-decoration:none}
-      .btn--ghost{background:transparent;color:var(--fg)}
+      .btn{appearance:none;border:1px solid var(--card-border);background:var(--brand-accent);color:#fff;border-radius:.8rem;padding:.65rem 1rem;font-weight:600;text-decoration:none}
+      .btn--ghost{background:transparent;color:#1c140f;border:1px solid var(--card-border)}
       .btn:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
 
-      .section{padding:48px 0;border-top:1px solid var(--card-border);background:color-mix(in srgb, var(--bg) 94%, var(--blog-accent) 6%)}
+      .section{padding:48px 0;border-top:1px solid var(--card-border);background:color-mix(in srgb, var(--bg) 96%, var(--brand-accent) 4%)}
       .section h2{font-size:1.5rem;margin:.2rem 0 1rem}
       .grid{display:grid;gap:16px}
       .grid--eixos{grid-template-columns:repeat(4,1fr)}
       .grid--posts{grid-template-columns:repeat(3,1fr)}
       @media (max-width:1000px){.grid--eixos{grid-template-columns:repeat(2,1fr)}.grid--posts{grid-template-columns:1fr}}
 
-      .card{background:var(--card);border:1px solid var(--card-border);border-radius:1rem;padding:16px}
+      .card{background:var(--card);border:1px solid var(--card-border);border-radius:1rem;padding:16px;box-shadow:0 1px 0 rgba(62,47,35,.04), 0 6px 16px -8px rgba(62,47,35,.15)}
       .card h3{font-size:1.05rem;margin:.2rem 0}
       .card p{color:var(--muted);margin:.25rem 0 .5rem}
       .card a.more{display:inline-flex;align-items:center;gap:.4rem;font-weight:600}
-      .chip{display:inline-block;background:color-mix(in srgb, var(--blog-accent) 20%, #000);color:#d1fffa;border:1px solid color-mix(in srgb, var(--blog-accent) 55%, #000);padding:.18rem .5rem;border-radius:999px;font-size:.75rem}
+      .chip{display:inline-block;background:color-mix(in srgb, var(--brand-accent) 18%, #fff);color:#4a2f23;border:1px solid color-mix(in srgb, var(--brand-accent) 45%, #fff);padding:.18rem .5rem;border-radius:999px;font-size:.75rem}
+
+      .topics{margin:.35rem 0 .25rem 1rem;padding:0 0 0 .5rem}
+      .topics li{margin:.1rem 0}
 
       .search{display:flex;gap:.5rem;align-items:center}
-      .search input[type="text"]{flex:1;min-width:220px;border-radius:.6rem;border:1px solid var(--card-border);padding:.6rem .8rem;background:#0d1317;color:var(--fg)}
+      .search input[type="text"]{flex:1;min-width:220px;border-radius:.6rem;border:1px solid var(--card-border);padding:.6rem .8rem;background:#fff;color:var(--fg)}
 
       .about{display:grid;grid-template-columns:1fr 1fr;gap:24px}
       @media (max-width:900px){.about{grid-template-columns:1fr}}
 
-      footer{padding:36px 0;border-top:1px solid var(--card-border);background:#0a0f12}
+      footer{padding:36px 0;border-top:1px solid var(--card-border);background:#2B211A;color:#f6f1e7}
+      footer a{color:#F0C9A5}
       .muted{color:var(--muted)}
     </style>
   </head>
@@ -131,15 +193,17 @@ const CANONICAL = `${site}/blog/`;
             <span class="muted">Blog institucional</span>
           </div>
         </nav>
+
         <div class="hero__grid" style="margin-top:24px">
           <div>
-            <h1 id="conteudo">Direito, internacionalidade e patrimônio — com rigor técnico e ética</h1>
+            <h1 id="conteudo">Decisões jurídicas seguras para seu patrimônio e sua família</h1>
             <p>
-              Publicações editoriais com base em jurisprudência, doutrina moderna e práticas de
-              Visual Law, sob governança ética (OAB), LGPD e acessibilidade (WCAG 2.2 AA).
+              Guias e análises assinadas pela PAVIE | Advocacia, com foco em sucessões, família,
+              imobiliário e relações Brasil–UE. Conteúdo ético, acessível e orientado à prática.
             </p>
             <div class="cta" role="group" aria-label="Chamadas">
               <a class="btn" href="#eixos" onclick="window.sendLead && sendLead({cta_type:'explorar_eixos',page_category:'blog_home'})">Explorar temas</a>
+              <a class="btn btn--ghost" href={ROOT_CONTACT} target="_blank" rel="noopener" onclick="window.sendLead && sendLead({cta_type:'contato_site_principal',page_category:'blog_home'})">Falar com o escritório</a>
               <a class="btn btn--ghost" href="/blog/sobre/" onclick="window.sendLead && sendLead({cta_type:'sobre_blog',page_category:'blog_home'})">Sobre o projeto editorial</a>
             </div>
             <div class="search" style="margin-top:18px" aria-label="Busca no Blog">
@@ -148,11 +212,12 @@ const CANONICAL = `${site}/blog/`;
             </div>
             <noscript><p class="muted">A busca requer JavaScript. Você ainda pode acessar o <a href="/blog/rss.xml">RSS</a>.</p></noscript>
           </div>
+
           <div class="card" aria-labelledby="aviso">
-            <h3 id="aviso">Aviso ético e de privacidade</h3>
+            <h3 id="aviso">Transparência e privacidade</h3>
             <p class="muted">
-              Conteúdo informativo, sem promessa de resultado. O contato configura tratamento de dados com base
-              pré-contratual e consentimento — consulte a Política Editorial e de Privacidade.
+              Conteúdo informativo e educacional, sem promessa de resultado. O contato configura
+              tratamento de dados sob base pré-contratual e consentimento. Consulte a Política Editorial e de Privacidade.
             </p>
             <a class="more" href="/blog/sobre/politica-editorial/">Ver política completa →</a>
           </div>
@@ -168,9 +233,14 @@ const CANONICAL = `${site}/blog/`;
           <div class="grid grid--eixos" role="list">
             {EIXOS.map((eixo) => (
               <article class="card" role="listitem">
-                <span class="chip" aria-hidden="true">Tema</span>
+                <span class="chip" aria-hidden="true">Área</span>
                 <h3><a href={`/blog/tags/${eixo.slug}/`}>{eixo.title}</a></h3>
                 <p>{eixo.desc}</p>
+                {eixo.topics && (
+                  <ul class="topics" aria-label={`Assuntos em ${eixo.title}`}>
+                    {eixo.topics.slice(0,4).map((t) => <li>{t}</li>)}
+                  </ul>
+                )}
                 <a class="more" href={`/blog/tags/${eixo.slug}/`} aria-label={`Ver posts em ${eixo.title}`}>Ver artigos →</a>
               </article>
             ))}
@@ -189,6 +259,7 @@ const CANONICAL = `${site}/blog/`;
               return (
                 <article class="card" role="listitem">
                   <span class="chip" aria-label={`Tipo: ${type}`}>{type}</span>
+                  {cover?.src && <img src={cover.src} alt={cover.alt} loading="lazy" decoding="async" style="width:100%;border-radius:.6rem;margin:.25rem 0" />}
                   <h3><a href={url}>{title}</a></h3>
                   <p>{description}</p>
                   <p class="muted" aria-label="Data de publicação">{new Date(pubDate).toLocaleDateString('pt-BR')}</p>
@@ -206,35 +277,62 @@ const CANONICAL = `${site}/blog/`;
           <div>
             <h2 id="sobre-title">Sobre o Blog PAVIE | Advocacia</h2>
             <p>
-              Este blog institucional consolida análises jurídicas com ênfase em sucessões, família e patrimônio,
-              contratos, imobiliário, consumo, compliance e internacional (Brasil–UE), seguindo um Documento‑Mestre (RFC‑000)
-              e registros de decisão (ADRs), com foco em governança, SEO, A11Y e LGPD.
+              Consolidamos análises com ênfase em sucessões, família e patrimônio, contratos, imobiliário,
+              consumo, compliance e internacional (Brasil–UE), sob Documento-Mestre (RFC-000) e ADRs.
+              Governança técnica com SEO, A11Y e LGPD.
             </p>
             <p>
-              Pautas e publicações observam revisão técnica (LAW‑CIV/INT), compliance ético (OAB) e critérios de aceite
-              objetivos (Core Web Vitals, dados estruturados e acessibilidade).
+              Revisão jurídica (LAW-CIV/INT), compliance ético (OAB) e critérios de aceite objetivos
+              (Core Web Vitals, dados estruturados, acessibilidade).
             </p>
             <div class="cta">
-              <a class="btn" href="/blog/sobre/">Conheça a governança editorial</a>
-              <a class="btn btn--ghost" href="/blog/rss.xml">Assinar RSS</a>
+              <a class="btn" href="/blog/sobre/">Governança editorial</a>
+              <a class="btn btn--ghost" href="/blog/rss.xml" onclick="window.sendLead && sendLead({cta_type:'rss',page_category:'blog_home'})">Assinar RSS</a>
             </div>
           </div>
           <div class="card">
-            <h3>Transparência editorial</h3>
+            <h3>Boas práticas técnicas</h3>
             <ul>
-              <li>Sem comentários públicos; foco em contato qualificado.</li>
               <li>Dados estruturados (BlogPosting, FAQ, Breadcrumb, LegalService).</li>
-              <li>Consent Mode v2 no GA4 e coleta mínima de dados.</li>
+              <li>Consent Mode v2 no GA4, coleta mínima e opt-in.</li>
+              <li>Busca estática Pagefind e performance otimizada.</li>
             </ul>
           </div>
         </div>
       </section>
 
-      <!-- Newsletter ética (opcional, via RSS/integrações) -->
+      <!-- FAQ curto (apoia SEO e dúvidas comuns) -->
+      <section class="section" aria-labelledby="faq-title">
+        <div class="container">
+          <h2 id="faq-title">Perguntas frequentes</h2>
+          <div class="grid" style="grid-template-columns:1fr 1fr">
+            <div class="card">
+              <h3>O conteúdo é consultivo?</h3>
+              <p>Não substitui consulta formal. É material informativo que ajuda a compreender opções e riscos.</p>
+            </div>
+            <div class="card">
+              <h3>Como falar com o escritório?</h3>
+              <p>Use o botão “Falar com o escritório” acima para abrir o canal institucional no site principal.</p>
+            </div>
+          </div>
+        </div>
+        <script type="application/ld+json">
+        {
+          "@context":"https://schema.org",
+          "@type":"FAQPage",
+          "mainEntity":[
+            {"@type":"Question","name":"O conteúdo é consultivo?","acceptedAnswer":{"@type":"Answer","text":"Não substitui consulta formal. É material informativo para compreensão de opções e riscos."}},
+            {"@type":"Question","name":"Como falar com o escritório?","acceptedAnswer":{"@type":"Answer","text":"Use o botão 'Falar com o escritório' para abrir o canal institucional no site principal."}}
+          ]
+        }
+        </script>
+      </section>
+
+      <!-- Newsletter ética (via RSS/integrações externas) -->
       <section class="section" aria-labelledby="news-title">
         <div class="container">
           <h2 id="news-title">Atualizações éticas</h2>
-          <p class="muted">Receba novidades por RSS ou acompanhe pelos canais institucionais (LinkedIn/Google Business). Nenhuma publicidade, nenhum spam.</p>
+          <p class="muted">Acompanhe por RSS ou canais institucionais (LinkedIn/Google Business). Sem publicidade invasiva.</p>
           <div class="cta">
             <a class="btn" href="/blog/rss.xml" onclick="window.sendLead && sendLead({cta_type:'rss',page_category:'blog_home'})">Assinar RSS</a>
             <a class="btn btn--ghost" href="https://www.linkedin.com/company/pavie-advocacia" rel="noopener" target="_blank">Seguir no LinkedIn</a>
@@ -251,6 +349,7 @@ const CANONICAL = `${site}/blog/`;
           <a href="/blog/sobre/privacidade/">Privacidade</a>
           <a href="/blog/sobre/acessibilidade/">Acessibilidade</a>
           <a href="/blog/contato/">Contato</a>
+          <a href={site + '/'}>Site institucional</a>
         </nav>
         <p class="muted" style="margin-top:12px">© {new Date().getFullYear()} PAVIE | Advocacia — Conteúdo informativo, sem promessa de resultado.</p>
       </div>
