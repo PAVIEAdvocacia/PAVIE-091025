@@ -1,16 +1,13 @@
 backend:
   name: github
-  repo: PAVIEAdvocacia/PAVIE-091025
+  repo: pavie-advocacia/PAVIE-091025
   branch: main
+  base_url: https://blog.pavieadvocacia.com.br
   auth_endpoint: /api/auth/github-oauth
 
-site_url: https://blog.pavieadvocacia.com.br
-locale: pt
-publish_mode: editorial_workflow
+site_domain: blog.pavieadvocacia.com.br
 
-# Caminho no repositório (onde os arquivos serão COMMITADOS)
-media_folder: "blog/public/uploads"
-# URL pública gerada a partir de blog/public (não repetir 'blog' aqui)
+media_folder: "public/uploads"
 public_folder: "/uploads"
 
 collections:

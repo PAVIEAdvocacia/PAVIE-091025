@@ -1,2 +1,2 @@
-# (opcional) redirecionamentos 301/302. Um por linha. Ex.:
-# /antigo-artigo  /novo-artigo  301
+/admin/*                /admin/index.html   200
+/*                      /index.html         200
