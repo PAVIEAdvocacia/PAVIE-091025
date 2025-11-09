@@ -1,50 +1,17 @@
 ﻿<!doctype html>
 <html lang="pt-br">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Admin — PAVIE | Blog</title>
-    <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
-  </head>
-  <body>
-    <script>
-      CMS.init({
-        config: {
-          backend: {
-            name: "github",
-            repo: "PAVIEAdvocacia/PAVIE-091025",
-            branch: "main",
-            auth_endpoint: "/api/auth/github-oauth"
-          },
-          publish_mode: "editorial_workflow",
-          site_url: "https://blog.pavieadvocacia.com.br",
-          display_url: "https://blog.pavieadvocacia.com.br",
-
-          media_folder: "blog/public/uploads",
-          public_folder: "/blog/uploads",
-
-          collections: [
-            {
-              name: "posts",
-              label: "Posts",
-              label_singular: "Post",
-              folder: "blog/src/content/posts",
-              create: true,
-              extension: "md",
-              format: "frontmatter",
-              slug: "{{year}}-{{month}}-{{day}}-{{slug}}",
-              fields: [
-                { label: "Título", name: "title", widget: "string" },
-                { label: "Resumo (description)", name: "description", widget: "text" },
-                { label: "Data", name: "date", widget: "datetime" },
-                { label: "Tags", name: "tags", widget: "list", default: [] },
-                { label: "Rascunho", name: "draft", widget: "boolean", default: true },
-                { label: "Conteúdo", name: "body", widget: "markdown" }
-              ]
-            }
-          ]
-        }
-      });
-    </script>
-  </body>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>PAVIE | Admin (Decap CMS)</title>
+  <!-- Decap (pinar versão) -->
+  <script src="https://unpkg.com/decap-cms@3.6.2/dist/decap-cms.js"></script>
+  <script>
+    // Inicialização mínima; se usar OAuth externo, basta o config.yml
+    window.CMS && CMS.init();
+  </script>
+</head>
+<body>
+  <!-- O app React do Decap rende aqui -->
+</body>
 </html>
