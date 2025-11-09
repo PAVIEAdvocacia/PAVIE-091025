@@ -1,9 +1,40 @@
 backend:
   name: github
-  repo: pavie-advocacia/PAVIE-091025
+  repo: PAVIEAdvocacia/PAVIE-091025
   branch: main
   base_url: https://blog.pavieadvocacia.com.br
   auth_endpoint: /api/auth/github-oauth
-site_domain: blog.pavieadvocacia.com.br
-media_folder: "public/uploads"
-public_folder: "/uploads"
+
+site_url: https://pavieadvocacia.com.br/blog
+logo_url: https://pavieadvocacia.com.br/assets/logo.png
+locale: pt
+publish_mode: editorial_workflow
+
+# Alinhado à árvore real do projeto
+media_folder: "blog/public/uploads"
+public_folder: "/blog/uploads"
+
+collections:
+  - name: posts
+    label: Artigos
+    folder: "blog/src/content/posts"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    preview_path: "blog/{{slug}}/"
+    editor: { preview: true }
+    fields:
+      - { label: "Título", name: "title", widget: "string" }
+      - { label: "Data", name: "pubDate", widget: "datetime", format: "YYYY-MM-DD" }
+      - { label: "Resumo", name: "description", widget: "text" }
+      - { label: "Autor", name: "author", widget: "string", default: "PAVIE | Advocacia" }
+      - { label: "Tipo", name: "type", widget: "select", options: ["autoridade","guia","jurisprudencia","noticia","opiniao"] }
+      - { label: "Tags", name: "tags", widget: "list" }
+      - label: "Imagem de capa"
+        name: "cover"
+        widget: "object"
+        fields:
+          - { label: "Arquivo", name: "src", widget: "image" }
+          - { label: "Alt (acessível)", name: "alt", widget: "string" }
+      - { label: "Canonical (opcional)", name: "canonical", widget: "string", required: false }
+      - { label: "Noindex", name: "noindex", widget: "boolean", default: false, required: false }
+      - { label: "Corpo", name: "body", widget: "markdown" }
