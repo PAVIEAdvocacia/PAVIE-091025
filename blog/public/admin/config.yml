@@ -1,28 +1,32 @@
+@'
 backend:
   name: github
   repo: PAVIEAdvocacia/PAVIE-091025
   branch: main
-  base_url: https://blog.pavieadvocacia.com.br   # domínio que hospeda o proxy OAuth
-  auth_endpoint: /api/auth/github-oauth           # rota de início do fluxo OAuth
+  auth_endpoint: /api/auth/github-oauth
 
-media_folder: "public/uploads"
-public_folder: "/uploads"
+publish_mode: editorial_workflow
+site_url: https://blog.pavieadvocacia.com.br
+display_url: https://blog.pavieadvocacia.com.br
 
-site_url: "https://blog.pavieadvocacia.com.br"
-locale: "pt"
+media_folder: blog/public/uploads
+public_folder: /blog/uploads
 
 collections:
-  - name: "posts"
-    label: "Posts"
-    folder: "src/content/posts"
+  - name: posts
+    label: Posts
+    label_singular: Post
+    folder: blog/src/content/posts
     create: true
-    slug: "{{slug}}"
-    format: "frontmatter"
-    extension: "md"
+    extension: md
+    format: frontmatter
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
     fields:
       - { label: "Título", name: "title", widget: "string" }
-      - { label: "Descrição", name: "description", widget: "string", pattern: [".{1,155}", "Máx 155 caracteres"] }
+      - { label: "Resumo (description)", name: "description", widget: "text" }
       - { label: "Data", name: "date", widget: "datetime" }
-      - { label: "Tags", name: "tags", widget: "list", required: false }
-      - { label: "Rascunho", name: "draft", widget: "boolean", default: false }
-      - { label: "Corpo", name: "body", widget: "markdown" }
+      - { label: "Tags", name: "tags", widget: "list", default: [] }
+      - { label: "Rascunho", name: "draft", widget: "boolean", default: true }
+      - { label: "Conteúdo", name: "body", widget: "markdown" }
+'@ | Set-Content -Encoding UTF8 "blog/public/admin/config.yml"
+
