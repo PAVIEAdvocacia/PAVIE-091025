@@ -1,4 +1,4 @@
-/admin/*
+//admin/*
   Content-Security-Policy: default-src 'self';
     script-src 'self' https://unpkg.com https://cdn.jsdelivr.net 'unsafe-inline' 'unsafe-eval';
     style-src  'self' 'unsafe-inline';
@@ -7,4 +7,8 @@
     connect-src 'self' https://api.github.com https://raw.githubusercontent.com https://github.com https://unpkg.com https://cdn.jsdelivr.net;
     frame-ancestors 'self';
     base-uri 'self'
-
+https://raw.githubusercontent.com;
+    font-src   'self' data:;
+    connect-src 'self' https://api.github.com https://raw.githubusercontent.com https://github.com https://unpkg.com https://cdn.jsdelivr.net;
+    frame-ancestors 'self';
+    base-uri 'self'
