@@ -1,4 +1,4 @@
-# PAVIE | Blog (Astro + Decap CMS)
+# PAVIE | Blog (Astro + Decap CMS )
 
 Estrutura pronta para deploy no subdomínio **blog.pavieadvocacia.com.br** com:
 - Astro + Content Collections
