@@ -1,32 +1,9 @@
-@'
 backend:
   name: github
-  repo: PAVIEAdvocacia/PAVIE-091025
+  repo: pavie-advocacia/PAVIE-091025
   branch: main
+  base_url: https://blog.pavieadvocacia.com.br
   auth_endpoint: /api/auth/github-oauth
-
-publish_mode: editorial_workflow
-site_url: https://blog.pavieadvocacia.com.br
-display_url: https://blog.pavieadvocacia.com.br
-
-media_folder: blog/public/uploads
-public_folder: /blog/uploads
-
-collections:
-  - name: posts
-    label: Posts
-    label_singular: Post
-    folder: blog/src/content/posts
-    create: true
-    extension: md
-    format: frontmatter
-    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
-    fields:
-      - { label: "Título", name: "title", widget: "string" }
-      - { label: "Resumo (description)", name: "description", widget: "text" }
-      - { label: "Data", name: "date", widget: "datetime" }
-      - { label: "Tags", name: "tags", widget: "list", default: [] }
-      - { label: "Rascunho", name: "draft", widget: "boolean", default: true }
-      - { label: "Conteúdo", name: "body", widget: "markdown" }
-'@ | Set-Content -Encoding UTF8 "blog/public/admin/config.yml"
-
+site_domain: blog.pavieadvocacia.com.br
+media_folder: "public/uploads"
+public_folder: "/uploads"
