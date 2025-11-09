@@ -1,0 +1,28 @@
+backend:
+  name: github
+  repo: PAVIEAdvocacia/PAVIE-091025
+  branch: main
+  base_url: https://blog.pavieadvocacia.com.br   # domínio que hospeda o proxy OAuth
+  auth_endpoint: /api/auth/github-oauth           # rota de início do fluxo OAuth
+
+media_folder: "public/uploads"
+public_folder: "/uploads"
+
+site_url: "https://blog.pavieadvocacia.com.br"
+locale: "pt"
+
+collections:
+  - name: "posts"
+    label: "Posts"
+    folder: "src/content/posts"
+    create: true
+    slug: "{{slug}}"
+    format: "frontmatter"
+    extension: "md"
+    fields:
+      - { label: "Título", name: "title", widget: "string" }
+      - { label: "Descrição", name: "description", widget: "string", pattern: [".{1,155}", "Máx 155 caracteres"] }
+      - { label: "Data", name: "date", widget: "datetime" }
+      - { label: "Tags", name: "tags", widget: "list", required: false }
+      - { label: "Rascunho", name: "draft", widget: "boolean", default: false }
+      - { label: "Corpo", name: "body", widget: "markdown" }

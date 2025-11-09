@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Admin — PAVIE | Blog</title>
+
+    <!-- Evita indexação da área administrativa -->
+    <meta name="robots" content="noindex, nofollow" />
+
+    <!-- Decap CMS: carrega o app; o /admin/config.yml é detectado automaticamente -->
+    <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js" defer></script>
+
+    <!-- (Opcional) proteção básica contra clickjacking já é reforçada por x-frame-options no seu edge -->
+  </head>
+  <body>
+    <noscript>Ative o JavaScript para usar o Admin.</noscript>
+    <div id="app" aria-busy="true">Carregando o Admin…</div>
+    <!-- Nenhuma chamada CMS.init() é necessária quando existe /admin/config.yml -->
+  </body>
+</html>

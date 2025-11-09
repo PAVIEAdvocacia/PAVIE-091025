@@ -1,0 +1,123 @@
+diff --git a/blog/public/admin/index.html b/blog/public/admin/index.html
+--- a/blog/public/admin/index.html
++++ b/blog/public/admin/index.html
+@@ -1,999 +1,999 @@
+ <!-- Conteúdo omitido acima/abaixo; patch focado apenas na configuração do CMS -->
+ <script>
+-  CMS.init({
+-    config: {
+-      backend: {
+-        name: "github",
+-        repo: "PAVIEAdvocacia/PAVIE-091025",
+-        branch: "main"
+-      },
+-      publish_mode: "editorial_workflow",
+-      site_url: "https://blog.pavieadvocacia.com.br",
+-      display_url: "https://blog.pavieadvocacia.com.br",
+-
+-      media_folder: "public/uploads",
+-      public_folder: "/uploads",
+-
+-      collections: [
+-        {
+-          name: "posts",
+-          label: "Posts",
+-          folder: "src/content/posts",
+-          create: true,
+-          extension: "md",
+-          format: "frontmatter",
+-          slug: "{{year}}-{{month}}-{{day}}-{{slug}}",
+-          fields: [
+-            { label: "Título", name: "title", widget: "string" },
+-            { label: "Resumo (description)", name: "description", widget: "text" },
+-            { label: "Data", name: "date", widget: "datetime" },
+-            { label: "Tags", name: "tags", widget: "list", default: [] },
+-            { label: "Rascunho", name: "draft", widget: "boolean", default: true },
+-            { label: "Conteúdo", name: "body", widget: "markdown" }
+-          ]
+-        }
+-      ]
+-    }
+-  });
++  CMS.init({
++    config: {
++      backend: {
++        name: "github",
++        repo: "PAVIEAdvocacia/PAVIE-091025",
++        branch: "main",
++        auth_endpoint: "/api/auth/github-oauth"
++      },
++      publish_mode: "editorial_workflow",
++      site_url: "https://blog.pavieadvocacia.com.br",
++      display_url: "https://blog.pavieadvocacia.com.br",
++
++      /* Escopo correto para subprojeto /blog */
++      media_folder: "blog/public/uploads",
++      public_folder: "/blog/uploads",
++
++      collections: [
++        {
++          name: "posts",
++          label: "Posts",
++          label_singular: "Post",
++          folder: "blog/src/content/posts",
++          create: true,
++          extension: "md",
++          format: "frontmatter",
++          slug: "{{year}}-{{month}}-{{day}}-{{slug}}",
++          fields: [
++            { label: "Título", name: "title", widget: "string" },
++            { label: "Resumo (description)", name: "description", widget: "text" },
++            { label: "Data", name: "date", widget: "datetime" },
++            { label: "Tags", name: "tags", widget: "list", default: [] },
++            { label: "Rascunho", name: "draft", widget: "boolean", default: true },
++            { label: "Conteúdo", name: "body", widget: "markdown" }
++          ]
++        }
++      ]
++    }
++  });
+ </script>
+diff --git a/blog/public/admin/config.yml b/blog/public/admin/config.yml
+--- a/blog/public/admin/config.yml
++++ b/blog/public/admin/config.yml
+@@ -1,40 +1,44 @@
+-backend:
+-  name: github
+-  repo: PAVIEAdvocacia/PAVIE-091025
+-  branch: main
++backend:
++  name: github
++  repo: PAVIEAdvocacia/PAVIE-091025
++  branch: main
++  auth_endpoint: /api/auth/github-oauth
+ 
+ publish_mode: editorial_workflow
+-site_url: https://pavieadvocacia.com.br
+-display_url: https://pavieadvocacia.com.br
++site_url: https://blog.pavieadvocacia.com.br
++display_url: https://blog.pavieadvocacia.com.br
+ 
+-media_folder: public/uploads
+-public_folder: /uploads
++media_folder: blog/public/uploads
++public_folder: /blog/uploads
+ 
+ collections:
+   - name: posts
+     label: Posts
++    label_singular: Post
+-    folder: src/content/posts
++    folder: blog/src/content/posts
+     create: true
+     extension: md
+     format: frontmatter
+     slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+     fields:
+       - { label: "Título", name: "title", widget: "string" }
+       - { label: "Resumo (description)", name: "description", widget: "text" }
+       - { label: "Data", name: "date", widget: "datetime" }
+       - { label: "Tags", name: "tags", widget: "list", default: [] }
+       - { label: "Rascunho", name: "draft", widget: "boolean", default: true }
+       - { label: "Conteúdo", name: "body", widget: "markdown" }
+
