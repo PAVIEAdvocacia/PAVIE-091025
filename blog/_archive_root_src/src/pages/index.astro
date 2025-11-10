@@ -1,0 +1,25 @@
+---
+import { getCollection } from "astro:content";
+const posts = (await getCollection("posts"))
+  .sort((a,b) => b.data.pubDate.getTime() - a.data.pubDate.getTime());
+---
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <title>PAVIE | Blog</title>
+    <link rel="canonical" href="/blog/">
+  </head>
+  <body>
+    <header><h1>PAVIE | Advocacia ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â Blog</h1></header>
+    <main>
+      <ul>
+        {posts.map(p => (
+          <li><a href={`/${p.slug}/`}>{p.data.title}</a> ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Â {p.data.pubDate.toISOString().slice(0,10)}</li>
+        ))}
+      </ul>
+      <div id="pagefind-ui"></div>
+      <script src="/_pagefind/pagefind.js" type="text/javascript"></script>
+    </main>
+  </body>
+</html>

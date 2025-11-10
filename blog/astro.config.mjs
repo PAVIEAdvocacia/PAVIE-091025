@@ -1,8 +1,12 @@
-// blog/astro.config.mjs
 import { defineConfig } from 'astro/config';
+import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({
-  // Não use base:'/blog' em subdomínio.
-  output: 'static',
   site: 'https://blog.pavieadvocacia.com.br',
+  base: '/',
+  output: 'static',
+  integrations: [sitemap()],
+  vite: {
+    server: { fs: { strict: false } },
+  },
 });

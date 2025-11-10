@@ -1,0 +1,23 @@
+---
+// src/layouts/PostOpiniao.astro
+import BasePost from "./BasePost.astro";
+import BlockTip from "../components/BlockTip.astro";
+import BlockCTA from "../components/BlockCTA.astro";
+const { post, headings } = Astro.props;
+---
+<BasePost post={post}>
+  <fragment slot="toc">
+    <nav>
+      <ul>{headings?.map((h) => <li><a href={`#${h.slug}`}>{h.text}</a></li>)}</ul>
+    </nav>
+  </fragment>
+
+  <article>
+    <BlockTip rotulo="Nota Editorial">Opiniões pessoais do(a) autor(a); não vinculam o escritório.</BlockTip>
+    <slot />
+  </article>
+
+  <fragment slot="footer">
+    <BlockCTA persona_publico={post.data.persona_publico} persona_estagio={post.data.persona_estagio} />
+  </fragment>
+</BasePost>

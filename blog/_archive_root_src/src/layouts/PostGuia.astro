@@ -1,0 +1,21 @@
+---
+// src/layouts/PostGuia.astro
+import BasePost from "./BasePost.astro";
+import BlockFAQ from "../components/BlockFAQ.astro";
+import BlockCTA from "../components/BlockCTA.astro";
+const { post, headings } = Astro.props;
+---
+<BasePost post={post}>
+  <fragment slot="toc">
+    <nav>
+      <ul>{headings?.map((h) => <li><a href={`#${h.slug}`}>{h.text}</a></li>)}</ul>
+    </nav>
+  </fragment>
+
+  <article><slot /></article>
+
+  <fragment slot="footer">
+    <BlockFAQ faq={post.data.faq} />
+    <BlockCTA persona_publico={post.data.persona_publico} persona_estagio={post.data.persona_estagio} />
+  </fragment>
+</BasePost>

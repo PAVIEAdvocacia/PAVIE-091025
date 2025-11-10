@@ -6,30 +6,12 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
-    "preview": "astro preview",
     "postbuild": "pagefind --site dist",
-    "lint": "eslint \"src/**/*.{js,ts,astro,md}\" --fix",
-    "format": "prettier --write \"src/**/*.{js,ts,astro,md,css}\""
-  },
-  "dependencies": {
-    "zod": "latest"
+    "preview": "astro preview"
   },
   "devDependencies": {
-    "@astrojs/sitemap": "latest",
-    "@eslint/js": "^9.39.1",
-    "@typescript-eslint/eslint-plugin": "^8.46.3",
-    "@typescript-eslint/parser": "^8.46.3",
-    "astro": "latest",
-    "astro-eslint-parser": "^1.2.2",
-    "eslint": "^9.39.1",
-    "eslint-plugin-astro": "^1.5.0",
-    "eslint-plugin-jsx-a11y": "^6.10.2",
-    "pagefind": "^1.4.0",
-    "prettier": "^3.6.2",
-    "prettier-plugin-astro": "^0.14.1",
-    "typescript-eslint": "^8.46.3"
-  },
-  "engines": {
-    "node": ">=18"
+    "astro": "^4.15.0",
+    "@astrojs/sitemap": "^3.2.0",
+    "pagefind": "^1.0.0"
   }
 }

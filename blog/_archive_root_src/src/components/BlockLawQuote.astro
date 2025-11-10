@@ -1,0 +1,10 @@
+---
+// src/components/BlockLawQuote.astro
+const { fonte, children } = Astro.props; // fonte: string
+---
+<figure role="group" aria-labelledby="cita-lei">
+  <blockquote id="cita-lei">
+    <p><em><slot /></em></p>
+  </blockquote>
+  {fonte && <figcaption>Fonte: {fonte}</figcaption>}
+</figure>

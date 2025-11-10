@@ -1,0 +1,19 @@
+---
+// src/components/BlockReferences.astro
+const { normas = [], precedentes = [] } = Astro.props;
+---
+<section aria-labelledby="refs">
+  <h2 id="refs">Normas citadas e precedentes</h2>
+  {normas.length > 0 && (
+    <>
+      <h3>Normas</h3>
+      <ul>{normas.map((n) => <li>{n}</li>)}</ul>
+    </>
+  )}
+  {precedentes.length > 0 && (
+    <>
+      <h3>Precedentes</h3>
+      <ul>{precedentes.map((p) => <li>{p}</li>)}</ul>
+    </>
+  )}
+</section>

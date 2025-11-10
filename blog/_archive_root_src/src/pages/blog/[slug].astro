@@ -1,0 +1,30 @@
+---
+// src/pages/blog/[slug].astro
+import { getCollection } from "astro:content";
+import PostAutoridade from "../../layouts/PostAutoridade.astro";
+import PostGuia from "../../layouts/PostGuia.astro";
+import PostJurisprudencia from "../../layouts/PostJurisprudencia.astro";
+import PostNoticia from "../../layouts/PostNoticia.astro";
+import PostOpiniao from "../../layouts/PostOpiniao.astro";
+
+const { slug } = Astro.params;
+const posts = await getCollection("posts");
+const post = posts.find((e) => e.slug === slug);
+
+if (!post) throw new Error(`Post não encontrado: ${slug}`);
+
+// Render prévio para obter headings (TOC)
+const { Content, headings } = await post.render();
+
+const Layout = ({
+  autoridade: PostAutoridade,
+  guia: PostGuia,
+  jurisprudencia: PostJurisprudencia,
+  noticia: PostNoticia,
+  opiniao: PostOpiniao,
+} as const)[post.data.type];
+---
+
+<Layout post={post} headings={headings}>
+  <Content />
+</Layout>

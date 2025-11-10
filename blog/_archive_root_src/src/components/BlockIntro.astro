@@ -1,0 +1,11 @@
+---
+// src/components/BlockIntro.astro
+const { scqa } = Astro.props; // { situacao, complicacao, pergunta, resposta }
+---
+<section aria-labelledby="intro">
+  <h2 id="intro" class="sr-only">Introdução</h2>
+  {scqa?.situacao && <p><strong>Situação:</strong> {scqa.situacao}</p>}
+  {scqa?.complicacao && <p><strong>Complicação:</strong> {scqa.complicacao}</p>}
+  {scqa?.pergunta && <p><strong>Pergunta-chave:</strong> {scqa.pergunta}</p>}
+  {scqa?.resposta && <p><strong>Resposta em síntese:</strong> {scqa.resposta}</p>}
+</section>

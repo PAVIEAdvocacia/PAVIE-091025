@@ -1,0 +1,15 @@
+---
+// src/components/BlockFAQ.astro
+const { faq = [] } = Astro.props;
+---
+{faq.length > 0 && (
+  <section aria-labelledby="faq">
+    <h2 id="faq">Perguntas frequentes</h2>
+    {faq.map((f, i) => (
+      <details>
+        <summary>{f.q}</summary>
+        <p set:html={f.a} />
+      </details>
+    ))}
+  </section>
+)}

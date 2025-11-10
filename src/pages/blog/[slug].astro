@@ -1,0 +1,70 @@
+---
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('posts');
+  return posts.map((p) => ({
+    params: { slug: p.slug },
+    props: { post: p }
+  }));
+}
+
+const { post } = Astro.props;
+
+// Função segura para normalizar datas
+function asDate(v) {
+  if (!v) return null;
+  if (v instanceof Date && !isNaN(v)) return v;
+  const d = new Date(v);
+  return isNaN(d) ? null : d;
+}
+
+const pub = asDate(post.data.pubDate);
+const upd = asDate(post.data.updatedAt ?? post.data.updatedDate ?? post.data.updateDate);
+
+const pubISO = pub ? pub.toISOString() : null;
+const updISO = upd ? upd.toISOString() : null;
+
+const title = post.data.title ?? post.slug;
+const description = post.data.description ?? "";
+const cover = post.data.cover?.src ?? null;
+const coverAlt = post.data.cover?.alt ?? "";
+---
+
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <title>{title}</title>
+    {description && <meta name="description" content={description} />}
+    {pubISO && <meta property="article:published_time" content={pubISO} />}
+    {updISO && <meta property="article:modified_time" content={updISO} />}
+    {cover && <meta property="og:image" content={cover} />}
+  </head>
+  <body>
+    <main>
+      <article>
+        <header>
+          <h1>{title}</h1>
+          {pub && (
+            <p>
+              <time datetime={pubISO}>
+                {pub.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric' })}
+              </time>
+            </p>
+          )}
+          {cover && <img src={cover} alt={coverAlt} loading="lazy" />}
+        </header>
+
+        <section>
+          <Content />
+        </section>
+
+        {upd && (
+          <footer>
+            <small>Atualizado em {upd.toLocaleDateString('pt-BR')}</small>
+          </footer>
+        )}
+      </article>
+    </main>
+  </body>
+</html>

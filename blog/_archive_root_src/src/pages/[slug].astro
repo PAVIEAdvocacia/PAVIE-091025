@@ -1,0 +1,24 @@
+---
+import { getCollection } from "astro:content";
+const { slug } = Astro.params;
+const all = await getCollection("posts");
+const entry = all.find(p => p.slug === slug);
+if (!entry) throw new Error("Post nÃƒÆ’Ã‚Â£o encontrado");
+const { Content, data } = await entry.render();
+---
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <title>{data.title}</title>
+    {data.canonical && <link rel="canonical" href={data.canonical} />}
+    {data.noindex && <meta name="robots" content="noindex" />}
+  </head>
+  <body>
+    <article>
+      <h1>{data.title}</h1>
+      <p><small>{data.pubDate.toISOString().slice(0,10)}</small></p>
+      <Content />
+    </article>
+  </body>
+</html>

@@ -1,70 +1,11 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="pt-br">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>PAVIE | Admin (Decap)</title>
-  <!-- pin de versão para estabilidade -->
-  <script src="https://unpkg.com/decap-cms@3.6.2/dist/decap-cms.js"></script>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Admin | PAVIE Advocacia</title>
 </head>
 <body>
-<script>
-  // Inline-Only: impede leitura do config.yml (evita duplicidade)
-  const config = {
-    backend: {
-      name: "github",
-      repo: "pavie-advocacia/PAVIE-091025",
-      branch: "main",
-      base_url: "https://blog.pavieadvocacia.com.br",
-      auth_endpoint: "/api/auth/github-oauth"
-    },
-    site_domain: "blog.pavieadvocacia.com.br",
-    media_folder: "public/uploads",
-    public_folder: "/uploads",
-    publish_mode: "editorial_workflow",
-    locale: "pt",
-    collections: [
-      {
-        name: "posts",
-        label: "Artigos",
-        label_singular: "Artigo",
-        folder: "src/content/posts",
-        create: true,
-        extension: "md",
-        slug: "{{slug}}",
-        path: "{{slug}}/index",
-        fields: [
-          { label: "Título", name: "title", widget: "string" },
-          { label: "Descrição", name: "description", widget: "text" },
-          { label: "Data de publicação", name: "pubDate", widget: "datetime" },
-          { label: "Tipo", name: "type", widget: "select", options: ["Artigo","Guia","FAQ","Checklist"] },
-          { label: "Noindex", name: "noindex", widget: "boolean", default: false },
-          { label: "Capa", name: "cover", widget: "object", required: false, fields: [
-            { label:"Imagem", name:"src", widget:"image", required:false },
-            { label:"Alt", name:"alt", widget:"string", required:false }
-          ]},
-          { label: "Corpo (Markdown)", name: "body", widget: "markdown" }
-        ]
-      },
-      {
-        name: "pages",
-        label: "Páginas",
-        folder: "src/content/pages",
-        create: true,
-        extension: "md",
-        slug: "{{slug}}",
-        path: "{{slug}}/index",
-        fields: [
-          { label: "Título", name: "title", widget: "string" },
-          { label: "Descrição", name: "description", widget: "text", required: false },
-          { label: "Noindex", name: "noindex", widget: "boolean", default: false },
-          { label: "Corpo", name: "body", widget: "markdown" }
-        ]
-      }
-    ]
-  };
-
-  window.CMS && CMS.init({ config, load_config_file: false });
-</script>
+  <script src="https://unpkg.com/decap-cms@^3.9.0/dist/decap-cms.js"></script>
 </body>
 </html>
