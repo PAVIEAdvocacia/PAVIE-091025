@@ -1,14 +1,18 @@
-# Blog build artifacts (Astro)
-/blog/dist/
-/blog/.astro/
-/blog/node_modules/
+# Node / build genérico (raiz)
+node_modules/
+dist/
+.npm-cache/
+.env
+.DS_Store
 
-# Blog dev vars (OAuth local)
-/blog/functions/.dev.vars
+# Artefatos do blog (subprojeto em /blog)
+blog/dist/
+blog/.astro/
+blog/node_modules/
 
-# Dependências Node (raiz)
-/node_modules/
+# Variáveis de desenvolvimento local do blog (OAuth, etc.)
+blog/functions/.dev.vars
 
-# Scripts e patches locais (não precisam ir para o Git)
+# Scripts auxiliares locais (não necessários em produção)
 add-blog.patch
 setup-blog.ps1

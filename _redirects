@@ -1,3 +1,15 @@
-# Aliases amigáveis para páginas internas
+# _redirects — raiz pavieadvocacia.com.br
+
+# Canonicalização de domínio (WWW → apex, HTTP → HTTPS)
+https://www.pavieadvocacia.com.br/*  https://pavieadvocacia.com.br/:splat  301!
+http://www.pavieadvocacia.com.br/*   https://pavieadvocacia.com.br/:splat  301!
+http://pavieadvocacia.com.br/*       https://pavieadvocacia.com.br/:splat  301!
+
+# Atalhos legíveis para páginas jurídicas
 /privacidade   /privacidade/privacidade.html   301
 /termos        /termos/termos.html             301
+
+# Encaminhamento do antigo /blog para o subdomínio oficial (quando o blog estiver no ar)
+/blog          https://blog.pavieadvocacia.com.br/        301
+/blog/         https://blog.pavieadvocacia.com.br/        301
+/blog/*        https://blog.pavieadvocacia.com.br/:splat  301
