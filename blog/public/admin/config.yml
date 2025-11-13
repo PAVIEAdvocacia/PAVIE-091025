@@ -1,0 +1,24 @@
+backend:
+  name: github
+  repo: PAVIEAdvocacia/PAVIE-091025
+  branch: main
+  auth_endpoint: https://pavieadvocacia.com.br/api/auth/github-oauth
+
+site_url: https://blog.pavieadvocacia.com.br
+locale: pt
+publish_mode: editorial_workflow
+
+media_folder: "public/uploads"
+public_folder: "/uploads"
+
+collections:
+  - name: "posts"
+    label: "Posts"
+    folder: "src/content/posts"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - { label: "Título", name: "title", widget: "string" }
+      - { label: "Data", name: "pubDate", widget: "datetime", format: "YYYY-MM-DD" }
+      - { label: "Resumo", name: "description", widget: "text" }
+      - { label: "Corpo do texto", name: "body", widget: "markdown" }

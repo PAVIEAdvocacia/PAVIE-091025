@@ -1,9 +1,18 @@
-gitignore# Blog build artifacts
+# Node / build genérico (raiz)
+node_modules/
+dist/
+.npm-cache/
+.env
+.DS_Store
+
+# Artefatos do blog (subprojeto em /blog)
 blog/dist/
 blog/.astro/
 blog/node_modules/
 
-# Blog dev vars (OAuth local)
+# Variáveis de desenvolvimento local do blog (OAuth, etc.)
 blog/functions/.dev.vars
+
+# Scripts auxiliares locais (não necessários em produção)
 add-blog.patch
 setup-blog.ps1

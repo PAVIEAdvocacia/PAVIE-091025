@@ -1,10 +1,15 @@
-# Redirecionamentos específicos para o CMS Admin
-/blog/admin      /blog/admin/index.html    200
-/blog/admin/     /blog/admin/index.html    200
-/blog/admin/*    /blog/admin/:splat        200
+# _redirects — raiz pavieadvocacia.com.br
 
-# Preservar rotas da API existentes
-/api/*    /api/:splat    200
+# Canonicalização de domínio (WWW → apex, HTTP → HTTPS)
+https://www.pavieadvocacia.com.br/*  https://pavieadvocacia.com.br/:splat  301!
+http://www.pavieadvocacia.com.br/*   https://pavieadvocacia.com.br/:splat  301!
+http://pavieadvocacia.com.br/*       https://pavieadvocacia.com.br/:splat  301!
 
-# Fallback SPA (se necessário) - REMOVER se estiver causando problemas
-# /*    /index.html   200
+# Atalhos legíveis para páginas jurídicas
+/privacidade   /privacidade/privacidade.html   301
+/termos        /termos/termos.html             301
+
+# Encaminhamento do antigo /blog para o subdomínio oficial (quando o blog estiver no ar)
+/blog          https://blog.pavieadvocacia.com.br/        301
+/blog/         https://blog.pavieadvocacia.com.br/        301
+/blog/*        https://blog.pavieadvocacia.com.br/:splat  301
