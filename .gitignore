@@ -1,9 +1,14 @@
-gitignore# Blog build artifacts
-blog/dist/
-blog/.astro/
-blog/node_modules/
+# Blog build artifacts (Astro)
+/blog/dist/
+/blog/.astro/
+/blog/node_modules/
 
 # Blog dev vars (OAuth local)
-blog/functions/.dev.vars
+/blog/functions/.dev.vars
+
+# Dependências Node (raiz)
+/node_modules/
+
+# Scripts e patches locais (não precisam ir para o Git)
 add-blog.patch
 setup-blog.ps1
