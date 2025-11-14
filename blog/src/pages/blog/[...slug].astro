@@ -12,20 +12,18 @@ export async function getStaticPaths() {
 
 type Props = CollectionEntry<'blog'>;
 
-// Post recebido do getStaticPaths
 const post: Props = Astro.props;
-
-// Renderiza o conteúdo MD/MDX
 const { Content } = await render(post);
 
-// Garante que campos opcionais NUNCA serão undefined
+// Normaliza os dados: garante que layoutType e demais campos existam
 const safeData = {
   ...post.data,
   layoutType: post.data?.layoutType ?? 'article',
   title: post.data?.title ?? 'Post sem título',
   description: post.data?.description ?? '',
   pubDate: post.data?.pubDate ?? new Date().toISOString(),
-  updatedDate: post.data?.updatedDate ?? post.data?.pubDate ?? new Date().toISOString(),
+  updatedDate:
+    post.data?.updatedDate ?? post.data?.pubDate ?? new Date().toISOString(),
 };
 ---
 
