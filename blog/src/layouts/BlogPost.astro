@@ -1,304 +1,86 @@
 ---
-interface HeroImageObject {
-  src: string;
-  alt?: string;
-}
+import { Image } from 'astro:assets';
+import type { CollectionEntry } from 'astro:content';
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import FormattedDate from '../components/FormattedDate.astro';
+import Header from '../components/Header.astro';
 
-// heroImage pode ser string (caminho) ou objeto { src, alt }
-type HeroImage = string | HeroImageObject;
+type Props = CollectionEntry<'blog'>['data'];
 
-interface Frontmatter {
-  title: string;
-  description: string;
-  // Aceita tanto pubDate (schema atual) quanto publishDate (futuro)
-  pubDate?: Date;
-  publishDate?: Date;
-  updatedDate?: Date;
-  heroImage?: HeroImage;
-  eixo?: string;
-  persona?: string;
-  funil?: 'TOFU' | 'MOFU' | 'BOFU';
-  layoutType?: string;
-  destaqueHome?: boolean;
-  responsavelEditorial?: string;
-}
-
-interface Props {
-  frontmatter: Frontmatter;
-}
-
-const { frontmatter } = Astro.props as Props;
-
-const layoutLabelMap: Record<string, string> = {
-  'guia-estruturado': 'Guia estruturado',
-  'analise-de-caso': 'Análise de caso',
-  'checklist-pratico': 'Checklist prático',
-  faq: 'Perguntas frequentes (FAQ)',
-  'opiniao-curta': 'Comentário / Nota rápida',
-};
-
-const layoutTipoLegivel =
-  (frontmatter.layoutType && layoutLabelMap[frontmatter.layoutType]) ??
-  'Guia estruturado';
-
-// Fonte da data de publicação: publishDate OU pubDate
-const dateSource = frontmatter.publishDate ?? frontmatter.pubDate ?? null;
-
-const dataPublicacao = dateSource
-  ? dateSource.toLocaleDateString('pt-BR', {
-      day: '2-digit',
-      month: 'long',
-      year: 'numeric',
-    })
-  : null;
-
-const dataPublicacaoISO = dateSource ? dateSource.toISOString() : null;
-
-const dataAtualizacao = frontmatter.updatedDate
-  ? frontmatter.updatedDate.toLocaleDateString('pt-BR', {
-      day: '2-digit',
-      month: 'long',
-      year: 'numeric',
-    })
-  : null;
-
-const dataAtualizacaoISO = frontmatter.updatedDate
-  ? frontmatter.updatedDate.toISOString()
-  : null;
-
-// Normalização de heroImage: aceita string OU objeto
-let heroSrc: string | null = null;
-let heroAlt: string | undefined;
-
-if (typeof frontmatter.heroImage === 'string') {
-  heroSrc = frontmatter.heroImage;
-  heroAlt = frontmatter.title;
-} else if (frontmatter.heroImage && typeof frontmatter.heroImage === 'object') {
-  heroSrc = frontmatter.heroImage.src;
-  heroAlt = frontmatter.heroImage.alt ?? frontmatter.title;
-}
+const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 ---
 
-<article class="pv-post">
-  <header class="pv-post__header">
-    <div class="pv-post__kicker">
-      {frontmatter.eixo && (
-        <span class="pv-pill pv-pill--area">
-          {frontmatter.eixo.replace(/-/g, ' ')}
-        </span>
-      )}
+<html lang="en">
+	<head>
+		<BaseHead title={title} description={description} />
+		<style>
+			main {
+				width: calc(100% - 2em);
+				max-width: 100%;
+				margin: 0;
+			}
+			.hero-image {
+				width: 100%;
+			}
+			.hero-image img {
+				display: block;
+				margin: 0 auto;
+				border-radius: 12px;
+				box-shadow: var(--box-shadow);
+			}
+			.prose {
+				width: 720px;
+				max-width: calc(100% - 2em);
+				margin: auto;
+				padding: 1em;
+				color: rgb(var(--gray-dark));
+			}
+			.title {
+				margin-bottom: 1em;
+				padding: 1em 0;
+				text-align: center;
+				line-height: 1;
+			}
+			.title h1 {
+				margin: 0 0 0.5em 0;
+			}
+			.date {
+				margin-bottom: 0.5em;
+				color: rgb(var(--gray));
+			}
+			.last-updated-on {
+				font-style: italic;
+			}
+		</style>
+	</head>
 
-      <span class="pv-pill pv-pill--layout">
-        {layoutTipoLegivel}
-      </span>
-
-      {frontmatter.funil && (
-        <span class="pv-pill pv-pill--funil">
-          Conteúdo {frontmatter.funil}
-        </span>
-      )}
-    </div>
-
-    <h1 class="pv-post__title">
-      {frontmatter.title}
-    </h1>
-
-    <p class="pv-post__description">
-      {frontmatter.description}
-    </p>
-
-    <div class="pv-post__meta">
-      {dataPublicacao && dataPublicacaoISO && (
-        <span>
-          Publicado em{' '}
-          <time datetime={dataPublicacaoISO}>
-            {dataPublicacao}
-          </time>
-        </span>
-      )}
-
-      {dataAtualizacao && dataAtualizacaoISO && (
-        <span aria-label="Data de atualização">
-          · Atualizado em{' '}
-          <time datetime={dataAtualizacaoISO}>
-            {dataAtualizacao}
-          </time>
-        </span>
-      )}
-
-      {frontmatter.persona && (
-        <span class="pv-post__persona">
-          · Escrito para: {frontmatter.persona}
-        </span>
-      )}
-    </div>
-
-    {heroSrc && (
-      <figure class="pv-post__hero">
-        <img
-          src={heroSrc}
-          alt={heroAlt ?? frontmatter.title}
-          loading="lazy"
-        />
-      </figure>
-    )}
-
-    {frontmatter.layoutType === 'checklist-pratico' && (
-      <aside class="pv-post__notice pv-post__notice--checklist">
-        Este conteúdo foi estruturado como um <strong>checklist prático</strong>.
-        Ao final do texto, você encontrará uma lista de verificação para uso
-        em reuniões com clientes e na triagem de casos.
-      </aside>
-    )}
-
-    {frontmatter.layoutType === 'analise-de-caso' && (
-      <aside class="pv-post__notice pv-post__notice--case">
-        Este texto segue o formato de <strong>análise de caso</strong>, com
-        narrativa fática, enquadramento jurídico e lições práticas para casos
-        semelhantes.
-      </aside>
-    )}
-
-    {frontmatter.layoutType === 'faq' && (
-      <aside class="pv-post__notice pv-post__notice--faq">
-        Este conteúdo está organizado em formato de <strong>perguntas e
-        respostas</strong>, para facilitar a consulta rápida por tema.
-      </aside>
-    )}
-  </header>
-
-  <main class="pv-post__body">
-    <slot />
-  </main>
-
-  <footer class="pv-post__footer">
-    {frontmatter.responsavelEditorial && (
-      <p class="pv-post__responsavel">
-        Revisão editorial: {frontmatter.responsavelEditorial}
-      </p>
-    )}
-
-    <p class="pv-post__disclaimer">
-      Conteúdo informativo, sem promessa de resultado. Não constitui
-      consulta jurídica individualizada. Em caso concreto, recomenda-se
-      atendimento personalizado.
-    </p>
-  </footer>
-</article>
-
-<style>
-  .pv-post {
-    max-width: 720px;
-    margin: 3rem auto;
-    padding: 0 1.5rem 4rem;
-  }
-
-  .pv-post__header {
-    margin-bottom: 2rem;
-  }
-
-  .pv-post__kicker {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    margin-bottom: 1rem;
-    font-size: 0.75rem;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-  }
-
-  .pv-pill {
-    border-radius: 999px;
-    padding: 0.2rem 0.75rem;
-    border: 1px solid rgba(0, 0, 0, 0.05);
-    background: rgba(0, 0, 0, 0.02);
-  }
-
-  .pv-pill--area {
-    font-weight: 600;
-  }
-
-  .pv-pill--layout {
-    font-style: italic;
-  }
-
-  .pv-pill--funil {
-    opacity: 0.8;
-  }
-
-  .pv-post__title {
-    font-size: clamp(2rem, 3vw, 2.4rem);
-    line-height: 1.2;
-    margin: 0 0 0.75rem;
-  }
-
-  .pv-post__description {
-    margin: 0 0 1rem;
-    font-size: 1rem;
-    color: rgba(0, 0, 0, 0.75);
-  }
-
-  .pv-post__meta {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    font-size: 0.85rem;
-    color: rgba(0, 0, 0, 0.6);
-  }
-
-  .pv-post__hero {
-    margin: 2rem 0 0;
-  }
-
-  .pv-post__hero img {
-    display: block;
-    width: 100%;
-    height: auto;
-    border-radius: 1rem;
-  }
-
-  .pv-post__notice {
-    margin-top: 1.5rem;
-    padding: 0.9rem 1rem;
-    border-radius: 0.75rem;
-    font-size: 0.9rem;
-    background: #fff7ea;
-    border: 1px solid #f2dfc3;
-  }
-
-  .pv-post__body {
-    margin-top: 2.5rem;
-  }
-
-  .pv-post__body :global(p) {
-    line-height: 1.7;
-    margin-bottom: 1rem;
-  }
-
-  .pv-post__body :global(h2) {
-    margin-top: 2rem;
-    margin-bottom: 0.75rem;
-  }
-
-  .pv-post__body :global(ul),
-  .pv-post__body :global(ol) {
-    margin-left: 1.5rem;
-    margin-bottom: 1rem;
-  }
-
-  .pv-post__footer {
-    margin-top: 3rem;
-    border-top: 1px solid rgba(0, 0, 0, 0.06);
-    padding-top: 1.5rem;
-    font-size: 0.85rem;
-    color: rgba(0, 0, 0, 0.65);
-  }
-
-  .pv-post__responsavel {
-    margin-bottom: 0.5rem;
-  }
-
-  .pv-post__disclaimer {
-    margin: 0;
-  }
-</style>
+	<body>
+		<Header />
+		<main>
+			<article>
+				<div class="hero-image">
+					{heroImage && <Image width={1020} height={510} src={heroImage} alt="" />}
+				</div>
+				<div class="prose">
+					<div class="title">
+						<div class="date">
+							<FormattedDate date={pubDate} />
+							{
+								updatedDate && (
+									<div class="last-updated-on">
+										Last updated on <FormattedDate date={updatedDate} />
+									</div>
+								)
+							}
+						</div>
+						<h1>{title}</h1>
+						<hr />
+					</div>
+					<slot />
+				</div>
+			</article>
+		</main>
+		<Footer />
+	</body>
+</html>
