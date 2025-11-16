@@ -5,21 +5,23 @@ import { defineCollection, z } from 'astro:content';
 const blog = defineCollection({
   type: 'content',
   schema: z.object({
-    // Campos básicos do template oficial
+    // Campos básicos OBRIGATÓRIOS
     title: z.string(),
     description: z.string(),
-    publishDate: z.date(),
-    updatedDate: z.date().optional(),
-    heroImage: z
-      .object({
-        src: z.string(),
-        alt: z.string(),
-      })
-      .optional(),
 
-    // --- Metadados editoriais Redator PAVIE ---
+    // Mantemos o nome ORIGINAL do starter: "pubDate"
+    // e usamos z.coerce.date() para aceitar strings tipo "Jul 08 2022"
+    pubDate: z.coerce.date(),
 
-    // Eixo/área de prática – opcional, mas recomendado
+    // Data de atualização (opcional)
+    updatedDate: z.coerce.date().optional(),
+
+    // heroImage como STRING (caminho para a imagem)
+    // Ex.: '../../assets/blog-placeholder-3.jpg'
+    heroImage: z.string().optional(),
+
+    // --- Metadados editoriais PAVIE (todos OPCIONAIS) ---
+
     eixo: z
       .enum([
         'familia-patrimonio-seguro',
@@ -34,29 +36,22 @@ const blog = defineCollection({
       ])
       .optional(),
 
-    // Persona-alvo (livre, para você nomear: “Sofia – inventário binacional”, etc.)
     persona: z.string().optional(),
 
-    // Estágio de funil (útil para futuro controle de pauta)
-    funil: z
-      .enum(['TOFU', 'MOFU', 'BOFU'])
-      .optional(),
+    funil: z.enum(['TOFU', 'MOFU', 'BOFU']).optional(),
 
-    // Tipo de layout lógico do texto
     layoutType: z
       .enum([
-        'guia-estruturado',      // “guia passo a passo”
-        'analise-de-caso',      // estudo de caso / narrativa
-        'checklist-pratico',    // lista de verificação
-        'faq',                  // perguntas e respostas
-        'opiniao-curta',        // comentário breve/nota
+        'guia-estruturado',
+        'analise-de-caso',
+        'checklist-pratico',
+        'faq',
+        'opiniao-curta',
       ])
-      .default('guia-estruturado'),
+      .optional(),
 
-    // Se o artigo deve ganhar destaque em grids, carrosséis etc.
     destaqueHome: z.boolean().default(false),
 
-    // Campo “interno” de controle (quem revisou / assinou)
     responsavelEditorial: z.string().optional(),
   }),
 });

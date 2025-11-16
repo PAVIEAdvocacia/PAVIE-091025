@@ -12,21 +12,10 @@ export async function getStaticPaths() {
 
 type Props = CollectionEntry<'blog'>;
 
-const post: Props = Astro.props;
+const post = Astro.props as Props;
 const { Content } = await render(post);
-
-// Normaliza os dados: garante que layoutType e demais campos existam
-const safeData = {
-  ...post.data,
-  layoutType: post.data?.layoutType ?? 'article',
-  title: post.data?.title ?? 'Post sem título',
-  description: post.data?.description ?? '',
-  pubDate: post.data?.pubDate ?? new Date().toISOString(),
-  updatedDate:
-    post.data?.updatedDate ?? post.data?.pubDate ?? new Date().toISOString(),
-};
 ---
 
-<BlogPost {...safeData}>
+<BlogPost frontmatter={post.data}>
   <Content />
 </BlogPost>

@@ -1,15 +1,18 @@
 ---
-// src/layouts/BlogPost.astro
-
-interface HeroImage {
+interface HeroImageObject {
   src: string;
-  alt: string;
+  alt?: string;
 }
+
+// heroImage pode ser string (caminho) ou objeto { src, alt }
+type HeroImage = string | HeroImageObject;
 
 interface Frontmatter {
   title: string;
   description: string;
-  publishDate: Date;
+  // Aceita tanto pubDate (schema atual) quanto publishDate (futuro)
+  pubDate?: Date;
+  publishDate?: Date;
   updatedDate?: Date;
   heroImage?: HeroImage;
   eixo?: string;
@@ -38,11 +41,18 @@ const layoutTipoLegivel =
   (frontmatter.layoutType && layoutLabelMap[frontmatter.layoutType]) ??
   'Guia estruturado';
 
-const dataPublicacao = frontmatter.publishDate.toLocaleDateString('pt-BR', {
-  day: '2-digit',
-  month: 'long',
-  year: 'numeric',
-});
+// Fonte da data de publicação: publishDate OU pubDate
+const dateSource = frontmatter.publishDate ?? frontmatter.pubDate ?? null;
+
+const dataPublicacao = dateSource
+  ? dateSource.toLocaleDateString('pt-BR', {
+      day: '2-digit',
+      month: 'long',
+      year: 'numeric',
+    })
+  : null;
+
+const dataPublicacaoISO = dateSource ? dateSource.toISOString() : null;
 
 const dataAtualizacao = frontmatter.updatedDate
   ? frontmatter.updatedDate.toLocaleDateString('pt-BR', {
@@ -51,6 +61,22 @@ const dataAtualizacao = frontmatter.updatedDate
       year: 'numeric',
     })
   : null;
+
+const dataAtualizacaoISO = frontmatter.updatedDate
+  ? frontmatter.updatedDate.toISOString()
+  : null;
+
+// Normalização de heroImage: aceita string OU objeto
+let heroSrc: string | null = null;
+let heroAlt: string | undefined;
+
+if (typeof frontmatter.heroImage === 'string') {
+  heroSrc = frontmatter.heroImage;
+  heroAlt = frontmatter.title;
+} else if (frontmatter.heroImage && typeof frontmatter.heroImage === 'object') {
+  heroSrc = frontmatter.heroImage.src;
+  heroAlt = frontmatter.heroImage.alt ?? frontmatter.title;
+}
 ---
 
 <article class="pv-post">
@@ -82,16 +108,19 @@ const dataAtualizacao = frontmatter.updatedDate
     </p>
 
     <div class="pv-post__meta">
-      <span>
-        Publicado em <time datetime={frontmatter.publishDate.toISOString()}>
-          {dataPublicacao}
-        </time>
-      </span>
+      {dataPublicacao && dataPublicacaoISO && (
+        <span>
+          Publicado em{' '}
+          <time datetime={dataPublicacaoISO}>
+            {dataPublicacao}
+          </time>
+        </span>
+      )}
 
-      {dataAtualizacao && (
+      {dataAtualizacao && dataAtualizacaoISO && (
         <span aria-label="Data de atualização">
           · Atualizado em{' '}
-          <time datetime={frontmatter.updatedDate!.toISOString()}>
+          <time datetime={dataAtualizacaoISO}>
             {dataAtualizacao}
           </time>
         </span>
@@ -104,17 +133,16 @@ const dataAtualizacao = frontmatter.updatedDate
       )}
     </div>
 
-    {frontmatter.heroImage && (
+    {heroSrc && (
       <figure class="pv-post__hero">
         <img
-          src={frontmatter.heroImage.src}
-          alt={frontmatter.heroImage.alt}
+          src={heroSrc}
+          alt={heroAlt ?? frontmatter.title}
           loading="lazy"
         />
       </figure>
     )}
 
-    {/* Blocos de “help text” conforme o tipo de layout lógico */}
     {frontmatter.layoutType === 'checklist-pratico' && (
       <aside class="pv-post__notice pv-post__notice--checklist">
         Este conteúdo foi estruturado como um <strong>checklist prático</strong>.
@@ -159,10 +187,6 @@ const dataAtualizacao = frontmatter.updatedDate
 </article>
 
 <style>
-  /* Mantém o estilo base do template e adiciona só alguns ajustes de layout.
-     Se o template já tiver classes utilitárias, estes estilos funcionam como
-     refinamento, não como substituição. */
-
   .pv-post {
     max-width: 720px;
     margin: 3rem auto;
