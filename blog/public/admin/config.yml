@@ -1,0 +1,28 @@
+﻿backend:
+  name: github
+  repo: PAVIEAdvocacia/PAVIE-091025
+  branch: main
+
+site_url: "https://blog.pavieadvocacia.com.br"
+locale: "pt"
+
+# Onde os uploads serão gravados NO REPO (caminho relativo à raiz do repo)
+media_folder: "blog/public/uploads"
+# Como esses arquivos são servidos NO SITE
+public_folder: "/uploads"
+
+collections:
+  - name: "blog"
+    label: "Postagens do Blog"
+    label_singular: "Postagem"
+    folder: "blog/src/content/blog"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    editor:
+      preview: true
+    fields:
+      - { label: "Título", name: "title", widget: "string" }
+      - { label: "Descrição", name: "description", widget: "string" }
+      - { label: "Data de publicação", name: "pubDate", widget: "datetime" }
+      - { label: "Imagem de capa (URL ou caminho)", name: "heroImage", widget: "string", required: false }
+      - { label: "Conteúdo", name: "body", widget: "markdown" }
