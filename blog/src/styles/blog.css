@@ -1,0 +1,93 @@
+/* Estrutura básica do artigo */
+.blog-post {
+  max-width: 72ch;
+  margin: 0 auto;
+  padding: 3rem 1.5rem;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  color: #020617; /* slate-950 */
+  background: #f8fafc; /* slate-50 */
+}
+
+/* Cabeçalho do artigo */
+.blog-post-header {
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid #e2e8f0; /* slate-200 */
+}
+
+.blog-post-kicker {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #4f46e5; /* indigo-600 */
+}
+
+.blog-post-title {
+  margin-top: 0.5rem;
+  font-size: 2rem;
+  line-height: 1.1;
+  font-weight: 700;
+}
+
+.blog-post-subtitle {
+  margin-top: 0.5rem;
+  color: #64748b; /* slate-500 */
+}
+
+/* Corpo do texto */
+.blog-post-content {
+  font-size: 1rem;
+  line-height: 1.7;
+  color: #0f172a; /* slate-900 */
+}
+
+.blog-post-content h2 {
+  margin-top: 2.5rem;
+  margin-bottom: 0.75rem;
+  font-size: 1.4rem;
+  font-weight: 700;
+}
+
+.blog-post-content h3 {
+  margin-top: 2rem;
+  margin-bottom: 0.5rem;
+  font-size: 1.15rem;
+  font-weight: 600;
+}
+
+.blog-post-content p {
+  margin-bottom: 1rem;
+}
+
+.blog-post-content ul,
+.blog-post-content ol {
+  margin: 0.75rem 0 1rem 1.25rem;
+  padding-left: 1rem;
+}
+
+.blog-post-content li {
+  margin-bottom: 0.35rem;
+}
+
+/* Destaques “jurídicos” comuns */
+.blog-post-content strong {
+  font-weight: 600;
+}
+
+.blog-post-content blockquote {
+  margin: 1.5rem 0;
+  padding-left: 1rem;
+  border-left: 3px solid #c4b5fd; /* violet-300 */
+  color: #475569; /* slate-600 */
+  font-style: italic;
+}
+
+/* Rodapé / aviso ético */
+.blog-post-footer {
+  margin-top: 3rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid #e2e8f0;
+  font-size: 0.85rem;
+  color: #64748b;
+}

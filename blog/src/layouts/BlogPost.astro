@@ -1,86 +1,69 @@
 ---
-import { Image } from 'astro:assets';
-import type { CollectionEntry } from 'astro:content';
-import BaseHead from '../components/BaseHead.astro';
-import Footer from '../components/Footer.astro';
-import FormattedDate from '../components/FormattedDate.astro';
-import Header from '../components/Header.astro';
+import '../styles/blog.css';
 
-type Props = CollectionEntry<'blog'>['data'];
+type Props = {
+  data: {
+    title: string;
+    subtitle?: string;
+    category?: string;
+    pubDate?: Date | string;
+    updatedDate?: Date | string;
+    readingTime?: number;
+  };
+  Content: any;
+};
 
-const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
+const { data, Content } = Astro.props as Props;
 ---
 
-<html lang="en">
-	<head>
-		<BaseHead title={title} description={description} />
-		<style>
-			main {
-				width: calc(100% - 2em);
-				max-width: 100%;
-				margin: 0;
-			}
-			.hero-image {
-				width: 100%;
-			}
-			.hero-image img {
-				display: block;
-				margin: 0 auto;
-				border-radius: 12px;
-				box-shadow: var(--box-shadow);
-			}
-			.prose {
-				width: 720px;
-				max-width: calc(100% - 2em);
-				margin: auto;
-				padding: 1em;
-				color: rgb(var(--gray-dark));
-			}
-			.title {
-				margin-bottom: 1em;
-				padding: 1em 0;
-				text-align: center;
-				line-height: 1;
-			}
-			.title h1 {
-				margin: 0 0 0.5em 0;
-			}
-			.date {
-				margin-bottom: 0.5em;
-				color: rgb(var(--gray));
-			}
-			.last-updated-on {
-				font-style: italic;
-			}
-		</style>
-	</head>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <title>{data.title} | PAVIE | Advocacia</title>
+    <meta name="description" content={data.subtitle ?? ''} />
+  </head>
+  <body>
+    <main>
+      <article class="blog-post">
+        <header class="blog-post-header">
+          <p class="blog-post-kicker">
+            {data.category ?? 'Conteúdo Jurídico'}
+          </p>
+          <h1 class="blog-post-title">
+            {data.title}
+          </h1>
+          {data.subtitle && (
+            <p class="blog-post-subtitle">
+              {data.subtitle}
+            </p>
+          )}
+          <p style="margin-top: 0.75rem; font-size: 0.8rem; color: #94a3b8;">
+            {data.pubDate && (
+              <>
+                Publicado em {new Date(data.pubDate).toLocaleDateString('pt-BR')}
+              </>
+            )}
+            {data.updatedDate && (
+              <> • Atualizado em {new Date(data.updatedDate).toLocaleDateString('pt-BR')}</>
+            )}
+            {data.readingTime && (
+              <> • {data.readingTime} min de leitura</>
+            )}
+          </p>
+        </header>
 
-	<body>
-		<Header />
-		<main>
-			<article>
-				<div class="hero-image">
-					{heroImage && <Image width={1020} height={510} src={heroImage} alt="" />}
-				</div>
-				<div class="prose">
-					<div class="title">
-						<div class="date">
-							<FormattedDate date={pubDate} />
-							{
-								updatedDate && (
-									<div class="last-updated-on">
-										Last updated on <FormattedDate date={updatedDate} />
-									</div>
-								)
-							}
-						</div>
-						<h1>{title}</h1>
-						<hr />
-					</div>
-					<slot />
-				</div>
-			</article>
-		</main>
-		<Footer />
-	</body>
+        <section class="blog-post-content">
+          <Content />
+        </section>
+
+        <footer class="blog-post-footer">
+          <p>
+            Este texto tem caráter exclusivamente informativo e não substitui consulta
+            jurídica individualizada. Em caso concreto, recomenda-se análise técnica
+            específica.
+          </p>
+        </footer>
+      </article>
+    </main>
+  </body>
 </html>
