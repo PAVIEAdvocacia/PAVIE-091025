@@ -2,62 +2,56 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
 
-// Busca os posts mais recentes
 const posts = (await getCollection('blog')).sort(
 	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
 );
 ---
 
-<BaseLayout title="Blog" description="Respostas rápidas para seus problemas jurídicos.">
+<BaseLayout title="Blog Jurídico" description="Atualizações e estratégias jurídicas.">
 	
-  <section class="bg-slate-50 py-20 text-center px-4 border-b border-slate-200">
-		<h1 class="text-4xl md:text-6xl font-serif font-bold text-slate-900 mb-6 tracking-tight">
-			Clareza e Agilidade.
-		</h1>
-		<p class="text-xl text-slate-600 max-w-2xl mx-auto font-light">
-			Entenda seus direitos em 5 minutos. Sem complicação, direto à solução do problema.
-		</p>
-	</section>
+  <section class="bg-slate-900 py-20 text-center px-4">
+    <h1 class="text-4xl md:text-5xl font-serif font-bold text-white mb-4">
+      Inteligência Jurídica
+    </h1>
+    <p class="text-slate-400 text-lg max-w-2xl mx-auto">
+      Artigos, análises e orientações práticas para proteger seus direitos e patrimônio.
+    </p>
+  </section>
 
   <section class="max-w-6xl mx-auto px-4 py-16">
-        <h2 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-8 text-center md:text-left">
-            Últimas Orientações
-        </h2>
+    
+    <div class="flex justify-between items-center mb-8 border-b border-slate-200 pb-4">
+        <h2 class="text-2xl font-serif font-bold text-slate-800">Últimas Publicações</h2>
+        <span class="text-xs font-bold text-slate-400 uppercase tracking-widest">Atualizado Semanalmente</span>
+    </div>
 
-		<div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-			{posts.map((post) => (
-				<article class="group bg-white border border-slate-200 rounded-xl overflow-hidden hover:shadow-xl transition-all duration-300 flex flex-col h-full hover:-translate-y-1">
-					<a href={`/blog/${post.slug}/`} class="flex flex-col h-full">
-                        
-                        <div class="h-48 bg-slate-100 overflow-hidden relative">
-                            {post.data.heroImage ? 
-                                <img src={post.data.heroImage} alt="" class="w-full h-full object-cover group-hover:scale-105 transition duration-700"/> 
-                                : <div class="w-full h-full flex items-center justify-center text-slate-300 font-serif italic">PAVIE</div>
-                            }
-                        </div>
-                        
-                        <div class="p-6 flex flex-col flex-grow">
-							
-                            <div class="text-xs text-blue-900 font-bold mb-2 uppercase">
-                                {post.data.pubDate.toLocaleDateString('pt-BR', { year: 'numeric', month: 'short', day: 'numeric' })}
-                            </div>
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+      {posts.map((post) => (
+        <article class="flex flex-col bg-white border border-slate-200 rounded-lg overflow-hidden hover:shadow-lg transition-all duration-300 group">
+          <a href={`/blog/${post.slug}/`} class="flex-1 flex flex-col">
+            <div class="h-52 bg-slate-100 overflow-hidden relative">
+                {post.data.heroImage ? 
+                  <img src={post.data.heroImage} alt="" class="w-full h-full object-cover group-hover:scale-105 transition duration-500"/> 
+                  : <div class="w-full h-full flex items-center justify-center text-slate-300 bg-slate-100 font-serif">PAVIE</div>
+                }
+            </div>
+            
+            <div class="p-6 flex flex-col flex-1">
+                <span class="text-amber-600 text-xs font-bold uppercase mb-2">Artigo</span>
+                <h3 class="text-xl font-serif font-bold text-slate-900 mb-3 leading-snug group-hover:text-blue-900 transition">
+                    {post.data.title}
+                </h3>
+                <p class="text-slate-600 text-sm line-clamp-3 mb-4 flex-1">
+                    {post.data.description}
+                </p>
+                <div class="pt-4 border-t border-slate-50 text-blue-900 text-sm font-bold flex items-center">
+                    Ler completo <span class="ml-2 group-hover:translate-x-1 transition">&rarr;</span>
+                </div>
+            </div>
+          </a>
+        </article>
+      ))}
+    </div>
 
-							<h3 class="text-xl font-bold text-slate-900 mb-3 leading-snug group-hover:text-blue-800 transition">
-								{post.data.title}
-							</h3>
-                            
-							<p class="text-slate-600 text-sm mb-4 line-clamp-3 leading-relaxed flex-grow">
-								{post.data.description}
-							</p>
-                            
-                            <div class="mt-auto pt-4 border-t border-slate-50 flex items-center text-blue-900 font-semibold text-sm">
-                                Ler orientação completa <span class="ml-2 group-hover:translate-x-1 transition">&rarr;</span>
-                            </div>
-						</div>
-					</a>
-				</article>
-			))}
-		</div>
-	</section>
-
+  </section>
 </BaseLayout>

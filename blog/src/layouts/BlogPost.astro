@@ -1,51 +1,70 @@
 ---
 import BaseLayout from './BaseLayout.astro';
 
-// Recebe os dados do post diretamente
+// Extrai as props corretamente para evitar o erro de build
 const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 ---
 
 <BaseLayout title={title} description={description}>
-  <article class="max-w-3xl mx-auto px-4 py-10">
+  
+  <div class="max-w-6xl mx-auto px-4 py-12 grid grid-cols-1 lg:grid-cols-12 gap-12">
     
-    <div class="text-center mb-10 border-b border-slate-100 pb-8">
-      {heroImage && (
-        <div class="mb-8 rounded-xl overflow-hidden shadow-sm h-64 md:h-96 w-full">
-           <img src={heroImage} alt="" class="w-full h-full object-cover" />
-        </div>
-      )}
+    <article class="lg:col-span-8">
       
-      <div class="text-slate-400 text-xs font-bold uppercase tracking-wider mb-3 font-sans">
-        {pubDate && <time datetime={pubDate}>
-          {new Date(pubDate).toLocaleDateString('pt-BR', { day: 'numeric', month: 'long', year: 'numeric' })}
-        </time>}
+      <header class="mb-10">
+        <span class="text-amber-600 font-bold text-xs uppercase tracking-widest mb-2 block">
+            Artigo Jurídico
+        </span>
+        <h1 class="text-4xl md:text-5xl font-serif font-bold text-slate-900 leading-tight mb-6">
+          {title}
+        </h1>
+        {description && <p class="text-xl text-slate-500 font-light italic border-l-4 border-amber-500 pl-4">{description}</p>}
+        
+        <div class="mt-6 flex items-center text-sm text-slate-400 font-bold uppercase">
+            {pubDate && <time>{new Date(pubDate).toLocaleDateString('pt-BR', { dateStyle: 'long' })}</time>}
+        </div>
+
+        {heroImage && (
+            <div class="mt-8 rounded-lg overflow-hidden shadow-sm">
+                <img src={heroImage} alt="" class="w-full object-cover" />
+            </div>
+        )}
+      </header>
+
+      <div class="prose prose-slate prose-lg max-w-none prose-headings:font-serif prose-a:text-amber-600 hover:prose-a:text-amber-700">
+        <slot />
       </div>
 
-      <h1 class="text-3xl md:text-5xl font-serif font-bold text-slate-900 leading-tight mb-4">
-        {title}
-      </h1>
-      
-      {description && (
-        <p class="text-xl text-slate-500 font-light italic max-w-2xl mx-auto">
-          {description}
-        </p>
-      )}
-    </div>
+      <div class="mt-16 bg-slate-50 border border-slate-200 p-8 rounded-lg text-center">
+        <h3 class="font-serif text-2xl font-bold text-slate-900 mb-2">Precisa de análise específica?</h3>
+        <p class="text-slate-600 mb-6">Este artigo é informativo. Para aplicar ao seu caso, agende uma conversa.</p>
+        <a href="https://wa.me/5521SEUNUMERO" class="btn-action inline-block">
+            Falar com Especialista
+        </a>
+      </div>
+    </article>
 
-    <div class="prose prose-slate prose-lg mx-auto prose-headings:font-serif prose-headings:text-slate-900 prose-a:text-blue-900 hover:prose-a:underline prose-li:marker:text-blue-900">
-      <slot />
-    </div>
+    <aside class="lg:col-span-4 space-y-8">
+        
+        <div class="bg-white border border-slate-200 p-6 rounded-lg shadow-sm sticky top-28">
+            <h3 class="font-serif font-bold text-slate-900 text-lg mb-4 border-b pb-2">Sobre o Escritório</h3>
+            <p class="text-slate-600 text-sm mb-4 leading-relaxed">
+                A <strong>PAVIE Advocacia</strong> oferece soluções jurídicas modernas para famílias, patrimônio e negócios. Foco em resolução ágil e segurança.
+            </p>
+            <a href="/about" class="text-amber-600 font-bold text-sm hover:underline">Ler perfil completo &rarr;</a>
+        </div>
 
-    <div class="mt-16 p-8 bg-slate-50 rounded-xl border border-slate-200 text-center shadow-sm">
-      <h3 class="font-serif text-xl font-bold text-slate-900 mb-2">Este caso se parece com o seu?</h3>
-      <p class="text-slate-600 mb-6 text-sm">Cada detalhe importa no Direito. Não tome decisões baseado apenas na internet.</p>
-      <a href="https://wa.me/5521SEUNUMERO" class="inline-flex items-center justify-center bg-blue-900 hover:bg-blue-800 text-white font-bold py-3 px-8 rounded-full transition shadow-lg gap-2 text-sm uppercase tracking-wide">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M8.625 12a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H8.25m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H12m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zM21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 01-2.555-.337A5.972 5.972 0 015.41 20.97a5.969 5.969 0 01-.474-.065 4.48 4.48 0 00.978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.159 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25z" />
-        </svg>
-        Analisar meu caso no WhatsApp
-      </a>
-    </div>
+        <div class="bg-slate-50 p-6 rounded-lg">
+            <h3 class="font-serif font-bold text-slate-900 text-lg mb-4">Tópicos Frequentes</h3>
+            <ul class="space-y-2 text-sm text-slate-600">
+                <li><a href="#" class="hover:text-amber-600 block py-1 border-b border-slate-200">Planejamento Sucessório</a></li>
+                <li><a href="#" class="hover:text-amber-600 block py-1 border-b border-slate-200">Divórcio & Família</a></li>
+                <li><a href="#" class="hover:text-amber-600 block py-1 border-b border-slate-200">Direito Internacional</a></li>
+                <li><a href="#" class="hover:text-amber-600 block py-1">Consumidor & Aéreo</a></li>
+            </ul>
+        </div>
 
-  </article>
+    </aside>
+
+  </div>
 </BaseLayout>
