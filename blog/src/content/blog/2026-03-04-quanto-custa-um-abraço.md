@@ -2,8 +2,21 @@
 title: Quanto custa um abraço
 description: "Critérios de Fixação da Pensão Alimentícia: entre necessidade,
   possibilidade e o custo real de criar um filho no Brasil"
+content_type: artigo
+intent: informativo
+funnel_stage: descoberta
+author_ref: Advogado
+author_name: Fabio Pavie
 pubDate: 2026-03-04T16:29:00.000-03:00
-heroImage: blog/public/uploads/preto-feliz-do-ícone-da-família-120355501.jpg
+published_at: 2026-03-08T11:41:00.000-03:00
+updatedDate: 2026-03-08T11:42:00.000-03:00
+updated_at: 2026-03-08T11:42:00.000-03:00
+heroImage: /uploads/gemini_generated_image_c9nt5mc9nt5mc9nt.png
+reading_time: 5
+audio_status: planned
+cta_variant: diagnostico
+tags:
+  - abraço
 ---
 ### Resumo
 
