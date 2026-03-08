@@ -1,57 +1,86 @@
----
-import BaseLayout from '../layouts/BaseLayout.astro';
+﻿---
 import { getCollection } from 'astro:content';
+import BlogGrid from '../components/blog/BlogGrid.astro';
+import BlogHero from '../components/blog/BlogHero.astro';
+import FeaturedPost from '../components/blog/FeaturedPost.astro';
+import BlogLayout from '../layouts/BlogLayout.astro';
+import { groupPostsByArea, isPublicPost, normalizePost, sortPostsByDate } from '../lib/posts';
 
-const posts = (await getCollection('blog')).sort(
-	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
-);
+const entries = await getCollection('blog');
+const posts = sortPostsByDate(entries.map((entry) => normalizePost(entry))).filter(isPublicPost);
+const featured = posts[0];
+const highlights = posts.slice(1, 7);
+const groupedByArea = groupPostsByArea(posts).slice(0, 3);
+
+const guidePosts = posts
+	.filter((post) => post.contentType.toLowerCase().includes('guia') || post.intent === 'educativo')
+	.slice(0, 4);
+
+const successionPosts = posts
+	.filter(
+		(post) =>
+			post.area.toLowerCase().includes('sucess') ||
+			post.temas.some((tema) => tema.toLowerCase().includes('inventario') || tema.toLowerCase().includes('heranca')),
+	)
+	.slice(0, 4);
+
+const areaNames = groupedByArea.map((group) => group.area);
 ---
 
-<BaseLayout title="Blog Jurídico" description="Atualizações e estratégias jurídicas.">
-	
-  <section class="bg-slate-900 py-20 text-center px-4">
-    <h1 class="text-4xl md:text-5xl font-serif font-bold text-white mb-4">
-      Inteligência Jurídica
-    </h1>
-    <p class="text-slate-400 text-lg max-w-2xl mx-auto">
-      Artigos, análises e orientações práticas para proteger seus direitos e patrimônio.
-    </p>
-  </section>
+<BlogLayout
+	title="Blog juridico da PAVIE"
+	description="Hub editorial institucional com trilhas por area, leitura longa e orientacao juridica aplicada."
+	canonical="https://blog.pavieadvocacia.com.br/"
+>
+	<div class="container blog-home">
+		<BlogHero totalPosts={posts.length} areas={areaNames} />
 
-  <section class="max-w-6xl mx-auto px-4 py-16">
-    
-    <div class="flex justify-between items-center mb-8 border-b border-slate-200 pb-4">
-        <h2 class="text-2xl font-serif font-bold text-slate-800">Últimas Publicações</h2>
-        <span class="text-xs font-bold text-slate-400 uppercase tracking-widest">Atualizado Semanalmente</span>
-    </div>
+		{featured && <FeaturedPost post={featured} />}
 
-    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-      {posts.map((post) => (
-        <article class="flex flex-col bg-white border border-slate-200 rounded-lg overflow-hidden hover:shadow-lg transition-all duration-300 group">
-          <a href={`/blog/${post.slug}/`} class="flex-1 flex flex-col">
-            <div class="h-52 bg-slate-100 overflow-hidden relative">
-                {post.data.heroImage ? 
-                  <img src={post.data.heroImage} alt="" class="w-full h-full object-cover group-hover:scale-105 transition duration-500"/> 
-                  : <div class="w-full h-full flex items-center justify-center text-slate-300 bg-slate-100 font-serif">PAVIE</div>
-                }
-            </div>
-            
-            <div class="p-6 flex flex-col flex-1">
-                <span class="text-amber-600 text-xs font-bold uppercase mb-2">Artigo</span>
-                <h3 class="text-xl font-serif font-bold text-slate-900 mb-3 leading-snug group-hover:text-blue-900 transition">
-                    {post.data.title}
-                </h3>
-                <p class="text-slate-600 text-sm line-clamp-3 mb-4 flex-1">
-                    {post.data.description}
-                </p>
-                <div class="pt-4 border-t border-slate-50 text-blue-900 text-sm font-bold flex items-center">
-                    Ler completo <span class="ml-2 group-hover:translate-x-1 transition">&rarr;</span>
-                </div>
-            </div>
-          </a>
-        </article>
-      ))}
-    </div>
+		{highlights.length > 0 && (
+			<BlogGrid title="Leituras em destaque" kicker="Curadoria principal" posts={highlights} />
+		)}
 
-  </section>
-</BaseLayout>
+		<section id="areas-editoriais" class="blog-grid" aria-label="Areas editoriais">
+			<div class="section-title">
+				<div>
+					<span class="section-kicker">Clusters editoriais</span>
+					<h2>Areas de atuacao e trilhas por tema</h2>
+				</div>
+			</div>
+			<div class="blog-row">
+				{groupedByArea.map((group) => (
+					<article class="blog-row__item">
+						<h3>{group.area}</h3>
+						<p>
+							{group.posts.length} publicacoes disponiveis para consulta tecnica e aprofundamento.
+						</p>
+						<a href={group.posts[0]?.url}>Abrir trilha editorial</a>
+					</article>
+				))}
+			</div>
+		</section>
+
+		{guidePosts.length > 0 && (
+			<BlogGrid title="Guias essenciais" kicker="Base de consulta" posts={guidePosts} compact />
+		)}
+
+		{successionPosts.length > 0 && (
+			<BlogGrid title="Planejamento sucessorio" kicker="Cluster prioritario" posts={successionPosts} compact />
+		)}
+
+		<section class="editorial-cta" aria-label="Chamada institucional">
+			<span class="section-kicker">Conversao etica</span>
+			<h2>Precisa transformar leitura em estrategia aplicavel?</h2>
+			<p>
+				Agende uma consultoria para receber orientacao alinhada ao seu contexto,
+				com clareza de riscos, prazos e proxima acao juridica.
+			</p>
+			<div>
+				<a class="btn btn-primary" href="https://pavieadvocacia.com.br/#agendar">
+					Agendar Consultoria
+				</a>
+			</div>
+		</section>
+	</div>
+</BlogLayout>

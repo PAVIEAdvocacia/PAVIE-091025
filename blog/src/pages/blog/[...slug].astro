@@ -1,20 +1,54 @@
 ---
-import { type CollectionEntry, getCollection, render } from 'astro:content';
-import BlogPost from '../../layouts/BlogPost.astro';
+import { getCollection, render } from 'astro:content';
+import ReadingLayout from '../../layouts/ReadingLayout.astro';
+import { getRelatedPosts } from '../../lib/related';
+import { isPublicPost, normalizePost, sortPostsByDate } from '../../lib/posts';
+import { buildToc } from '../../lib/toc';
 
 export async function getStaticPaths() {
-	const posts = await getCollection('blog');
-	return posts.map((post) => ({
-		params: { slug: post.id },
-		props: post,
-	}));
-}
-type Props = CollectionEntry<'blog'>;
+	const entries = await getCollection('blog');
+	const paths: Array<{ params: { slug: string }; props: { entryId: string; alias: boolean } }> = [];
+	const seen = new Set<string>();
 
-const post = Astro.props;
-const { Content } = await render(post);
+	for (const entry of entries) {
+		const post = normalizePost(entry);
+		const primarySlug = post.slug;
+		if (!seen.has(primarySlug)) {
+			paths.push({
+				params: { slug: primarySlug },
+				props: { entryId: entry.id, alias: false },
+			});
+			seen.add(primarySlug);
+		}
+
+		if (entry.id !== primarySlug && !seen.has(entry.id)) {
+			paths.push({
+				params: { slug: entry.id },
+				props: { entryId: entry.id, alias: true },
+			});
+			seen.add(entry.id);
+		}
+	}
+
+	return paths;
+}
+
+const entries = await getCollection('blog');
+const currentEntry = entries.find((entry) => entry.id === Astro.props.entryId);
+
+if (!currentEntry) {
+	throw new Error(`Post nao encontrado: ${Astro.props.entryId}`);
+}
+
+const currentPost = normalizePost(currentEntry);
+const publicPosts = sortPostsByDate(entries.map((entry) => normalizePost(entry))).filter(isPublicPost);
+const related = getRelatedPosts(publicPosts, currentPost, 3);
+const { Content, headings } = await render(currentEntry);
+const toc = buildToc(headings);
+const isAlias = Boolean(Astro.props.alias);
+const noIndex = isAlias || !isPublicPost(currentPost);
 ---
 
-<BlogPost {...post.data}>
+<ReadingLayout post={currentPost} toc={toc} related={related} noIndex={noIndex}>
 	<Content />
-</BlogPost>
+</ReadingLayout>

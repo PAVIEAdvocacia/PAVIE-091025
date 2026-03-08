@@ -6,23 +6,96 @@
 site_url: "https://blog.pavieadvocacia.com.br"
 locale: "pt"
 
-# Onde os uploads serão gravados NO REPO (caminho relativo à raiz do repo)
 media_folder: "blog/public/uploads"
-# Como esses arquivos são servidos NO SITE
 public_folder: "/uploads"
 
 collections:
   - name: "blog"
-    label: "Postagens do Blog"
-    label_singular: "Postagem"
+    label: "Publicacoes do Blog"
+    label_singular: "Publicacao"
     folder: "blog/src/content/blog"
     create: true
     slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
     editor:
       preview: true
     fields:
-      - { label: "Título", name: "title", widget: "string" }
-      - { label: "Descrição", name: "description", widget: "string" }
-      - { label: "Data de publicação", name: "pubDate", widget: "datetime" }
-      - { label: "Imagem de capa (URL ou caminho)", name: "heroImage", widget: "string", required: false }
-      - { label: "Conteúdo", name: "body", widget: "markdown" }
+      - { label: "Titulo", name: "title", widget: "string" }
+      -
+          label: "Slug canonico"
+          name: "slug"
+          widget: "string"
+          required: false
+          hint: "Opcional. Se vazio, sera usado o nome do arquivo."
+      - { label: "Descricao", name: "description", widget: "text" }
+      - { label: "Resumo", name: "excerpt", widget: "text", required: false }
+      -
+          label: "Area"
+          name: "area"
+          widget: "select"
+          required: false
+          options:
+            - "Planejamento Sucessorio"
+            - "Familia e Patrimonio"
+            - "Direito Imobiliario"
+            - "Direito e Patrimonio"
+      - { label: "Tema", name: "tema", widget: "list", required: false, default: [] }
+      -
+          label: "Tipo de conteudo"
+          name: "content_type"
+          widget: "select"
+          required: false
+          default: "artigo"
+          options: ["artigo", "guia", "analise", "faq"]
+      -
+          label: "Intencao"
+          name: "intent"
+          widget: "select"
+          required: false
+          default: "informativo"
+          options: ["informativo", "educativo", "diagnostico", "decisao"]
+      -
+          label: "Estagio do funil"
+          name: "funnel_stage"
+          widget: "select"
+          required: false
+          default: "consideracao"
+          options: ["descoberta", "consideracao", "decisao", "fidelizacao"]
+      - { label: "Referencia do autor", name: "author_ref", widget: "string", required: false, default: "dr-fabio-pavie" }
+      - { label: "Nome do autor", name: "author_name", widget: "string", required: false, default: "Dr. Fabio Pavie" }
+      - { label: "Data de publicacao (legado)", name: "pubDate", widget: "datetime", required: false }
+      - { label: "Publicado em", name: "published_at", widget: "datetime", required: false }
+      - { label: "Atualizado em (legado)", name: "updatedDate", widget: "datetime", required: false }
+      - { label: "Atualizado em", name: "updated_at", widget: "datetime", required: false }
+      - { label: "Imagem de capa (legado)", name: "heroImage", widget: "image", required: false }
+      - { label: "Imagem de capa", name: "featured_image", widget: "image", required: false }
+      - { label: "Texto alternativo da imagem", name: "featured_image_alt", widget: "string", required: false }
+      - { label: "Tempo de leitura (min)", name: "reading_time", widget: "number", required: false, value_type: "int", min: 1 }
+      -
+          label: "Status do audio"
+          name: "audio_status"
+          widget: "select"
+          required: false
+          default: "none"
+          options: ["none", "planned", "published"]
+      - { label: "URL do audio", name: "audio_url", widget: "string", required: false }
+      - { label: "URL da transcricao", name: "transcript_url", widget: "string", required: false }
+      -
+          label: "Variante de CTA"
+          name: "cta_variant"
+          widget: "select"
+          required: false
+          default: "consultoria"
+          options: ["consultoria", "diagnostico", "aprofundamento", "institucional"]
+      - { label: "Relacionados manuais", name: "related_manual", widget: "list", required: false, default: [] }
+      - { label: "Tags", name: "tags", widget: "list", required: false, default: [] }
+      -
+          label: "Status de publicacao"
+          name: "publish_status"
+          widget: "select"
+          required: false
+          default: "published"
+          options: ["published", "draft", "archived"]
+      - { label: "Status de atualizacao", name: "update_status", widget: "string", required: false }
+      - { label: "Canonical URL", name: "canonical_url", widget: "string", required: false }
+      - { label: "TRACE ref", name: "trace_ref", widget: "string", required: false }
+      - { label: "Conteudo", name: "body", widget: "markdown" }

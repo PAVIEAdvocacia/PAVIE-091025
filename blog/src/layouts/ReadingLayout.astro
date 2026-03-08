@@ -1,0 +1,97 @@
+---
+import type { BlogPost } from '../lib/posts';
+import type { TocItem } from '../lib/toc';
+import '../styles/reading.css';
+import AudioPlayer from '../components/blog/AudioPlayer.astro';
+import AuthorCard from '../components/blog/AuthorCard.astro';
+import Breadcrumbs from '../components/blog/Breadcrumbs.astro';
+import ReadingHero from '../components/blog/ReadingHero.astro';
+import ReadingSidebar from '../components/blog/ReadingSidebar.astro';
+import RelatedPosts from '../components/blog/RelatedPosts.astro';
+import BaseLayout from './BaseLayout.astro';
+import { BLOG_SITE_URL } from '../consts';
+
+interface Props {
+	post: BlogPost;
+	toc: TocItem[];
+	related: BlogPost[];
+	noIndex?: boolean;
+}
+
+const { post, toc, related, noIndex = false } = Astro.props;
+
+const breadcrumbs = [
+	{ label: 'Inicio', href: '/' },
+	{ label: 'Publicacoes', href: '/blog/' },
+	{ label: post.area, href: '/blog/#areas-editoriais' },
+	{ label: post.title },
+];
+
+const articleSchema = {
+	'@context': 'https://schema.org',
+	'@type': 'Article',
+	headline: post.title,
+	description: post.description,
+	image: post.image ? [post.image.startsWith('http') ? post.image : `${BLOG_SITE_URL}${post.image}`] : undefined,
+	author: {
+		'@type': 'Person',
+		name: post.authorName,
+	},
+	publisher: {
+		'@type': 'Organization',
+		name: 'PAVIE Advocacia',
+	},
+	datePublished: post.publishedAt?.toISOString(),
+	dateModified: (post.updatedAt ?? post.publishedAt)?.toISOString(),
+	mainEntityOfPage: post.canonicalUrl,
+};
+---
+
+<BaseLayout
+	title={`${post.title} | PAVIE`}
+	description={post.description}
+	canonical={post.canonicalUrl}
+	image={post.image}
+	type="article"
+	noIndex={noIndex}
+	publishedTime={post.publishedAt}
+	modifiedTime={post.updatedAt}
+>
+	<div class="container reading-page">
+		<Breadcrumbs items={breadcrumbs} />
+		<ReadingHero post={post} />
+
+		<div class="reading-shell">
+			<ReadingSidebar post={post} toc={toc} related={related} />
+
+			<article class="reading-content" aria-labelledby="reading-hero-title">
+				<AudioPlayer
+					audioStatus={post.audioStatus}
+					audioUrl={post.audioUrl}
+					transcriptUrl={post.transcriptUrl}
+				/>
+				{post.updatedAt && post.updateStatus && (
+					<p class="text-muted">
+						Atualizacao editorial: {post.updateStatus}
+					</p>
+				)}
+				<div class="article-content">
+					<slot />
+				</div>
+				<div class="reading-footer">
+					<AuthorCard post={post} />
+					<section class="reading-panel" aria-label="Chamada final">
+						<h3>Precisa de orientacao aplicada ao seu caso?</h3>
+						<p class="text-muted">{post.cta.description}</p>
+						<a class="btn btn-primary" href={post.cta.href}>
+							{post.cta.label}
+						</a>
+					</section>
+					<RelatedPosts posts={related} />
+				</div>
+			</article>
+		</div>
+	</div>
+
+	<script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
+</BaseLayout>

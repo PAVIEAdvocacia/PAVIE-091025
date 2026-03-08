@@ -1,0 +1,31 @@
+---
+interface Props {
+	totalPosts: number;
+	areas: string[];
+}
+
+const { totalPosts, areas } = Astro.props;
+---
+
+<section class="blog-hero" aria-labelledby="blog-hero-title">
+	<div class="blog-hero__content">
+		<span class="badge">Hub Editorial PAVIE</span>
+		<h1 id="blog-hero-title">Publicacoes juridicas para decisoes de alto impacto.</h1>
+		<p>
+			Analises de sucessoes, familia e patrimonio com leitura longa, estrutura
+			tecnica e encaminhamento institucional etico.
+		</p>
+		<div class="meta-list" aria-label="Informacoes do acervo">
+			<span><span class="meta-dot" aria-hidden="true"></span>{totalPosts} artigos no acervo</span>
+			<span><span class="meta-dot" aria-hidden="true"></span>Atualizacao editorial continua</span>
+			<span><span class="meta-dot" aria-hidden="true"></span>Base para conteudo derivado</span>
+		</div>
+		<div class="blog-hero__chips">
+			{areas.slice(0, 5).map((area) => (
+				<a class="blog-chip" href="#areas-editoriais">
+					{area}
+				</a>
+			))}
+		</div>
+	</div>
+</section>

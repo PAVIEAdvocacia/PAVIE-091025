@@ -1,29 +1,43 @@
----
+﻿---
 import BaseLayout from '../layouts/BaseLayout.astro';
+
+const title = 'O Escritorio | PAVIE';
+const description =
+	'PAVIE Advocacia e sociedade unipessoal com atuacao estrategica em familia, sucessoes e patrimonio.';
 ---
 
-<BaseLayout title="Sobre" description="Seu Consultor Jurídico de Bolso">
-	<div class="py-16 max-w-3xl mx-auto px-4">
-		<h1 class="text-4xl md:text-5xl font-serif font-bold text-slate-900 mb-8">
-            Seu Consultor Jurídico de Bolso.
-        </h1>
-        
-		<div class="prose prose-slate prose-lg text-slate-600 leading-relaxed">
-			<p class="lead text-xl text-slate-800 font-medium mb-6">
-				Acreditamos que o Direito não precisa ser complicado. Na <strong>PAVIE Advocacia</strong>, traduzimos a lei em estratégia para você.
+<BaseLayout title={title} description={description} canonical="https://blog.pavieadvocacia.com.br/about/">
+	<div class="container-md" style="padding-top: 2rem; display: grid; gap: 1rem;">
+		<span class="badge">PAVIE Advocacia</span>
+		<h1 style="font-size: clamp(2rem, 1.5rem + 1.8vw, 3rem);">
+			Arquitetura juridica para proteger familia, patrimonio e legado.
+		</h1>
+		<p style="font-size: 1.06rem; color: var(--text-muted); max-width: 66ch;">
+			A PAVIE atua com linguagem clara, processo documentado e foco em confianca institucional.
+			No blog, cada artigo e tratado como ativo editorial: rastreavel, atualizado e conectado com
+			a jornada real do cliente.
+		</p>
+
+		<section class="surface-card" style="padding: 1.2rem; display: grid; gap: 0.7rem;">
+			<h2 style="font-size: 1.6rem;">Como trabalhamos</h2>
+			<ul style="padding-left: 1.2rem; display: grid; gap: 0.45rem;">
+				<li>Diagnostico juridico com foco em risco, prazo e decisao pratica.</li>
+				<li>Plano de acao documentado com comunicacao objetiva.</li>
+				<li>Integracao entre site institucional, blog e fluxos de atendimento.</li>
+				<li>Revisao editorial continua para manter confiabilidade publica.</li>
+			</ul>
+		</section>
+
+		<section class="surface-card" style="padding: 1.2rem; display: grid; gap: 0.8rem;">
+			<h2 style="font-size: 1.6rem;">Contato e proximos passos</h2>
+			<p style="color: var(--text-muted);">
+				Para casos concretos, a orientacao e feita com analise individual e proposta formal,
+				em conformidade com as normas eticas da advocacia.
 			</p>
-            <p>
-                Este blog foi desenhado com um propósito único: ser sua fonte ágil de consulta para problemas reais. Aqui você não encontrará "juridiquês" desnecessário, mas sim guias práticos sobre:
-            </p>
-            <ul class="list-disc pl-5 space-y-2 my-6">
-                <li><strong>Direitos do Consumidor:</strong> Voos atrasados, problemas bancários e compras;</li>
-                <li><strong>Família & Sucessões:</strong> Divórcios, pensões e a nova Reforma Tributária;</li>
-                <li><strong>Direito Internacional:</strong> Soluções para brasileiros no exterior.</li>
-            </ul>
-            <hr class="my-8 border-slate-200"/>
-            <p>
-                Leu algo e ficou com dúvida? Nossa equipe atua de forma digital e presencial. O botão de WhatsApp no topo da página é sua linha direta conosco.
-            </p>
-		</div>
+			<div style="display: flex; flex-wrap: wrap; gap: 0.6rem;">
+				<a class="btn btn-primary" href="https://pavieadvocacia.com.br/#agendar">Agendar consultoria</a>
+				<a class="btn btn-ghost" href="/blog/">Voltar para publicacoes</a>
+			</div>
+		</section>
 	</div>
 </BaseLayout>

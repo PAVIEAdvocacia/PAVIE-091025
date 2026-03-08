@@ -1,70 +1,18 @@
+﻿---
+import type { BlogPost } from '../lib/posts';
+import type { TocItem } from '../lib/toc';
+import ReadingLayout from './ReadingLayout.astro';
+
+interface Props {
+	post: BlogPost;
+	toc?: TocItem[];
+	related?: BlogPost[];
+	noIndex?: boolean;
+}
+
+const { post, toc = [], related = [], noIndex = false } = Astro.props;
 ---
-import BaseLayout from './BaseLayout.astro';
 
-// Extrai as props corretamente para evitar o erro de build
-const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
----
-
-<BaseLayout title={title} description={description}>
-  
-  <div class="max-w-6xl mx-auto px-4 py-12 grid grid-cols-1 lg:grid-cols-12 gap-12">
-    
-    <article class="lg:col-span-8">
-      
-      <header class="mb-10">
-        <span class="text-amber-600 font-bold text-xs uppercase tracking-widest mb-2 block">
-            Artigo Jurídico
-        </span>
-        <h1 class="text-4xl md:text-5xl font-serif font-bold text-slate-900 leading-tight mb-6">
-          {title}
-        </h1>
-        {description && <p class="text-xl text-slate-500 font-light italic border-l-4 border-amber-500 pl-4">{description}</p>}
-        
-        <div class="mt-6 flex items-center text-sm text-slate-400 font-bold uppercase">
-            {pubDate && <time>{new Date(pubDate).toLocaleDateString('pt-BR', { dateStyle: 'long' })}</time>}
-        </div>
-
-        {heroImage && (
-            <div class="mt-8 rounded-lg overflow-hidden shadow-sm">
-                <img src={heroImage} alt="" class="w-full object-cover" />
-            </div>
-        )}
-      </header>
-
-      <div class="prose prose-slate prose-lg max-w-none prose-headings:font-serif prose-a:text-amber-600 hover:prose-a:text-amber-700">
-        <slot />
-      </div>
-
-      <div class="mt-16 bg-slate-50 border border-slate-200 p-8 rounded-lg text-center">
-        <h3 class="font-serif text-2xl font-bold text-slate-900 mb-2">Precisa de análise específica?</h3>
-        <p class="text-slate-600 mb-6">Este artigo é informativo. Para aplicar ao seu caso, agende uma conversa.</p>
-        <a href="https://wa.me/5521SEUNUMERO" class="btn-action inline-block">
-            Falar com Especialista
-        </a>
-      </div>
-    </article>
-
-    <aside class="lg:col-span-4 space-y-8">
-        
-        <div class="bg-white border border-slate-200 p-6 rounded-lg shadow-sm sticky top-28">
-            <h3 class="font-serif font-bold text-slate-900 text-lg mb-4 border-b pb-2">Sobre o Escritório</h3>
-            <p class="text-slate-600 text-sm mb-4 leading-relaxed">
-                A <strong>PAVIE Advocacia</strong> oferece soluções jurídicas modernas para famílias, patrimônio e negócios. Foco em resolução ágil e segurança.
-            </p>
-            <a href="/about" class="text-amber-600 font-bold text-sm hover:underline">Ler perfil completo &rarr;</a>
-        </div>
-
-        <div class="bg-slate-50 p-6 rounded-lg">
-            <h3 class="font-serif font-bold text-slate-900 text-lg mb-4">Tópicos Frequentes</h3>
-            <ul class="space-y-2 text-sm text-slate-600">
-                <li><a href="#" class="hover:text-amber-600 block py-1 border-b border-slate-200">Planejamento Sucessório</a></li>
-                <li><a href="#" class="hover:text-amber-600 block py-1 border-b border-slate-200">Divórcio & Família</a></li>
-                <li><a href="#" class="hover:text-amber-600 block py-1 border-b border-slate-200">Direito Internacional</a></li>
-                <li><a href="#" class="hover:text-amber-600 block py-1">Consumidor & Aéreo</a></li>
-            </ul>
-        </div>
-
-    </aside>
-
-  </div>
-</BaseLayout>
+<ReadingLayout post={post} toc={toc} related={related} noIndex={noIndex}>
+	<slot />
+</ReadingLayout>

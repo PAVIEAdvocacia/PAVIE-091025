@@ -1,94 +1,61 @@
----
-// Arquivo: src/layouts/BaseLayout.astro
+﻿---
+import BaseHead from '../components/BaseHead.astro';
+import SiteFooter from '../components/site/Footer.astro';
+import SiteHeader from '../components/site/Header.astro';
+import { BLOG_SITE_URL, DEFAULT_OG_IMAGE, SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 import '../styles/global.css';
-const { title, description } = Astro.props;
+
+interface Props {
+	title?: string;
+	description?: string;
+	canonical?: string;
+	image?: string;
+	type?: 'website' | 'article';
+	noIndex?: boolean;
+	publishedTime?: Date;
+	modifiedTime?: Date;
+	hideHeader?: boolean;
+	hideFooter?: boolean;
+}
+
+const {
+	title = SITE_TITLE,
+	description = SITE_DESCRIPTION,
+	canonical,
+	image = DEFAULT_OG_IMAGE,
+	type = 'website',
+	noIndex = false,
+	publishedTime,
+	modifiedTime,
+	hideHeader = false,
+	hideFooter = false,
+} = Astro.props;
+
+const canonicalUrl = canonical || new URL(Astro.url.pathname, Astro.site ?? BLOG_SITE_URL).toString();
 ---
 
-<html lang="pt-br">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="generator" content={Astro.generator} />
-    <meta name="description" content={description || "PAVIE Advocacia - Inteligência Jurídica"} />
-    <title>{title} | PAVIE Advocacia</title>
-    
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
-    
-    <style>
-      :root {
-        --pavie-blue: #0f172a; /* Azul Escuro Institucional */
-        --pavie-gold: #d97706; /* Dourado/Laranja de Ação */
-      }
-      body { font-family: 'Lato', sans-serif; color: #334155; }
-      h1, h2, h3, h4 { font-family: 'Playfair Display', serif; color: var(--pavie-blue); }
-      .btn-action {
-        background-color: var(--pavie-gold);
-        color: white;
-        padding: 0.75rem 1.5rem;
-        border-radius: 4px;
-        font-weight: bold;
-        text-decoration: none;
-        transition: opacity 0.2s;
-      }
-      .btn-action:hover { opacity: 0.9; }
-    </style>
-  </head>
-  
-  <body class="bg-slate-50 flex flex-col min-h-screen">
-    
-    <header class="bg-white border-b border-slate-200 sticky top-0 z-50">
-      <div class="max-w-6xl mx-auto px-4 h-24 flex items-center justify-between">
-        <a href="/" class="text-3xl font-serif font-bold tracking-tight text-slate-900 no-underline">
-          PAVIE <span class="text-amber-600">|</span> <span class="text-slate-600 text-xl">Blog</span>
-        </a>
-        
-        <div class="flex items-center gap-8">
-          <nav class="hidden md:flex space-x-6 text-sm font-bold uppercase tracking-wide text-slate-600">
-            <a href="/" class="hover:text-blue-900 no-underline transition">Artigos</a>
-            <a href="/about" class="hover:text-blue-900 no-underline transition">O Advogado</a>
-            <a href="https://pavieadvocacia.com.br" class="text-blue-900 hover:text-amber-600 no-underline transition">Voltar ao Site</a>
-          </nav>
-
-          <a href="https://wa.me/5521SEUNUMERO" class="btn-action shadow-md">
-            Consulta Diagnóstica
-          </a>
-        </div>
-      </div>
-    </header>
-
-    <main class="flex-grow">
-      <slot />
-    </main>
-
-    <footer class="bg-slate-900 text-white py-12 mt-16">
-      <div class="max-w-6xl mx-auto px-4 grid md:grid-cols-3 gap-8">
-        <div>
-          <h3 class="text-xl font-serif mb-4 text-amber-500">PAVIE Advocacia</h3>
-          <p class="text-slate-400 text-sm leading-relaxed">
-            Clareza e segurança jurídica. Transformamos ansiedade em confiança informada através de atuação digital e estratégica.
-          </p>
-        </div>
-        <div>
-          <h4 class="font-bold uppercase text-xs tracking-widest mb-4 text-slate-500">Áreas de Foco</h4>
-          <ul class="text-sm space-y-2 text-slate-300">
-            <li>Família & Sucessões</li>
-            <li>Direito Internacional</li>
-            <li>Proteção Patrimonial</li>
-          </ul>
-        </div>
-        <div>
-          <h4 class="font-bold uppercase text-xs tracking-widest mb-4 text-slate-500">Contato</h4>
-          <p class="text-sm text-slate-300">Rio de Janeiro - RJ (Atuação Digital)</p>
-          <p class="text-sm text-slate-300">contato@pavieadvocacia.com.br</p>
-        </div>
-      </div>
-      <div class="max-w-6xl mx-auto px-4 mt-12 pt-8 border-t border-slate-800 text-center text-xs text-slate-600">
-        &copy; 2026 PAVIE Advocacia. Todos os direitos reservados.
-      </div>
-    </footer>
-
-  </body>
+<!doctype html>
+<html lang="pt-BR">
+	<head>
+		<BaseHead
+			title={title}
+			description={description}
+			canonical={canonicalUrl}
+			image={image}
+			type={type}
+			noIndex={noIndex}
+			publishedTime={publishedTime}
+			modifiedTime={modifiedTime}
+		/>
+	</head>
+	<body>
+		<a class="skip-link" href="#main-content">Pular para o conteudo principal</a>
+		<div class="site-shell">
+			{!hideHeader && <SiteHeader currentPath={Astro.url.pathname} />}
+			<main id="main-content" class="site-main">
+				<slot />
+			</main>
+			{!hideFooter && <SiteFooter />}
+		</div>
+	</body>
 </html>

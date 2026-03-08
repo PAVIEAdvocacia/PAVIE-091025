@@ -1,0 +1,20 @@
+---
+import type { BlogPost } from '../../lib/posts';
+import ReadingMeta from './ReadingMeta.astro';
+
+interface Props {
+	post: BlogPost;
+}
+
+const { post } = Astro.props;
+---
+
+<header class="reading-hero" aria-labelledby="reading-hero-title">
+	{post.image && <img src={post.image} alt={post.imageAlt} loading="eager" />}
+	<div class="reading-hero__inner">
+		<span class="badge">{post.area}</span>
+		<h1 id="reading-hero-title" class="reading-hero__title">{post.title}</h1>
+		<ReadingMeta post={post} />
+		<p class="reading-hero__description">{post.description}</p>
+	</div>
+</header>

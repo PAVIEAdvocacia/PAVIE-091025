@@ -1,0 +1,27 @@
+---
+import type { BlogPost } from '../../lib/posts';
+
+interface Props {
+	posts: BlogPost[];
+}
+
+const { posts } = Astro.props;
+---
+
+<section class="reading-panel" aria-labelledby="deep-read-title">
+	<h3 id="deep-read-title">Aprofunde a leitura</h3>
+	<div class="deep-read">
+		{posts.length > 0 ? (
+			posts.map((post) => (
+				<article>
+					<h4>
+						<a href={post.url}>{post.title}</a>
+					</h4>
+					<p>Leitura: {post.readingTime} min</p>
+				</article>
+			))
+		) : (
+			<p class="text-muted">Novas recomendacoes serao adicionadas em breve.</p>
+		)}
+	</div>
+</section>

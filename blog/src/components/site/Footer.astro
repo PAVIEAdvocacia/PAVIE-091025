@@ -1,0 +1,118 @@
+---
+import { MAIN_SITE_URL } from '../../consts';
+---
+
+<footer class="site-footer" role="contentinfo">
+	<div class="container site-footer__grid">
+		<section>
+			<h2>PAVIE</h2>
+			<p>
+				Excelencia juridica em sucessoes, familia e patrimonio com orientacao clara,
+				estrutura de dados e atendimento responsavel.
+			</p>
+		</section>
+
+		<section>
+			<h3>Areas de Atuacao</h3>
+			<ul>
+				<li><a href={`${MAIN_SITE_URL}/#servicos`}>Inventario e Partilha</a></li>
+				<li><a href={`${MAIN_SITE_URL}/#servicos`}>Planejamento Sucessorio</a></li>
+				<li><a href={`${MAIN_SITE_URL}/#servicos`}>Holding Familiar</a></li>
+				<li><a href={`${MAIN_SITE_URL}/#servicos`}>Direito Imobiliario</a></li>
+			</ul>
+		</section>
+
+		<section>
+			<h3>Publicacoes</h3>
+			<ul>
+				<li><a href="/blog/">Artigos Juridicos</a></li>
+				<li><a href="/blog/">Guias Essenciais</a></li>
+				<li><a href={`${MAIN_SITE_URL}/privacidade/privacidade.html`}>Politica de Privacidade</a></li>
+				<li><a href={`${MAIN_SITE_URL}/termos/termos.html`}>Termos de Servico</a></li>
+			</ul>
+		</section>
+
+		<section>
+			<h3>Contato</h3>
+			<ul>
+				<li><a href="tel:+5521964382263">+55 (21) 96438-2263</a></li>
+				<li><a href="mailto:contato@pavieadvocacia.com.br">contato@pavieadvocacia.com.br</a></li>
+				<li>Av. Ataulfo de Paiva, 1235 - Leblon, RJ</li>
+				<li>Seg-Sex: 8h-18h · Sab: 8h-12h</li>
+			</ul>
+		</section>
+	</div>
+
+	<div class="container site-footer__bottom">
+		<p>OAB/RJ 134.947 · CNPJ 61.489.144/0001-48</p>
+		<p>Conteudo informativo. Cada caso exige analise tecnica individual.</p>
+		<p>&copy; 2026 PAVIE Advocacia. Todos os direitos reservados.</p>
+	</div>
+</footer>
+
+<style>
+	.site-footer {
+		margin-top: 3.2rem;
+		padding: 2.5rem 0 1.8rem;
+		background:
+			radial-gradient(circle at 90% 10%, rgba(143, 164, 167, 0.18), transparent 38%),
+			linear-gradient(150deg, rgba(37, 40, 43, 0.98), rgba(31, 34, 38, 0.98));
+		color: var(--text-contrast);
+		border-top: 1px solid rgba(143, 164, 167, 0.22);
+	}
+
+	.site-footer a {
+		color: color-mix(in srgb, var(--text-contrast) 88%, var(--color-soft));
+		text-decoration-color: rgba(204, 176, 147, 0.35);
+	}
+
+	.site-footer h2,
+	.site-footer h3 {
+		color: color-mix(in srgb, var(--color-sand) 72%, white);
+		font-size: 1.05rem;
+		margin-bottom: 0.7rem;
+	}
+
+	.site-footer__grid {
+		display: grid;
+		gap: 1.25rem;
+		grid-template-columns: repeat(4, minmax(0, 1fr));
+	}
+
+	.site-footer p,
+	.site-footer li {
+		font-size: 0.9rem;
+		color: color-mix(in srgb, var(--text-contrast) 82%, var(--color-soft));
+	}
+
+	.site-footer ul {
+		list-style: none;
+		display: grid;
+		gap: 0.45rem;
+	}
+
+	.site-footer__bottom {
+		margin-top: 1.7rem;
+		padding-top: 1rem;
+		border-top: 1px solid rgba(143, 164, 167, 0.22);
+		display: grid;
+		gap: 0.35rem;
+		text-align: center;
+	}
+
+	@media (max-width: 900px) {
+		.site-footer__grid {
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+		}
+	}
+
+	@media (max-width: 640px) {
+		.site-footer__grid {
+			grid-template-columns: 1fr;
+		}
+
+		.site-footer {
+			padding-top: 2rem;
+		}
+	}
+</style>

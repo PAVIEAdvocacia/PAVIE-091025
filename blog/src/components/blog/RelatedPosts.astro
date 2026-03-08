@@ -1,0 +1,26 @@
+---
+import type { BlogPost } from '../../lib/posts';
+
+interface Props {
+	posts: BlogPost[];
+	title?: string;
+}
+
+const { posts, title = 'Leituras relacionadas' } = Astro.props;
+---
+
+<section class="reading-footer related-posts" aria-labelledby="related-posts-title">
+	<h3 id="related-posts-title">{title}</h3>
+	{posts.length > 0 ? (
+		posts.map((post) => (
+			<article>
+				<h4>
+					<a href={post.url}>{post.title}</a>
+				</h4>
+				<p>{post.excerpt}</p>
+			</article>
+		))
+	) : (
+		<p class="text-muted">Sem artigos relacionados no momento.</p>
+	)}
+</section>

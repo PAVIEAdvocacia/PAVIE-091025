@@ -1,0 +1,21 @@
+---
+import type { BlogPost } from '../../lib/posts';
+import type { TocItem } from '../../lib/toc';
+import DeepReadBox from './DeepReadBox.astro';
+import ReadingCTA from './ReadingCTA.astro';
+import ReadingTOC from './ReadingTOC.astro';
+
+interface Props {
+	post: BlogPost;
+	toc: TocItem[];
+	related: BlogPost[];
+}
+
+const { post, toc, related } = Astro.props;
+---
+
+<aside class="reading-sidebar" aria-label="Recursos de leitura">
+	<ReadingTOC items={toc} />
+	<ReadingCTA cta={post.cta} />
+	<DeepReadBox posts={related} />
+</aside>

@@ -1,0 +1,17 @@
+---
+import type { BlogPost } from '../../lib/posts';
+
+interface Props {
+	post: BlogPost;
+}
+
+const { post } = Astro.props;
+---
+
+<section class="author-card" aria-label="Informacoes do autor">
+	<div class="author-card__avatar" aria-hidden="true"></div>
+	<div>
+		<h3>Escrito por {post.authorName}</h3>
+		<p>{post.authorRole}</p>
+	</div>
+</section>

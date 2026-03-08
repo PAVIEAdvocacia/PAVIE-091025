@@ -1,0 +1,184 @@
+---
+import { MAIN_SITE_URL } from '../../consts';
+
+interface Props {
+	currentPath?: string;
+}
+
+const { currentPath = '/' } = Astro.props;
+
+const navItems = [
+	{ href: `${MAIN_SITE_URL}/#servicos`, label: 'Areas de Atuacao', external: true },
+	{ href: `${MAIN_SITE_URL}/#sobre`, label: 'O Escritorio', external: true },
+	{ href: '/blog/', label: 'Publicacoes', external: false },
+];
+
+function isActive(href: string): boolean {
+	if (href.startsWith('http')) return false;
+	return currentPath === href || currentPath.startsWith(`${href.replace(/\/$/, '')}/`);
+}
+---
+
+<header class="site-header" role="banner">
+	<div class="site-header__bar container">
+		<a class="site-header__brand" href={MAIN_SITE_URL} aria-label="PAVIE Advocacia, site principal">
+			<span aria-hidden="true">⚖</span>
+			<strong>PAVIE</strong>
+			<small>Advocacia</small>
+		</a>
+
+		<nav class="site-nav" aria-label="Navegacao principal">
+			{navItems.map((item) => (
+				<a
+					href={item.href}
+					class:list={['site-nav__link', { 'is-active': isActive(item.href) }]}
+					target={item.external ? '_self' : undefined}
+				>
+					{item.label}
+				</a>
+			))}
+		</nav>
+
+		<a class="btn btn-primary site-header__cta" href={`${MAIN_SITE_URL}/#agendar`}>
+			Consultoria Online
+		</a>
+
+		<details class="site-mobile-nav">
+			<summary aria-label="Abrir menu de navegacao">Menu</summary>
+			<div class="site-mobile-nav__panel" role="menu">
+				{navItems.map((item) => (
+					<a href={item.href} role="menuitem">
+						{item.label}
+					</a>
+				))}
+				<a href={`${MAIN_SITE_URL}/#agendar`} role="menuitem">
+					Consultoria Online
+				</a>
+			</div>
+		</details>
+	</div>
+</header>
+
+<style>
+	.site-header {
+		background: color-mix(in srgb, var(--surface-card) 95%, var(--surface-page));
+		border-bottom: 1px solid var(--color-line);
+		position: sticky;
+		top: 0;
+		z-index: 50;
+		backdrop-filter: blur(6px);
+	}
+
+	.site-header__bar {
+		min-height: 72px;
+		display: grid;
+		grid-template-columns: auto 1fr auto;
+		align-items: center;
+		gap: 1rem;
+	}
+
+	.site-header__brand {
+		display: inline-flex;
+		align-items: baseline;
+		gap: 0.5rem;
+		text-decoration: none;
+		color: var(--color-graphite);
+	}
+
+	.site-header__brand strong {
+		font-family: var(--font-serif);
+		font-size: 1.25rem;
+	}
+
+	.site-header__brand small {
+		font-size: 0.88rem;
+		text-transform: uppercase;
+		letter-spacing: 0.08em;
+		color: color-mix(in srgb, var(--color-petrol) 52%, white);
+	}
+
+	.site-nav {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		gap: 1.1rem;
+	}
+
+	.site-nav__link {
+		text-decoration: none;
+		font-size: 0.88rem;
+		font-weight: 700;
+		letter-spacing: 0.06em;
+		text-transform: uppercase;
+		color: color-mix(in srgb, var(--color-graphite) 78%, var(--color-mist));
+		padding: 0.3rem 0.2rem;
+	}
+
+	.site-nav__link.is-active {
+		color: var(--color-petrol);
+		text-decoration: underline;
+		text-decoration-color: color-mix(in srgb, var(--color-sand) 72%, white);
+	}
+
+	.site-header__cta {
+		font-size: 0.86rem;
+		padding-inline: 0.95rem;
+	}
+
+	.site-mobile-nav {
+		display: none;
+		position: relative;
+	}
+
+	.site-mobile-nav summary {
+		list-style: none;
+		font-weight: 700;
+		font-size: 0.9rem;
+		cursor: pointer;
+	}
+
+	.site-mobile-nav summary::-webkit-details-marker {
+		display: none;
+	}
+
+	.site-mobile-nav__panel {
+		position: absolute;
+		top: 2rem;
+		right: 0;
+		display: grid;
+		gap: 0.25rem;
+		padding: 0.75rem;
+		min-width: 220px;
+		background: var(--surface-card);
+		border: 1px solid var(--color-line);
+		border-radius: var(--radius-sm);
+		box-shadow: var(--shadow-soft);
+	}
+
+	.site-mobile-nav__panel a {
+		padding: 0.4rem 0.45rem;
+		border-radius: var(--radius-xs);
+		text-decoration: none;
+		font-size: 0.92rem;
+	}
+
+	.site-mobile-nav__panel a:hover,
+	.site-mobile-nav__panel a:focus-visible {
+		background: color-mix(in srgb, var(--color-soft) 78%, white);
+	}
+
+	@media (max-width: 960px) {
+		.site-header__bar {
+			grid-template-columns: 1fr auto;
+		}
+
+		.site-nav,
+		.site-header__cta {
+			display: none;
+		}
+
+		.site-mobile-nav {
+			display: inline-block;
+		}
+	}
+</style>
