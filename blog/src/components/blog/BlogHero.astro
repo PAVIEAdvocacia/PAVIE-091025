@@ -1,4 +1,6 @@
 ---
+import { areaHref } from '../../lib/taxonomy';
+
 interface Props {
 	totalPosts: number;
 	areas: string[];
@@ -22,7 +24,7 @@ const { totalPosts, areas } = Astro.props;
 		</div>
 		<div class="blog-hero__chips">
 			{areas.slice(0, 5).map((area) => (
-				<a class="blog-chip" href="#areas-editoriais">
+				<a class="blog-chip" href={areaHref(area)}>
 					{area}
 				</a>
 			))}

@@ -1,0 +1,74 @@
+---
+import { getCollection } from 'astro:content';
+import BlogGrid from '../../../components/blog/BlogGrid.astro';
+import BlogLayout from '../../../layouts/BlogLayout.astro';
+import { isPublicPost, normalizePost, sortPostsByDate } from '../../../lib/posts';
+import { areaLabel, normalizeAreaKey, temaHref } from '../../../lib/taxonomy';
+
+export async function getStaticPaths() {
+	const entries = await getCollection('blog');
+	const posts = sortPostsByDate(entries.map((entry) => normalizePost(entry))).filter(isPublicPost);
+	const keys = new Set(posts.map((post) => normalizeAreaKey(post.areaKey || post.area)));
+	return [...keys].map((key) => ({ params: { area: key } }));
+}
+
+const entries = await getCollection('blog');
+const allPosts = sortPostsByDate(entries.map((entry) => normalizePost(entry))).filter(isPublicPost);
+const areaKey = normalizeAreaKey(Astro.params.area ?? '');
+const areaPosts = allPosts.filter((post) => normalizeAreaKey(post.areaKey || post.area) === areaKey);
+
+if (areaPosts.length === 0) {
+	throw new Error(`Area sem publicacoes: ${areaKey}`);
+}
+
+const topTemas = Array.from(
+	new Map(
+		areaPosts
+			.flatMap((post) => post.temas)
+			.map((tema) => [tema.toLowerCase(), tema]),
+	).values(),
+).slice(0, 10);
+
+const title = `${areaLabel(areaKey)} | Publicacoes`;
+---
+
+<BlogLayout
+	title={title}
+	description={`Trilha editorial da PAVIE para ${areaLabel(areaKey)}.`}
+	canonical={`https://blog.pavieadvocacia.com.br/blog/areas/${areaKey}/`}
+>
+	<div class="container blog-home">
+		<section class="blog-grid" aria-label={title}>
+			<div class="section-title">
+				<div>
+					<span class="section-kicker">Trilha editorial</span>
+					<h1>{areaLabel(areaKey)}</h1>
+				</div>
+			</div>
+			<p class="text-muted">
+				{areaPosts.length} publicacoes disponiveis nesta area.
+			</p>
+		</section>
+
+		{topTemas.length > 0 && (
+			<section class="blog-grid" aria-label="Temas da area">
+				<div class="section-title">
+					<div>
+						<span class="section-kicker">Temas relacionados</span>
+						<h2>Explorar por tema</h2>
+					</div>
+				</div>
+				<div class="theme-chip-list">
+					{topTemas.map((tema) => (
+						<a class="blog-chip blog-chip--theme" href={temaHref(tema)}>
+							{tema}
+						</a>
+					))}
+				</div>
+			</section>
+		)}
+
+		<BlogGrid title="Publicacoes da area" kicker="Leitura por especialidade" posts={areaPosts} />
+	</div>
+</BlogLayout>
+

@@ -1,0 +1,49 @@
+---
+import { getCollection } from 'astro:content';
+import BlogLayout from '../../../layouts/BlogLayout.astro';
+import { isPublicPost, normalizePost, sortPostsByDate } from '../../../lib/posts';
+import { temaHref, temaLabel, normalizeTemaKey } from '../../../lib/taxonomy';
+
+const entries = await getCollection('blog');
+const posts = sortPostsByDate(entries.map((entry) => normalizePost(entry))).filter(isPublicPost);
+
+const temaMap = new Map<string, { key: string; label: string; count: number }>();
+for (const post of posts) {
+	for (const tema of post.temas) {
+		const key = normalizeTemaKey(tema);
+		const item = temaMap.get(key);
+		if (item) {
+			item.count += 1;
+			continue;
+		}
+		temaMap.set(key, { key, label: temaLabel(tema), count: 1 });
+	}
+}
+
+const temas = [...temaMap.values()].sort((a, b) => b.count - a.count);
+---
+
+<BlogLayout
+	title="Temas do Blog | PAVIE"
+	description="Acesse o acervo por tema juridico no blog da PAVIE."
+	canonical="https://blog.pavieadvocacia.com.br/blog/temas/"
+>
+	<div class="container blog-home">
+		<section class="blog-grid" aria-label="Temas editoriais">
+			<div class="section-title">
+				<div>
+					<span class="section-kicker">Mapa de temas</span>
+					<h1>Temas do blog</h1>
+				</div>
+			</div>
+			<div class="theme-chip-list">
+				{temas.map((tema) => (
+					<a class="blog-chip blog-chip--theme" href={temaHref(tema.key)}>
+						{tema.label} ({tema.count})
+					</a>
+				))}
+			</div>
+		</section>
+	</div>
+</BlogLayout>
+

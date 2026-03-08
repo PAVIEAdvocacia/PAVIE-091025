@@ -10,6 +10,7 @@ import ReadingSidebar from '../components/blog/ReadingSidebar.astro';
 import RelatedPosts from '../components/blog/RelatedPosts.astro';
 import BaseLayout from './BaseLayout.astro';
 import { BLOG_SITE_URL } from '../consts';
+import { areaHref } from '../lib/taxonomy';
 
 interface Props {
 	post: BlogPost;
@@ -23,7 +24,7 @@ const { post, toc, related, noIndex = false } = Astro.props;
 const breadcrumbs = [
 	{ label: 'Inicio', href: '/' },
 	{ label: 'Publicacoes', href: '/blog/' },
-	{ label: post.area, href: '/blog/#areas-editoriais' },
+	{ label: post.area, href: areaHref(post.areaKey || post.area) },
 	{ label: post.title },
 ];
 

@@ -5,6 +5,7 @@ import BlogHero from '../../components/blog/BlogHero.astro';
 import FeaturedPost from '../../components/blog/FeaturedPost.astro';
 import BlogLayout from '../../layouts/BlogLayout.astro';
 import { groupPostsByArea, isPublicPost, normalizePost, sortPostsByDate } from '../../lib/posts';
+import { areaHref, temaHref } from '../../lib/taxonomy';
 
 const entries = await getCollection('blog');
 const posts = sortPostsByDate(entries.map((entry) => normalizePost(entry))).filter(isPublicPost);
@@ -13,7 +14,12 @@ const highlights = posts.slice(1, 7);
 const groupedByArea = groupPostsByArea(posts).slice(0, 3);
 
 const guidePosts = posts
-	.filter((post) => post.contentType.toLowerCase().includes('guia') || post.intent === 'educativo')
+	.filter(
+		(post) =>
+			post.contentType.toLowerCase().includes('guia') ||
+			post.intent === 'aprofundar' ||
+			post.intent === 'informar',
+	)
 	.slice(0, 4);
 
 const successionPosts = posts
@@ -25,13 +31,19 @@ const successionPosts = posts
 	.slice(0, 4);
 
 const areaNames = groupedByArea.map((group) => group.area);
+const topThemes = Array.from(
+	new Map(
+		posts
+			.flatMap((post) => post.temas)
+			.map((tema) => [tema.toLowerCase(), tema]),
+	).values(),
+).slice(0, 8);
 ---
 
 <BlogLayout
 	title="Publicacoes juridicas da PAVIE"
 	description="Hub editorial institucional da PAVIE Advocacia para descoberta, aprofundamento e conversao etica."
 	canonical="https://blog.pavieadvocacia.com.br/"
-	noIndex
 >
 	<div class="container blog-home">
 		<BlogHero totalPosts={posts.length} areas={areaNames} />
@@ -56,11 +68,29 @@ const areaNames = groupedByArea.map((group) => group.area);
 						<p>
 							{group.posts.length} publicacoes disponiveis para consulta tecnica e aprofundamento.
 						</p>
-						<a href={group.posts[0]?.url}>Abrir trilha editorial</a>
+						<a href={areaHref(group.area)}>Abrir trilha editorial</a>
 					</article>
 				))}
 			</div>
 		</section>
+
+		{topThemes.length > 0 && (
+			<section class="blog-grid" aria-label="Temas em foco">
+				<div class="section-title">
+					<div>
+						<span class="section-kicker">Descoberta por tema</span>
+						<h2>Temas em foco</h2>
+					</div>
+				</div>
+				<div class="theme-chip-list">
+					{topThemes.map((tema) => (
+						<a class="blog-chip blog-chip--theme" href={temaHref(tema)}>
+							{tema}
+						</a>
+					))}
+				</div>
+			</section>
+		)}
 
 		{guidePosts.length > 0 && (
 			<BlogGrid title="Guias essenciais" kicker="Base de consulta" posts={guidePosts} compact />

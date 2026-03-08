@@ -6,6 +6,7 @@ import {
 	DEFAULT_CTA,
 	MAIN_SITE_URL,
 } from '../consts';
+import { areaLabel, normalizeAreaKey, normalizeTemaKey } from './taxonomy';
 
 export type RawPostEntry = CollectionEntry<'blog'>;
 
@@ -25,7 +26,9 @@ export interface BlogPost {
 	description: string;
 	excerpt: string;
 	area: string;
+	areaKey: string;
 	temas: string[];
+	temaKeys: string[];
 	tags: string[];
 	contentType: string;
 	intent: string;
@@ -65,6 +68,26 @@ const CTA_BY_VARIANT: Record<string, CtaConfig> = {
 		label: 'Ver Publicacoes Relacionadas',
 		href: '/blog/',
 		description: 'Continue estudando o tema com artigos da mesma trilha editorial.',
+	},
+	leitura_relacionada: {
+		label: 'Ver Publicacoes Relacionadas',
+		href: '/blog/',
+		description: 'Continue estudando o tema com artigos da mesma trilha editorial.',
+	},
+	checklist: {
+		label: 'Solicitar Checklist Aplicavel',
+		href: `${MAIN_SITE_URL}/#agendar`,
+		description: 'Receba um roteiro inicial para organizar sua proxima decisao juridica.',
+	},
+	contato: {
+		label: 'Falar com a PAVIE',
+		href: `${MAIN_SITE_URL}/#agendar`,
+		description: 'Entre em contato para avaliar o melhor caminho para o seu caso.',
+	},
+	calculadora: {
+		label: 'Agendar Simulacao Juridica',
+		href: `${MAIN_SITE_URL}/#agendar`,
+		description: 'Solicite uma simulacao orientada para apoiar sua tomada de decisao.',
 	},
 	institucional: {
 		label: 'Conhecer Areas de Atuacao',
@@ -190,6 +213,8 @@ function resolvePublishedStatus(rawValue: string): string {
 	if (!value) return 'published';
 	if (['published', 'publicado', 'active'].includes(value)) return 'published';
 	if (['draft', 'rascunho'].includes(value)) return 'draft';
+	if (['review', 'revisao'].includes(value)) return 'review';
+	if (['scheduled', 'agendado'].includes(value)) return 'scheduled';
 	if (['archived', 'arquivado'].includes(value)) return 'archived';
 	return value;
 }
@@ -199,7 +224,7 @@ export function postRoute(slug: string): string {
 }
 
 export function isPublicPost(post: BlogPost): boolean {
-	return post.publishStatus !== 'draft' && post.publishStatus !== 'archived';
+	return post.publishStatus === 'published';
 }
 
 export function normalizePost(entry: RawPostEntry): BlogPost {
@@ -211,6 +236,8 @@ export function normalizePost(entry: RawPostEntry): BlogPost {
 	const slug = routeSlug.replace(/^\/+|\/+$/g, '');
 	const slugKey = normalizeSlug(slug || entry.id);
 	const area = cleanString(data.area) || inferArea(title, description);
+	const areaKey = normalizeAreaKey(area);
+	const areaDisplay = areaLabel(area);
 	const temas = cleanList(data.tema);
 	const tags = cleanList(data.tags);
 	const contentType = cleanString(data.content_type) || 'artigo';
@@ -232,6 +259,8 @@ export function normalizePost(entry: RawPostEntry): BlogPost {
 	const audioStatus: BlogPost['audioStatus'] =
 		rawAudioStatus === 'published'
 			? 'published'
+			: rawAudioStatus === 'available'
+				? 'published'
 			: rawAudioStatus === 'planned'
 				? 'planned'
 				: 'none';
@@ -245,6 +274,7 @@ export function normalizePost(entry: RawPostEntry): BlogPost {
 	const canonicalUrl = canonicalInput || `${BLOG_SITE_URL}${postRoute(slug)}`;
 	const traceRef = cleanString(data.trace_ref) || undefined;
 	const derivedTemas = temas.length > 0 ? temas : inferTemas(title, description);
+	const temaKeys = derivedTemas.map((item) => normalizeTemaKey(item));
 	const allTags = tags.length > 0 ? tags : [...derivedTemas];
 
 	return {
@@ -256,8 +286,10 @@ export function normalizePost(entry: RawPostEntry): BlogPost {
 		title,
 		description,
 		excerpt,
-		area,
+		area: areaDisplay,
+		areaKey,
 		temas: derivedTemas,
+		temaKeys,
 		tags: allTags,
 		contentType,
 		intent,
@@ -292,15 +324,15 @@ export function sortPostsByDate(posts: BlogPost[]): BlogPost[] {
 }
 
 export function groupPostsByArea(posts: BlogPost[]): Array<{ area: string; posts: BlogPost[] }> {
-	const bucket = new Map<string, BlogPost[]>();
+	const bucket = new Map<string, { area: string; posts: BlogPost[] }>();
 	for (const post of posts) {
-		const area = post.area || AREA_FALLBACK;
-		const list = bucket.get(area) ?? [];
-		list.push(post);
-		bucket.set(area, list);
+		const areaKey = post.areaKey || normalizeAreaKey(post.area || AREA_FALLBACK);
+		const group = bucket.get(areaKey) ?? { area: post.area || areaLabel(areaKey), posts: [] };
+		group.posts.push(post);
+		bucket.set(areaKey, group);
 	}
-	return [...bucket.entries()]
-		.map(([area, areaPosts]) => ({ area, posts: sortPostsByDate(areaPosts) }))
+	return [...bucket.values()]
+		.map((group) => ({ area: group.area, posts: sortPostsByDate(group.posts) }))
 		.sort((a, b) => b.posts.length - a.posts.length);
 }
 

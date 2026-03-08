@@ -67,6 +67,18 @@
 	color: white;
 }
 
+.theme-chip-list {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.6rem;
+}
+
+.blog-chip--theme {
+	background: var(--surface-card);
+	color: var(--color-petrol);
+	border-color: color-mix(in srgb, var(--color-petrol) 24%, var(--color-line));
+}
+
 .featured-post {
 	display: grid;
 	grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);

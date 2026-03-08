@@ -6,67 +6,78 @@
 site_url: "https://blog.pavieadvocacia.com.br"
 locale: "pt"
 
-media_folder: "blog/public/uploads"
+media_folder: "public/uploads"
 public_folder: "/uploads"
 
 collections:
   - name: "blog"
     label: "Publicacoes do Blog"
     label_singular: "Publicacao"
-    folder: "blog/src/content/blog"
+    folder: "src/content/blog"
     create: true
     slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
     editor:
       preview: true
     fields:
       - { label: "Titulo", name: "title", widget: "string" }
+      - { label: "ID editorial", name: "editorial_item_id", widget: "string", required: true, hint: "Ex.: PAVIE-BLOG-20260308-001" }
       -
           label: "Slug canonico"
           name: "slug"
           widget: "string"
-          required: false
-          hint: "Opcional. Se vazio, sera usado o nome do arquivo."
-      - { label: "Descricao", name: "description", widget: "text" }
+          required: true
+          hint: "URL amigavel. Ex.: inventario-extrajudicial-2026"
+      - { label: "Descricao", name: "description", widget: "text", required: true }
       - { label: "Resumo", name: "excerpt", widget: "text", required: false }
       -
           label: "Area"
           name: "area"
           widget: "select"
-          required: false
+          required: true
           options:
-            - "Planejamento Sucessorio"
-            - "Familia e Patrimonio"
-            - "Direito Imobiliario"
-            - "Direito e Patrimonio"
-      - { label: "Tema", name: "tema", widget: "list", required: false, default: [] }
+            - { label: "Sucessoes", value: "sucessoes" }
+            - { label: "Familia", value: "familia" }
+            - { label: "Imobiliario", value: "imobiliario" }
+            - { label: "Internacional", value: "internacional" }
+            - { label: "Contratos", value: "contratos" }
+            - { label: "Cobranca", value: "cobranca" }
+            - { label: "Consumidor", value: "consumidor" }
+            - { label: "Compliance", value: "compliance" }
+            - { label: "Empresarial", value: "empresarial" }
+      - { label: "Tema", name: "tema", widget: "list", required: true, default: [] }
       -
           label: "Tipo de conteudo"
           name: "content_type"
           widget: "select"
-          required: false
-          default: "artigo"
-          options: ["artigo", "guia", "analise", "faq"]
+          required: true
+          options:
+            - "guia"
+            - "explicativo"
+            - "checklist"
+            - "comparativo"
+            - "faq"
+            - "atualizacao"
+            - "caso_pratico"
+            - "alerta"
+            - "glossario"
+            - "pagina_pilar"
       -
           label: "Intencao"
           name: "intent"
           widget: "select"
-          required: false
-          default: "informativo"
-          options: ["informativo", "educativo", "diagnostico", "decisao"]
+          required: true
+          options: ["informar", "diagnosticar", "comparar", "aprofundar", "converter", "atualizar"]
       -
           label: "Estagio do funil"
           name: "funnel_stage"
           widget: "select"
-          required: false
-          default: "consideracao"
-          options: ["descoberta", "consideracao", "decisao", "fidelizacao"]
-      - { label: "Referencia do autor", name: "author_ref", widget: "string", required: false, default: "dr-fabio-pavie" }
+          required: true
+          options: ["topo", "meio", "fundo"]
+      - { label: "Referencia do autor", name: "author_ref", widget: "string", required: true, default: "fabio-pavie" }
       - { label: "Nome do autor", name: "author_name", widget: "string", required: false, default: "Dr. Fabio Pavie" }
-      - { label: "Data de publicacao (legado)", name: "pubDate", widget: "datetime", required: false }
-      - { label: "Publicado em", name: "published_at", widget: "datetime", required: false }
-      - { label: "Atualizado em (legado)", name: "updatedDate", widget: "datetime", required: false }
+      - { label: "Publicado em", name: "published_at", widget: "datetime", required: true }
       - { label: "Atualizado em", name: "updated_at", widget: "datetime", required: false }
-      - { label: "Imagem de capa (legado)", name: "heroImage", widget: "image", required: false }
+      - { label: "Status de atualizacao", name: "update_status", widget: "select", required: false, options: ["current", "review_needed", "time_sensitive", "legacy"] }
       - { label: "Imagem de capa", name: "featured_image", widget: "image", required: false }
       - { label: "Texto alternativo da imagem", name: "featured_image_alt", widget: "string", required: false }
       - { label: "Tempo de leitura (min)", name: "reading_time", widget: "number", required: false, value_type: "int", min: 1 }
@@ -76,8 +87,9 @@ collections:
           widget: "select"
           required: false
           default: "none"
-          options: ["none", "planned", "published"]
+          options: ["none", "planned", "available", "legacy"]
       - { label: "URL do audio", name: "audio_url", widget: "string", required: false }
+      - { label: "Duracao do audio", name: "audio_duration", widget: "string", required: false }
       - { label: "URL da transcricao", name: "transcript_url", widget: "string", required: false }
       -
           label: "Variante de CTA"
@@ -85,17 +97,22 @@ collections:
           widget: "select"
           required: false
           default: "consultoria"
-          options: ["consultoria", "diagnostico", "aprofundamento", "institucional"]
+          options: ["consultoria", "checklist", "leitura_relacionada", "calculadora", "contato", "diagnostico"]
       - { label: "Relacionados manuais", name: "related_manual", widget: "list", required: false, default: [] }
       - { label: "Tags", name: "tags", widget: "list", required: false, default: [] }
       -
           label: "Status de publicacao"
           name: "publish_status"
           widget: "select"
-          required: false
-          default: "published"
-          options: ["published", "draft", "archived"]
-      - { label: "Status de atualizacao", name: "update_status", widget: "string", required: false }
+          required: true
+          default: "draft"
+          options: ["draft", "review", "scheduled", "published", "archived"]
       - { label: "Canonical URL", name: "canonical_url", widget: "string", required: false }
-      - { label: "TRACE ref", name: "trace_ref", widget: "string", required: false }
+      - { label: "Escopo de jurisdicao", name: "jurisdiction_scope", widget: "string", required: false }
+      - { label: "FAQ habilitado", name: "faq_enabled", widget: "boolean", required: false, default: false }
+      - { label: "Variante de disclaimer", name: "disclaimer_variant", widget: "string", required: false }
+      - { label: "Referencia de serie", name: "series_ref", widget: "string", required: false }
+      - { label: "Gancho para Instagram", name: "instagram_hook", widget: "text", required: false }
+      - { label: "Hint de intencao de lead", name: "lead_intent_hint", widget: "string", required: false }
+      - { label: "TRACE ref", name: "trace_ref", widget: "string", required: true }
       - { label: "Conteudo", name: "body", widget: "markdown" }

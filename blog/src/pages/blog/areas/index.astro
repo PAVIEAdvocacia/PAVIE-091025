@@ -1,0 +1,55 @@
+---
+import { getCollection } from 'astro:content';
+import BlogLayout from '../../../layouts/BlogLayout.astro';
+import { isPublicPost, normalizePost, sortPostsByDate } from '../../../lib/posts';
+import { areaHref, areaLabel, normalizeAreaKey } from '../../../lib/taxonomy';
+
+const entries = await getCollection('blog');
+const posts = sortPostsByDate(entries.map((entry) => normalizePost(entry))).filter(isPublicPost);
+
+const areaMap = new Map<string, { key: string; label: string; count: number; latestUrl: string }>();
+for (const post of posts) {
+	const key = normalizeAreaKey(post.areaKey || post.area);
+	const current = areaMap.get(key);
+	if (current) {
+		current.count += 1;
+		continue;
+	}
+	areaMap.set(key, {
+		key,
+		label: areaLabel(key),
+		count: 1,
+		latestUrl: post.url,
+	});
+}
+
+const areas = [...areaMap.values()].sort((a, b) => b.count - a.count);
+---
+
+<BlogLayout
+	title="Areas editoriais | PAVIE"
+	description="Navegue pelas trilhas editoriais do blog da PAVIE por area juridica."
+	canonical="https://blog.pavieadvocacia.com.br/blog/areas/"
+>
+	<div class="container blog-home">
+		<section class="blog-grid" aria-label="Areas editoriais">
+			<div class="section-title">
+				<div>
+					<span class="section-kicker">Mapa do blog</span>
+					<h1>Areas editoriais</h1>
+				</div>
+			</div>
+			<div class="blog-row">
+				{areas.map((area) => (
+					<article class="blog-row__item">
+						<h2>{area.label}</h2>
+						<p>{area.count} publicacoes nesta trilha.</p>
+						<a href={areaHref(area.key)}>Abrir area</a>
+						<p><a href={area.latestUrl}>Ler publicacao mais recente</a></p>
+					</article>
+				))}
+			</div>
+		</section>
+	</div>
+</BlogLayout>
+

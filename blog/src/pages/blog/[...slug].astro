@@ -12,6 +12,7 @@ export async function getStaticPaths() {
 
 	for (const entry of entries) {
 		const post = normalizePost(entry);
+		if (!isPublicPost(post)) continue;
 		const primarySlug = post.slug;
 		if (!seen.has(primarySlug)) {
 			paths.push({

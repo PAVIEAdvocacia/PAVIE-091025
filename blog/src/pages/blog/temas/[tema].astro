@@ -1,0 +1,48 @@
+---
+import { getCollection } from 'astro:content';
+import BlogGrid from '../../../components/blog/BlogGrid.astro';
+import BlogLayout from '../../../layouts/BlogLayout.astro';
+import { isPublicPost, normalizePost, sortPostsByDate } from '../../../lib/posts';
+import { normalizeTemaKey, temaLabel } from '../../../lib/taxonomy';
+
+export async function getStaticPaths() {
+	const entries = await getCollection('blog');
+	const posts = sortPostsByDate(entries.map((entry) => normalizePost(entry))).filter(isPublicPost);
+	const keys = new Set(posts.flatMap((post) => post.temaKeys.map((tema) => normalizeTemaKey(tema))));
+	return [...keys].map((tema) => ({ params: { tema } }));
+}
+
+const entries = await getCollection('blog');
+const allPosts = sortPostsByDate(entries.map((entry) => normalizePost(entry))).filter(isPublicPost);
+const temaKey = normalizeTemaKey(Astro.params.tema ?? '');
+const temaPosts = allPosts.filter((post) =>
+	post.temaKeys.some((tema) => normalizeTemaKey(tema) === temaKey),
+);
+
+if (temaPosts.length === 0) {
+	throw new Error(`Tema sem publicacoes: ${temaKey}`);
+}
+
+const pageTitle = `${temaLabel(temaKey)} | Tema`;
+---
+
+<BlogLayout
+	title={pageTitle}
+	description={`Publicacoes da PAVIE sobre ${temaLabel(temaKey)}.`}
+	canonical={`https://blog.pavieadvocacia.com.br/blog/temas/${temaKey}/`}
+>
+	<div class="container blog-home">
+		<section class="blog-grid" aria-label={pageTitle}>
+			<div class="section-title">
+				<div>
+					<span class="section-kicker">Tema editorial</span>
+					<h1>{temaLabel(temaKey)}</h1>
+				</div>
+			</div>
+			<p class="text-muted">{temaPosts.length} publicacoes relacionadas.</p>
+		</section>
+
+		<BlogGrid title="Publicacoes por tema" kicker="Aprofundamento" posts={temaPosts} />
+	</div>
+</BlogLayout>
+
