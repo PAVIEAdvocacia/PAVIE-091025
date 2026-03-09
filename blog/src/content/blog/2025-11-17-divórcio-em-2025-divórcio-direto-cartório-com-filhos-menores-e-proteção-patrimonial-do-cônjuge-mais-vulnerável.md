@@ -2,7 +2,7 @@
 title: "Doação: como se preparar para cuidar de uma criança"
 description: Em 2025, quando faz sentido ir ao cartório, quando o Judiciário
   ainda é necessário, e como proteger economicamente o cônjuge mais vulnerável?
-area: Direito Imobiliario
+area: Planejamento Sucessorio
 pubDate: 2026-03-09T00:59:00.000-03:00
 published_at: 2026-03-09T00:59:00.000-03:00
 updatedDate: 2026-03-09T00:59:00.000-03:00
