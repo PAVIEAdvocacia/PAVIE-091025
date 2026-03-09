@@ -1,10 +1,18 @@
-﻿---
+---
+import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { MAIN_SITE_URL } from '../consts';
+import { buildHubDirectory } from '../lib/service-hubs';
+import { isPublicPost, normalizePost, sortPostsByDate } from '../lib/posts';
 import '../styles/site-home.css';
 
 const title = 'PAVIE Advocacia | Clareza Jurídica para Decisões Importantes';
 const description =
 	'Orientação jurídica clara para família, patrimônio, sucessões, imóveis e contratos, com condução técnica responsável e conversão ética.';
+
+const entries = await getCollection('blog');
+const posts = sortPostsByDate(entries.map((entry) => normalizePost(entry))).filter(isPublicPost);
+const hubDirectory = buildHubDirectory(posts);
 
 const faq = [
 	{
@@ -24,8 +32,8 @@ const faq = [
 		a: 'Os honorários são definidos após análise técnica da situação, escopo, complexidade e necessidade de acompanhamento. A proposta é formal, clara e compatível com as normas da OAB.',
 	},
 	{
-		q: 'Posso enviar documentos antes da reunião?',
-		a: 'Sim. O envio prévio ajuda na triagem e torna a conversa mais objetiva. Você recebe orientação sobre quais documentos são relevantes para o seu contexto.',
+		q: 'Como os serviços e conteúdos são organizados?',
+		a: 'A navegação segue taxonomia por áreas e temas. Cada hub jurídico conecta escopo institucional, trilha editorial e critérios de atendimento para facilitar compreensão e tomada de decisão.',
 	},
 ];
 
@@ -46,7 +54,7 @@ const localBusinessSchema = {
 	'@context': 'https://schema.org',
 	'@type': 'LegalService',
 	name: 'PAVIE Advocacia',
-	url: 'https://blog.pavieadvocacia.com.br/',
+	url: `${MAIN_SITE_URL}/`,
 	email: 'contato@pavieadvocacia.com.br',
 	telephone: '+55 21 96438-2263',
 	address: {
@@ -60,26 +68,26 @@ const localBusinessSchema = {
 };
 ---
 
-<BaseLayout title={title} description={description} canonical="https://blog.pavieadvocacia.com.br/">
+<BaseLayout title={title} description={description} canonical={`${MAIN_SITE_URL}/`}>
 	<div class="container site-home">
-		<section class="site-hero" aria-labelledby="hero-title">
+		<section class="site-hero surface-card" aria-labelledby="hero-title">
 			<div>
 				<span class="badge">PAVIE Advocacia · OAB/RJ 134.947</span>
-				<h1 id="hero-title">Advocacia civil com clareza para decisões que afetam família, patrimônio e negócios.</h1>
+				<h1 id="hero-title">Segurança jurídica para decisões que impactam família, patrimônio e negócios.</h1>
 				<p>
-					Se você chegou com dúvida, risco ou pressão de prazo, este é o lugar para organizar o cenário,
-					entender caminhos possíveis e conduzir sua situação com segurança jurídica e sobriedade.
+					A condução começa com clareza: entender sua situação, mapear riscos e definir o caminho
+					adequado com linguagem objetiva e responsabilidade técnica.
 				</p>
 				<div class="site-hero__cta">
 					<a class="btn btn-primary" href="/contato/">Solicitar orientação inicial</a>
-					<a class="btn btn-ghost" href="/areas/">Ver áreas de atuação</a>
+					<a class="btn btn-ghost" href="/areas/">Ver hubs de serviços</a>
 				</div>
 			</div>
 			<ul class="trust-list" aria-label="Sinais de confiança">
-				<li>Atuação centrada em situações reais, não em linguagem genérica.</li>
-				<li>Análise técnica com comunicação objetiva e acessível.</li>
-				<li>Condução ética, sem promessa de resultado.</li>
-				<li>Integração com conteúdo jurídico educativo no blog.</li>
+				<li>Atendimento orientado por contexto real e não por linguagem genérica.</li>
+				<li>Integração entre atuação institucional e trilhas editoriais do blog.</li>
+				<li>Escopo claro, comunicação objetiva e postura ética na condução.</li>
+				<li>Taxonomia de áreas e temas para facilitar navegação e continuidade.</li>
 			</ul>
 		</section>
 
@@ -87,7 +95,7 @@ const localBusinessSchema = {
 			<div class="section-title">
 				<div>
 					<span class="section-kicker">Reconhecimento de cenário</span>
-					<h2 id="situacoes-title">Situações em que a orientação jurídica faz diferença</h2>
+					<h2 id="situacoes-title">Situações em que a orientação jurídica reduz risco e ansiedade</h2>
 				</div>
 			</div>
 			<div class="situation-grid">
@@ -104,40 +112,50 @@ const localBusinessSchema = {
 					<p>Regularização, compra e venda, cláusulas críticas e riscos contratuais que pedem leitura técnica prévia.</p>
 				</article>
 				<article class="surface-card">
-					<h3>Responsabilidade e cobrança</h3>
+					<h3>Cobrança e responsabilidade</h3>
 					<p>Demandas cíveis com impacto financeiro que exigem estratégia, evidência e condução consistente.</p>
 				</article>
 			</div>
 		</section>
 
-		<section id="areas" class="site-section" aria-labelledby="areas-title">
+		<section id="servicos" class="site-section" aria-labelledby="servicos-title">
 			<div class="section-title">
 				<div>
-					<span class="section-kicker">Campos de solução</span>
-					<h2 id="areas-title">Áreas priorizadas da atuação</h2>
+					<span class="section-kicker">Serviços por taxonomia</span>
+					<h2 id="servicos-title">Hubs jurídicos para organização de atuação e conteúdo</h2>
 				</div>
-				<a class="btn btn-ghost" href="/areas/">Explorar todas as áreas</a>
+				<a class="btn btn-ghost" href="/areas/">Abrir mapa completo</a>
 			</div>
-			<div class="service-grid">
-				<article class="surface-card">
-					<h3>Família e Sucessões</h3>
-					<p>Questões familiares e patrimoniais com impacto imediato e duradouro.</p>
-					<a href="/blog/areas/familia/">Ver conteúdos relacionados</a>
-				</article>
-				<article class="surface-card">
-					<h3>Planejamento Patrimonial</h3>
-					<p>Organização jurídica para proteger patrimônio e reduzir risco futuro.</p>
-					<a href="/blog/temas/partilha/">Aprofundar no blog</a>
-				</article>
-				<article class="surface-card">
-					<h3>Contratos e Negócios</h3>
-					<p>Estruturação de contratos com clareza de responsabilidade, prazo e segurança.</p>
-					<a href="/contato/">Solicitar análise</a>
-				</article>
+			<div class="hub-grid">
+				{hubDirectory.map((hub) => (
+					<article class="surface-card hub-card">
+						<h3>{hub.title}</h3>
+						<p>{hub.summary}</p>
+						<ul>
+							{hub.scopes.slice(0, 3).map((scope) => (
+								<li>{scope}</li>
+							))}
+						</ul>
+						<div class="hub-tag-list" aria-label={`Temas do hub ${hub.title}`}>
+							{hub.themes.map((theme) => (
+								<a class:list={['hub-tag', { 'is-muted': !theme.available }]} href={theme.href}>
+									{theme.label}
+								</a>
+							))}
+						</div>
+						<div class="hub-card__meta">
+							<span>{hub.postCount} conteúdos no blog</span>
+							<a href={hub.areaUrl}>Abrir hub</a>
+						</div>
+					</article>
+				))}
 			</div>
+			<p class="governance-note">
+				A mesma taxonomia (áreas + temas) organiza serviços, páginas institucionais, trilhas do blog e operação editorial no CMS.
+			</p>
 		</section>
 
-		<section class="site-section" aria-labelledby="atendimento-title">
+		<section id="como-funciona" class="site-section" aria-labelledby="atendimento-title">
 			<div class="section-title">
 				<div>
 					<span class="section-kicker">Fluxo de atendimento</span>
@@ -153,7 +171,7 @@ const localBusinessSchema = {
 			</ol>
 		</section>
 
-		<section class="site-section split" aria-labelledby="transparencia-title">
+		<section id="honorarios" class="site-section split" aria-labelledby="transparencia-title">
 			<article class="surface-card">
 				<span class="section-kicker">Transparência</span>
 				<h2 id="transparencia-title">Honorários e critérios de contratação</h2>
@@ -174,7 +192,7 @@ const localBusinessSchema = {
 			</article>
 		</section>
 
-		<section class="site-section" aria-labelledby="faq-title">
+		<section id="faq" class="site-section" aria-labelledby="faq-title">
 			<div class="section-title">
 				<div>
 					<span class="section-kicker">Perguntas frequentes</span>
@@ -191,7 +209,7 @@ const localBusinessSchema = {
 			</div>
 		</section>
 
-		<section id="contato" class="site-contact" aria-labelledby="contato-title">
+		<section id="contato" class="site-contact surface-card" aria-labelledby="contato-title">
 			<span class="section-kicker">Contato</span>
 			<h2 id="contato-title">Conte sua situação com clareza. O primeiro passo é organizar o cenário.</h2>
 			<p>

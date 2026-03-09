@@ -6,12 +6,12 @@ interface Props {
 const { currentPath = '/' } = Astro.props;
 
 const navItems = [
-	{ href: '/areas/', label: 'Areas de Atuacao', external: false },
-	{ href: '/sobre/', label: 'Sobre', external: false },
-	{ href: '/blog/', label: 'Publicacoes', external: false },
-	{ href: '/blog/areas/', label: 'Areas do Blog', external: false },
-	{ href: '/blog/temas/', label: 'Temas', external: false },
-	{ href: '/contato/', label: 'Contato', external: false },
+	{ href: '/areas/', label: 'Servicos' },
+	{ href: '/blog/areas/', label: 'Hubs' },
+	{ href: '/blog/temas/', label: 'Temas' },
+	{ href: '/sobre/', label: 'Sobre' },
+	{ href: '/blog/', label: 'Publicacoes' },
+	{ href: '/contato/', label: 'Contato' },
 ];
 
 function isActive(href: string): boolean {
@@ -33,7 +33,6 @@ function isActive(href: string): boolean {
 				<a
 					href={item.href}
 					class:list={['site-nav__link', { 'is-active': isActive(item.href) }]}
-					target={item.external ? '_self' : undefined}
 				>
 					{item.label}
 				</a>

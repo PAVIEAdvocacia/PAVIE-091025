@@ -87,8 +87,6 @@ const breadcrumbSchema = {
 		<div class="reading-progress" aria-hidden="true"><span data-reading-progress></span></div>
 
 		<div class="reading-shell">
-			<ReadingSidebar post={post} toc={toc} related={related} />
-
 			<article class="reading-content" aria-labelledby="reading-hero-title">
 				<section class="reading-summary" aria-label="Resumo do artigo">
 					<h2>Resumo prático</h2>
@@ -137,6 +135,8 @@ const breadcrumbSchema = {
 					<RelatedPosts posts={related} />
 				</div>
 			</article>
+
+			<ReadingSidebar post={post} toc={toc} related={related} />
 		</div>
 	</div>
 

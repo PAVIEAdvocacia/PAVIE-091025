@@ -1,11 +1,12 @@
 ﻿---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { MAIN_SITE_URL } from '../consts';
 
 const title = 'Sobre | PAVIE';
 const description = 'Página de transição para o perfil institucional da PAVIE Advocacia.';
 ---
 
-<BaseLayout title={title} description={description} canonical="https://blog.pavieadvocacia.com.br/sobre/" noIndex>
+<BaseLayout title={title} description={description} canonical={`${MAIN_SITE_URL}/sobre/`} noIndex>
 	<div class="container-md" style="padding-top: 2rem; display: grid; gap: 1rem;">
 		<span class="badge">Atualização de rota</span>
 		<h1 style="font-size: clamp(1.8rem, 1.2rem + 1.6vw, 2.5rem);">Esta página foi reorganizada.</h1>

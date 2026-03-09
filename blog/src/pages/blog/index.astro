@@ -4,14 +4,17 @@ import BlogGrid from '../../components/blog/BlogGrid.astro';
 import BlogHero from '../../components/blog/BlogHero.astro';
 import FeaturedPost from '../../components/blog/FeaturedPost.astro';
 import BlogLayout from '../../layouts/BlogLayout.astro';
+import { buildHubDirectory } from '../../lib/service-hubs';
 import { groupPostsByArea, isPublicPost, normalizePost, sortPostsByDate } from '../../lib/posts';
-import { areaHref, temaHref } from '../../lib/taxonomy';
+import { temaHref } from '../../lib/taxonomy';
 
 const entries = await getCollection('blog');
 const posts = sortPostsByDate(entries.map((entry) => normalizePost(entry))).filter(isPublicPost);
 const featured = posts[0];
 const latestPosts = posts.slice(1, 7);
 const groupedByArea = groupPostsByArea(posts).slice(0, 4);
+const hubDirectory = buildHubDirectory(posts);
+const activeHubs = hubDirectory.filter((hub) => hub.postCount > 0);
 
 const practicalPosts = posts
 	.filter((post) => post.intent === 'diagnosticar' || post.intent === 'comparar' || post.funnelStage === 'fundo')
@@ -41,20 +44,30 @@ const topThemes = Array.from(
 
 		{featured && <FeaturedPost post={featured} />}
 
-		<section id="areas-editoriais" class="blog-grid" aria-label="Trilhas por situação">
+		<section id="hubs-editoriais" class="blog-grid" aria-label="Hubs editoriais">
 			<div class="section-title">
 				<div>
-					<span class="section-kicker">Comece por situação</span>
-					<h2>Trilhas para dúvidas recorrentes</h2>
+					<span class="section-kicker">Taxonomia ativa</span>
+					<h2>Hubs jurídicos para organizar leitura e decisão</h2>
 				</div>
-				<a class="btn btn-ghost" href="/blog/areas/">Ver todas as áreas</a>
+				<a class="btn btn-ghost" href="/blog/areas/">Ver mapa de áreas</a>
 			</div>
-			<div class="blog-row">
-				{groupedByArea.map((group) => (
-					<article class="blog-row__item">
-						<h3>{group.area}</h3>
-						<p>{group.posts.length} publicações para leitura técnica e orientação inicial.</p>
-						<a href={areaHref(group.area)}>Abrir trilha editorial</a>
+			<div class="hub-grid">
+				{activeHubs.map((hub) => (
+					<article class="surface-card hub-card">
+						<h3>{hub.title}</h3>
+						<p>{hub.summary}</p>
+						<div class="hub-tag-list">
+							{hub.themes.map((theme) => (
+								<a class:list={['hub-tag', { 'is-muted': !theme.available }]} href={theme.href}>
+									{theme.label}
+								</a>
+							))}
+						</div>
+						<div class="hub-card__meta">
+							<span>{hub.postCount} publicações</span>
+							<a href={hub.areaUrl}>Abrir hub</a>
+						</div>
 					</article>
 				))}
 			</div>

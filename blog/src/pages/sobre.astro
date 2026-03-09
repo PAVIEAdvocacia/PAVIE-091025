@@ -1,5 +1,6 @@
 ﻿---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { MAIN_SITE_URL } from '../consts';
 import '../styles/institutional-pages.css';
 
 const title = 'Sobre | PAVIE Advocacia';
@@ -7,7 +8,7 @@ const description =
 	'Perfil profissional e proposta de atuação da PAVIE Advocacia: clareza, rigor técnico e condução responsável de questões cíveis.';
 ---
 
-<BaseLayout title={title} description={description} canonical="https://blog.pavieadvocacia.com.br/sobre/">
+<BaseLayout title={title} description={description} canonical={`${MAIN_SITE_URL}/sobre/`}>
 	<div class="container-md institutional-page">
 		<span class="badge">Sobre o advogado</span>
 		<h1>

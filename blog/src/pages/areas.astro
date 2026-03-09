@@ -1,54 +1,53 @@
-﻿---
+---
+import { getCollection } from 'astro:content';
+import { MAIN_SITE_URL } from '../consts';
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { buildHubDirectory } from '../lib/service-hubs';
+import { isPublicPost, normalizePost, sortPostsByDate } from '../lib/posts';
 import '../styles/institutional-pages.css';
 
 const title = 'Áreas de Atuação | PAVIE Advocacia';
 const description =
-	'Campos de atuação da PAVIE organizados por situações reais, com foco em clareza, prevenção de risco e condução jurídica responsável.';
+	'Mapa institucional de serviços jurídicos da PAVIE, organizado por hubs de atuação, temas e trilhas editoriais.';
 
-const areas = [
-	{
-		title: 'Família e Sucessões',
-		text: 'Divórcio, guarda, alimentos, inventário, partilha e planejamento sucessório com foco em proteção patrimonial e segurança documental.',
-		blog: '/blog/areas/familia/',
-	},
-	{
-		title: 'Patrimônio e Imóveis',
-		text: 'Regularização, análise de risco em compra e venda, contratos imobiliários e organização jurídica de ativos.',
-		blog: '/blog/temas/partilha/',
-	},
-	{
-		title: 'Contratos e Negócios',
-		text: 'Estruturação de cláusulas, prevenção de conflito, negociação e suporte em obrigações civis e empresariais.',
-		blog: '/blog/',
-	},
-	{
-		title: 'Responsabilidade Civil e Consumidor',
-		text: 'Condução de demandas com análise de prova, risco financeiro e estratégia processual proporcional ao caso.',
-		blog: '/blog/',
-	},
-];
+const entries = await getCollection('blog');
+const posts = sortPostsByDate(entries.map((entry) => normalizePost(entry))).filter(isPublicPost);
+const hubDirectory = buildHubDirectory(posts);
 ---
 
-<BaseLayout title={title} description={description} canonical="https://blog.pavieadvocacia.com.br/areas/">
+<BaseLayout title={title} description={description} canonical={`${MAIN_SITE_URL}/areas/`}>
 	<div class="container-md institutional-page">
 		<span class="badge">Áreas de atuação</span>
-		<h1>
-			Atuação jurídica organizada por cenário real, não por generalismo.
-		</h1>
+		<h1>Serviços jurídicos organizados por hubs, com trilhas de conteúdo por área e tema.</h1>
 		<p class="institutional-page__lead">
-			Cada área abaixo foi estruturada para facilitar entendimento de escopo, reduzir ansiedade de quem procura ajuda
-			e orientar o próximo passo com clareza.
+			Esta estrutura mantém coerência entre atendimento, páginas institucionais e publicação editorial.
+			Cada hub abaixo conecta escopo jurídico, situações comuns e conteúdo de apoio no blog.
 		</p>
 
-		<div class="institutional-grid">
-			{areas.map((area) => (
-				<article class="surface-card institutional-card">
-					<h2>{area.title}</h2>
-					<p>{area.text}</p>
+		<div class="hub-grid">
+			{hubDirectory.map((hub) => (
+				<article class="surface-card hub-card">
+					<h2>{hub.title}</h2>
+					<p>{hub.summary}</p>
+					<ul class="institutional-list">
+						{hub.situations.map((situation) => (
+							<li>{situation}</li>
+						))}
+					</ul>
+					<div class="hub-tag-list">
+						{hub.themes.map((theme) => (
+							<a class:list={['hub-tag', { 'is-muted': !theme.available }]} href={theme.href}>
+								{theme.label}
+							</a>
+						))}
+					</div>
+					<div class="hub-card__meta">
+						<span>{hub.postCount} conteúdos publicados</span>
+						<a href={hub.areaUrl}>Abrir trilha da área</a>
+					</div>
 					<div class="institutional-actions">
 						<a class="btn btn-primary" href="/contato/">Solicitar orientação</a>
-						<a class="btn btn-ghost" href={area.blog}>Ver conteúdos no blog</a>
+						<a class="btn btn-ghost" href="/blog/temas/">Explorar temas</a>
 					</div>
 				</article>
 			))}

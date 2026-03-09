@@ -92,14 +92,14 @@
 
 .reading-shell {
 	display: grid;
-	grid-template-columns: minmax(0, 300px) minmax(0, 1fr);
+	grid-template-columns: minmax(0, 1fr) minmax(260px, 300px);
 	gap: clamp(1rem, 2vw, 2rem);
 	align-items: start;
 }
 
 .reading-sidebar {
 	position: sticky;
-	top: 1rem;
+	top: 92px;
 	display: grid;
 	gap: 0.9rem;
 }
@@ -396,11 +396,6 @@
 
 	.reading-sidebar {
 		position: static;
-		order: 2;
-	}
-
-	.reading-content {
-		order: 1;
 	}
 }
 
