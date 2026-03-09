@@ -10,6 +10,11 @@ export interface CtaConfig {
 	description: string;
 }
 
+export interface FaqItem {
+	question: string;
+	answer: string;
+}
+
 export interface BlogPost {
 	entry: RawPostEntry;
 	id: string;
@@ -21,6 +26,8 @@ export interface BlogPost {
 	excerpt: string;
 	area: string;
 	areaKey: string;
+	hub: string;
+	hubKey: string;
 	temas: string[];
 	temaKeys: string[];
 	tags: string[];
@@ -42,6 +49,7 @@ export interface BlogPost {
 	ctaVariant: string;
 	cta: CtaConfig;
 	relatedManual: string[];
+	faqItems: FaqItem[];
 	publishStatus: string;
 	updateStatus?: string;
 	canonicalUrl?: string;
@@ -49,6 +57,7 @@ export interface BlogPost {
 }
 
 const AREA_FALLBACK = 'Direito e Patrimonio';
+const HUB_FALLBACK = 'orientacao-juridica';
 const THEME_SPLIT_PATTERN = /[,;|]/;
 const WORDS_PER_MINUTE = 220;
 
@@ -106,6 +115,19 @@ function cleanList(value: unknown): string[] {
 			.filter(Boolean);
 	}
 	return [];
+}
+
+function cleanFaqItems(value: unknown): FaqItem[] {
+	if (!Array.isArray(value)) return [];
+	return value
+		.map((item) => {
+			if (!item || typeof item !== 'object') return undefined;
+			const maybeQuestion = cleanString((item as { question?: unknown }).question);
+			const maybeAnswer = cleanString((item as { answer?: unknown }).answer);
+			if (!maybeQuestion || !maybeAnswer) return undefined;
+			return { question: maybeQuestion, answer: maybeAnswer };
+		})
+		.filter((item): item is FaqItem => Boolean(item));
 }
 
 function parseDate(value: unknown): Date | undefined {
@@ -191,6 +213,33 @@ function inferTemas(title: string, description: string): string[] {
 	return temas;
 }
 
+function inferHub(areaKey: string, temas: string[]): string {
+	const tema = temas[0] || '';
+	if (tema) return tema;
+	switch (areaKey) {
+		case 'familia':
+			return 'divorcio-e-guarda';
+		case 'sucessoes':
+			return 'inventario-e-itcmd';
+		case 'imobiliario':
+			return 'compra-venda-imovel';
+		case 'contratos':
+			return 'revisao-contratual';
+		case 'consumidor':
+			return 'negativa-e-reparacao';
+		case 'empresarial':
+			return 'societario-e-governanca';
+		case 'compliance':
+			return 'lgpd-e-integridade';
+		case 'internacional':
+			return 'documentacao-internacional';
+		case 'cobranca':
+			return 'recuperacao-de-credito';
+		default:
+			return HUB_FALLBACK;
+	}
+}
+
 function ensureDescription(title: string, description: string): string {
 	if (description) return description;
 	return `Analise juridica da PAVIE sobre ${title.toLowerCase()}.`;
@@ -238,6 +287,7 @@ export function normalizePost(entry: RawPostEntry): BlogPost {
 	const areaKey = normalizeAreaKey(area);
 	const areaDisplay = areaLabel(area);
 	const temas = cleanList(data.tema);
+	const hub = cleanString(data.hub);
 	const tags = cleanList(data.tags);
 	const contentType = cleanString(data.content_type) || 'artigo';
 	const intent = cleanString(data.intent) || 'informativo';
@@ -268,12 +318,15 @@ export function normalizePost(entry: RawPostEntry): BlogPost {
 	const transcriptUrl = cleanString(data.transcript_url) || undefined;
 	const ctaVariant = cleanString(data.cta_variant).toLowerCase() || 'consultoria';
 	const relatedManual = cleanList(data.related_manual).map((item) => normalizeSlug(item));
+	const faqItems = cleanFaqItems(data.faq_items);
 	const publishStatus = resolvePublishedStatus(cleanString(data.publish_status));
 	const updateStatus = cleanString(data.update_status) || undefined;
 	const canonicalInput = cleanString(data.canonical_url);
 	const canonicalUrl = canonicalInput || `${BLOG_SITE_URL}${postRoute(slug)}`;
 	const traceRef = cleanString(data.trace_ref) || undefined;
 	const derivedTemas = temas.length > 0 ? temas : inferTemas(title, description);
+	const resolvedHub = hub || inferHub(areaKey, derivedTemas);
+	const hubKey = normalizeTemaKey(resolvedHub);
 	const temaKeys = derivedTemas.map((item) => normalizeTemaKey(item));
 	const allTags = tags.length > 0 ? tags : [...derivedTemas];
 
@@ -288,6 +341,8 @@ export function normalizePost(entry: RawPostEntry): BlogPost {
 		excerpt,
 		area: areaDisplay,
 		areaKey,
+		hub: resolvedHub,
+		hubKey,
 		temas: derivedTemas,
 		temaKeys,
 		tags: allTags,
@@ -309,6 +364,7 @@ export function normalizePost(entry: RawPostEntry): BlogPost {
 		ctaVariant,
 		cta: resolveCtaByVariant(ctaVariant),
 		relatedManual,
+		faqItems,
 		publishStatus,
 		updateStatus,
 		canonicalUrl,

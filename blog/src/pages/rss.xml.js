@@ -1,6 +1,6 @@
 import { getCollection } from 'astro:content';
 import rss from '@astrojs/rss';
-import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
+import { BLOG_SITE_URL, SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 import { isPublicPost, normalizePost, sortPostsByDate } from '../lib/posts';
 
 export async function GET(context) {
@@ -10,7 +10,7 @@ export async function GET(context) {
 	return rss({
 		title: SITE_TITLE,
 		description: SITE_DESCRIPTION,
-		site: context.site,
+		site: BLOG_SITE_URL,
 		items: posts.map((post) => ({
 			title: post.title,
 			description: post.description,

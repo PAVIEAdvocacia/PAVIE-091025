@@ -236,6 +236,24 @@
 	gap: 0.35rem;
 }
 
+.reading-summary .faq-list {
+	display: grid;
+	gap: 0.55rem;
+}
+
+.reading-summary details {
+	padding: 0.8rem 0.9rem;
+}
+
+.reading-summary summary {
+	cursor: pointer;
+	font-weight: 700;
+}
+
+.reading-summary details p {
+	margin-top: 0.55rem;
+}
+
 .reading-summary__tags {
 	display: flex;
 	flex-wrap: wrap;
@@ -354,6 +372,10 @@
 	color: var(--text-muted);
 }
 
+.mobile-reading-cta {
+	display: none;
+}
+
 .author-card {
 	display: flex;
 	gap: 0.8rem;
@@ -434,5 +456,18 @@
 	.reading-panel h2,
 	.reading-panel h3 {
 		font-size: 1.12rem;
+	}
+
+	.mobile-reading-cta {
+		display: block;
+		position: sticky;
+		bottom: 0.65rem;
+		z-index: 35;
+		padding: 0.2rem;
+	}
+
+	.mobile-reading-cta .btn {
+		width: 100%;
+		box-shadow: var(--shadow-lift);
 	}
 }

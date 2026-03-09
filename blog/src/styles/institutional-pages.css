@@ -28,6 +28,31 @@
 	color: var(--text-muted);
 }
 
+.institutional-profile {
+	padding: 1rem;
+	display: grid;
+	grid-template-columns: minmax(180px, 220px) minmax(0, 1fr);
+	gap: 1rem;
+	align-items: start;
+}
+
+.institutional-profile img {
+	width: 100%;
+	aspect-ratio: 3 / 4;
+	object-fit: cover;
+	border-radius: var(--radius-sm);
+	border: 1px solid var(--color-line);
+}
+
+.institutional-profile h2 {
+	font-size: 1.45rem;
+	margin: 0.25rem 0 0.35rem;
+}
+
+.institutional-profile p {
+	color: var(--text-muted);
+}
+
 .institutional-list {
 	padding-left: 1.1rem;
 	display: grid;
@@ -55,6 +80,14 @@
 }
 
 @media (max-width: 860px) {
+	.institutional-profile {
+		grid-template-columns: 1fr;
+	}
+
+	.institutional-profile img {
+		max-width: 320px;
+	}
+
 	.institutional-grid {
 		grid-template-columns: 1fr;
 	}

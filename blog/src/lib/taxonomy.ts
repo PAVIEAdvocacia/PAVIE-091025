@@ -1,13 +1,13 @@
 const AREA_CANONICAL_LABELS: Record<string, string> = {
-	sucessoes: 'Planejamento Sucessorio',
+	sucessoes: 'Sucessoes e Inventario',
 	familia: 'Familia e Patrimonio',
-	imobiliario: 'Direito Imobiliario',
-	internacional: 'Direito Internacional',
-	contratos: 'Contratos',
-	cobranca: 'Cobranca',
-	consumidor: 'Direito do Consumidor',
-	compliance: 'Compliance',
-	empresarial: 'Direito Empresarial',
+	imobiliario: 'Imobiliario e Regularizacao',
+	internacional: 'Familia Internacional',
+	contratos: 'Contratos e Negocios',
+	cobranca: 'Cobranca e Recuperacao de Credito',
+	consumidor: 'Consumidor e Responsabilidade',
+	compliance: 'Compliance e Integridade',
+	empresarial: 'Empresarial e Societario',
 };
 
 const AREA_ALIASES: Record<string, string> = {

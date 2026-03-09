@@ -106,6 +106,15 @@
 	color: var(--text-muted);
 }
 
+.site-about-photo {
+	width: min(100%, 360px);
+	aspect-ratio: 4 / 3;
+	object-fit: cover;
+	border-radius: var(--radius-sm);
+	border: 1px solid var(--color-line);
+	margin: 0.6rem 0;
+}
+
 .hub-card ul {
 	margin: 0.2rem 0 0;
 	padding-inline-start: 1.05rem;

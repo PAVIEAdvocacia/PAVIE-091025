@@ -69,6 +69,22 @@ const breadcrumbSchema = {
 		item: toAbsoluteUrl(item.href),
 	})),
 };
+
+const faqSchema =
+	post.faqItems.length > 0
+		? {
+				'@context': 'https://schema.org',
+				'@type': 'FAQPage',
+				mainEntity: post.faqItems.map((item) => ({
+					'@type': 'Question',
+					name: item.question,
+					acceptedAnswer: {
+						'@type': 'Answer',
+						text: item.answer,
+					},
+				})),
+			}
+		: undefined;
 ---
 
 <BaseLayout
@@ -117,6 +133,19 @@ const breadcrumbSchema = {
 				<div class="article-content">
 					<slot />
 				</div>
+				{post.faqItems.length > 0 && (
+					<section class="reading-summary" aria-label="Perguntas frequentes do artigo">
+						<h2>Perguntas frequentes</h2>
+						<div class="faq-list">
+							{post.faqItems.map((item) => (
+								<details class="surface-card">
+									<summary>{item.question}</summary>
+									<p>{item.answer}</p>
+								</details>
+							))}
+						</div>
+					</section>
+				)}
 				<div class="reading-footer">
 					<AuthorCard post={post} />
 					<section class="reading-panel" aria-label="Chamada final">
@@ -133,10 +162,15 @@ const breadcrumbSchema = {
 
 			<ReadingSidebar post={post} toc={toc} related={related} />
 		</div>
+
+		<div class="mobile-reading-cta" aria-label="Acao rapida no mobile">
+			<a class="btn btn-primary" href={post.cta.href}>{post.cta.label}</a>
+		</div>
 	</div>
 
 	<script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
 	<script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+	{faqSchema && <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />}
 	<script>
 		const progress = document.querySelector('[data-reading-progress]');
 		if (progress) {

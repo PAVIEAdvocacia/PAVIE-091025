@@ -1,7 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import BlogGrid from '../../../components/blog/BlogGrid.astro';
-import { MAIN_SITE_URL } from '../../../consts';
+import { BLOG_SITE_URL } from '../../../consts';
 import BlogLayout from '../../../layouts/BlogLayout.astro';
 import { isPublicPost, normalizePost, sortPostsByDate } from '../../../lib/posts';
 import { normalizeTemaKey, temaLabel } from '../../../lib/taxonomy';
@@ -30,7 +30,7 @@ const pageTitle = `${temaLabel(temaKey)} | Tema`;
 <BlogLayout
 	title={pageTitle}
 	description={`Publicacoes da PAVIE sobre ${temaLabel(temaKey)}.`}
-	canonical={`${MAIN_SITE_URL}/blog/temas/${temaKey}/`}
+	canonical={`${BLOG_SITE_URL}/blog/temas/${temaKey}/`}
 >
 	<div class="container blog-home">
 		<section class="blog-grid" aria-label={pageTitle}>

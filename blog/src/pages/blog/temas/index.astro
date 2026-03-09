@@ -1,6 +1,6 @@
 ---
 import { getCollection } from 'astro:content';
-import { MAIN_SITE_URL } from '../../../consts';
+import { BLOG_SITE_URL } from '../../../consts';
 import BlogLayout from '../../../layouts/BlogLayout.astro';
 import { isPublicPost, normalizePost, sortPostsByDate } from '../../../lib/posts';
 import { temaHref, temaLabel, normalizeTemaKey } from '../../../lib/taxonomy';
@@ -27,7 +27,7 @@ const temas = [...temaMap.values()].sort((a, b) => b.count - a.count);
 <BlogLayout
 	title="Temas do Blog | PAVIE"
 	description="Acesse o acervo por tema juridico no blog da PAVIE."
-	canonical={`${MAIN_SITE_URL}/blog/temas/`}
+	canonical={`${BLOG_SITE_URL}/blog/temas/`}
 >
 	<div class="container blog-home">
 		<section class="blog-grid" aria-label="Temas editoriais">

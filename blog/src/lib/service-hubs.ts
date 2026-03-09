@@ -64,7 +64,7 @@ export const SERVICE_HUBS: ServiceHub[] = [
 	},
 	{
 		id: 'familia-internacional',
-		title: 'Familia e Patrimonio Internacional',
+		title: 'Familia Internacional',
 		areaKey: 'internacional',
 		summary: 'Demandas com elemento estrangeiro, documentos transnacionais e coordenacao juridica entre jurisdicoes.',
 		situations: ['familia binacional', 'bens no exterior', 'documentacao internacional'],

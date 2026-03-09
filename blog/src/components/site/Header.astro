@@ -7,10 +7,8 @@ const { currentPath = '/' } = Astro.props;
 
 const navItems = [
 	{ href: '/areas/', label: 'Servicos' },
-	{ href: '/blog/areas/', label: 'Hubs' },
-	{ href: '/blog/temas/', label: 'Temas' },
 	{ href: '/sobre/', label: 'Sobre' },
-	{ href: '/blog/', label: 'Publicacoes' },
+	{ href: 'https://blog.pavieadvocacia.com.br/blog/', label: 'Conteudos Juridicos' },
 	{ href: '/contato/', label: 'Contato' },
 ];
 
@@ -22,10 +20,9 @@ function isActive(href: string): boolean {
 
 <header class="site-header" role="banner">
 	<div class="site-header__bar container">
-		<a class="site-header__brand" href="/" aria-label="PAVIE Advocacia, inicio do site">
-			<span aria-hidden="true">&#9878;</span>
+		<a class="site-header__brand" href="https://pavieadvocacia.com.br" aria-label="PAVIE Advocacia, inicio do site institucional">
 			<strong>PAVIE</strong>
-			<small>Advocacia</small>
+			<small>| Advocacia</small>
 		</a>
 
 		<nav class="site-nav" aria-label="Navegacao principal">
@@ -92,8 +89,8 @@ function isActive(href: string): boolean {
 
 	.site-header__brand small {
 		font-size: 0.88rem;
-		text-transform: uppercase;
-		letter-spacing: 0.08em;
+		text-transform: none;
+		letter-spacing: 0.02em;
 		color: color-mix(in srgb, var(--color-petrol) 52%, white);
 	}
 
