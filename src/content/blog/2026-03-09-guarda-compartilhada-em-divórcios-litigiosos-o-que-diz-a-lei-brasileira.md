@@ -1,6 +1,6 @@
 ---
-title: "Guarda compartilhada em divórcios litigiosos: o que diz a lei brasileira"
-editorial_item_id: PAVIE-BLOG-20260309-001
+title: Lero Lero
+editorial_item_id: PAVIE-BLOG-20260309-002
 slug: guarda-compartilhada-divorcio-litigioso
 description: Entenda como funciona a guarda compartilhada em casos de divórcio
   litigioso no Brasil. Veja o que diz o Código Civil, quando esse regime pode
@@ -16,10 +16,9 @@ excerpt: >
   situações em que esse regime pode ser aplicado ou afastado. O objetivo é
   oferecer orientação geral para pais e responsáveis que enfrentam processos de
   separação envolvendo filhos menores.
-area: familia
-tema:
-  - Direito de Família
-content_type: explicativo
+area: imobiliario
+tema: []
+content_type: checklist
 intent: informar
 funnel_stage: fundo
 author_ref: Dr. Fabio Pavie
