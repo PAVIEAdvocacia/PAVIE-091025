@@ -1,43 +1,19 @@
 ﻿---
 import BaseLayout from '../layouts/BaseLayout.astro';
 
-const title = 'O Escritorio | PAVIE';
-const description =
-	'PAVIE Advocacia e sociedade unipessoal com atuacao estrategica em familia, sucessoes e patrimonio.';
+const title = 'Sobre | PAVIE';
+const description = 'Página de transição para o perfil institucional da PAVIE Advocacia.';
 ---
 
-<BaseLayout title={title} description={description} canonical="https://blog.pavieadvocacia.com.br/about/">
+<BaseLayout title={title} description={description} canonical="https://blog.pavieadvocacia.com.br/sobre/" noIndex>
 	<div class="container-md" style="padding-top: 2rem; display: grid; gap: 1rem;">
-		<span class="badge">PAVIE Advocacia</span>
-		<h1 style="font-size: clamp(2rem, 1.5rem + 1.8vw, 3rem);">
-			Arquitetura juridica para proteger familia, patrimonio e legado.
-		</h1>
-		<p style="font-size: 1.06rem; color: var(--text-muted); max-width: 66ch;">
-			A PAVIE atua com linguagem clara, processo documentado e foco em confianca institucional.
-			No blog, cada artigo e tratado como ativo editorial: rastreavel, atualizado e conectado com
-			a jornada real do cliente.
+		<span class="badge">Atualização de rota</span>
+		<h1 style="font-size: clamp(1.8rem, 1.2rem + 1.6vw, 2.5rem);">Esta página foi reorganizada.</h1>
+		<p style="color: var(--text-muted);">
+			O conteúdo institucional completo está disponível em <a href="/sobre/">/sobre</a>.
 		</p>
-
-		<section class="surface-card" style="padding: 1.2rem; display: grid; gap: 0.7rem;">
-			<h2 style="font-size: 1.6rem;">Como trabalhamos</h2>
-			<ul style="padding-left: 1.2rem; display: grid; gap: 0.45rem;">
-				<li>Diagnostico juridico com foco em risco, prazo e decisao pratica.</li>
-				<li>Plano de acao documentado com comunicacao objetiva.</li>
-				<li>Integracao entre site institucional, blog e fluxos de atendimento.</li>
-				<li>Revisao editorial continua para manter confiabilidade publica.</li>
-			</ul>
-		</section>
-
-		<section class="surface-card" style="padding: 1.2rem; display: grid; gap: 0.8rem;">
-			<h2 style="font-size: 1.6rem;">Contato e proximos passos</h2>
-			<p style="color: var(--text-muted);">
-				Para casos concretos, a orientacao e feita com analise individual e proposta formal,
-				em conformidade com as normas eticas da advocacia.
-			</p>
-			<div style="display: flex; flex-wrap: wrap; gap: 0.6rem;">
-				<a class="btn btn-primary" href="https://pavieadvocacia.com.br/#agendar">Agendar consultoria</a>
-				<a class="btn btn-ghost" href="/blog/">Voltar para publicacoes</a>
-			</div>
-		</section>
+		<div>
+			<a class="btn btn-primary" href="/sobre/">Ir para Sobre</a>
+		</div>
 	</div>
 </BaseLayout>

@@ -1,34 +1,30 @@
----
-import { MAIN_SITE_URL } from '../../consts';
----
-
-<footer class="site-footer" role="contentinfo">
+﻿<footer class="site-footer" role="contentinfo">
 	<div class="container site-footer__grid">
 		<section>
-			<h2>PAVIE</h2>
+			<h2>PAVIE Advocacia</h2>
 			<p>
-				Excelencia juridica em sucessoes, familia e patrimonio com orientacao clara,
-				estrutura de dados e atendimento responsavel.
+				Advocacia civil orientada a decisões seguras em família, sucessões, patrimônio,
+				contratos e conflitos cíveis com impacto real.
 			</p>
 		</section>
 
 		<section>
-			<h3>Areas de Atuacao</h3>
+			<h3>Navegação Institucional</h3>
 			<ul>
-				<li><a href={`${MAIN_SITE_URL}/#servicos`}>Inventario e Partilha</a></li>
-				<li><a href={`${MAIN_SITE_URL}/#servicos`}>Planejamento Sucessorio</a></li>
-				<li><a href={`${MAIN_SITE_URL}/#servicos`}>Holding Familiar</a></li>
-				<li><a href={`${MAIN_SITE_URL}/#servicos`}>Direito Imobiliario</a></li>
+				<li><a href="/">Início</a></li>
+				<li><a href="/areas/">Áreas de atuação</a></li>
+				<li><a href="/sobre/">Sobre</a></li>
+				<li><a href="/contato/">Contato</a></li>
 			</ul>
 		</section>
 
 		<section>
-			<h3>Publicacoes</h3>
+			<h3>Blog Jurídico</h3>
 			<ul>
-				<li><a href="/blog/">Artigos Juridicos</a></li>
-				<li><a href="/blog/">Guias Essenciais</a></li>
-				<li><a href={`${MAIN_SITE_URL}/privacidade/privacidade.html`}>Politica de Privacidade</a></li>
-				<li><a href={`${MAIN_SITE_URL}/termos/termos.html`}>Termos de Servico</a></li>
+				<li><a href="/blog/">Home do blog</a></li>
+				<li><a href="/blog/areas/">Trilhas por área</a></li>
+				<li><a href="/blog/temas/">Trilhas por tema</a></li>
+				<li><a href="/rss.xml">RSS</a></li>
 			</ul>
 		</section>
 
@@ -37,22 +33,22 @@ import { MAIN_SITE_URL } from '../../consts';
 			<ul>
 				<li><a href="tel:+5521964382263">+55 (21) 96438-2263</a></li>
 				<li><a href="mailto:contato@pavieadvocacia.com.br">contato@pavieadvocacia.com.br</a></li>
-				<li>Av. Ataulfo de Paiva, 1235 - Leblon, RJ</li>
-				<li>Seg-Sex: 8h-18h · Sab: 8h-12h</li>
+				<li>Av. Ataulfo de Paiva, 1235 · Leblon · Rio de Janeiro</li>
+				<li>Segunda a sexta, em horário comercial</li>
 			</ul>
 		</section>
 	</div>
 
 	<div class="container site-footer__bottom">
 		<p>OAB/RJ 134.947 · CNPJ 61.489.144/0001-48</p>
-		<p>Conteudo informativo. Cada caso exige analise tecnica individual.</p>
+		<p>Conteúdo informativo. Cada caso exige análise técnica individual.</p>
 		<p>&copy; 2026 PAVIE Advocacia. Todos os direitos reservados.</p>
 	</div>
 </footer>
 
 <style>
 	.site-footer {
-		margin-top: 3.2rem;
+		margin-top: 3rem;
 		padding: 2.5rem 0 1.8rem;
 		background:
 			radial-gradient(circle at 90% 10%, rgba(143, 164, 167, 0.18), transparent 38%),
@@ -75,7 +71,7 @@ import { MAIN_SITE_URL } from '../../consts';
 
 	.site-footer__grid {
 		display: grid;
-		gap: 1.25rem;
+		gap: 1.2rem;
 		grid-template-columns: repeat(4, minmax(0, 1fr));
 	}
 
@@ -92,7 +88,7 @@ import { MAIN_SITE_URL } from '../../consts';
 	}
 
 	.site-footer__bottom {
-		margin-top: 1.7rem;
+		margin-top: 1.6rem;
 		padding-top: 1rem;
 		border-top: 1px solid rgba(143, 164, 167, 0.22);
 		display: grid;
@@ -100,7 +96,7 @@ import { MAIN_SITE_URL } from '../../consts';
 		text-align: center;
 	}
 
-	@media (max-width: 900px) {
+	@media (max-width: 920px) {
 		.site-footer__grid {
 			grid-template-columns: repeat(2, minmax(0, 1fr));
 		}

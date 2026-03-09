@@ -1,0 +1,45 @@
+﻿---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import '../styles/institutional-pages.css';
+
+const title = 'Sobre | PAVIE Advocacia';
+const description =
+	'Perfil profissional e proposta de atuação da PAVIE Advocacia: clareza, rigor técnico e condução responsável de questões cíveis.';
+---
+
+<BaseLayout title={title} description={description} canonical="https://blog.pavieadvocacia.com.br/sobre/">
+	<div class="container-md institutional-page">
+		<span class="badge">Sobre o advogado</span>
+		<h1>
+			Fabio Mathias Pavie — condução jurídica com clareza, técnica e responsabilidade.
+		</h1>
+		<p class="institutional-page__lead">
+			Advogado, fundador da PAVIE Advocacia e membro do IBDFAM, com atuação cível voltada a
+			família, sucessões, patrimônio, contratos, imóveis, responsabilidade civil, consumidor e compliance.
+			A proposta de trabalho é objetiva: compreender o problema, mapear riscos e conduzir solução com segurança.
+		</p>
+
+		<section class="surface-card institutional-card">
+			<h2>Credenciais e atuação</h2>
+			<ul class="institutional-list">
+				<li>OAB/RJ 134.947 · atuação cível com cerca de 20 anos de experiência jurídica.</li>
+				<li>Graduado e pós-graduado em Direito pela UFF; formação complementar em Administração Pública e Letras.</li>
+				<li>Membro do Instituto Brasileiro de Direito de Família (IBDFAM).</li>
+				<li>Experiência em contencioso cível, conformidade documental e gestão jurídica institucional.</li>
+			</ul>
+		</section>
+
+		<section class="surface-card institutional-card">
+			<h2>Como a PAVIE atua</h2>
+			<p>
+				A atuação combina análise técnica, comunicação acessível e organização documental. O objetivo é
+				reduzir incerteza, orientar decisões com base jurídica sólida e preservar segurança na condução do caso,
+				sem promessas incompatíveis com a ética da advocacia.
+			</p>
+			<div class="institutional-actions">
+				<a class="btn btn-primary" href="/contato/">Falar com a PAVIE</a>
+				<a class="btn btn-ghost" href="/blog/">Ler conteúdos jurídicos</a>
+			</div>
+		</section>
+	</div>
+</BaseLayout>

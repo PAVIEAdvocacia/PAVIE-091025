@@ -1,4 +1,4 @@
----
+﻿---
 import { getCollection } from 'astro:content';
 import BlogGrid from '../../components/blog/BlogGrid.astro';
 import BlogHero from '../../components/blog/BlogHero.astro';
@@ -10,24 +10,15 @@ import { areaHref, temaHref } from '../../lib/taxonomy';
 const entries = await getCollection('blog');
 const posts = sortPostsByDate(entries.map((entry) => normalizePost(entry))).filter(isPublicPost);
 const featured = posts[0];
-const highlights = posts.slice(1, 7);
-const groupedByArea = groupPostsByArea(posts).slice(0, 3);
+const latestPosts = posts.slice(1, 7);
+const groupedByArea = groupPostsByArea(posts).slice(0, 4);
 
-const guidePosts = posts
-	.filter(
-		(post) =>
-			post.contentType.toLowerCase().includes('guia') ||
-			post.intent === 'aprofundar' ||
-			post.intent === 'informar',
-	)
+const practicalPosts = posts
+	.filter((post) => post.intent === 'diagnosticar' || post.intent === 'comparar' || post.funnelStage === 'fundo')
 	.slice(0, 4);
 
-const successionPosts = posts
-	.filter(
-		(post) =>
-			post.area.toLowerCase().includes('sucess') ||
-			post.temas.some((tema) => tema.toLowerCase().includes('inventario') || tema.toLowerCase().includes('heranca')),
-	)
+const guidePosts = posts
+	.filter((post) => post.contentType.includes('guia') || post.contentType.includes('checklist'))
 	.slice(0, 4);
 
 const areaNames = groupedByArea.map((group) => group.area);
@@ -37,50 +28,58 @@ const topThemes = Array.from(
 			.flatMap((post) => post.temas)
 			.map((tema) => [tema.toLowerCase(), tema]),
 	).values(),
-).slice(0, 8);
+).slice(0, 10);
 ---
 
 <BlogLayout
-	title="Publicacoes juridicas da PAVIE"
-	description="Hub editorial institucional da PAVIE Advocacia para descoberta, aprofundamento e conversao etica."
-	canonical="https://blog.pavieadvocacia.com.br/"
+	title="Blog jurídico da PAVIE"
+	description="Leitura jurídica para entender cenários reais, organizar decisões e agir com segurança."
+	canonical="https://blog.pavieadvocacia.com.br/blog/"
 >
 	<div class="container blog-home">
 		<BlogHero totalPosts={posts.length} areas={areaNames} />
 
 		{featured && <FeaturedPost post={featured} />}
 
-		{highlights.length > 0 && (
-			<BlogGrid title="Leituras em destaque" kicker="Curadoria principal" posts={highlights} />
-		)}
-
-		<section id="areas-editoriais" class="blog-grid" aria-label="Areas editoriais">
+		<section id="areas-editoriais" class="blog-grid" aria-label="Trilhas por situação">
 			<div class="section-title">
 				<div>
-					<span class="section-kicker">Clusters editoriais</span>
-					<h2>Areas de atuacao e trilhas por tema</h2>
+					<span class="section-kicker">Comece por situação</span>
+					<h2>Trilhas para dúvidas recorrentes</h2>
 				</div>
+				<a class="btn btn-ghost" href="/blog/areas/">Ver todas as áreas</a>
 			</div>
 			<div class="blog-row">
 				{groupedByArea.map((group) => (
 					<article class="blog-row__item">
 						<h3>{group.area}</h3>
-						<p>
-							{group.posts.length} publicacoes disponiveis para consulta tecnica e aprofundamento.
-						</p>
+						<p>{group.posts.length} publicações para leitura técnica e orientação inicial.</p>
 						<a href={areaHref(group.area)}>Abrir trilha editorial</a>
 					</article>
 				))}
 			</div>
 		</section>
 
+		{latestPosts.length > 0 && (
+			<BlogGrid title="Leituras recentes" kicker="Atualizações do acervo" posts={latestPosts} />
+		)}
+
+		{practicalPosts.length > 0 && (
+			<BlogGrid title="Casos práticos e decisão" kicker="Quando o tema pede ação" posts={practicalPosts} compact />
+		)}
+
+		{guidePosts.length > 0 && (
+			<BlogGrid title="Guias e fundamentos" kicker="Base para consulta" posts={guidePosts} compact />
+		)}
+
 		{topThemes.length > 0 && (
 			<section class="blog-grid" aria-label="Temas em foco">
 				<div class="section-title">
 					<div>
-						<span class="section-kicker">Descoberta por tema</span>
+						<span class="section-kicker">Navegação por tema</span>
 						<h2>Temas em foco</h2>
 					</div>
+					<a class="btn btn-ghost" href="/blog/temas/">Explorar todos os temas</a>
 				</div>
 				<div class="theme-chip-list">
 					{topThemes.map((tema) => (
@@ -92,25 +91,15 @@ const topThemes = Array.from(
 			</section>
 		)}
 
-		{guidePosts.length > 0 && (
-			<BlogGrid title="Guias essenciais" kicker="Base de consulta" posts={guidePosts} compact />
-		)}
-
-		{successionPosts.length > 0 && (
-			<BlogGrid title="Planejamento sucessorio" kicker="Cluster prioritario" posts={successionPosts} compact />
-		)}
-
 		<section class="editorial-cta" aria-label="Chamada institucional">
-			<span class="section-kicker">Conversao etica</span>
-			<h2>Precisa transformar leitura em estrategia aplicavel?</h2>
+			<span class="section-kicker">Leitura com utilidade prática</span>
+			<h2>Entender o tema é o primeiro passo. Decidir com segurança é o próximo.</h2>
 			<p>
-				Agende uma consultoria para receber orientacao alinhada ao seu contexto,
-				com clareza de riscos, prazos e proxima acao juridica.
+				Se o seu cenário exige orientação aplicada, a equipe da PAVIE pode analisar contexto,
+				prioridades e riscos com uma proposta clara de condução.
 			</p>
 			<div>
-				<a class="btn btn-primary" href="https://pavieadvocacia.com.br/#agendar">
-					Agendar Consultoria
-				</a>
+				<a class="btn btn-primary" href="/contato/">Solicitar orientação</a>
 			</div>
 		</section>
 	</div>

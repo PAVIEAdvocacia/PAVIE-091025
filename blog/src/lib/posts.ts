@@ -1,11 +1,5 @@
 import type { CollectionEntry } from 'astro:content';
-import {
-	BLOG_SITE_URL,
-	DEFAULT_AUTHOR_NAME,
-	DEFAULT_AUTHOR_ROLE,
-	DEFAULT_CTA,
-	MAIN_SITE_URL,
-} from '../consts';
+import { BLOG_SITE_URL, DEFAULT_AUTHOR_NAME, DEFAULT_AUTHOR_ROLE, DEFAULT_CTA } from '../consts';
 import { areaLabel, normalizeAreaKey, normalizeTemaKey } from './taxonomy';
 
 export type RawPostEntry = CollectionEntry<'blog'>;
@@ -61,7 +55,7 @@ const CTA_BY_VARIANT: Record<string, CtaConfig> = {
 	consultoria: DEFAULT_CTA,
 	diagnostico: {
 		label: 'Solicitar Diagnostico Juridico',
-		href: `${MAIN_SITE_URL}/#agendar`,
+		href: '/contato/',
 		description: 'Receba uma avaliacao inicial para entender riscos, prazos e estrategia.',
 	},
 	aprofundamento: {
@@ -76,22 +70,22 @@ const CTA_BY_VARIANT: Record<string, CtaConfig> = {
 	},
 	checklist: {
 		label: 'Solicitar Checklist Aplicavel',
-		href: `${MAIN_SITE_URL}/#agendar`,
+		href: '/contato/',
 		description: 'Receba um roteiro inicial para organizar sua proxima decisao juridica.',
 	},
 	contato: {
 		label: 'Falar com a PAVIE',
-		href: `${MAIN_SITE_URL}/#agendar`,
+		href: '/contato/',
 		description: 'Entre em contato para avaliar o melhor caminho para o seu caso.',
 	},
 	calculadora: {
 		label: 'Agendar Simulacao Juridica',
-		href: `${MAIN_SITE_URL}/#agendar`,
+		href: '/contato/',
 		description: 'Solicite uma simulacao orientada para apoiar sua tomada de decisao.',
 	},
 	institucional: {
 		label: 'Conhecer Areas de Atuacao',
-		href: `${MAIN_SITE_URL}/#servicos`,
+		href: '/areas/',
 		description: 'Veja como a PAVIE atua em sucessoes, familia e organizacao patrimonial.',
 	},
 };

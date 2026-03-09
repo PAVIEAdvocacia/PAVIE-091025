@@ -4,6 +4,25 @@
 	padding-top: 1.25rem;
 }
 
+.reading-progress {
+	position: sticky;
+	top: 72px;
+	height: 4px;
+	width: 100%;
+	border-radius: 999px;
+	background: color-mix(in srgb, var(--color-line) 65%, white);
+	overflow: hidden;
+	z-index: 20;
+}
+
+.reading-progress span {
+	display: block;
+	height: 100%;
+	width: 0;
+	border-radius: inherit;
+	background: linear-gradient(90deg, var(--color-petrol), color-mix(in srgb, var(--color-sand) 70%, white));
+}
+
 .breadcrumbs {
 	display: flex;
 	flex-wrap: wrap;
@@ -185,6 +204,56 @@
 	box-shadow: var(--shadow-soft);
 }
 
+.reading-summary {
+	padding: 0.9rem 1rem;
+	border-radius: var(--radius-xs);
+	border: 1px solid color-mix(in srgb, var(--color-line) 82%, white);
+	background: color-mix(in srgb, var(--color-soft) 68%, white);
+	display: grid;
+	gap: 0.6rem;
+	margin-bottom: 1rem;
+}
+
+.reading-summary h2 {
+	font-size: 1.12rem;
+}
+
+.reading-summary p,
+.reading-summary ul {
+	color: var(--text-muted);
+	font-size: 0.95rem;
+}
+
+.reading-summary ul {
+	padding-inline-start: 1.1rem;
+	display: grid;
+	gap: 0.35rem;
+}
+
+.reading-summary__tags {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.5rem;
+}
+
+.reading-tag {
+	display: inline-flex;
+	align-items: center;
+	padding: 0.28rem 0.66rem;
+	border-radius: 999px;
+	border: 1px solid color-mix(in srgb, var(--color-petrol) 25%, var(--color-line));
+	background: var(--surface-card);
+	color: var(--color-petrol);
+	font-size: 0.8rem;
+	text-decoration: none;
+}
+
+.reading-tag:hover,
+.reading-tag:focus-visible {
+	border-color: color-mix(in srgb, var(--color-sand) 72%, var(--color-line));
+	background: color-mix(in srgb, var(--color-sand) 18%, white);
+}
+
 .audio-player {
 	display: grid;
 	gap: 0.55rem;
@@ -273,6 +342,12 @@
 	gap: 1rem;
 }
 
+.reading-ethics-note {
+	margin-top: 0.65rem;
+	font-size: 0.82rem;
+	color: var(--text-muted);
+}
+
 .author-card {
 	display: flex;
 	gap: 0.8rem;
@@ -332,6 +407,10 @@
 @media (max-width: 720px) {
 	.reading-page {
 		padding-top: 0.8rem;
+	}
+
+	.reading-progress {
+		top: 64px;
 	}
 
 	.reading-hero {

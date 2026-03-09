@@ -1,117 +1,210 @@
 ﻿---
-import { getCollection } from 'astro:content';
-import BlogGrid from '../components/blog/BlogGrid.astro';
-import BlogHero from '../components/blog/BlogHero.astro';
-import FeaturedPost from '../components/blog/FeaturedPost.astro';
-import BlogLayout from '../layouts/BlogLayout.astro';
-import { groupPostsByArea, isPublicPost, normalizePost, sortPostsByDate } from '../lib/posts';
-import { areaHref, temaHref } from '../lib/taxonomy';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import '../styles/site-home.css';
 
-const entries = await getCollection('blog');
-const posts = sortPostsByDate(entries.map((entry) => normalizePost(entry))).filter(isPublicPost);
-const featured = posts[0];
-const highlights = posts.slice(1, 7);
-const groupedByArea = groupPostsByArea(posts).slice(0, 3);
+const title = 'PAVIE Advocacia | Clareza Jurídica para Decisões Importantes';
+const description =
+	'Orientação jurídica clara para família, patrimônio, sucessões, imóveis e contratos, com condução técnica responsável e conversão ética.';
 
-const guidePosts = posts
-	.filter(
-		(post) =>
-			post.contentType.toLowerCase().includes('guia') ||
-			post.intent === 'aprofundar' ||
-			post.intent === 'informar',
-	)
-	.slice(0, 4);
+const faq = [
+	{
+		q: 'Quando vale a pena buscar orientação jurídica?',
+		a: 'Quando há dúvida relevante, risco patrimonial, conflito familiar, pendência documental ou decisão que pode gerar impacto futuro. A orientação inicial evita retrabalho e insegurança.',
+	},
+	{
+		q: 'A primeira conversa já resolve o caso?',
+		a: 'A primeira etapa serve para entender o contexto, mapear riscos e definir o caminho adequado. Em muitos casos, isso já reduz ansiedade e organiza os próximos passos com clareza.',
+	},
+	{
+		q: 'Vocês atendem apenas processos judiciais?',
+		a: 'Não. Muitas demandas começam com organização documental, estratégia preventiva, negociação e regularização. O processo judicial é usado quando realmente necessário.',
+	},
+	{
+		q: 'Como funcionam honorários?',
+		a: 'Os honorários são definidos após análise técnica da situação, escopo, complexidade e necessidade de acompanhamento. A proposta é formal, clara e compatível com as normas da OAB.',
+	},
+	{
+		q: 'Posso enviar documentos antes da reunião?',
+		a: 'Sim. O envio prévio ajuda na triagem e torna a conversa mais objetiva. Você recebe orientação sobre quais documentos são relevantes para o seu contexto.',
+	},
+];
 
-const successionPosts = posts
-	.filter(
-		(post) =>
-			post.area.toLowerCase().includes('sucess') ||
-			post.temas.some((tema) => tema.toLowerCase().includes('inventario') || tema.toLowerCase().includes('heranca')),
-	)
-	.slice(0, 4);
+const faqSchema = {
+	'@context': 'https://schema.org',
+	'@type': 'FAQPage',
+	mainEntity: faq.map((item) => ({
+		'@type': 'Question',
+		name: item.q,
+		acceptedAnswer: {
+			'@type': 'Answer',
+			text: item.a,
+		},
+	})),
+};
 
-const areaNames = groupedByArea.map((group) => group.area);
-const topThemes = Array.from(
-	new Map(
-		posts
-			.flatMap((post) => post.temas)
-			.map((tema) => [tema.toLowerCase(), tema]),
-	).values(),
-).slice(0, 8);
+const localBusinessSchema = {
+	'@context': 'https://schema.org',
+	'@type': 'LegalService',
+	name: 'PAVIE Advocacia',
+	url: 'https://blog.pavieadvocacia.com.br/',
+	email: 'contato@pavieadvocacia.com.br',
+	telephone: '+55 21 96438-2263',
+	address: {
+		'@type': 'PostalAddress',
+		streetAddress: 'Av. Ataulfo de Paiva, 1235',
+		addressLocality: 'Rio de Janeiro',
+		addressRegion: 'RJ',
+		addressCountry: 'BR',
+	},
+	areaServed: 'Brasil',
+};
 ---
 
-<BlogLayout
-	title="Blog juridico da PAVIE"
-	description="Hub editorial institucional com trilhas por area, leitura longa e orientacao juridica aplicada."
-	canonical="https://blog.pavieadvocacia.com.br/"
->
-	<div class="container blog-home">
-		<BlogHero totalPosts={posts.length} areas={areaNames} />
-
-		{featured && <FeaturedPost post={featured} />}
-
-		{highlights.length > 0 && (
-			<BlogGrid title="Leituras em destaque" kicker="Curadoria principal" posts={highlights} />
-		)}
-
-		<section id="areas-editoriais" class="blog-grid" aria-label="Areas editoriais">
-			<div class="section-title">
-				<div>
-					<span class="section-kicker">Clusters editoriais</span>
-					<h2>Areas de atuacao e trilhas por tema</h2>
+<BaseLayout title={title} description={description} canonical="https://blog.pavieadvocacia.com.br/">
+	<div class="container site-home">
+		<section class="site-hero" aria-labelledby="hero-title">
+			<div>
+				<span class="badge">PAVIE Advocacia · OAB/RJ 134.947</span>
+				<h1 id="hero-title">Advocacia civil com clareza para decisões que afetam família, patrimônio e negócios.</h1>
+				<p>
+					Se você chegou com dúvida, risco ou pressão de prazo, este é o lugar para organizar o cenário,
+					entender caminhos possíveis e conduzir sua situação com segurança jurídica e sobriedade.
+				</p>
+				<div class="site-hero__cta">
+					<a class="btn btn-primary" href="/contato/">Solicitar orientação inicial</a>
+					<a class="btn btn-ghost" href="/areas/">Ver áreas de atuação</a>
 				</div>
 			</div>
-			<div class="blog-row">
-				{groupedByArea.map((group) => (
-					<article class="blog-row__item">
-						<h3>{group.area}</h3>
-						<p>
-							{group.posts.length} publicacoes disponiveis para consulta tecnica e aprofundamento.
-						</p>
-						<a href={areaHref(group.area)}>Abrir trilha editorial</a>
-					</article>
+			<ul class="trust-list" aria-label="Sinais de confiança">
+				<li>Atuação centrada em situações reais, não em linguagem genérica.</li>
+				<li>Análise técnica com comunicação objetiva e acessível.</li>
+				<li>Condução ética, sem promessa de resultado.</li>
+				<li>Integração com conteúdo jurídico educativo no blog.</li>
+			</ul>
+		</section>
+
+		<section class="site-section" aria-labelledby="situacoes-title">
+			<div class="section-title">
+				<div>
+					<span class="section-kicker">Reconhecimento de cenário</span>
+					<h2 id="situacoes-title">Situações em que a orientação jurídica faz diferença</h2>
+				</div>
+			</div>
+			<div class="situation-grid">
+				<article class="surface-card">
+					<h3>Família e patrimônio em transição</h3>
+					<p>Divórcio com bens, guarda, alimentos e reorganização patrimonial exigindo decisões equilibradas.</p>
+				</article>
+				<article class="surface-card">
+					<h3>Sucessão e inventário</h3>
+					<p>Planejamento sucessório, inventário e partilha com foco em segurança documental e prevenção de conflito.</p>
+				</article>
+				<article class="surface-card">
+					<h3>Imóveis e contratos</h3>
+					<p>Regularização, compra e venda, cláusulas críticas e riscos contratuais que pedem leitura técnica prévia.</p>
+				</article>
+				<article class="surface-card">
+					<h3>Responsabilidade e cobrança</h3>
+					<p>Demandas cíveis com impacto financeiro que exigem estratégia, evidência e condução consistente.</p>
+				</article>
+			</div>
+		</section>
+
+		<section id="areas" class="site-section" aria-labelledby="areas-title">
+			<div class="section-title">
+				<div>
+					<span class="section-kicker">Campos de solução</span>
+					<h2 id="areas-title">Áreas priorizadas da atuação</h2>
+				</div>
+				<a class="btn btn-ghost" href="/areas/">Explorar todas as áreas</a>
+			</div>
+			<div class="service-grid">
+				<article class="surface-card">
+					<h3>Família e Sucessões</h3>
+					<p>Questões familiares e patrimoniais com impacto imediato e duradouro.</p>
+					<a href="/blog/areas/familia/">Ver conteúdos relacionados</a>
+				</article>
+				<article class="surface-card">
+					<h3>Planejamento Patrimonial</h3>
+					<p>Organização jurídica para proteger patrimônio e reduzir risco futuro.</p>
+					<a href="/blog/temas/partilha/">Aprofundar no blog</a>
+				</article>
+				<article class="surface-card">
+					<h3>Contratos e Negócios</h3>
+					<p>Estruturação de contratos com clareza de responsabilidade, prazo e segurança.</p>
+					<a href="/contato/">Solicitar análise</a>
+				</article>
+			</div>
+		</section>
+
+		<section class="site-section" aria-labelledby="atendimento-title">
+			<div class="section-title">
+				<div>
+					<span class="section-kicker">Fluxo de atendimento</span>
+					<h2 id="atendimento-title">Como funciona a condução do seu caso</h2>
+				</div>
+			</div>
+			<ol class="process-list">
+				<li><strong>1. Escuta e triagem:</strong> entendimento inicial da situação e dos objetivos.</li>
+				<li><strong>2. Diagnóstico jurídico:</strong> mapeamento de riscos, cenário e alternativas.</li>
+				<li><strong>3. Proposta clara:</strong> escopo, estratégia, etapas e honorários de forma transparente.</li>
+				<li><strong>4. Execução acompanhada:</strong> atuação técnica com comunicação objetiva.</li>
+				<li><strong>5. Fechamento orientado:</strong> documentação e próximos cuidados para continuidade segura.</li>
+			</ol>
+		</section>
+
+		<section class="site-section split" aria-labelledby="transparencia-title">
+			<article class="surface-card">
+				<span class="section-kicker">Transparência</span>
+				<h2 id="transparencia-title">Honorários e critérios de contratação</h2>
+				<p>
+					A contratação é definida por análise técnica, complexidade, urgência e escopo real do trabalho.
+					Não há tabela pública de preços no site. Você recebe proposta formal e compreensível,
+					compatível com as normas éticas da advocacia.
+				</p>
+			</article>
+			<article class="surface-card">
+				<span class="section-kicker">Sobre o escritório</span>
+				<h2>Atuação com rigor técnico e linguagem acessível</h2>
+				<p>
+					A PAVIE atua para transformar dúvida jurídica em caminho organizado. O foco é clareza,
+					responsabilidade e previsibilidade na condução do caso, com atenção real ao contexto da pessoa atendida.
+				</p>
+				<a href="/sobre/">Conheça o perfil profissional completo</a>
+			</article>
+		</section>
+
+		<section class="site-section" aria-labelledby="faq-title">
+			<div class="section-title">
+				<div>
+					<span class="section-kicker">Perguntas frequentes</span>
+					<h2 id="faq-title">Respostas objetivas para dúvidas comuns</h2>
+				</div>
+			</div>
+			<div class="faq-list">
+				{faq.map((item) => (
+					<details class="surface-card">
+						<summary>{item.q}</summary>
+						<p>{item.a}</p>
+					</details>
 				))}
 			</div>
 		</section>
 
-		{topThemes.length > 0 && (
-			<section class="blog-grid" aria-label="Temas em foco">
-				<div class="section-title">
-					<div>
-						<span class="section-kicker">Descoberta por tema</span>
-						<h2>Temas em foco</h2>
-					</div>
-				</div>
-				<div class="theme-chip-list">
-					{topThemes.map((tema) => (
-						<a class="blog-chip blog-chip--theme" href={temaHref(tema)}>
-							{tema}
-						</a>
-					))}
-				</div>
-			</section>
-		)}
-
-		{guidePosts.length > 0 && (
-			<BlogGrid title="Guias essenciais" kicker="Base de consulta" posts={guidePosts} compact />
-		)}
-
-		{successionPosts.length > 0 && (
-			<BlogGrid title="Planejamento sucessorio" kicker="Cluster prioritario" posts={successionPosts} compact />
-		)}
-
-		<section class="editorial-cta" aria-label="Chamada institucional">
-			<span class="section-kicker">Conversao etica</span>
-			<h2>Precisa transformar leitura em estrategia aplicavel?</h2>
+		<section id="contato" class="site-contact" aria-labelledby="contato-title">
+			<span class="section-kicker">Contato</span>
+			<h2 id="contato-title">Conte sua situação com clareza. O primeiro passo é organizar o cenário.</h2>
 			<p>
-				Agende uma consultoria para receber orientacao alinhada ao seu contexto,
-				com clareza de riscos, prazos e proxima acao juridica.
+				Você pode iniciar por WhatsApp, e-mail ou formulário. O retorno é objetivo e orientado ao seu contexto,
+				com postura ética e confidencialidade.
 			</p>
-			<div>
-				<a class="btn btn-primary" href="https://pavieadvocacia.com.br/#agendar">
-					Agendar Consultoria
-				</a>
+			<div class="site-hero__cta">
+				<a class="btn btn-primary" href="/contato/">Iniciar atendimento</a>
+				<a class="btn btn-ghost" href="/blog/">Ler conteúdos do blog</a>
 			</div>
 		</section>
 	</div>
-</BlogLayout>
+
+	<script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+	<script type="application/ld+json" set:html={JSON.stringify(localBusinessSchema)} />
+</BaseLayout>

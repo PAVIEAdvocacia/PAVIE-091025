@@ -1,6 +1,4 @@
----
-import { MAIN_SITE_URL } from '../../consts';
-
+﻿---
 interface Props {
 	currentPath?: string;
 }
@@ -8,11 +6,12 @@ interface Props {
 const { currentPath = '/' } = Astro.props;
 
 const navItems = [
-	{ href: `${MAIN_SITE_URL}/#servicos`, label: 'Areas de Atuacao', external: true },
-	{ href: `${MAIN_SITE_URL}/#sobre`, label: 'O Escritorio', external: true },
+	{ href: '/areas/', label: 'Areas de Atuacao', external: false },
+	{ href: '/sobre/', label: 'Sobre', external: false },
 	{ href: '/blog/', label: 'Publicacoes', external: false },
 	{ href: '/blog/areas/', label: 'Areas do Blog', external: false },
 	{ href: '/blog/temas/', label: 'Temas', external: false },
+	{ href: '/contato/', label: 'Contato', external: false },
 ];
 
 function isActive(href: string): boolean {
@@ -23,8 +22,8 @@ function isActive(href: string): boolean {
 
 <header class="site-header" role="banner">
 	<div class="site-header__bar container">
-		<a class="site-header__brand" href={MAIN_SITE_URL} aria-label="PAVIE Advocacia, site principal">
-			<span aria-hidden="true">⚖</span>
+		<a class="site-header__brand" href="/" aria-label="PAVIE Advocacia, inicio do site">
+			<span aria-hidden="true">&#9878;</span>
 			<strong>PAVIE</strong>
 			<small>Advocacia</small>
 		</a>
@@ -41,8 +40,8 @@ function isActive(href: string): boolean {
 			))}
 		</nav>
 
-		<a class="btn btn-primary site-header__cta" href={`${MAIN_SITE_URL}/#agendar`}>
-			Consultoria Online
+		<a class="btn btn-primary site-header__cta" href="/contato/">
+			Orientacao Inicial
 		</a>
 
 		<details class="site-mobile-nav">
@@ -53,8 +52,8 @@ function isActive(href: string): boolean {
 						{item.label}
 					</a>
 				))}
-				<a href={`${MAIN_SITE_URL}/#agendar`} role="menuitem">
-					Consultoria Online
+				<a href="/contato/" role="menuitem">
+					Orientacao Inicial
 				</a>
 			</div>
 		</details>
@@ -108,7 +107,7 @@ function isActive(href: string): boolean {
 
 	.site-nav__link {
 		text-decoration: none;
-		font-size: 0.88rem;
+		font-size: 0.84rem;
 		font-weight: 700;
 		letter-spacing: 0.06em;
 		text-transform: uppercase;
@@ -167,6 +166,12 @@ function isActive(href: string): boolean {
 	.site-mobile-nav__panel a:hover,
 	.site-mobile-nav__panel a:focus-visible {
 		background: color-mix(in srgb, var(--color-soft) 78%, white);
+	}
+
+	@media (max-width: 1080px) {
+		.site-nav {
+			gap: 0.75rem;
+		}
 	}
 
 	@media (max-width: 960px) {

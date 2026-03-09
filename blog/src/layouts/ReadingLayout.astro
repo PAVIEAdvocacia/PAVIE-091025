@@ -1,4 +1,4 @@
----
+﻿---
 import type { BlogPost } from '../lib/posts';
 import type { TocItem } from '../lib/toc';
 import '../styles/reading.css';
@@ -10,7 +10,7 @@ import ReadingSidebar from '../components/blog/ReadingSidebar.astro';
 import RelatedPosts from '../components/blog/RelatedPosts.astro';
 import BaseLayout from './BaseLayout.astro';
 import { BLOG_SITE_URL } from '../consts';
-import { areaHref } from '../lib/taxonomy';
+import { areaHref, temaHref } from '../lib/taxonomy';
 
 interface Props {
 	post: BlogPost;
@@ -22,10 +22,16 @@ interface Props {
 const { post, toc, related, noIndex = false } = Astro.props;
 
 const breadcrumbs = [
-	{ label: 'Inicio', href: '/' },
-	{ label: 'Publicacoes', href: '/blog/' },
+	{ label: 'Início', href: '/' },
+	{ label: 'Publicações', href: '/blog/' },
 	{ label: post.area, href: areaHref(post.areaKey || post.area) },
 	{ label: post.title },
+];
+
+const appliesTo = [
+	'postos em que você precisa entender risco antes de agir',
+	'cenários com decisão patrimonial ou familiar relevante',
+	'situações em que uma orientação inicial evita retrabalho jurídico',
 ];
 
 const articleSchema = {
@@ -46,6 +52,23 @@ const articleSchema = {
 	dateModified: (post.updatedAt ?? post.publishedAt)?.toISOString(),
 	mainEntityOfPage: post.canonicalUrl,
 };
+
+function toAbsoluteUrl(href?: string): string {
+	if (!href) return post.canonicalUrl || BLOG_SITE_URL;
+	if (href.startsWith('http')) return href;
+	return `${BLOG_SITE_URL}${href}`;
+}
+
+const breadcrumbSchema = {
+	'@context': 'https://schema.org',
+	'@type': 'BreadcrumbList',
+	itemListElement: breadcrumbs.map((item, index) => ({
+		'@type': 'ListItem',
+		position: index + 1,
+		name: item.label,
+		item: toAbsoluteUrl(item.href),
+	})),
+};
 ---
 
 <BaseLayout
@@ -61,11 +84,33 @@ const articleSchema = {
 	<div class="container reading-page">
 		<Breadcrumbs items={breadcrumbs} />
 		<ReadingHero post={post} />
+		<div class="reading-progress" aria-hidden="true"><span data-reading-progress></span></div>
 
 		<div class="reading-shell">
 			<ReadingSidebar post={post} toc={toc} related={related} />
 
 			<article class="reading-content" aria-labelledby="reading-hero-title">
+				<section class="reading-summary" aria-label="Resumo do artigo">
+					<h2>Resumo prático</h2>
+					<p>{post.excerpt}</p>
+					{post.temas.length > 0 && (
+						<div class="reading-summary__tags">
+							{post.temas.slice(0, 5).map((tema) => (
+								<a class="reading-tag" href={temaHref(tema)}>{tema}</a>
+							))}
+						</div>
+					)}
+				</section>
+
+				<section class="reading-summary" aria-label="Quando este conteúdo se aplica">
+					<h2>Quando este conteúdo se aplica</h2>
+					<ul>
+						{appliesTo.map((item) => (
+							<li>{item}</li>
+						))}
+					</ul>
+				</section>
+
 				<AudioPlayer
 					audioStatus={post.audioStatus}
 					audioUrl={post.audioUrl}
@@ -73,7 +118,7 @@ const articleSchema = {
 				/>
 				{post.updatedAt && post.updateStatus && (
 					<p class="text-muted">
-						Atualizacao editorial: {post.updateStatus}
+						Atualização editorial: {post.updateStatus}
 					</p>
 				)}
 				<div class="article-content">
@@ -82,11 +127,12 @@ const articleSchema = {
 				<div class="reading-footer">
 					<AuthorCard post={post} />
 					<section class="reading-panel" aria-label="Chamada final">
-						<h3>Precisa de orientacao aplicada ao seu caso?</h3>
+						<h3>Precisa de orientação aplicada ao seu caso?</h3>
 						<p class="text-muted">{post.cta.description}</p>
 						<a class="btn btn-primary" href={post.cta.href}>
 							{post.cta.label}
 						</a>
+						<p class="reading-ethics-note">Conteúdo informativo. Cada caso exige análise técnica individual.</p>
 					</section>
 					<RelatedPosts posts={related} />
 				</div>
@@ -95,4 +141,17 @@ const articleSchema = {
 	</div>
 
 	<script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
+	<script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+	<script>
+		const progress = document.querySelector('[data-reading-progress]');
+		if (progress) {
+			const update = () => {
+				const max = document.documentElement.scrollHeight - window.innerHeight;
+				const value = max > 0 ? (window.scrollY / max) * 100 : 0;
+				progress.style.width = `${Math.min(100, Math.max(0, value))}%`;
+			};
+			update();
+			window.addEventListener('scroll', update, { passive: true });
+		}
+	</script>
 </BaseLayout>
