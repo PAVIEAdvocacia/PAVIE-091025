@@ -1,0 +1,218 @@
+﻿## BLOCO 00
+- 00.00 Carta Constitucional da PA.md
+  H2: 1. Preâmbulo constitucional | 2. Natureza, finalidade e força normativa | 3. Identidade institucional da PAVIE Advocacia | 4. Missão, visão, posicionamento e princípios
+
+## BLOCO 01
+- 01.00 Plano Diretor Estratégico e Op.md
+  H2: 1. Preâmbulo diretor | 2. Natureza, finalidade e subordinação | 3. Base constitucional de alinhamento | 4. Horizonte, escopo e premissas do ciclo estratégico
+- 01.01 Plano Anual de Execução.md
+  H2: 1. Preâmbulo | 2. Natureza, finalidade e subordinação | 3. Base de alinhamento do ciclo 2026 | 4. Diretriz anual de execução
+- 01.02 Plano Trimestral de Prioridade.md
+  H2: 1. Preâmbulo | 2. Natureza, finalidade e subordinação | 3. Base de alinhamento do ciclo trimestral | 4. Função tática do trimestre
+- 01.03 Mapa de Portfólio e Priorizaçã.md
+  H2: 1. Preâmbulo | 2. Natureza, finalidade e subordinação | 3. Base de alinhamento | 4. Conceitos operacionais do mapa
+- 01.04 Orçamento, Metas e Capacidade.md
+  H2: 1. Preâmbulo | 2. Natureza, finalidade e subordinação | 3. Base de alinhamento | 4. Premissas econômico-operacionais do ciclo
+- 01.05 Roadmap de Evolução Estrutural.md
+  H2: 1. Preâmbulo | 2. Natureza, finalidade e subordinação | 3. Base de alinhamento do roadmap | 4. Tese central do roadmap
+
+## BLOCO 02
+- 02.00 Matriz de Papéis, Responsabili.md
+  H2: 1. Preâmbulo | 2. Natureza, finalidade e subordinação | 3. Princípios operativos de governança | 4. Papéis institucionais mínimos
+- 02.01 Política de Revisão Humana e A.md
+  H2: 1. Preâmbulo | 2. Natureza, finalidade e subordinação | 3. Base constitucional e matricial de alinhamento | 4. Conceitos operacionais da política
+- 02.02 Política de Delegação e Superv.md
+  H2: 1. Preâmbulo | 2. Natureza, finalidade e subordinação | 3. Base constitucional e matricial de alinhamento | 4. Conceitos operacionais da política
+- 02.03 Regimento de Decisões Estrutur.md
+  H2: 1. Preâmbulo | 2. Natureza, finalidade e subordinação | 3. Base constitucional e matricial de alinhamento | 4. Conceitos operacionais do Regimento
+- 02.04 Política de Terceiros, Parceir.md
+  H2: 1. Preâmbulo | 2. Natureza, finalidade e subordinação | 3. Base constitucional e matricial de alinhamento | 4. Conceitos operacionais da política
+
+## BLOCO 03
+- 03.00 Arquitetura Operacional do Sis.md
+  H2: 1. Preâmbulo | 2. Natureza, finalidade e subordinação | 3. Base de alinhamento superior | 4. Papel do 03.00 dentro da árvore de comando e execução
+- 03.01 Manual de Taxonomia, IDs e YAM.md
+  H2: 1. Preâmbulo | 2. Natureza, finalidade e subordinação | 3. Princípios estruturais permanentes | 4. Domínios oficiais do Sistema PAVIE
+- 03.02 Mapa de Processos do Escritóri.md
+  H2: 1. Preâmbulo | 2. Natureza, finalidade e subordinação | 3. Princípios de desenho processual | 4. Visão geral da cadeia operacional
+- 03.03 Biblioteca de SOPs, Checklists.md
+  H2: 1. Preâmbulo | 2. Natureza, finalidade e subordinação | 3. Princípios da biblioteca operacional | 4. Conceitos operacionais oficiais
+- 03.04 Esteira de CRM, Captação, Tria.md
+  H2: 1. Preâmbulo | 2. Natureza, finalidade e subordinação | 3. Escopo da esteira | 4. Princípios operacionais da entrada
+- 03.05 Esteira de Produção Jurídica, .md
+  H2: 1. Preâmbulo | 2. Natureza, finalidade e subordinação | 3. Escopo da esteira | 4. Princípios operacionais da produção jurídica
+- 03.06 Esteira Administrativo-Finance.md
+  H2: 1. Preâmbulo | 2. Natureza, finalidade e subordinação | 3. Escopo da esteira | 4. Princípios operacionais da administração financeira e cobrança
+- 03.07 Esteira de Conhecimento, Model.md
+  H2: 1. Preâmbulo | 2. Natureza, finalidade e subordinação | 3. Escopo da esteira | 4. Princípios operacionais do conhecimento e do reuso
+- 03.08 Memória Operacional, Incidente.md
+  H2: 1. Preâmbulo | 2. Natureza, finalidade e subordinação | 3. Escopo da esteira | 4. Princípios operacionais da memória e da melhoria contínua
+
+## BLOCO 04
+- 04.00 Política de Controle, Risco e .md
+  H2: 1. Preâmbulo | 2. Natureza, finalidade e subordinação | 3. Escopo da política | 4. Fundamentos superiores da política
+- 04.01 Matriz de Riscos Institucionai.md
+  H2: 1. Preâmbulo | 2. Natureza, finalidade e subordinação | 3. Escopo da matriz | 4. Fundamentos metodológicos
+- 04.02 Política de LGPD, Segurança da.md
+  H2: 1. Preâmbulo | 2. Natureza, finalidade e subordinação | 3. Escopo da política | 4. Fundamentos específicos
+- 04.03 Política de IA, Automação e Su.md
+  H2: 1. Preâmbulo | 2. Natureza, finalidade e subordinação | 3. Escopo da política | 4. Fundamentos específicos
+- 04.04 Protocolo PAVIE TRACE.md
+  H2: 1. Preâmbulo | 2. Natureza, finalidade e subordinação | 3. Escopo do protocolo | 4. Fundamentos específicos do PAVIE TRACE
+- 04.05 Política de Auditoria Contínua.md
+  H2: 1. Preâmbulo | 2. Natureza, finalidade e subordinação | 3. Escopo da auditoria contínua | 4. Fundamentos específicos da política
+- 04.06 Plano de Continuidade de Negóc.md
+  H2: 1. Preâmbulo | 2. Natureza, finalidade e subordinação | 3. Conceitos operacionais essenciais | 4. Fundamentos específicos do plano
+- 04.07 Política de Diligência Reforça.md
+  H2: 1. Preâmbulo | 2. Natureza, finalidade e subordinação | 3. Fundamentos específicos da política | 4. Objetivos permanentes da política
+- 04.08 Política de Resposta a Inciden.md
+  H2: 1. Preâmbulo | 2. Natureza, finalidade e subordinação | 3. Conceito de incidente de conformidade | 4. Fundamentos específicos da política
+- 04.09 Manual de Controles por Esteir.md
+  H2: 1. Preâmbulo | 2. Natureza, finalidade e subordinação | 3. Estrutura institucional de um controle | 4. Classificação dos controles
+- 04.10 Painel Executivo de Integridad.md
+  H2: 1. Preâmbulo | 2. Natureza, finalidade e subordinação | 3. Fundamentos específicos do painel | 4. Objetivos permanentes do painel
+
+## BLOCO 05
+- 05.00 Portfólio Jurídico e Entrega d.md
+  H2: 1. Preâmbulo | 2. Natureza, finalidade e subordinação | 3. Fundamentos específicos do portfólio | 4. Objetivos permanentes do bloco 05
+- 05.01 Mapa Oficial de Frentes, Áreas.md
+  H2: 1. Preâmbulo | 2. Natureza, finalidade e subordinação | 3. Regras de leitura do mapa | 4. Mapa oficial consolidado das frentes
+- 05.02 Catálogo de Produtos Jurídicos.md
+  H2: 1. Preâmbulo | 2. Natureza, finalidade e subordinação | 3. Regras estruturais do catálogo | 4. Classes oficiais de serviço da PAVIE
+- 05.03 Critérios de Aceitação, Recusa, Encaminhame.md
+  H2: 1. Preâmbulo | 2. Natureza, finalidade e subordinação | 3. Fundamentos específicos da decisão de entrada | 4. Objetivos permanentes deste documento
+- 05.04 Matriz de Complexidade, Escopo.md
+  H2: 1. Preâmbulo | 2. Natureza, finalidade e subordinação | 3. Fundamentos específicos da precificação na PAVIE | 4. Objetivos permanentes desta matriz
+- 05.05 Padrões de Entregáveis, Evidên.md
+  H2: 1. Preâmbulo | 2. Natureza, finalidade e subordinação | 3. Fundamentos específicos da entrega na PAVIE | 4. Objetivos permanentes deste documento
+- 05.06 Política de Propostas, Pacotes.md
+  H2: 1. Preâmbulo | 2. Natureza, finalidade e subordinação | 3. Fundamentos específicos das propostas da PAVIE | 4. Objetivos permanentes desta política
+- 05.07 Regime de Casos Estratégic .md
+  H2: 1. Preâmbulo | 2. Natureza, finalidade e subordinação | 3. Conceitos estruturais | 4. Fundamentos específicos do regime
+- 05.08 Protocolo de Revisão Periódica.md
+  H2: 1. Preâmbulo | 2. Natureza, finalidade e subordinação | 3. Fundamentos específicos da revisão de portfólio | 4. Objetivos permanentes deste protocolo
+
+## BLOCO 06
+- 06.00 Comercial, Captação e Relacion.md
+  H2: 1. Preâmbulo | 2. Natureza, finalidade e subordinação | 3. Fundamentos específicos do bloco 06 | 4. Objetivos permanentes do bloco 06
+- 06.01 Política de Triagem Comercial .md
+  H2: 1. Preâmbulo | 2. Natureza, finalidade e subordinação | 3. Fundamentos específicos da qualificação comercial | 4. Objetivos permanentes desta política
+- 06.02 Política de Orçamento, Convers.md
+  H2: 1. Preâmbulo | 2. Natureza, finalidade e subordinação | 3. Fundamentos específicos do orçamento e da conversão | 4. Objetivos permanentes desta política
+- 06.03 Jornada do Cliente, Onboarding.md
+  H2: 1. Preâmbulo | 2. Natureza, finalidade e subordinação | 3. Fundamentos específicos da jornada ativa | 4. Objetivos permanentes desta política
+- 06.04 Política de Relacionamento, Pó.md
+  H2: 1. Preâmbulo | 2. Natureza, finalidade e subordinação | 3. Fundamentos específicos | 4. Objetivos permanentes desta política
+- 06.05 Política de Indicações, Parcer.md
+  H2: 1. Preâmbulo | 2. Natureza, finalidade e subordinação | 3. Fundamentos específicos | 4. Objetivos permanentes desta política
+- 06.06 Política de Conteúdo, Autoridade e Captação.md
+  H2: 1. Preâmbulo | 2. Natureza, finalidade e subordinação | 3. Fundamentos específicos | 4. Objetivos permanentes desta política
+- 06.07 CRM Comercial, Pipeline e Ge - Copia.md
+  H2: 1. Preâmbulo | 2. Natureza, finalidade e subordinação | 3. Fundamentos específicos | 4. Objetivos permanentes desta política
+- 06.08 Protocolo de Perda, Reativação.md
+  H2: 1. Preâmbulo | 2. Natureza, finalidade e subordinação | 3. Fundamentos específicos | 4. Objetivos permanentes deste protocolo
+
+## BLOCO 07
+- 07.00 Marca, Comunicação e Presença .md
+  H2: 1. Preâmbulo | 2. Natureza, finalidade e subordinação | 3. Fundamentos específicos do bloco 07 | 4. Objetivos permanentes do bloco 07
+- 07.01_manual_de_identidade_verbal_to.md
+  H2: 1. Preâmbulo | 2. Natureza, finalidade e subordinação | 3. Fundamentos específicos da identidade verbal da PAVIE | 4. Objetivos permanentes deste manual
+- 07.02 Manual de Identidade Visual e .md
+  H2: 1. Preâmbulo | 2. Natureza, finalidade e subordinação | 3. Fundamentos específicos da identidade visual da PAVIE | 4. Objetivos permanentes deste manual
+- 07.03 Arquitetura de Canais, Ativos .md
+  H2: 1. Preâmbulo | 2. Natureza, finalidade e subordinação | 3. Fundamentos específicos da arquitetura de presença | 4. Objetivos permanentes desta política
+- 07.04 Política de Site, Blog, Página.md
+  H2: 1. Preâmbulo | 2. Natureza, finalidade e subordinação | 3. Fundamentos específicos | 4. Objetivos permanentes desta política
+- 07.05 Política de Redes Sociais, Dis.md
+  H2: 1. Preâmbulo | 2. Natureza, finalidade e subordinação | 3. Fundamentos específicos | 4. Objetivos permanentes desta política
+- 07.06 Política de Reputação, Prova I.md
+  H2: 1. Preâmbulo | 2. Natureza, finalidade e subordinação | 3. Fundamentos específicos | 4. Objetivos permanentes desta política
+- 07.07 Política de UX, Clareza, Conve.md
+  H2: 1. Preâmbulo | 2. Natureza, finalidade e subordinação | 3. Fundamentos específicos | 4. Objetivos permanentes desta política
+- 07.08 Protocolo de Revisão, Coerênci.md
+  H2: 1. Preâmbulo | 2. Natureza, finalidade e subordinação | 3. Fundamentos específicos | 4. Objetivos permanentes deste protocolo
+
+## BLOCO 08
+- 08.00 Financeiro, Administrativo e P.md
+  H2: 1. Preâmbulo | 2. Natureza, finalidade e subordinação | 3. Fundamentos específicos do bloco 08 | 4. Objetivos permanentes do bloco 08
+- 08.01 Política de Estrutura Financei.md
+  H2: 1. Preâmbulo | 2. Natureza, finalidade e subordinação | 3. Fundamentos específicos | 4. Objetivos permanentes desta política
+- 08.02 Política de Orçamento Operacio.md
+  H2: 1. Preâmbulo | 2. Natureza, finalidade e subordinação | 3. Fundamentos específicos | 4. Objetivos permanentes desta política
+- 08.03_politica_de_precificacao_execu.md
+  H2: 1. Preâmbulo | 2. Natureza, finalidade e subordinação | 3. Fundamentos específicos | 4. Objetivos permanentes desta política
+- 08.04_politica_de_faturamento_cobran.md
+  H2: 1. Preâmbulo | 2. Natureza, finalidade e subordinação | 3. Fundamentos específicos | 4. Objetivos permanentes desta política
+- 08.05_politica_de_custos_estrutura_e.md
+  H2: 1. Preâmbulo | 2. Natureza, finalidade e subordinação | 3. Fundamentos específicos | 4. Objetivos permanentes desta política
+- 08.06_politica_de_indicadores_kpis_e.md
+  H2: 1. Preâmbulo | 2. Natureza, finalidade e subordinação | 3. Fundamentos específicos | 4. Objetivos permanentes desta política
+- 08.07_politica_de_risco_contingencia.md
+  H2: 1. Preâmbulo | 2. Natureza, finalidade e subordinação | 3. Fundamentos específicos | 4. Objetivos permanentes desta política
+- 08.08_politica_de_revisao_economica_.md
+  H2: 1. Preâmbulo | 2. Natureza, finalidade e subordinação | 3. Fundamentos específicos | 4. Objetivos permanentes desta política
+
+## BLOCO 09
+- 09.00_politica_de_arquitetura_tecnol.md
+  H2: 1. Preâmbulo | 2. Natureza, finalidade e subordinação | 3. Fundamentos específicos | 4. Objetivos permanentes desta política
+- 09.01_politica_do_nucleo_obsidian_cr.md
+  H2: 1. Preâmbulo | 2. Natureza, finalidade e subordinação | 3. Fundamentos específicos | 4. Objetivos permanentes desta política
+- 09.02_politica_da_camada_de_captura_.md
+  H2: 1. Preâmbulo | 2. Natureza, finalidade e subordinação | 3. Fundamentos específicos | 4. Objetivos permanentes desta política
+- 09.03_politica_de_versionamento_inte.md
+  H2: 1. Preâmbulo | 2. Natureza, finalidade e subordinação | 3. Fundamentos específicos | 4. Objetivos permanentes desta política
+- 09.04_politica_de_observabilidade_lo.md
+  H2: 1. Preâmbulo | 2. Natureza, finalidade e subordinação | 3. Fundamentos específicos | 4. Objetivos permanentes desta política
+- 09.05_politica_de_seguranca_controle.md
+  H2: 1. Preâmbulo | 2. Natureza, finalidade e subordinação | 3. Fundamentos específicos | 4. Objetivos permanentes desta política
+- 09.06_politica_de_backup_redundancia.md
+  H2: 1. Preâmbulo | 2. Natureza, finalidade e subordinação | 3. Fundamentos específicos | 4. Objetivos permanentes desta política
+- 09.07_politica_de_governanca_de_ia_p.md
+  H2: 1. Preâmbulo | 2. Natureza, finalidade e subordinação | 3. Fundamentos específicos | 4. Objetivos permanentes desta política
+- 09.08_politica_de_dados_derivados_me.md
+  H2: 1. Preâmbulo | 2. Natureza, finalidade e subordinação | 3. Fundamentos específicos | 4. Objetivos permanentes desta política
+
+## BLOCO 10
+- 10.00_politica_de_registros_evidenci.md
+  H2: 1. Preâmbulo | 2. Natureza, finalidade e subordinação | 3. Fundamentos específicos | 4. Objetivos permanentes desta política
+- 10.01_matriz_de_classes_documentais_.md
+  H2: 1. Preâmbulo | 2. Natureza, finalidade e subordinação | 3. Fundamentos específicos | 4. Objetivos permanentes desta matriz
+- 10.02_politica_de_dossies_pastas_com.md
+  H2: 1. Preâmbulo | 2. Natureza, finalidade e subordinação | 3. Fundamentos específicos | 4. Objetivos permanentes desta política
+- 10.03_politica_de_evidencia_primaria.md
+  H2: 1. Preâmbulo | 2. Natureza, finalidade e subordinação | 3. Fundamentos específicos | 4. Objetivos permanentes desta política
+- 10.04_politica_de_retencao_arquivame.md
+  H2: 1. Preâmbulo | 2. Natureza, finalidade e subordinação | 3. Fundamentos específicos | 4. Objetivos permanentes desta política
+- 10.05_politica_de_registros_fisicos_.md
+  H2: 1. Preâmbulo | 2. Natureza, finalidade e subordinação | 3. Fundamentos específicos | 4. Objetivos permanentes desta política
+- 10.06_politica_de_resumos_de_ciclo_e.md
+  H2: 1. Preâmbulo | 2. Natureza, finalidade e subordinação | 3. Fundamentos específicos | 4. Objetivos permanentes desta política
+- 10.07_politica_de_reuso_probatorio_e.md
+  H2: 1. Preâmbulo | 2. Natureza, finalidade e subordinação | 3. Fundamentos específicos | 4. Objetivos permanentes desta política
+- 10.08_protocolo_de_higiene_documenta.md
+  H2: 1. Preâmbulo | 2. Natureza, finalidade e subordinação | 3. Fundamentos específicos | 4. Objetivos permanentes deste protocolo
+
+## BLOCO 11
+- 11.00 Política do Ecossistema Editorial.md
+  H2: 1. Preâmbulo | 2. Natureza, finalidade e subordinação | 3. Fundamentos específicos do ecossistema editorial da PAVIE | 4. Objetivos permanentes do blog jurídico institucional
+- 11.01_politica_de_modelo_de_conteudo.md
+  H2: 1. Preâmbulo | 2. Natureza, finalidade e subordinação | 3. Fundamentos específicos | 4. Objetivos permanentes desta política
+- 11.02_politica_da_pagina_principal_d.md
+  H2: 1. Preâmbulo | 2. Natureza, finalidade e subordinação | 3. Fundamentos específicos | 4. Objetivos permanentes desta política
+- 11.03_politica_da_pagina_de_leitura_.md
+  H2: 1. Preâmbulo | 2. Natureza, finalidade e subordinação | 3. Fundamentos específicos | 4. Objetivos permanentes desta política
+- 11.04_politica_de_workflow_editorial.md
+  H2: 1. Preâmbulo | 2. Natureza, finalidade e subordinação | 3. Fundamentos específicos | 4. Objetivos permanentes desta política
+- 11.05_politica_de_seo_editorial_dado.md
+  H2: 1. Preâmbulo | 2. Natureza, finalidade e subordinação | 3. Fundamentos específicos | 4. Objetivos permanentes desta política
+- 11.06_politica_de_interlinking_ctas_.md
+  H2: 1. Preâmbulo | 2. Natureza, finalidade e subordinação | 3. Fundamentos específicos | 4. Objetivos permanentes desta política
+- 11.07_politica_de_audio_midias_deriv.md
+  H2: 1. Preâmbulo | 2. Natureza, finalidade e subordinação | 3. Fundamentos específicos | 4. Objetivos permanentes desta política
+- 11.08_protocolo_de_qa_editorial_test.md
+  H2: 1. Preâmbulo | 2. Natureza, finalidade e subordinação | 3. Fundamentos específicos | 4. Objetivos permanentes deste protocolo
+
+## BLOCO xx
+- pavie_blog_blueprint_execucao_prompt.md
+  H2: 1. Tese central | 2. Diagnóstico do fluxo atual | 3. Objetivo do blog dentro do ecossistema PAVIE | 4. Arquitetura recomendada do ecossistema comunicacional
+

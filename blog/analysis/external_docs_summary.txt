@@ -1,0 +1,1293 @@
+
+=== FILE: PAVIE_Codex_Digital_v2 (claude).pdf ===
+exists=True
+type=pdf pages=12
+--- page 1 ---
+HOME
+BLOG HOME
+SERVIÇOS
+ARTIGO
+CODEX
+Digital
+PAVIE
+Especificação editorial, visual e de copy
+Site Institucional & Blog Jurídico
+Copy exato
+Layout por seção
+Posição de CTAs
+ROI por bloco
+Diagnóstico ativo
+Versão 2.0 · Março 2026 · Baseado na análise do site ativo e documentos estratégicos
+OAB/RJ 134.947 · Maricá, Rio de Janeiro
+PAVIE ADVOCACIA — CODEX DIGITAL 2026
+--- page 2 ---
+PAVIE Advocacia
+CODEX DIGITAL
+DIAGNÓSTICO — SITE ATIVO
+Especificação Editorial, Visual e de Copy
+pavieadvocacia.com.br · blog.pavieadvocacia.com.br
+DIAGNÓSTICO DO SITE ATIVO — pavieadvocacia.com.br
+Análise pontual por bloco: o que funciona, o que pode ser refinado e por quê
+pavieadvocacia.com.br
+PAVIE
+| Advocacia
+Sobre
+Serviços
+Como Contratar
+Honorários
+FAQ
+Contato
+Agendar Consulta
+(21) 96438-2283  ● WhatsApp  Agendar Consulta ■
+A solidez da experiência.
+A agilidade digital.
+Família, sucessões — Informação clara,
+prazos definidos e documentos corretos.
+Solicitar Proposta
+Conheça os Serviços
+Por que a PAVIE?
+✓ 20 anos experiência
+✓ Resposta 24h
+✓ 100% digital
+✓ Linguagem clara
+✓ LGPD
+24h
+100%
+OAB
+LGPD
+20
+--- page 3 ---
+PAVIE Advocacia
+CODEX DIGITAL
+DIAGNÓSTICO — BLOG ATIVO
+Especificação Editorial, Visual e de Copy
+pavieadvocacia.com.br · blog.pavieadvocacia.com.br
+DIAGNÓSTICO DO BLOG ATIVO — blog.pavieadvocacia.com.br
+Home do blog · Página de artigo · Análise visual e de copy
+blog.pavieadvocacia.com.br
+π PAVIE
+Áreas de Atuação
+O Escritório
+Publicações
+Consultoria Online
+HUB EDITORIAL PAVIE
+Publicações jurídicas para
+decisões de alto impacto.
+Análises de sucessões, família e patrimônio.
+Direito e Patrimônio
+LEITURA EM DESTAQUE
+Quanto custa um abraço
+Critérios de Fixação da Pensão...
+Ler análise →
+Leituras em destaque
+Precisa transformar leitura em estratégia aplicável?
+Agendar Consultoria
+blog.pavieadvocacia.com.br/blog/...
+π
+Consultoria Online
+Direito e Patrimônio
+Quanto custa um abraço
+Fábio Pavie · 8 mar 2024 · 5 min
+Critérios de Fixação da Pensão Alimentícia...
+Neste artigo
+Dúvidas sobre
+seu caso?
+--- page 4 ---
+PAVIE Advocacia
+CODEX DIGITAL
+CODEX — HOME: TOPBAR & HERO
+Especificação Editorial, Visual e de Copy
+pavieadvocacia.com.br · blog.pavieadvocacia.com.br
+Site Institucional · Seção de Entrada · Alto ROI
+(21) 96438-2283  ●  WhatsApp   ■  OAB/RJ 134.947
+Agendar Consulta Inicial
+ROI CRÍTICO
+Único CTA acima do fold
+PAVIE
+| Advocacia
+Sobre
+Serviços
+Como Contratar
+Honorários
+FAQ
+Contato
+Agendar Consulta
+Sticky nav
+fixa ao rolar
+A solidez da experiência.
+A agilidade digital.
+Família, sucessões e patrimônio.
+Informação clara, prazos definidos.
+Solicitar Diagnóstico
+Conheça os Serviços
+Por que escolher a PAVIE?
+✓ 20 anos de experiência
+✓ Resposta em até 24h úteis
+✓ 100% digital ou híbrido
+✓ Linguagem clara, sem juridiquês
+✓ Documentação impecável
+✓ Honorários transparentes
+CTA 1°
+--- page 5 ---
+PAVIE Advocacia
+CODEX DIGITAL
+CODEX — HOME: SOBRE & SERVIÇOS
+Especificação Editorial, Visual e de Copy
+pavieadvocacia.com.br · blog.pavieadvocacia.com.br
+Identidade Institucional · Hierarquia de Serviços
+Consultoria jurídica
+Direito claro para decisões seguras.
+Consultoria jurídica com par...
+Cronograma com marcos e praz...
+Atendimento online e presenc...
+Consulta diagnóstica e check...
+Seção SOBRE
+H2 + atributos
+Serviços Jurídicos
+Família, Contratos, Imóveis, Tributos e Empresarial
+F
+Família &
+Patrimônio
+Ver área
+G
+Internacional
+& Binacional
+Ver área
+I
+Imóveis &
+Registro
+Ver área
+T
+Tributos &
+Fazenda
+Ver área
+E
+Empresarial
+OSCs
+--- page 6 ---
+PAVIE Advocacia
+CODEX DIGITAL
+CODEX — COMO CONTRATAR · HONORÁRIOS · FAQ
+Especificação Editorial, Visual e de Copy
+pavieadvocacia.com.br · blog.pavieadvocacia.com.br
+Transparência · Conversão · SEO
+Como Contratar
+Processo simples, transparente e 100% digital
+1
+Primeiro Contato
+WhatsApp, e-mail ou formulário — resposta em 24h
+2
+Triagem e Consulta
+Videochamada 60–90 min para análise e estratégia
+3
+Proposta e Contrato
+Proposta detalhada, escopo, prazos, D4Sign
+4
+Execução com Acompanhamento
+Pasta segura, relatórios quinzenais, SLA 24h
+5
+Conclusão e Pós-Serviço
+Relatório final, suporte 30 dias, orientações de guarda
+Começar Agora →
+Elemento ROI CRÍTICO
+Maior taxa de conversão
+Política de Honorários
+Transparência, moderação e contrato claro —
+sem divulgação de valores no site (normas da OAB).
+Como definimos honorários
+✓ Natureza e complexidade
+✓ Trabalho e tempo necessários
+✓ Local e eventuais deslocamentos
+Fluxo ético de contratação
+✓ Consulta diagnóstica
+--- page 7 ---
+PAVIE Advocacia
+CODEX DIGITAL
+CODEX — CONTATO & FOOTER
+Especificação Editorial, Visual e de Copy
+pavieadvocacia.com.br · blog.pavieadvocacia.com.br
+Conversão Máxima · Aviso Ético · Fechamento Institucional
+Pronto para clarear seu caminho jurídico?
+Agende uma consulta diagnóstica ou solicite
+uma proposta sem compromisso
+■ Contato Direto
+(21) 96438-2283 · WhatsApp →
+■ E-mail
+contato@pavieadvocacia.com.br →
+CTA seção final
+max conversão
+Formulário de Contato
+Nome completo *
+E-mail *
+Telefone/WhatsApp *
++55 Brasil  ■
+Serviço de interesse
+Selecione...  ■
+Descreva brevemente sua situação *
+Selecione...  ■
+Li e concordo com a Política de Privacidade e autorizo o contato.
+Enviar Solicitação
+Segurança validada.
+ROI MÁXIMO
+PAVIE | Advocacia
+Clareza e segurança jurídica. Onde você estiver.
+Serviços
+Família & Patrimônio
+Sucessões & Inventário
+Divórcios
+Família Binacional
+--- page 8 ---
+PAVIE Advocacia
+CODEX DIGITAL
+CODEX — BLOG: HOME
+Especificação Editorial, Visual e de Copy
+pavieadvocacia.com.br · blog.pavieadvocacia.com.br
+Hub Editorial · Curadoria · Clusters Temáticos
+π PAVIE
+Advocacia
+Áreas de Atuação
+O Escritório
+Publicações
+Buscar...
+Consultoria Online
+HUB EDITORIAL PAVIE
+Publicações jurídicas para
+decisões de alto impacto.
+Análises de sucessões, família e patrimônio.
+Leitura longa · Estrutura técnica · Encaminhamento institucional.
+Direito e Patrimônio
+Todos
+Família
+Sucessões
+Imóveis
+Internacional
+Tributos
+Direito e Patrimônio
+Quanto custa um abraço
+Critérios de Fixação da Pensão Alimentícia:
+necessidade, possibilidade e custo real.
+8 mar 2024 · 5 min de leitura
+Ler análise principal →
+Leituras em destaque
+Direito
+Ler →
+Direito
+--- page 9 ---
+PAVIE Advocacia
+CODEX DIGITAL
+CODEX — BLOG: PÁGINA DE ARTIGO
+Especificação Editorial, Visual e de Copy
+pavieadvocacia.com.br · blog.pavieadvocacia.com.br
+Leitura · Retenção · CTA Contextual · Schema Article
+π PAVIE
+Áreas de Atuação
+O Escritório
+Publicações
+Consultoria Online
+Início  ›  Publicações  ›  Família e Sucessões  ›  Pensão alimentícia
+Breadcrumb
+BreadcrumbList schema
+Direito e Patrimônio
+Quanto custa um abraço
+Critérios de Fixação da Pensão Alimentícia: entre necessidade,
+possibilidade e o custo real de criar um filho no Brasil
+Fábio Pavie · Sócio fundador da PAVIE Advocacia
+8 de março de 2024  ·  5 min de leitura  ·  8 min de audio
+35% lido
+■ Em produção
+Barra progresso
+retém leitores +40%
+Neste artigo
+→ Resumo
+→ O trinômio legal
+→ Dados do IBGE
+→ Jurisprudência
+→ Conclusão
+Dúvidas sobre
+seu caso?
+Receba análise inicial para
+entender riscos e estratégia.
+CTA sidebar
+--- page 10 ---
+PAVIE Advocacia
+CODEX DIGITAL
+MAPA DE ROI & CTAs
+Especificação Editorial, Visual e de Copy
+pavieadvocacia.com.br · blog.pavieadvocacia.com.br
+Priorização de Conversão Ética · Rastreamento · Performance
+MAPA DE ROI — ELEMENTOS DE ALTO IMPACTO
+Cada bloco, seção e CTA ranqueado por impacto na captação ética de clientes
+01
+FORMULÁRIO DE CONTATO
+Conversão direta. Todo funil termina aqui.
+CRÍTICO
+site + blog
+02
+CTA HERO — Solicitar Diagnóstico
+Primeiro ponto de conversão. Acima do fold.
+CRÍTICO
+site home
+03
+SEÇÃO COMO CONTRATAR
+Transparência = confiança = decisão. Maior dif. competitivo.
+CRÍTICO
+site home
+04
+CTA CONTEXTUAL (artigo blog)
+Leitor qualificado + tema em evidência = lead quente.
+CRÍTICO
+cada artigo
+05
+TOPBAR — Agendar Consulta
+Visível em todas as páginas. Acima de tudo.
+ALTO
+site
+06
+FAQ COM SCHEMA
+--- page 11 ---
+PAVIE Advocacia
+CODEX DIGITAL
+VOCABULÁRIO & FRASEOLOGIA
+Especificação Editorial, Visual e de Copy
+pavieadvocacia.com.br · blog.pavieadvocacia.com.br
+Tom · Voz · Termos Preferenciais · Vedados · CTAs
+VOCABULÁRIO DEFINITIVO — SITE & BLOG PAVIE
+
+=== FILE: PAVIE_Ebook_Completo.md ===
+exists=True
+type=md lines=55402 headings=6725
+# PAVIE Advocacia — Sistema Operacional Completo
+## Índice Geral
+# 00. Constituição e Governo do Escritório — Carta Constitucional da PAVIE Advocacia e Raiz da Árvore de Comando e Execução
+## 1. Preâmbulo constitucional
+## 2. Natureza, finalidade e força normativa
+### 2.1 Natureza
+### 2.2 Finalidade
+### 2.3 Força normativa
+### 2.4 Regra de prevalência
+### 2.5 Vedação de desvio hierárquico
+## 3. Identidade institucional da PAVIE Advocacia
+### 3.1 Definição institucional
+### 3.2 Tese institucional
+### 3.3 Vocação
+### 3.4 Compromisso institucional
+### 3.5 Atributos permanentes de identidade
+## 4. Missão, visão, posicionamento e princípios
+### 4.1 Missão
+### 4.2 Visão
+### 4.3 Posicionamento institucional
+### 4.4 Princípios constitucionais permanentes
+#### 4.4.1 Legalidade
+#### 4.4.2 Evidência antes da narrativa
+#### 4.4.3 Accountability
+#### 4.4.4 Rastreabilidade
+#### 4.4.5 Segurança por padrão
+#### 4.4.6 Privacidade e minimização de dados
+#### 4.4.7 Supervisão humana cogente sobre IA
+#### 4.4.8 Eficiência com rigor
+#### 4.4.9 Comunicação clara
+#### 4.4.10 Legal Design funcional
+#### 4.4.11 Continuidade e resiliência
+#### 4.4.12 Coerência institucional
+#### 4.4.13 Disciplina documental
+#### 4.4.14 Foco em valor e resultado com ética
+## 5. Pilares de governo: P.L.O.C.
+### 5.1 Planejamento
+### 5.2 Liderança
+### 5.3 Organização
+### 5.4 Controle
+## 6. Modelo de negócio e diretrizes estratégicas vigentes
+### 6.1 Regra geral
+### 6.2 Parâmetros estratégicos vigentes
+### 6.3 Regra de revisão dos parâmetros
+### 6.4 Relação entre estratégia, capacidade e ética
+### 6.5 Compatibilidade entre promessa externa e capacidade interna
+## 7. Modelo de autoridade, decisão e alçadas
+### 7.1 Centralidade decisória
+### 7.2 Delegação
+### 7.3 Classificação dos atos
+### 7.4 Regra de revisão humana
+### 7.5 Precedência entre campos de decisão
+## 8. Governo dos dados, da tecnologia e da IA
+### 8.1 Diretriz arquitetural
+### 8.2 Metadados estruturados
+### 8.3 Versionamento
+### 8.4 Rastreabilidade tecnológica
+### 8.5 Princípio de confiança mínima
+### 8.6 Dados pessoais e sigilo
+### 8.7 Inteligência artificial
+### 8.8 Automação responsável
+## 9. Governo da comunicação, da marca e da forma documental
+### 9.1 Regra geral
+### 9.2 Primazia do conteúdo
+### 9.3 Marca e coerência
+### 9.4 Legal Design e Visual Law
+### 9.5 Subordinação aos manuais próprios
+### 9.6 Vedação de improvisação
+## 10. Governo da conformidade, do risco e da continuidade
+### 10.1 Conformidade contínua
+### 10.2 Gestão de riscos
+### 10.3 PAVIE TRACE
+### 10.4 Privacidade, proteção de dados e segurança
+### 10.5 Continuidade do negócio
+### 10.6 Governança de IA
+### 10.7 PLD, KYC, KYE, KYP e KYS
+### 10.8 Auditoria e correção de desvios
+### 10.9 Capacitação e aculturamento
+## 11. Árvore de comando e execução
+### 11.1 Bloco 00 — Constituição e Governo do Escritório
+### 11.2 Bloco 01 — Planejamento e Direção Estratégica
+### 11.3 Bloco 02 — Liderança, Governança e Comando
+### 11.4 Bloco 03 — Organização Operacional do Escritório
+### 11.5 Bloco 04 — Controle, Risco e Conformidade
+### 11.6 Bloco 05 — Portfólio Jurídico e Entrega de Valor
+### 11.7 Bloco 06 — Comercial, Captação e Relacionamento
+### 11.8 Bloco 07 — Marca, Comunicação e Presença Digital
+### 11.9 Bloco 08 — Financeiro, Administrativo e Performance
+### 11.10 Bloco 09 — Ativos, Infraestrutura e Tecnologia
+### 11.11 Bloco 10 — Registros, Evidências e Memória Institucional
+## 12. Matriz de derivação documental
+### 12.1 Redistribuição dos documentos-fonte na nova arquitetura
+#### a) Conteúdo que sobe para o 00
+#### b) Conteúdo que desce para o 01
+#### c) Conteúdo que desce para o 04
+#### d) Conteúdo que desce para o 07
+#### e) Conteúdo que desce para o 09
+## 13. Regras de redação, versionamento e revisão
+### 13.1 Periodicidade ordinária
+### 13.2 Gatilhos extraordinários de revisão
+### 13.3 Controle de versão
+### 13.4 Autoridade de revisão e aprovação
+### 13.5 Vedação de documentos conflitantes
+### 13.6 Registro de alteração estrutural
+## 14. Cláusulas finais
+### 14.1 Entrada em vigor
+### 14.2 Obrigatoriedade de observância
+### 14.3 Revogação tácita
+### 14.4 Força precursora
+### 14.5 Regra de implementação
+# Anexo A — O que pertence ao 00 e o que não pertence
+# Anexo B — Quadro de aproveitamento dos documentos-fonte
+# Anexo C — Lista de documentos-filhos prioritários
+## Nota de implementação
+# 01.00 Plano Diretor Estratégico e Operacional — versão constitucionalmente alinhada
+## 1. Preâmbulo diretor
+## 2. Natureza, finalidade e subordinação
+### 2.1 Natureza
+### 2.2 Finalidade
+### 2.3 Subordinação
+
+=== FILE: PAVIE_Elementos_Institucionais_Sit.docx ===
+exists=True
+type=docx paragraphs=77
+PAVIE | ADVOCACIA
+Elementos Institucionais · Site & Blog Jurídico
+Fabio Mathias Pavie · OAB/RJ 134.947
+Este documento reúne os blocos de texto institucionais prontos para uso na página "Sobre", na home do site e na assinatura de autor do blog jurídico da PAVIE | Advocacia. Cada seção indica sua função específica, a localização recomendada na arquitetura do site e as orientações de uso editorial.
+SEÇÃO 1 — PÁGINA "SOBRE O ADVOGADO"
+Bio Principal · Versão Completa
+[ Uso: página /sobre · Texto principal da seção biográfica · ~450 palavras ]
+Foto sugerida: página /sobre e hero da home — ambiente Rio de Janeiro
+↳ Recomendada para: topo da página /sobre · hero da home · cartão de apresentação digital
+Fabio Mathias Pavie é advogado e fundador da PAVIE | Advocacia, com atuação concentrada na advocacia cível e em áreas de alta relevância prática para pessoas, famílias e negócios. Graduado em Direito pela Universidade Federal Fluminense, com pós-graduação em Direito Processual e formação complementar em Administração Pública e Letras pela mesma instituição — além de pós-graduação em andamento em Direito Processual Civil: Panorama Atual —, reúne cerca de 20 anos de experiência jurídica dedicados à condução técnica de questões ligadas a família, sucessões, contratos, patrimônio, responsabilidade civil, relações imobiliárias, consumidor, compliance e regularidade negocial. É membro do Instituto Brasileiro de Direito de Família — IBDFAM.
+Sua formação profissional articula advocacia privada e experiência institucional consistente, o que lhe confere visão ampliada sobre litígios, prevenção de riscos, organização documental, conformidade normativa e tomada de decisão em contextos complexos. Ao longo de sua atuação no setor público, exerceu funções jurídicas em diferentes estruturas da administração municipal, incluindo a Casa Civil, onde participou da elaboração e revisão de projetos de lei, minutas normativas e instrumentos regulamentares, e secretarias voltadas à articulação política, gestão executiva e controle de conformidade.
+Como Coordenador Jurídico da Secretaria Municipal de Assistência Social, liderou processos de adequação contratual às normas de licitação e parcerias com organizações da sociedade civil, com foco em segurança jurídica, conformidade documental e interlocução com órgãos de controle. Nesse período, também coordenou o desenvolvimento e execução de um programa voltado ao acesso à justiça para pessoas em situação de vulnerabilidade, articulando CRAS, Defensoria Pública e Secretaria de Saúde para garantir, de forma célere e efetiva, o acesso a medicamentos, insumos e orientação jurídica à população mais carente — reduzindo tempo de espera e custos com judicialização.
+No contencioso cível privado, sua experiência inclui a representação de grandes clientes institucionais em demandas de responsabilidade civil e consumidor, conduzindo defesas técnicas em casos envolvendo danos materiais e morais com relevância quantitativa e qualitativa. Essa vivência fortaleceu sua capacidade de construir estratégias defensivas sólidas, avaliar indicadores de risco e conduzir negociações e acordos com método e segurança jurídica.
+Ao longo da trajetória, sua atuação também envolveu diretamente a proteção de pessoas em situação de vulnerabilidade em diferentes frentes. No âmbito da política de assistência social, esteve à frente da supervisão jurídica de equipamentos de acolhimento institucional para crianças e adolescentes — incluindo unidades destinadas a crianças de até 12 anos e a adolescentes de até 18 anos —, em conformidade com o Estatuto da Criança e do Adolescente e as diretrizes da política nacional de acolhimento. Essa experiência confere familiaridade técnica com os instrumentos do ECA, com a dinâmica do Sistema de Garantia de Direitos e com as interfaces entre o acolhimento institucional, o poder judiciário e os órgãos de controle. Atuou ainda em interface com a rede de proteção de mulheres em situação de violência doméstica e vulnerabilidade — conjunto de vivências que reforça a densidade humana e a responsabilidade técnica com que conduz casos que exigem, além de domínio jurídico, escuta qualificada, prudência e atenção às repercussões familiares, patrimoniais e pessoais envolvidas.
+Na PAVIE | Advocacia, sua proposta é objetiva: oferecer ao cliente leitura estratégica do problema, compreensão real dos riscos, organização dos documentos relevantes e condução jurídica segura — com discrição, linguagem acessível e rigor técnico. Sem excesso retórico, sem promessas incompatíveis com a seriedade da profissão. Com método, consistência e confiança.
+Bloco de Credenciais
+[ Uso: sidebar da página /sobre · coluna lateral · formato visual compacto ]
+SEÇÃO 2 — HOME DO SITE
+Headline Principal
+[ Uso: hero da home · acima do fold · impacto imediato ]
+Variante A — orientada ao cliente:
+Advocacia civil com clareza, método e foco no que realmente importa para você.
+Variante B — orientada à autoridade:
+Soluções jurídicas sérias para questões que impactam patrimônio, família e negócios.
+Subtítulo recomendado (qualquer variante):
+Fabio Mathias Pavie — Advogado | OAB/RJ 134.947 | Fundador da PAVIE | Advocacia
+Microcopy de Identificação
+[ Uso: logo após o headline · antes da bio · gera espelhamento com o visitante ]
+Quando uma questão jurídica chega, ela raramente chega sozinha. Ela vem acompanhada de dúvida, pressão de prazo, documentos incompletos, conflitos familiares ou incerteza sobre o que pode e o que não pode ser feito. É exatamente nesse ponto que a PAVIE | Advocacia atua: com diagnóstico claro, linguagem acessível e condução técnica responsável.
+Bio de Apresentação — Versão Home
+[ Uso: seção "Quem está à frente do escritório" na home · ~200 palavras ]
+Sou Fabio Mathias Pavie, advogado à frente da PAVIE | Advocacia. Minha atuação é centrada na advocacia cível e em áreas que costumam impactar profundamente a vida das pessoas, das famílias e dos negócios: família, sucessões, contratos, patrimônio, imóveis, responsabilidade civil, consumidor e compliance.
+Graduado e pós-graduado pela UFF, com cerca de 20 anos de atuação jurídica, construí minha trajetória com a convicção de que o cliente não precisa apenas de alguém que conheça a lei — precisa de alguém que entenda o problema com profundidade, organize o caminho e conduza a solução com clareza, seriedade e responsabilidade. Sou membro do IBDFAM, o que reforça meu vínculo técnico e institucional com temas de família e sucessões.
+Minha experiência combina advocacia privada e atuação institucional relevante, incluindo contencioso cível de alta complexidade, elaboração de projetos normativos, gestão de conformidade e coordenação de programas voltados ao acesso à justiça. Ao longo da carreira, também atuei diretamente na supervisão jurídica de equipamentos de acolhimento institucional para crianças e adolescentes, em conformidade com o ECA e a política nacional de acolhimento, bem como em contextos de proteção de mulheres em situação de violência doméstica e vulnerabilidade.
+Na PAVIE | Advocacia, o compromisso é oferecer orientação séria, acessível e bem estruturada: sem juridiquês desnecessário e sem promessas incompatíveis com a realidade. Cada caso merece análise verdadeira, estratégia adequada e atuação compatível com a importância que ele tem na vida de quem busca ajuda jurídica.
+Proposta de Valor — Bloco Diferenciador
+[ Uso: seção central da home · responde à objeção "por que este escritório?" ]
+Por que a PAVIE | Advocacia?
+Não porque somos o escritório mais antigo nem o de maior estrutura. Mas porque acreditamos que o cliente merece entender, com clareza, onde está, o que pode fazer, quais riscos existem e qual caminho faz sentido seguir. Nossa proposta é simples: técnica jurídica a serviço de decisões seguras, com linguagem que você consegue acompanhar e orientação em que você pode confiar.
+SEÇÃO 3 — CHAMADAS PARA CONTATO (CTA)
+[ Uso: rodapé de página /sobre · fim de artigos do blog · seção de contato ]
+CTA Direto:
+Tem uma questão jurídica que precisa de análise? Entre em contato e explique sua situação. O primeiro passo é entender o problema com clareza.
+CTA Acolhedor:
+Muitas situações jurídicas chegam acompanhadas de dúvida. Se você não sabe ao certo se tem um problema jurídico ou qual seria o caminho correto, esse já é um bom motivo para conversar.
+CTA Institucional (para blog):
+Este artigo foi elaborado pela PAVIE | Advocacia. Para questões específicas sobre o tema ou outras situações jurídicas envolvendo patrimônio, família, contratos ou responsabilidade civil, entre em contato para uma avaliação responsável e fundamentada.
+SEÇÃO 4 — BLOG JURÍDICO
+Assinatura de Autor
+[ Uso: bloco fixo abaixo de todos os artigos · padronizada em todo o blog ]
+Foto sugerida: assinatura de autor no blog · perfil LinkedIn · diretórios jurídicos
+↳ Recomendada para: assinatura de autor · avatar em perfis externos · miniatura institucional
+Fabio Mathias Pavie é advogado, fundador da PAVIE | Advocacia e membro do IBDFAM. Com graduação e pós-graduação em Direito pela UFF, formação complementar em Administração Pública e Letras, pós-graduação em andamento em Direito Processual Civil: Panorama Atual, e cerca de 20 anos de atuação na advocacia cível, escreve sobre família, sucessões, patrimônio, contratos, imóveis, responsabilidade civil, consumidor e compliance — com linguagem clara, enfoque estratégico e atenção especial a temas humanos e patrimoniais de alta relevância prática. OAB/RJ 134.947.
+Bio de Autor — Versão Estendida
+[ Uso: página de perfil do autor no blog · seção "Sobre o autor" em artigos âncora ]
+Fabio Mathias Pavie é advogado e fundador da PAVIE | Advocacia, com graduação e pós-graduação em Direito pela Universidade Federal Fluminense, formação complementar em Administração Pública e Letras pela mesma instituição, pós-graduação em andamento em Direito Processual Civil: Panorama Atual, e cerca de 20 anos de atuação concentrada na advocacia cível. É membro do Instituto Brasileiro de Direito de Família — IBDFAM — e atua principalmente nas áreas de família, sucessões, patrimônio, contratos, imóveis, responsabilidade civil, consumidor e compliance.
+Ao longo da carreira, combinou advocacia privada com experiência jurídica institucional relevante, incluindo a condução de contencioso cível em casos de responsabilidade e danos, a elaboração de projetos normativos e regulamentares, a gestão de conformidade contratual em estruturas públicas, a supervisão jurídica de equipamentos de acolhimento institucional para crianças e adolescentes (ECA) e a coordenação de programas voltados ao acesso à justiça para pessoas em situação de vulnerabilidade. Essa trajetória confere a seus textos uma perspectiva que une domínio técnico, visão institucional e atenção à dimensão humana dos conflitos jurídicos.
+SEÇÃO 5 — VERSÃO INTERMEDIÁRIA / PERFIS EXTERNOS
+[ Uso: LinkedIn · diretórios jurídicos · apresentações em eventos · press kit ]
+Foto sugerida: LinkedIn · diretórios · press kit · versões impressas
+↳ Recomendada para: LinkedIn · diretórios jurídicos · press kit · apresentações externas
+Fabio Mathias Pavie é advogado e fundador da PAVIE | Advocacia, com graduação e pós-graduação em Direito pela UFF, formação complementar em Administração Pública e Letras, pós-graduação em andamento em Direito Processual Civil: Panorama Atual, cerca de 20 anos de experiência na advocacia cível e membro do IBDFAM. Sua trajetória reúne advocacia privada de alto nível técnico — incluindo contencioso cível em casos de responsabilidade civil — e experiência institucional relevante em compliance, conformidade normativa, elaboração legislativa, supervisão jurídica de acolhimento institucional de crianças e adolescentes (ECA) e coordenação de programas de acesso à justiça. Atua principalmente em família, sucessões, contratos, patrimônio, imóveis, responsabilidade civil, consumidor e regularidade negocial. Sua proposta de atuação combina rigor jurídico, linguagem acessível e visão estratégica, com atenção especial à dimensão humana e patrimonial dos casos — inclusive em situações de vulnerabilidade, proteção de direitos das mulheres e proteção integral de crianças e adolescentes. OAB/RJ 134.947.
+SEÇÃO 6 — ORIENTAÇÕES EDITORIAIS E DE CONFORMIDADE OAB
+O que deve aparecer em todas as versões:
+Número de inscrição na OAB: OAB/RJ 134.947 — é sinal de confiança imediato e verificável.
+Menção ao IBDFAM em todas as versões destinadas ao site — é credencial institucional verificável.
+Formação pela UFF e pós-graduação — âncoras de credibilidade acadêmica.
+Cerca de 20 anos de experiência — formulação segura e verificável.
+O que evitar (conformidade OAB — art. 39 e ss. do Código de Ética):
+Nunca usar o título de "especialista" sem certificação formal em área específica pela OAB.
+Nunca fazer promessas de resultado ou garantias de êxito — vedação expressa.
+Evitar menções a casos específicos com identificação de partes — respeito ao sigilo.
+Não citar nomes de ex-empregadores ou clientes institucionais sem autorização expressa.
+Manter linguagem sóbria, informativa e discreta em todos os textos de apresentação.
+Recomendação de sequência para a página /sobre:
+Headline → Microcopy de identificação → Bio completa → Bloco de credenciais → Áreas de atuação (com frase de dor por área) → Proposta de valor → CTA. Essa arquitetura cria um funil de leitura que parte do problema do cliente, passa pela autoridade do advogado e conduz naturalmente à ação de contato.
+PAVIE | Advocacia · pavieadvogado.com · OAB/RJ 134.947 · Documento interno — uso editorial
+
+=== FILE: PAVIE_Plano_Diretor_Arquitetura_Dig (CLAUDE).pdf ===
+exists=True
+type=pdf pages=30
+--- page 1 ---
+PAVIE ADVOCACIA
+OAB/RJ 134.947  —  Maricá, Rio de Janeiro
+PLANO DIRETOR
+Arquitetura
+Estratégica,
+Visual e Textual
+do Ecossistema
+Digital
+Site Institucional & Blog Jurídico
+Documento Diretor — Versão 1.0
+Arquitetura da Informação · UX Estratégico · Identidade Editorial
+SEO Estrutural · Branding Institucional · Conversão Ética
+2025 / 2026
+--- page 2 ---
+PAVIE Advocacia — Plano Diretor da Arquitetura Estratégica, Visual e Textual do Ecossistema Digital
+Página 2
+ÍNDICE DO DOCUMENTO
+Sumário Executivo
+01
+Apresentação do Projeto
+■ O ecossistema digital da PAVIE
+■ Site institucional e blog jurídico
+■ Diferença estratégica entre os ambientes
+02
+Princípios Diretores da Arquitetura Digital
+■ Os 10 princípios fundamentais
+■ Justificativa de cada princípio
+03
+Papel Estratégico do Site Institucional
+■ O que o site é e o que não deve ser
+■ Função institucional, comercial e reputacional
+04
+Papel Estratégico do Blog Jurídico
+■ O blog como ativo de longo prazo
+■ SEO, autoridade e educação do público
+05
+Arquitetura do Site: Páginas, Funções e Hierarquia
+■ Home · Sobre · Áreas de atuação
+■ Páginas de dores · Contato · Prova institucional
+06
+Arquitetura do Blog: Estrutura Editorial e Organizacional
+■ Home do blog · Página de leitura
+■ Categorias · Hubs · Tags · CTAs · Clusters
+07
+Proposta Visual do Site e do Blog
+■ Paleta cromática · Tipografia · Grid
+■ Componentes visuais e hierarquia
+08
+Proposta Textual e Editorial
+--- page 3 ---
+PAVIE Advocacia — Plano Diretor da Arquitetura Estratégica, Visual e Textual do Ecossistema Digital
+Página 3
+12
+Regras de Coerência Institucional
+■ Marca · UX · SEO · Conteúdo unificados
+13
+Diretrizes Práticas de Implementação
+■ Roadmap de execução e priorização
+14
+Checklist Final de Implementação
+■ Site · Blog · Editorial · Marca
+--- page 4 ---
+PAVIE Advocacia — Plano Diretor da Arquitetura Estratégica, Visual e Textual do Ecossistema Digital
+Página 4
+INTRODUÇÃO
+Nota Introdutória
+Este documento constitui o Plano Diretor da Arquitetura Estratégica, Visual e Textual do Ecossistema Digital
+da PAVIE Advocacia. Sua função é servir como referência formal e normativa para todas as decisões de
+design, conteúdo, desenvolvimento, revisão e expansão do site institucional e do blog jurídico do escritório.
+A PAVIE Advocacia é um escritório de advocacia com atuação em Maricá, Rio de Janeiro, especializado em
+direito civil, família, sucessões, imóveis e matérias internacionais. Seu posicionamento é orientado por
+credibilidade, clareza, autoridade técnica, leitura confortável, sofisticação discreta e conversão ética —
+valores que devem se refletir com absoluta coerência em toda a presença digital.
+O ecossistema digital da PAVIE não é a soma de peças isoladas. Site e blog integram um único sistema
+institucional de comunicação, presença e geração de valor, com papéis distintos e complementares: o site
+como núcleo institucional da marca; o blog como ativo estratégico de conteúdo, descoberta orgânica e
+educação do público.
+Premissa central deste documento
+Cada decisão de arquitetura, visual, textual ou funcional documentada neste plano parte de uma justificativa
+estratégica real. Nada existe por ornamento. Tudo existe para construir confiança, facilitar a leitura, sustentar
+autoridade, respeitar a ética profissional e converter visitantes em contatos qualificados de forma transparente
+e responsável.
+--- page 5 ---
+PAVIE Advocacia — Plano Diretor da Arquitetura Estratégica, Visual e Textual do Ecossistema Digital
+Página 5
+01
+Apresentação do Projeto
+O ecossistema digital da PAVIE Advocacia
+1.1 O que é o ecossistema digital da PAVIE
+O ecossistema digital da PAVIE Advocacia compreende o conjunto integrado de ambientes, ativos e canais
+pelos quais o escritório existe, comunica e gera valor publicamente. Não se trata de uma coleção de páginas
+ou perfis: trata-se de um sistema institucional coerente, orientado por estratégia, governado por política
+editorial e sustentado por identidade visual e verbal estável.
+Ambiente
+Papel Institucional
+Site Institucional
+Sede pública da marca. Apresentação, autoridade, áreas de atuação,
+confiança e captação ética.
+Blog Jurídico
+Ativo editorial de longo prazo. Educação, SEO, autoridade temática e
+apoio ao funil de conversão.
+Redes Sociais
+Distribuição, alcance e lembrança. Amplificam conteúdo sem substituir a
+sede institucional.
+Ativos de Prova
+Perfis públicos, avaliações e referências que reforçam reputação e
+sinalizam confiabilidade.
+1.2 Diferença estratégica entre site e blog
+A distinção entre site e blog não é apenas técnica — é estratégica e funcional. O site existe para apresentar
+e converter. O blog existe para educar e atrair. O primeiro fala sobre quem a PAVIE é; o segundo demonstra
+como a PAVIE pensa. Juntos, formam um ciclo virtuoso: o blog atrai visitantes qualificados e o site os
+converte.
+Dimensão
+Site Institucional
+Blog Jurídico
+Objetivo primário
+Apresentar e converter
+Educar e atrair organicamente
+--- page 6 ---
+PAVIE Advocacia — Plano Diretor da Arquitetura Estratégica, Visual e Textual do Ecossistema Digital
+Página 6
+02
+Princípios Diretores da Arquitetura Digital
+Os fundamentos que orientam todas as decisões
+Todo projeto de arquitetura digital sólido parte de princípios claros que antecedem qualquer decisão de
+layout, cor, conteúdo ou funcionalidade. Os princípios a seguir não são recomendações genéricas: são
+fundamentos derivados diretamente da identidade institucional da PAVIE Advocacia e da natureza ética da
+comunicação jurídica.
+01
+Clareza como valor primário
+Toda página, texto, componente e elemento visual deve ser imediatamente compreensível pelo
+público-alvo. Clareza não é simplificação: é organização inteligente da complexidade.
+02
+Legibilidade antes de estética
+A experiência de leitura tem prioridade sobre efeitos visuais. Contraste, espaçamento, hierarquia
+tipográfica e ritmo de leitura são decisões funcionais, não decorativas.
+03
+Autoridade institucional por consistência
+Autoridade não se constrói por declaração, mas por repetição coerente de forma, linguagem e
+método. Cada touchpoint reforça ou enfraquece a percepção do escritório.
+04
+Conversão ética como orientação
+Nenhum elemento de conversão deve usar urgência artificial, medo, pressão emocional ou promessa
+de resultado. O contato qualificado nasce da confiança, não da manipulação.
+05
+Acessibilidade progressiva
+O ecossistema deve ser acessível a usuários com diferentes níveis de letramento jurídico, dispositivos
+e capacidades. Acessibilidade é inclusão e também SEO.
+06
+Escaneabilidade estrutural
+O visitante escaneia antes de ler. Títulos, subtítulos, destaques e blocos visuais devem comunicar
+sentido mesmo sem leitura linear completa.
+07
+SEO sem artificialidade
+--- page 7 ---
+PAVIE Advocacia — Plano Diretor da Arquitetura Estratégica, Visual e Textual do Ecossistema Digital
+Página 7
+10
+Sobriedade como diferencial competitivo
+No universo jurídico, a estética limpa, contida e funcional comunica mais confiança do que qualquer
+excesso visual. Menos ruído equivale a mais credibilidade.
+--- page 8 ---
+PAVIE Advocacia — Plano Diretor da Arquitetura Estratégica, Visual e Textual do Ecossistema Digital
+Página 8
+03
+Papel Estratégico do Site Institucional
+O site como núcleo da identidade pública da PAVIE
+3.1 Para que o site existe
+O site institucional da PAVIE Advocacia é a sede pública da marca. Não é um catálogo de serviços nem um
+repositório de conteúdo: é o ponto de maior autoridade e credibilidade do escritório no ambiente digital. Sua
+existência responde a três funções essenciais e complementares.
+Função
+O que resolve
+Impacto esperado
+Apresentação
+institucional
+Quem é a PAVIE, o que faz,
+como atua e por que merece
+confiança
+Percepção de seriedade e relevância antes do
+contato
+Organização da
+oferta
+Quais áreas atende, que dores
+resolve, que tipo de cliente serve
+Qualificação prévia e redução de atrito
+comercial
+Captação ética
+Onde e como o visitante pode
+iniciar contato de forma clara e
+não invasiva
+Conversão por clareza, não por pressão
+3.2 O que o site deve transmitir
+Cada elemento do site — desde o cabeçalho até o rodapé — deve, de forma cumulativa, comunicar os
+atributos institucionais que constroem confiança prévia e percepção de valor. O visitante que passa dois
+minutos no site da PAVIE deve sair com uma impressão clara e positiva, mesmo sem ter lido cada linha.
+Atributo
+--- page 9 ---
+PAVIE Advocacia — Plano Diretor da Arquitetura Estratégica, Visual e Textual do Ecossistema Digital
+Página 9
+✔ DEVE TER
+ Sede institucional clara e organizada
+ Espaço de apresentação do advogado e do
+escritório
+ Ponto central de captação ética
+ Vitrine das áreas de atuação com profundidade
+real
+ Âncora de confiança e credibilidade
+✘ NÃO DEVE TER
+ Portal de notícias jurídicas genéricas
+ Plataforma de autoajuda ou consulta informal
+ Repositório de todas as especialidades possíveis
+ Concorrente do blog em volume editorial
+ Ferramenta de pressão ou urgência artificial
+--- page 10 ---
+PAVIE Advocacia — Plano Diretor da Arquitetura Estratégica, Visual e Textual do Ecossistema Digital
+Página 10
+04
+Papel Estratégico do Blog Jurídico
+O blog como ativo permanente de autoridade e descoberta
+4.1 Por que o blog existe
+O blog jurídico da PAVIE existe porque o conhecimento jurídico bem comunicado é o melhor instrumento de
+captação ética disponível a um escritório de alto valor. Pessoas que enfrentam situações jurídicas
+complexas — inventários, divórcios patrimoniais, disputas imobiliárias — buscam informação antes de
+buscar advogado. O blog coloca a PAVIE no caminho dessas pessoas, no momento certo, com a resposta
+certa.
+O blog como investimento, não como custo
+Um artigo bem escrito, bem estruturado e bem otimizado pode gerar tráfego qualificado por anos. Diferente de
+anúncios pagos, que cessam quando o orçamento acaba, o conteúdo editorial é um ativo permanente que
+acumula autoridade, indexação e confiança ao longo do tempo. Este é o fundamento econômico-estratégico do
+blog da PAVIE.
+4.2 Funções do blog no ecossistema
+Função
+Mecanismo
+Resultado
+Descoberta orgânica
+Artigos otimizados para buscas
+reais
+Tráfego qualificado sem custo por clique
+Construção de
+autoridade
+Profundidade e consistência
+temática
+Reconhecimento como referência no nicho
+Educação do público
+Conteúdo que explica direitos e
+contextos
+Leads mais maduros e bem qualificados
+Apoio ao site
+institucional
+--- page 11 ---
+PAVIE Advocacia — Plano Diretor da Arquitetura Estratégica, Visual e Textual do Ecossistema Digital
+Página 11
+Categorias
+Agrupamentos amplos por área do direito. Ex: Família e Sucessões,
+Imóveis e Registro, Direito Internacional. Máximo 6–8 categorias.
+Hubs temáticos
+Páginas-âncora que agregam todos os artigos de um subtema. Ex: "Guia
+completo sobre inventário". Alta relevância SEO.
+Artigos individuais
+Conteúdo respondendo a dúvidas ou temas específicos. Devem sempre
+linkar para o hub correspondente.
+Tags
+Etiquetas transversais de classificação secundária. Uso limitado e
+controlado para evitar proliferação sem critério.
+--- page 12 ---
+PAVIE Advocacia — Plano Diretor da Arquitetura Estratégica, Visual e Textual do Ecossistema Digital
+Página 12
+05
+Arquitetura do Site: Páginas, Funções e
+Hierarquia
+Estrutura detalhada de cada página institucional
+5.1 Hierarquia de páginas do site
+A arquitetura do site institucional da PAVIE segue uma hierarquia clara de seis níveis funcionais, cada um
+com papel distinto na experiência do visitante e na lógica de captação ética.
+Nível
+Página
+Função Central
+Nível 1 — Entrada
+Home
+Porta principal. Apresentação, autoridade, direcionamento.
+Nível 2 — Identidade
+Sobre / O Advogado
+Quem é a PAVIE, qual é a formação, qual é o método.
+Nível 3 — Oferta
+Áreas de Atuação
+O que o escritório faz, com que profundidade.
+Nível 4 — Dores
+Páginas Temáticas
+Resposta específica a situações e problemas reais.
+Nível 5 — Prova
+Prova Institucional
+OAB, formação, consistência, sinalização de confiança.
+Nível 6 — Ação
+Contato
+Canal de entrada claro, simples e sem pressão.
+5.2 Cards de arquitetura por página
+HOME — Página Inicial
+Objetivo
+Criar impacto positivo imediato, comunicar identidade institucional, direcionar para áreas
+de interesse e sinalizar credibilidade.
+--- page 13 ---
+PAVIE Advocacia — Plano Diretor da Arquitetura Estratégica, Visual e Textual do Ecossistema Digital
+Página 13
+Mensagem
+Existe um profissional de verdade por trás da marca — com formação, método, foco e
+responsabilidade institucional.
+Elementos
+Apresentação do advogado · Formação e registro OAB · Método de trabalho · Áreas de
+foco · Filosofia institucional · Foto profissional (opcional, se houver) · CTA para contato
+ÁREAS — Áreas de Atuação
+Objetivo
+Apresentar o portfólio do escritório com clareza, profundidade proporcional e sem
+dispersão temática.
+Público
+Visitante que já entendeu quem é a PAVIE e quer confirmar se o seu tipo de problema é
+atendido.
+Mensagem
+A PAVIE atua com foco e profundidade nestas áreas — e sabe exatamente o que está
+fazendo em cada uma.
+Elementos
+Lista clara das áreas · Cards individuais por área · Breve descrição de escopo · Indicação
+das dores típicas atendidas · Links para páginas temáticas específicas · CTA por área
+CONTATO — Página de Contato
+Objetivo
+Oferecer canal de entrada claro, simples, sem fricção e sem qualquer pressão ou
+urgência artificial.
+Público
+Visitante já qualificado que decidiu dar o próximo passo e busca a forma correta de
+iniciar.
+Mensagem
+Entrar em contato com a PAVIE é fácil, claro e sem complicação. O próximo passo está
+aqui.
+Elementos
+Formulário simples (nome, e-mail, tema, mensagem) · WhatsApp institucional · E-mail
+profissional · Endereço e região de atuação · Aviso sobre tempo de retorno · Sem campos
+desnecessários
+--- page 14 ---
+PAVIE Advocacia — Plano Diretor da Arquitetura Estratégica, Visual e Textual do Ecossistema Digital
+Página 14
+06
+Arquitetura do Blog: Estrutura Editorial e
+Organizacional
+Como o blog jurídico da PAVIE está estruturado
+6.1 Componentes essenciais do blog
+Componente
+Função e justificativa
+Home do blog
+Ponto de entrada do ambiente editorial. Deve apresentar artigos recentes,
+
+=== FILE: PAVIE_Portfolio_UX_UI_Design (CLAUDE).pdf ===
+exists=True
+type=pdf pages=12
+--- page 1 ---
+PAVIE
+Sobre    Areas    Blog    Contato
+Contato
+PORTFOLIO
+UX / UI
+& Design
+Site Institucional & Blog Jurídico
+PAVIE Advocacia
+Wireframes
+Components
+UX Flows
+Design System
+Responsive
+Marica, Rio de Janeiro · OAB/RJ 134.947 · 2025–2026
+PAVIE ADVOCACIA — DIGITAL PORTFOLIO
+--- page 2 ---
+PAVIE Advocacia
+DESIGN SYSTEM
+Paleta · Tipografia · Espaçamento
+UX/UI & Design Portfolio
+pavieadvocacia.com.br
+SISTEMA DE CORES
+#2F4E4A
+Verde Petróleo
+Identidade principal
+Logotipo · CTAs · Headers
+#25282B
+Grafite Jurídico
+Texto corrido
+Títulos · Elementos base
+#8FA4A7
+Azul Névoa
+Apoio editorial
+Divisores · Metadados
+#CCB093
+Areia Premium
+Acento sofisticado
+Destaques seletivos
+#F5F1EB
+Marfim Editorial
+Fundo institucional
+Areas de respiro
+USO RECOMENDADO:
+Verde + Marfim
+Grafite + Branco
+Verde + Areia
+Névoa + Marfim
+TIPOGRAFIA
+H1 — Título Principal
+28px Bold
+H2 — Subtítulo
+--- page 3 ---
+PAVIE Advocacia
+SITE INSTITUCIONAL — HOME
+Wireframe de Alta Fidelidade
+UX/UI & Design Portfolio
+pavieadvocacia.com.br
+pavieadvocacia.com.br
+PAVIE
+Início
+Sobre
+Áreas
+Blog
+Falar com o escritório
+A
+Navegação■sticky
+Clareza jurídica para
+decisões que importam
+Advocacia com método, foco patrimonial
+e clareza para quem precisa decidir bem.
+Solicitar análise
+Conhecer o escritório
+B
+Hero com■dual CTA
+Família & Sucessões
+Imóveis
+Internacional
+Execução & Crédito
+Áreas de Atuação
+Foco, profundidade e método em cada frente de atuação
+F
+Família
+e Sucessões
+Ver mais
+I
+Imóveis
+e Registro
+--- page 4 ---
+PAVIE Advocacia
+SITE — SOBRE & ÁREAS DE ATUAÇÃO
+Wireframes de Alta Fidelidade
+UX/UI & Design Portfolio
+pavieadvocacia.com.br
+pavieadvocacia.com.br/sobre
+PAVIE
+O Advogado
+Fábio Pavie · OAB/RJ 134.947
+Foto
+Profissional
+Formacao · Pós-Graduação · OAB/RJ · Especialização
+Método de trabalho
+1
+2
+3
+Solicitar análise inicial
+SOBRE
+pavieadvocacia.com.br/areas
+PAVIE
+Áreas de Atuação
+Foco e profundidade em cada frente
+Família & Sucessões
+Inventário, partilha,
+planejamento patrimonial
+Ver esta área
+Imóveis & Registro
+Compra, venda, usucapião,
+regularização
+Ver esta área
+Internacional
+Herança exterior,
+dupla nacionalidade
+Ver esta área
+Crédito & Execução
+--- page 5 ---
+PAVIE Advocacia
+BLOG JURÍDICO — HOME & ARTIGO
+Wireframes de Alta Fidelidade
+UX/UI & Design Portfolio
+pavieadvocacia.com.br
+blog.pavieadvocacia.com.br
+PAVIE
+Blog Jurídico
+Buscar...
+Família e Sucessões
+Como funciona o inventário
+extrajudicial no Brasil?
+Entenda os requisitos, prazos e custos.
+8 min de leitura · Janeiro 2025
+Ler artigo
+Todos
+Família
+Imóveis
+Internacional
+Crédito
+IMG
+Família
+IMG
+Imóveis
+IMG
+Crédito
+HOME DO BLOG
+blog.pavieadvocacia.com.br/inventario-extrajudicial
+PAVIE Blog
+Blog  >  Família e Sucessões  >  Inventário extrajudicial
+Família e Sucessões
+Como funciona o inventário
+extrajudicial no Brasil?
+Fábio Pavie · OAB/RJ 134.947 · 15 Jan 2025 · 8 min
+35% lido
+--- page 6 ---
+PAVIE Advocacia
+UX FLOWS — JORNADAS DO USUÁRIO
+Fluxos de Navegação e Decisão
+UX/UI & Design Portfolio
+pavieadvocacia.com.br
+FLUXO 1 — Site Institucional
+Jornada do visitante que chega diretamente ao site
+Google /■Indicação
+Entrada
+HOME
+Impacto inicial
+SOBRE
+Validação
+ÁREAS
+Aderência
+Página■Temática
+Aprofundamento
+CONTATO
+Conversão
+Saída rápida (bounce)
+atalho direto
+FLUXO 2 — Blog Jurídico
+Jornada do leitor que chega via busca orgânica
+Google■Orgânico
+Busca
+ARTIGO
+Leitura
+Leu até■o fim?
+CTA■Contextual
+Convite
+Site■Institucional
+Validação
+CONTATO
+Conversão
+Sim
+--- page 7 ---
+PAVIE Advocacia
+COMPONENT LIBRARY
+Botões · Cards · Formulários · Navegação
+UX/UI & Design Portfolio
+pavieadvocacia.com.br
+BOTÕES & CTAs
+Solicitar análise inicial
+Primary
+Solicitar análise inicial
+Primary Hover
+Conhecer o escritório
+Secondary
+Ver artigo
+Accent
+Desabilitado
+Disabled
+Icon Buttons
+FORMULÁRIOS & INPUTS
+Nome completo
+Seu nome completo
+E-mail institucional
+fabio@pavie.com.br
+Área de interesse
+Família e Sucessões  ■
+Mensagem
+Enviar mensagem
+* Resposta em até 24 horas úteis. Sem compromisso.
+NAVEGAÇÃO & HEADER
+PAVIE
+Início
+Sobre
+Áreas de Atuação
+Blog
+Falar com o escritório
+Desktop
+--- page 8 ---
+PAVIE Advocacia
+DESIGN RESPONSIVO — MOBILE FIRST
+Breakpoints · Adaptação · Touch UX
+UX/UI & Design Portfolio
+pavieadvocacia.com.br
+PAVIE
+Clareza jurídica
+para decisões
+que importam
+Ver áreas
+390px
+Mobile
+PAVIE
+Sobre
+Áreas
+Blog
+Contato
+Clareza jurídica
+para decisões que importam
+Solicitar análise
+768px
+Tablet
+PAVIE
+Início
+Sobre
+Áreas
+Blog
+Contato
+Clareza jurídica
+para decisões
+que importam
+Solicitar análise
+1440px
+Desktop
+BREAKPOINTS SYSTEM
+--- page 9 ---
+PAVIE Advocacia
+FERRAMENTAS & STACK TECNOLÓGICA
+Tecnologias · CMS · Hospedagem · Analytics
+UX/UI & Design Portfolio
+pavieadvocacia.com.br
+STACK TECNOLÓGICA
+Arquitetura moderna, leve, segura e de alto desempenho
+Astro
+FRAMEWORK
+Site estático de alta
+performance e SEO nativo
+v4.x
+Decap CMS
+CMS HEADLESS
+Gerenciamento de conteúdo
+git-based, sem banco de dados
+Open Source
+Cloudflare Pages
+HOSPEDAGEM
+CDN global, deploy automático,
+SSL gratuito e Edge functions
+Free/Pro
+GitHub
+VERSIONAMENTO
+Controle de versão,
+CI/CD automatizado
+Actions CI
+Tailwind CSS
+ESTILIZAÇÃO
+Utility-first CSS,
+design system escalável
+v3.x
+Google Analytics 4
+ANALYTICS
+Rastreamento de conversão,
+--- page 10 ---
+PAVIE Advocacia
+FUNCIONALIDADES & FEATURES
+Site · Blog · SEO · Performance · Acessibilidade
+UX/UI & Design Portfolio
+pavieadvocacia.com.br
+S
+Site Institucional
+Home com hero dual-CTA
+Navegação sticky responsiva
+Cards de área interativos
+Página Sobre com credenciais
+Prova institucional (OAB)
+Formulário de contato leve
+B
+Blog Jurídico
+Home com artigos em destaque
+Filtro por categoria
+Busca interna
+Página de artigo otimizada
+Barra de progresso de leitura
+Sidebar com autor + relacionados
+X
+UX / Acessibilidade
+Mobile-first 100%
+Touch targets 44×44px+
+Contraste WCAG AA
+Semântica HTML5 correta
+Alt text em imagens
+Navegação por teclado
+S
+SEO Estrutural
+Meta title/description únicos
+Schema LocalBusiness + Article
+Sitemap XML automático
+Canonical URLs
+--- page 11 ---
+PAVIE Advocacia
+SEO ESTRUTURAL & ARQUITETURA EDITORIAL
+Schema · Clusters · Interlinking
+UX/UI & Design Portfolio
+pavieadvocacia.com.br
+CLUSTERIZAÇÃO TEMÁTICA DO BLOG
+Arquitetura de hubs + clusters para autoridade SEO
+HUB
+Família &
+
+=== FILE: Plano Diretor Digital PAVIE Advocaci 2(GEMINI).md ===
+exists=True
+type=md lines=256 headings=22
+# **Arquitetura Estratégica, Visual e Textual do Site e do Blog da PAVIE Advocacia**
+## **1\. Apresentação do Projeto**
+## **2\. Princípios Diretores da Arquitetura Digital**
+## **3\. Papel Estratégico do Site Institucional**
+## **4\. Papel Estratégico do Blog Jurídico**
+## **5\. Arquitetura do Site: Páginas, Funções e Hierarquia**
+## **6\. Arquitetura do Blog: Estrutura Editorial e Organizacional**
+### **A Lógica Arquitetural dos *Topic Clusters* (Hubs Temáticos)**
+### **Taxonomia, Metadados e Governança**
+## **7\. Proposta Visual do Site e do Blog**
+### **Psicologia das Cores Aplicada à Advocacia Institucional**
+### **Elementos Gráficos, Tipografia e Legal Design**
+## **8\. Proposta Textual e Editorial**
+### **Tom e Voz Institucional**
+### **Diretrizes de Redação Estratégica e Empatia Documental**
+## **9\. Justificativa Completa dos Elementos Visuais e Textuais**
+## **10\. Jornada do Usuário e Lógica de Navegação**
+## **11\. Estratégia de Conversão Ética**
+## **12\. Regras de Coerência entre Marca, UX, SEO e Conteúdo**
+## **13\. Diretrizes Práticas para Implementação**
+## **14\. Checklist Final de Auditoria e Entrega**
+#### **Referências citadas**
