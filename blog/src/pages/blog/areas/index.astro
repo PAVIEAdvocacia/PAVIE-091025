@@ -1,5 +1,6 @@
 ---
 import { getCollection } from 'astro:content';
+import { MAIN_SITE_URL } from '../../../consts';
 import BlogLayout from '../../../layouts/BlogLayout.astro';
 import { isPublicPost, normalizePost, sortPostsByDate } from '../../../lib/posts';
 import { areaHref, areaLabel, normalizeAreaKey } from '../../../lib/taxonomy';
@@ -29,7 +30,7 @@ const areas = [...areaMap.values()].sort((a, b) => b.count - a.count);
 <BlogLayout
 	title="Areas editoriais | PAVIE"
 	description="Navegue pelas trilhas editoriais do blog da PAVIE por area juridica."
-	canonical="https://blog.pavieadvocacia.com.br/blog/areas/"
+	canonical={`${MAIN_SITE_URL}/blog/areas/`}
 >
 	<div class="container blog-home">
 		<section class="blog-grid" aria-label="Areas editoriais">
@@ -39,17 +40,23 @@ const areas = [...areaMap.values()].sort((a, b) => b.count - a.count);
 					<h1>Areas editoriais</h1>
 				</div>
 			</div>
-			<div class="blog-row">
-				{areas.map((area) => (
-					<article class="blog-row__item">
-						<h2>{area.label}</h2>
-						<p>{area.count} publicacoes nesta trilha.</p>
-						<a href={areaHref(area.key)}>Abrir area</a>
-						<p><a href={area.latestUrl}>Ler publicacao mais recente</a></p>
-					</article>
-				))}
-			</div>
+			{areas.length === 0 ? (
+				<article class="surface-card empty-state">
+					<h2>Nenhuma área publicada</h2>
+					<p>Publique ao menos um conteúdo com `publish_status: published` para ativar as trilhas por área.</p>
+				</article>
+			) : (
+				<div class="blog-row">
+					{areas.map((area) => (
+						<article class="blog-row__item">
+							<h2>{area.label}</h2>
+							<p>{area.count} publicacoes nesta trilha.</p>
+							<a href={areaHref(area.key)}>Abrir area</a>
+							<p><a href={area.latestUrl}>Ler publicacao mais recente</a></p>
+						</article>
+					))}
+				</div>
+			)}
 		</section>
 	</div>
 </BlogLayout>
-

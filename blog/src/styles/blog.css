@@ -240,6 +240,23 @@
 	color: var(--text-muted);
 }
 
+.empty-state {
+	padding: 1rem;
+	border: 1px dashed color-mix(in srgb, var(--color-mist) 45%, var(--color-line));
+	background: color-mix(in srgb, var(--surface-card) 88%, white);
+	display: grid;
+	gap: 0.7rem;
+}
+
+.empty-state h2,
+.empty-state h3 {
+	font-size: 1.25rem;
+}
+
+.empty-state p {
+	color: var(--text-muted);
+}
+
 .editorial-cta {
 	padding: clamp(1.3rem, 2vw, 2.1rem);
 	border-radius: var(--radius-md);

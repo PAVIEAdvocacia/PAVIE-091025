@@ -1,5 +1,6 @@
 ---
 import { getCollection } from 'astro:content';
+import { MAIN_SITE_URL } from '../../../consts';
 import BlogLayout from '../../../layouts/BlogLayout.astro';
 import { isPublicPost, normalizePost, sortPostsByDate } from '../../../lib/posts';
 import { temaHref, temaLabel, normalizeTemaKey } from '../../../lib/taxonomy';
@@ -26,7 +27,7 @@ const temas = [...temaMap.values()].sort((a, b) => b.count - a.count);
 <BlogLayout
 	title="Temas do Blog | PAVIE"
 	description="Acesse o acervo por tema juridico no blog da PAVIE."
-	canonical="https://blog.pavieadvocacia.com.br/blog/temas/"
+	canonical={`${MAIN_SITE_URL}/blog/temas/`}
 >
 	<div class="container blog-home">
 		<section class="blog-grid" aria-label="Temas editoriais">
@@ -36,14 +37,20 @@ const temas = [...temaMap.values()].sort((a, b) => b.count - a.count);
 					<h1>Temas do blog</h1>
 				</div>
 			</div>
-			<div class="theme-chip-list">
-				{temas.map((tema) => (
-					<a class="blog-chip blog-chip--theme" href={temaHref(tema.key)}>
-						{tema.label} ({tema.count})
-					</a>
-				))}
-			</div>
+			{temas.length === 0 ? (
+				<article class="surface-card empty-state">
+					<h2>Nenhum tema ativo</h2>
+					<p>Os temas aparecem automaticamente quando existem conteúdos publicados com taxonomia preenchida.</p>
+				</article>
+			) : (
+				<div class="theme-chip-list">
+					{temas.map((tema) => (
+						<a class="blog-chip blog-chip--theme" href={temaHref(tema.key)}>
+							{tema.label} ({tema.count})
+						</a>
+					))}
+				</div>
+			)}
 		</section>
 	</div>
 </BlogLayout>
-

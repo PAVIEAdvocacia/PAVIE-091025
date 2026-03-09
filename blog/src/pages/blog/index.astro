@@ -3,6 +3,7 @@ import { getCollection } from 'astro:content';
 import BlogGrid from '../../components/blog/BlogGrid.astro';
 import BlogHero from '../../components/blog/BlogHero.astro';
 import FeaturedPost from '../../components/blog/FeaturedPost.astro';
+import { MAIN_SITE_URL } from '../../consts';
 import BlogLayout from '../../layouts/BlogLayout.astro';
 import { buildHubDirectory } from '../../lib/service-hubs';
 import { groupPostsByArea, isPublicPost, normalizePost, sortPostsByDate } from '../../lib/posts';
@@ -37,10 +38,21 @@ const topThemes = Array.from(
 <BlogLayout
 	title="Blog jurídico da PAVIE"
 	description="Leitura jurídica para entender cenários reais, organizar decisões e agir com segurança."
-	canonical="https://blog.pavieadvocacia.com.br/blog/"
+	canonical={`${MAIN_SITE_URL}/blog/`}
 >
 	<div class="container blog-home">
 		<BlogHero totalPosts={posts.length} areas={areaNames} />
+
+		{posts.length === 0 && (
+			<section class="surface-card empty-state" aria-label="Sem publicacoes">
+				<h2>Nenhuma publicação ativa no momento</h2>
+				<p>
+					O blog exibe somente conteúdos com governança editorial completa
+					(`editorial_item_id`, `trace_ref` e `publish_status: published`).
+				</p>
+				<a class="btn btn-primary" href="/admin/">Abrir Decap Admin</a>
+			</section>
+		)}
 
 		{featured && <FeaturedPost post={featured} />}
 

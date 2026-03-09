@@ -1,6 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import BlogGrid from '../../../components/blog/BlogGrid.astro';
+import { MAIN_SITE_URL } from '../../../consts';
 import BlogLayout from '../../../layouts/BlogLayout.astro';
 import { isPublicPost, normalizePost, sortPostsByDate } from '../../../lib/posts';
 import { areaLabel, normalizeAreaKey, temaHref } from '../../../lib/taxonomy';
@@ -35,7 +36,7 @@ const title = `${areaLabel(areaKey)} | Publicacoes`;
 <BlogLayout
 	title={title}
 	description={`Trilha editorial da PAVIE para ${areaLabel(areaKey)}.`}
-	canonical={`https://blog.pavieadvocacia.com.br/blog/areas/${areaKey}/`}
+	canonical={`${MAIN_SITE_URL}/blog/areas/${areaKey}/`}
 >
 	<div class="container blog-home">
 		<section class="blog-grid" aria-label={title}>
@@ -71,4 +72,3 @@ const title = `${areaLabel(areaKey)} | Publicacoes`;
 		<BlogGrid title="Publicacoes da area" kicker="Leitura por especialidade" posts={areaPosts} />
 	</div>
 </BlogLayout>
-

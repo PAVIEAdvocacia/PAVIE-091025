@@ -3,7 +3,7 @@
   repo: PAVIEAdvocacia/PAVIE-091025
   branch: main
 
-site_url: "https://blog.pavieadvocacia.com.br"
+site_url: "https://pavieadvocacia.com.br"
 locale: "pt"
 
 media_folder: "public/uploads"

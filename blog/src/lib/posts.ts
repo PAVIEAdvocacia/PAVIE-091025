@@ -27,6 +27,7 @@ export interface BlogPost {
 	contentType: string;
 	intent: string;
 	funnelStage: string;
+	editorialItemId?: string;
 	authorRef: string;
 	authorName: string;
 	authorRole: string;
@@ -204,7 +205,7 @@ function resolveCtaByVariant(variant: string): CtaConfig {
 
 function resolvePublishedStatus(rawValue: string): string {
 	const value = rawValue.toLowerCase();
-	if (!value) return 'published';
+	if (!value) return 'draft';
 	if (['published', 'publicado', 'active'].includes(value)) return 'published';
 	if (['draft', 'rascunho'].includes(value)) return 'draft';
 	if (['review', 'revisao'].includes(value)) return 'review';
@@ -218,7 +219,12 @@ export function postRoute(slug: string): string {
 }
 
 export function isPublicPost(post: BlogPost): boolean {
-	return post.publishStatus === 'published';
+	return (
+		post.publishStatus === 'published' &&
+		Boolean(post.editorialItemId) &&
+		Boolean(post.traceRef) &&
+		Boolean(post.publishedAt)
+	);
 }
 
 export function normalizePost(entry: RawPostEntry): BlogPost {
@@ -237,6 +243,7 @@ export function normalizePost(entry: RawPostEntry): BlogPost {
 	const contentType = cleanString(data.content_type) || 'artigo';
 	const intent = cleanString(data.intent) || 'informativo';
 	const funnelStage = cleanString(data.funnel_stage) || 'consideracao';
+	const editorialItemId = cleanString(data.editorial_item_id) || undefined;
 	const authorRef = cleanString(data.author_ref) || 'dr-fabio-pavie';
 	const authorName = cleanString(data.author_name) || DEFAULT_AUTHOR_NAME;
 	const authorRole = DEFAULT_AUTHOR_ROLE;
@@ -288,6 +295,7 @@ export function normalizePost(entry: RawPostEntry): BlogPost {
 		contentType,
 		intent,
 		funnelStage,
+		editorialItemId,
 		authorRef,
 		authorName,
 		authorRole,

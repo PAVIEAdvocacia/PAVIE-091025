@@ -1,5 +1,5 @@
-export const BLOG_SITE_URL = 'https://blog.pavieadvocacia.com.br';
 export const MAIN_SITE_URL = 'https://pavieadvocacia.com.br';
+export const BLOG_SITE_URL = MAIN_SITE_URL;
 
 export const SITE_TITLE = 'PAVIE | Publicacoes Juridicas';
 export const SITE_DESCRIPTION =
