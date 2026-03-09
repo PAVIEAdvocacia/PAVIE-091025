@@ -8,7 +8,7 @@ import '../styles/institutional-pages.css';
 
 const title = 'Áreas de Atuação | PAVIE Advocacia';
 const description =
-	'Mapa institucional de serviços jurídicos da PAVIE, organizado por hubs de atuação, temas e trilhas editoriais.';
+	'Mapa institucional de serviços jurídicos da PAVIE, organizado por áreas, temas e conteúdos de orientação.';
 
 const entries = await getCollection('blog');
 const posts = sortPostsByDate(entries.map((entry) => normalizePost(entry))).filter(isPublicPost);
@@ -20,7 +20,7 @@ const hubDirectory = buildHubDirectory(posts);
 		<span class="badge">Áreas de atuação</span>
 		<h1>Serviços jurídicos organizados por hubs, com trilhas de conteúdo por área e tema.</h1>
 		<p class="institutional-page__lead">
-			Esta estrutura mantém coerência entre atendimento, páginas institucionais e publicação editorial.
+			Esta estrutura mantém coerência entre atendimento, páginas institucionais e conteúdos do blog.
 			Cada hub abaixo conecta escopo jurídico, situações comuns e conteúdo de apoio no blog.
 		</p>
 

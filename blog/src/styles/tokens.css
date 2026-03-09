@@ -3,13 +3,13 @@
 	--color-graphite: #25282b;
 	--color-mist: #8fa4a7;
 	--color-sand: #ccb093;
-	--color-ivory: #f5f1eb;
-	--color-warm-white: #fcfaf7;
+	--color-ivory: #f8f7f4;
+	--color-warm-white: #ffffff;
 	--color-text: #3b4044;
 	--color-line: #d9d3cb;
-	--color-soft: #ece7e0;
+	--color-soft: #f2efea;
 
-	--surface-page: var(--color-ivory);
+	--surface-page: #ffffff;
 	--surface-card: var(--color-warm-white);
 	--surface-dense: var(--color-graphite);
 	--surface-accent: var(--color-petrol);

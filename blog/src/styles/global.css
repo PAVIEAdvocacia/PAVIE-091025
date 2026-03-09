@@ -21,8 +21,8 @@ body {
 	line-height: 1.65;
 	color: var(--text-body);
 	background:
-		radial-gradient(circle at 10% 5%, rgba(143, 164, 167, 0.16), transparent 35%),
-		radial-gradient(circle at 90% -10%, rgba(204, 176, 147, 0.24), transparent 33%),
+		radial-gradient(circle at 10% 5%, rgba(143, 164, 167, 0.08), transparent 35%),
+		radial-gradient(circle at 90% -10%, rgba(204, 176, 147, 0.1), transparent 33%),
 		var(--surface-page);
 	min-height: 100vh;
 }

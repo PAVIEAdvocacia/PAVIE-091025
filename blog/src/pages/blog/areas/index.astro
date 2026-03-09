@@ -28,22 +28,22 @@ const areas = [...areaMap.values()].sort((a, b) => b.count - a.count);
 ---
 
 <BlogLayout
-	title="Areas editoriais | PAVIE"
-	description="Navegue pelas trilhas editoriais do blog da PAVIE por area juridica."
+	title="Areas do Blog | PAVIE"
+	description="Navegue pelos conteudos do blog da PAVIE por area juridica."
 	canonical={`${MAIN_SITE_URL}/blog/areas/`}
 >
 	<div class="container blog-home">
-		<section class="blog-grid" aria-label="Areas editoriais">
+		<section class="blog-grid" aria-label="Areas do blog">
 			<div class="section-title">
 				<div>
 					<span class="section-kicker">Mapa do blog</span>
-					<h1>Areas editoriais</h1>
+					<h1>Areas do blog</h1>
 				</div>
 			</div>
 			{areas.length === 0 ? (
 				<article class="surface-card empty-state">
 					<h2>Nenhuma área publicada</h2>
-					<p>Publique ao menos um conteúdo com `publish_status: published` para ativar as trilhas por área.</p>
+					<p>As trilhas por área ficam visíveis assim que novos conteúdos forem publicados.</p>
 				</article>
 			) : (
 				<div class="blog-row">

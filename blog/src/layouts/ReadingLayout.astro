@@ -114,11 +114,6 @@ const breadcrumbSchema = {
 					audioUrl={post.audioUrl}
 					transcriptUrl={post.transcriptUrl}
 				/>
-				{post.updatedAt && post.updateStatus && (
-					<p class="text-muted">
-						Atualização editorial: {post.updateStatus}
-					</p>
-				)}
 				<div class="article-content">
 					<slot />
 				</div>

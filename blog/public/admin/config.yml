@@ -3,6 +3,8 @@
   repo: PAVIEAdvocacia/PAVIE-091025
   branch: main
 
+local_backend: true
+publish_mode: simple
 site_url: "https://pavieadvocacia.com.br"
 locale: "pt"
 
@@ -15,12 +17,16 @@ collections:
     label_singular: "Publicacao"
     folder: "src/content/blog"
     create: true
-    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    delete: true
+    identifier_field: "title"
+    summary: "{{title}} - {{publish_status}}"
+    slug: "{{slug}}"
+    extension: "md"
     editor:
       preview: true
     fields:
       - { label: "Titulo", name: "title", widget: "string" }
-      - { label: "ID editorial", name: "editorial_item_id", widget: "string", required: true, hint: "Ex.: PAVIE-BLOG-20260308-001" }
+      - { label: "ID interno (opcional)", name: "editorial_item_id", widget: "string", required: false, hint: "Uso interno de controle." }
       -
           label: "Slug canonico"
           name: "slug"
@@ -115,5 +121,5 @@ collections:
       - { label: "Referencia de serie", name: "series_ref", widget: "string", required: false }
       - { label: "Gancho para Instagram", name: "instagram_hook", widget: "text", required: false }
       - { label: "Hint de intencao de lead", name: "lead_intent_hint", widget: "string", required: false }
-      - { label: "TRACE ref", name: "trace_ref", widget: "string", required: true }
+      - { label: "Referencia interna (opcional)", name: "trace_ref", widget: "string", required: false, hint: "Uso interno de rastreio." }
       - { label: "Conteudo", name: "body", widget: "markdown" }

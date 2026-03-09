@@ -62,12 +62,12 @@ const CTA_BY_VARIANT: Record<string, CtaConfig> = {
 	aprofundamento: {
 		label: 'Ver Publicacoes Relacionadas',
 		href: '/blog/',
-		description: 'Continue estudando o tema com artigos da mesma trilha editorial.',
+		description: 'Continue estudando o tema com artigos relacionados.',
 	},
 	leitura_relacionada: {
 		label: 'Ver Publicacoes Relacionadas',
 		href: '/blog/',
-		description: 'Continue estudando o tema com artigos da mesma trilha editorial.',
+		description: 'Continue estudando o tema com artigos relacionados.',
 	},
 	checklist: {
 		label: 'Solicitar Checklist Aplicavel',
@@ -221,8 +221,7 @@ export function postRoute(slug: string): string {
 export function isPublicPost(post: BlogPost): boolean {
 	return (
 		post.publishStatus === 'published' &&
-		Boolean(post.editorialItemId) &&
-		Boolean(post.traceRef) &&
+		Boolean(post.slug) &&
 		Boolean(post.publishedAt)
 	);
 }

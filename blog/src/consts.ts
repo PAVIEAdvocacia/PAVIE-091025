@@ -3,7 +3,7 @@ export const BLOG_SITE_URL = MAIN_SITE_URL;
 
 export const SITE_TITLE = 'PAVIE | Publicacoes Juridicas';
 export const SITE_DESCRIPTION =
-	'Hub editorial da PAVIE Advocacia com artigos tecnicos, guias e analises para decisoes juridicas seguras.';
+	'Conteudos juridicos da PAVIE Advocacia com orientacoes praticas para decisoes seguras.';
 
 export const DEFAULT_AUTHOR_NAME = 'Dr. Fabio Pavie';
 export const DEFAULT_AUTHOR_ROLE = 'Socio-fundador da PAVIE Advocacia';
