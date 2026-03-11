@@ -1,0 +1,26 @@
+---
+import type { BlogPost } from '../../lib/posts';
+import BlogCard from './BlogCard.astro';
+
+interface Props {
+	title: string;
+	kicker?: string;
+	posts: BlogPost[];
+	compact?: boolean;
+}
+
+const { title, kicker, posts, compact = false } = Astro.props;
+---
+
+<section class="blog-grid" aria-label={title}>
+	<div class="section-title">
+		<div>
+			{kicker && <span class="section-kicker">{kicker}</span>}
+			<h2>{title}</h2>
+		</div>
+	</div>
+
+	<div class:list={['blog-grid', compact ? 'blog-grid--compact' : 'blog-grid--cards']}>
+		{posts.map((post) => <BlogCard post={post} />)}
+	</div>
+</section>

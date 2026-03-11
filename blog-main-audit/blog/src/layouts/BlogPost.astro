@@ -1,0 +1,18 @@
+﻿---
+import type { BlogPost } from '../lib/posts';
+import type { TocItem } from '../lib/toc';
+import ReadingLayout from './ReadingLayout.astro';
+
+interface Props {
+	post: BlogPost;
+	toc?: TocItem[];
+	related?: BlogPost[];
+	noIndex?: boolean;
+}
+
+const { post, toc = [], related = [], noIndex = false } = Astro.props;
+---
+
+<ReadingLayout post={post} toc={toc} related={related} noIndex={noIndex}>
+	<slot />
+</ReadingLayout>

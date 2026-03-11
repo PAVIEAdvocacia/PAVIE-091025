@@ -1,0 +1,10 @@
+/* 
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
+
+/uploads/*
+  Cache-Control: public, max-age=604800
+
+/.well-known/*
+  Cache-Control: public, max-age=86400

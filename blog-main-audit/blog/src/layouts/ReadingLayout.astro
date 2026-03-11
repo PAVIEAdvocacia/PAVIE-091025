@@ -1,0 +1,223 @@
+---
+import type { BlogPost } from '../lib/posts';
+import type { TocItem } from '../lib/toc';
+import '../styles/reading.css';
+import AudioPlayer from '../components/blog/AudioPlayer.astro';
+import AuthorCard from '../components/blog/AuthorCard.astro';
+import Breadcrumbs from '../components/blog/Breadcrumbs.astro';
+import ReadingHero from '../components/blog/ReadingHero.astro';
+import ReadingSidebar from '../components/blog/ReadingSidebar.astro';
+import RelatedPosts from '../components/blog/RelatedPosts.astro';
+import BaseLayout from './BaseLayout.astro';
+import { blogClusterHref, getBlogClusterForPost } from '../lib/blog-clusters';
+import { buildBreadcrumbSchema, PUBLISHER_SCHEMA, toAbsoluteUrl } from '../lib/seo';
+import { temaHref } from '../lib/taxonomy';
+
+interface Props {
+	post: BlogPost;
+	toc: TocItem[];
+	related: BlogPost[];
+	noIndex?: boolean;
+}
+
+const { post, toc, related, noIndex = false } = Astro.props;
+const cluster = getBlogClusterForPost(post);
+const canonicalUrl = post.canonicalUrl ?? toAbsoluteUrl(post.url);
+
+const breadcrumbs = [
+	{ label: 'Início', href: '/' },
+	{ label: 'Publicações', href: '/blog/' },
+	{ label: cluster.title, href: blogClusterHref(cluster.key) },
+	{ label: post.title },
+];
+
+const articleFocusPoints = [
+	'Quando a decisão já envolve documento, contrato, patrimônio ou registro relevante.',
+	'Quando existe prazo, audiência, urgência prática ou risco que não convém tratar no improviso.',
+	'Quando a leitura informa bem o tema, mas a estratégia ainda depende das particularidades do caso.',
+];
+const introText = post.excerpt && post.excerpt !== post.description ? post.excerpt : '';
+const showIntroTags = post.temas.length > 0;
+const showIntroBlock = Boolean(introText) || showIntroTags;
+
+const articleSchema = {
+	'@context': 'https://schema.org',
+	'@type': 'BlogPosting',
+	headline: post.title,
+	description: post.description,
+	url: canonicalUrl,
+	image: post.image ? [toAbsoluteUrl(post.image)] : undefined,
+	author: {
+		'@type': 'Person',
+		name: post.authorName,
+	},
+	publisher: PUBLISHER_SCHEMA,
+	datePublished: post.publishedAt?.toISOString(),
+	dateModified: (post.updatedAt ?? post.publishedAt)?.toISOString(),
+	mainEntityOfPage: canonicalUrl,
+	inLanguage: 'pt-BR',
+	articleSection: post.area,
+};
+const breadcrumbSchema = buildBreadcrumbSchema(breadcrumbs, canonicalUrl);
+
+const faqSchema =
+	post.faqItems.length > 0
+		? {
+				'@context': 'https://schema.org',
+				'@type': 'FAQPage',
+				mainEntity: post.faqItems.map((item) => ({
+					'@type': 'Question',
+					name: item.question,
+					acceptedAnswer: {
+						'@type': 'Answer',
+						text: item.answer,
+					},
+				})),
+			}
+		: undefined;
+---
+
+<BaseLayout
+	title={`${post.seoTitle ?? post.title} | PAVIE | Advocacia`}
+	description={post.description}
+	canonical={canonicalUrl}
+	image={post.image}
+	type="article"
+	noIndex={noIndex}
+	publishedTime={post.publishedAt}
+	modifiedTime={post.updatedAt ?? post.publishedAt}
+	author={post.authorName}
+>
+	<div class="container reading-page">
+		<Breadcrumbs items={breadcrumbs} />
+		<ReadingHero post={post} />
+		<div class="reading-progress" aria-hidden="true"><span data-reading-progress></span></div>
+
+		<div class="reading-shell">
+			<article class="reading-content" aria-labelledby="reading-hero-title">
+				{showIntroBlock && (
+					<section class="reading-intro" aria-label="Introdução do artigo">
+						{introText && <p class="reading-intro__lead">{introText}</p>}
+						{showIntroTags && (
+							<div class="reading-summary__tags">
+								{post.temas.slice(0, 5).map((tema) => (
+									<a class="reading-tag" href={temaHref(tema)}>{tema}</a>
+								))}
+							</div>
+						)}
+					</section>
+				)}
+
+				<AudioPlayer
+					audioStatus={post.audioStatus}
+					audioUrl={post.audioUrl}
+					transcriptUrl={post.transcriptUrl}
+				/>
+				<div class="article-content">
+					<slot />
+				</div>
+				<section class="reading-context" aria-label="Quando este tema costuma exigir análise do caso concreto">
+					<span class="section-kicker">Quando a leitura pede um próximo passo</span>
+					<h2>Este tema costuma exigir análise individual quando a decisão já envolve documento, prazo, risco ou impacto relevante.</h2>
+					<ul>
+						{articleFocusPoints.map((item) => (
+							<li>{item}</li>
+						))}
+					</ul>
+				</section>
+
+				{post.faqItems.length > 0 && (
+					<section class="reading-summary" aria-label="Perguntas frequentes do artigo">
+						<h2>Perguntas frequentes</h2>
+						<div class="faq-list">
+							{post.faqItems.map((item) => (
+								<details class="surface-card">
+									<summary>{item.question}</summary>
+									<p>{item.answer}</p>
+								</details>
+							))}
+						</div>
+					</section>
+				)}
+				<div class="reading-footer">
+					<section class="reading-next-step surface-card" aria-label="Próximo passo após a leitura">
+						<div>
+							<span class="section-kicker">Próximo passo possível</span>
+							<h2>Se a leitura não basta sozinha, o primeiro passo é descrever a situação concreta com clareza.</h2>
+							<p>{post.cta.description}</p>
+						</div>
+						<div class="reading-next-step__grid">
+							<article class="reading-next-step__panel">
+								<h3>Área jurídica correspondente</h3>
+								<p>{cluster.description}</p>
+								<ul>
+									{cluster.typicalSituations.slice(0, 3).map((item) => (
+										<li>{item}</li>
+									))}
+								</ul>
+							</article>
+							<article class="reading-next-step__panel">
+								<h3>O que ajuda no primeiro contato</h3>
+								<ul>
+									<li>Descrição objetiva da situação principal.</li>
+									<li>Documentos, contratos ou registros que já existem.</li>
+									<li>Prazo, audiência, urgência prática ou impacto patrimonial.</li>
+								</ul>
+							</article>
+						</div>
+						<div class="reading-bridge__actions">
+							<a class="btn btn-secondary" href={blogClusterHref(cluster.key)}>Explorar temas</a>
+							<a class="btn btn-ghost" href={cluster.institutionalHref}>Conheça os Serviços</a>
+							<a
+								class="btn btn-primary"
+								href={post.cta.href}
+								data-contact-origin="article-final"
+								data-contact-intent="orientacao-inicial"
+							>
+								{post.cta.label}
+							</a>
+						</div>
+						<p class="reading-ethics-note">Conteúdo informativo. Cada caso exige análise técnica individual.</p>
+					</section>
+					<AuthorCard post={post} />
+					<RelatedPosts
+						posts={related}
+						title="Continue por leituras desta área"
+						emptyHref={blogClusterHref(cluster.key)}
+						emptyLabel="Explorar temas"
+					/>
+					<section class="reading-panel" aria-label="Chamada final resumida">
+						<h3>Prefere seguir direto para o contato?</h3>
+						<p class="text-muted">{post.cta.description}</p>
+						<a
+							class="btn btn-secondary"
+							href={post.cta.href}
+							data-contact-origin="article-summary"
+							data-contact-intent="orientacao-inicial"
+						>
+							{post.cta.label}
+						</a>
+					</section>
+				</div>
+			</article>
+
+			<ReadingSidebar post={post} toc={toc} related={related} />
+		</div>
+	</div>
+
+	<script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
+	<script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+	{faqSchema && <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />}
+	<script>
+		const progress = document.querySelector('[data-reading-progress]');
+		if (progress) {
+			const update = () => {
+				const max = document.documentElement.scrollHeight - window.innerHeight;
+				const value = max > 0 ? (window.scrollY / max) * 100 : 0;
+				progress.style.width = `${Math.min(100, Math.max(0, value))}%`;
+			};
+			update();
+			window.addEventListener('scroll', update, { passive: true });
+		}
+	</script>
+</BaseLayout>

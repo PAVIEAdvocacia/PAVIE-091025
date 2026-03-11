@@ -1,0 +1,57 @@
+﻿---
+import { getCollection } from 'astro:content';
+import { MAIN_SITE_URL } from '../consts';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { buildHubDirectory } from '../lib/service-hubs';
+import { isPublicPost, normalizePost, sortPostsByDate } from '../lib/posts';
+import '../styles/institutional-pages.css';
+
+const title = 'Áreas de Atuação | PAVIE | Advocacia';
+const description =
+	'Mapa institucional de serviços jurídicos da PAVIE, com áreas de atuação organizadas e ligação natural com os conteúdos do blog.';
+
+const entries = await getCollection('blog');
+const posts = sortPostsByDate(entries.map((entry) => normalizePost(entry))).filter(isPublicPost);
+const hubDirectory = buildHubDirectory(posts);
+---
+
+<BaseLayout title={title} description={description} canonical={`${MAIN_SITE_URL}/areas/`}>
+	<div class="container-md institutional-page">
+		<span class="badge">Áreas de atuação</span>
+		<h1>Serviços jurídicos organizados pelas principais áreas de atuação da PAVIE.</h1>
+		<p class="institutional-page__lead">
+			Esta estrutura mantém coerência entre atendimento, páginas institucionais e conteúdos do
+			blog. Cada área abaixo reúne escopo jurídico, situações comuns e leituras úteis sobre o mesmo assunto.
+		</p>
+
+		<div class="hub-grid">
+			{hubDirectory.map((hub) => (
+				<article class="surface-card hub-card">
+					<h2>{hub.title}</h2>
+					<p>{hub.summary}</p>
+					<ul class="institutional-list">
+						{hub.situations.map((situation) => (
+							<li>{situation}</li>
+						))}
+					</ul>
+					<div class="hub-tag-list">
+						{hub.themes.map((theme) => (
+							<a class:list={['hub-tag', { 'is-muted': !theme.available }]} href={theme.href}>
+								{theme.label}
+							</a>
+						))}
+					</div>
+					<div class="hub-card__meta">
+						<span>{hub.postCount} conteúdos publicados</span>
+						<a href={hub.areaUrl}>Explorar temas</a>
+					</div>
+					<div class="institutional-actions">
+						<a class="btn btn-primary" href={hub.areaUrl}>Explorar temas</a>
+						<a class="btn btn-ghost" href="/contato/">Solicitar Diagnóstico Jurídico</a>
+					</div>
+				</article>
+			))}
+		</div>
+	</div>
+</BaseLayout>
+

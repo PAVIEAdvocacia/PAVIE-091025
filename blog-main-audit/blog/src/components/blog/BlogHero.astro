@@ -1,0 +1,33 @@
+﻿---
+import { areaHref } from '../../lib/taxonomy';
+
+interface Props {
+	totalPosts: number;
+	areas: string[];
+}
+
+const { totalPosts, areas } = Astro.props;
+---
+
+<section class="blog-hero" aria-labelledby="blog-hero-title">
+	<div class="blog-hero__content">
+		<span class="badge">Blog Jurídico PAVIE</span>
+		<h1 id="blog-hero-title">Conteúdo para entender antes de decidir.</h1>
+		<p>
+			Leituras orientadas a situações reais em família, sucessões, patrimônio, contratos e relações cíveis,
+			com linguagem clara e foco em utilidade prática.
+		</p>
+		<div class="meta-list" aria-label="Informações do acervo">
+			<span><span class="meta-dot" aria-hidden="true"></span>{totalPosts} artigos no acervo público</span>
+			<span><span class="meta-dot" aria-hidden="true"></span>Atualizações periódicas</span>
+			<span><span class="meta-dot" aria-hidden="true"></span>Navegação por áreas e temas</span>
+		</div>
+		<div class="blog-hero__chips">
+			{areas.slice(0, 6).map((area) => (
+				<a class="blog-chip" href={areaHref(area)}>
+					{area}
+				</a>
+			))}
+		</div>
+	</div>
+</section>

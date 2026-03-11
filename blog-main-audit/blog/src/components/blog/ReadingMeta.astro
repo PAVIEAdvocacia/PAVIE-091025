@@ -1,0 +1,33 @@
+---
+import type { BlogPost } from '../../lib/posts';
+
+interface Props {
+	post: BlogPost;
+}
+
+const { post } = Astro.props;
+
+const publishedLabel = post.publishedAt
+	? post.publishedAt.toLocaleDateString('pt-BR', { dateStyle: 'long' })
+	: 'Data não informada';
+const publishedISO = post.publishedAt?.toISOString();
+const updatedLabel = post.updatedAt
+	? post.updatedAt.toLocaleDateString('pt-BR', { dateStyle: 'long' })
+	: undefined;
+const updatedISO = post.updatedAt?.toISOString();
+---
+
+<div class="meta-list" aria-label="Metadados do artigo">
+	<span><span class="meta-dot" aria-hidden="true"></span>{post.authorName}</span>
+	<span><span class="meta-dot" aria-hidden="true"></span>Leitura de {post.readingTime} min</span>
+	<span>
+		<span class="meta-dot" aria-hidden="true"></span>
+		Publicado em {publishedISO ? <time datetime={publishedISO}>{publishedLabel}</time> : publishedLabel}
+	</span>
+	{updatedLabel && (
+		<span>
+			<span class="meta-dot" aria-hidden="true"></span>
+			Atualizado em {updatedISO ? <time datetime={updatedISO}>{updatedLabel}</time> : updatedLabel}
+		</span>
+	)}
+</div>

@@ -1,0 +1,164 @@
+<footer class="site-footer" role="contentinfo">
+	<div class="container site-footer__intro">
+		<div class="site-footer__intro-copy">
+			<span class="site-footer__eyebrow">PAVIE | Advocacia</span>
+			<h2>Clareza jurídica, condução responsável e formas diretas de contato.</h2>
+			<p>
+				O site reúne áreas de atuação, conteúdos úteis e o primeiro passo para uma orientação inicial
+				com contexto e sobriedade.
+			</p>
+		</div>
+		<a class="btn btn-secondary site-footer__cta" href="/contato/">Iniciar contato</a>
+	</div>
+
+	<div class="container site-footer__grid">
+		<section>
+			<h3>PAVIE | Advocacia</h3>
+			<p>
+				Advocacia civil orientada a decisões seguras em família, sucessões, patrimônio,
+				contratos e conflitos cíveis com impacto real.
+			</p>
+		</section>
+
+		<section>
+			<h3>Navegação principal</h3>
+			<ul>
+				<li><a href="/">Início</a></li>
+				<li><a href="/areas/">Áreas de atuação</a></li>
+				<li><a href="/sobre/">Sobre</a></li>
+				<li><a href="/contato/">Contato</a></li>
+			</ul>
+		</section>
+
+		<section>
+			<h3>Blog jurídico</h3>
+			<ul>
+				<li><a href="/blog/">Home do blog</a></li>
+				<li><a href="/blog/areas/">Artigos por área</a></li>
+				<li><a href="/blog/temas/">Artigos por tema</a></li>
+				<li><a href="/rss.xml">RSS</a></li>
+			</ul>
+		</section>
+
+		<section>
+			<h3>Contato</h3>
+			<ul>
+				<li><a href="tel:+5521964382263">+55 (21) 96438-2263</a></li>
+				<li><a href="mailto:contato@pavieadvocacia.com.br">contato@pavieadvocacia.com.br</a></li>
+				<li>Av. Ataulfo de Paiva, 1235 / Leblon / Rio de Janeiro</li>
+				<li>Segunda a sexta, em horário comercial</li>
+			</ul>
+		</section>
+	</div>
+
+	<div class="container site-footer__bottom">
+		<p>OAB/RJ 134.947 / CNPJ 61.489.144/0001-48</p>
+		<p>Conteúdo informativo. Cada caso exige análise técnica individual.</p>
+		<p>&copy; 2026 PAVIE | Advocacia. Todos os direitos reservados.</p>
+	</div>
+</footer>
+
+<style>
+	.site-footer {
+		margin-top: var(--space-2xl);
+		padding: var(--space-2xl) 0 var(--space-lg);
+		background:
+			radial-gradient(circle at 90% 10%, rgba(143, 164, 167, 0.18), transparent 38%),
+			linear-gradient(150deg, rgba(37, 40, 43, 0.98), rgba(31, 34, 38, 0.98));
+		color: var(--text-contrast);
+		border-top: 1px solid rgba(143, 164, 167, 0.22);
+	}
+
+	.site-footer__intro {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr) auto;
+		gap: var(--space-lg);
+		align-items: center;
+		padding-bottom: var(--space-xl);
+		margin-bottom: var(--space-xl);
+		border-bottom: 1px solid rgba(143, 164, 167, 0.22);
+	}
+
+	.site-footer__intro-copy {
+		display: grid;
+		gap: var(--space-sm);
+		max-width: 60ch;
+	}
+
+	.site-footer__eyebrow {
+		font-size: var(--step-label);
+		font-weight: 700;
+		letter-spacing: var(--letter-label);
+		text-transform: uppercase;
+		color: color-mix(in srgb, var(--color-mist) 82%, white);
+	}
+
+	.site-footer__intro h2 {
+		color: var(--text-contrast);
+		font-size: clamp(1.45rem, 1.15rem + 1vw, 2rem);
+	}
+
+	.site-footer__intro p {
+		color: color-mix(in srgb, var(--text-contrast) 82%, var(--color-soft));
+		max-width: 58ch;
+	}
+
+	.site-footer a {
+		color: color-mix(in srgb, var(--text-contrast) 88%, var(--color-soft));
+		text-decoration-color: rgba(204, 176, 147, 0.35);
+	}
+
+	.site-footer h3 {
+		color: color-mix(in srgb, var(--color-sand) 72%, white);
+		font-size: 1.05rem;
+		margin-bottom: 0.7rem;
+	}
+
+	.site-footer__grid {
+		display: grid;
+		gap: var(--space-lg);
+		grid-template-columns: repeat(4, minmax(0, 1fr));
+	}
+
+	.site-footer p,
+	.site-footer li {
+		font-size: 0.92rem;
+		color: color-mix(in srgb, var(--text-contrast) 82%, var(--color-soft));
+	}
+
+	.site-footer ul {
+		list-style: none;
+		display: grid;
+		gap: var(--space-xs);
+	}
+
+	.site-footer__bottom {
+		margin-top: var(--space-xl);
+		padding-top: var(--space-md);
+		border-top: 1px solid rgba(143, 164, 167, 0.22);
+		display: grid;
+		gap: var(--space-2xs);
+		text-align: center;
+	}
+
+	@media (max-width: 920px) {
+		.site-footer__intro {
+			grid-template-columns: 1fr;
+			align-items: start;
+		}
+
+		.site-footer__grid {
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+		}
+	}
+
+	@media (max-width: 640px) {
+		.site-footer__grid {
+			grid-template-columns: 1fr;
+		}
+
+		.site-footer {
+			padding-top: var(--space-xl);
+		}
+	}
+</style>

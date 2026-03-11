@@ -1,0 +1,46 @@
+---
+import { getCollection, render } from 'astro:content';
+import ReadingLayout from '../../layouts/ReadingLayout.astro';
+import { getRelatedPosts } from '../../lib/related';
+import { isPublicPost, normalizePost, sortPostsByDate } from '../../lib/posts';
+import { buildToc } from '../../lib/toc';
+
+export async function getStaticPaths() {
+	const entries = await getCollection('blog');
+	const paths: Array<{ params: { slug: string }; props: { entryId: string } }> = [];
+	const seen = new Set<string>();
+
+	for (const entry of entries) {
+		const post = normalizePost(entry);
+		if (!isPublicPost(post)) continue;
+		const primarySlug = post.slug;
+		if (!seen.has(primarySlug)) {
+			paths.push({
+				params: { slug: primarySlug },
+				props: { entryId: entry.id },
+			});
+			seen.add(primarySlug);
+		}
+	}
+
+	return paths;
+}
+
+const entries = await getCollection('blog');
+const currentEntry = entries.find((entry) => entry.id === Astro.props.entryId);
+
+if (!currentEntry) {
+	throw new Error(`Post nao encontrado: ${Astro.props.entryId}`);
+}
+
+const currentPost = normalizePost(currentEntry);
+const publicPosts = sortPostsByDate(entries.map((entry) => normalizePost(entry))).filter(isPublicPost);
+const related = getRelatedPosts(publicPosts, currentPost, 3);
+const { Content, headings } = await render(currentEntry);
+const toc = buildToc(headings);
+const noIndex = !isPublicPost(currentPost);
+---
+
+<ReadingLayout post={currentPost} toc={toc} related={related} noIndex={noIndex}>
+	<Content />
+</ReadingLayout>

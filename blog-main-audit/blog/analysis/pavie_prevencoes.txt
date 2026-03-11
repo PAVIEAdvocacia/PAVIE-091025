@@ -1,0 +1,493 @@
+﻿## 03.00 Arquitetura Operacional do Sis.md
+1. crescimento por acÃºmulo desordenado de arquivos e tarefas;
+2. duplicaÃ§Ã£o de dados em mÃºltiplas notas, planilhas, mensagens ou documentos;
+3. perda de comando entre entrada, produÃ§Ã£o, cobranÃ§a, publicaÃ§Ã£o e memÃ³ria;
+4. dependÃªncia excessiva de uma Ãºnica ferramenta sem redundÃ¢ncia operacional;
+5. produÃ§Ã£o jurÃ­dica dissociada de taxonomia, prova e histÃ³rico;
+6. entrada de novos casos incompatÃ­vel com a capacidade real do escritÃ³rio;
+7. uso de automaÃ§Ãµes sem encaixe documental, sem revisÃ£o humana ou sem trilha mÃ­nima;
+8. separaÃ§Ã£o artificial entre operaÃ§Ã£o jurÃ­dica, operaÃ§Ã£o administrativa e gestÃ£o do conhecimento;
+9. publicaÃ§Ã£o externa ou comunicaÃ§Ã£o institucional desvinculada do portfÃ³lio e da capacidade;
+10. incapacidade de reconstruir, explicar e revisar a trajetÃ³ria de um caso, uma decisÃ£o, uma peÃ§a, um lead, um projeto ou uma mudanÃ§a estrutural.
+
+## 03.01 Manual de Taxonomia, IDs e YAM.md
+1. registros sem identidade Ãºnica;
+2. notas com nomes arbitrÃ¡rios e irrecuperÃ¡veis;
+3. duplicidade de entidades e documentos;
+4. YAML inconsistente, incompleto ou sem valor analÃ­tico;
+5. crescimento do acervo sem critÃ©rio uniforme de leitura humana e sistÃªmica.
+
+## 03.02 Mapa de Processos do Escritóri.md
+1. atividades relevantes executadas fora de fluxo minimamente reconhecÃ­vel;
+2. perda de continuidade entre captaÃ§Ã£o, triagem, produÃ§Ã£o e cobranÃ§a;
+3. retrabalho por ausÃªncia de definiÃ§Ã£o de entradas, saÃ­das e responsÃ¡veis;
+4. acÃºmulo de tarefas sem critÃ©rio de prioridade e sem vÃ­nculo com capacidade real;
+5. produÃ§Ã£o jurÃ­dica dissociada de prova, revisÃ£o e rastreabilidade;
+6. desorganizaÃ§Ã£o entre dados estruturais, documentos finais e memÃ³ria institucional;
+7. automaÃ§Ãµes inseridas em pontos errados do fluxo;
+8. crescimento operacional sem padronizaÃ§Ã£o suficiente para delegaÃ§Ã£o, controle e melhoria.
+
+## 03.03 Biblioteca de SOPs, Checklists.md
+1. repetiÃ§Ã£o de tarefas crÃ­ticas sem padrÃ£o mÃ­nimo;
+2. dependÃªncia excessiva de memÃ³ria individual;
+3. execuÃ§Ã£o desigual do mesmo tipo de ato;
+4. checklists soltos, sem dono, sem revisÃ£o e sem validade;
+5. modelos operacionais sem vÃ­nculo com o fluxo real;
+6. automaÃ§Ãµes criadas sem espelho procedimental humano;
+7. delegaÃ§Ã£o de etapas sem critÃ©rio de supervisÃ£o;
+8. crescimento do acervo operacional sem taxonomia, versionamento e descarte controlado.
+
+## 05.00 Portfólio Jurídico e Entrega d.md
+1. dispersÃ£o temÃ¡tica incompatÃ­vel com o foco estratÃ©gico;
+2. aceitaÃ§Ã£o oportunista de casos sem aderÃªncia a capacidade, mÃ©todo ou identidade;
+3. confusÃ£o entre portfÃ³lio estratÃ©gico e matÃ©ria eventual;
+4. promessa comercial superior Ã  capacidade operacional real do escritÃ³rio;
+5. propostas sem padrÃ£o de valor, escopo e prova de entrega;
+6. dificuldade de explicar, internamente e externamente, o que a PAVIE faz e como entrega;
+7. degradaÃ§Ã£o da percepÃ§Ã£o de valor por informalidade de oferta;
+8. mistura indevida entre nicho prioritÃ¡rio, nicho complementar e matÃ©ria satÃ©lite;
+9. falta de governanÃ§a sobre expansÃ£o, retraÃ§Ã£o ou revisÃ£o do portfÃ³lio;
+10. perda de coerÃªncia entre o que se comunica, o que se contrata e o que efetivamente se entrega.
+
+## 05.03 Critérios de Aceitação, Recusa, Encaminhame.md
+1. aceitaÃ§Ã£o impulsiva de casos sem aderÃªncia real ao foco do escritÃ³rio;
+2. entrada de demanda apenas por urgÃªncia, pressÃ£o comercial ou afinidade subjetiva;
+3. absorÃ§Ã£o de casos que fragilizem a agenda, a revisÃ£o humana ou a qualidade da entrega;
+4. recusa informal sem critÃ©rio, registro ou racionalidade;
+5. encaminhamento aleatÃ³rio de casos sem lÃ³gica institucional;
+6. despriorizaÃ§Ã£o silenciosa e injustificÃ¡vel de assuntos relevantes;
+7. baixa previsibilidade sobre o que entra, o que nÃ£o entra e em que condiÃ§Ãµes entra;
+8. incoerÃªncia entre o portfÃ³lio oficial e a prÃ¡tica cotidiana de aceitaÃ§Ã£o.
+
+## 05.04 Matriz de Complexidade, Escopo.md
+1. propostas feitas apenas por intuiÃ§Ã£o ou comparaÃ§Ã£o casual;
+2. subprecificaÃ§Ã£o de trabalho denso e estrutural;
+3. sobreprecificaÃ§Ã£o mal explicada e sem correspondÃªncia com escopo;
+4. confusÃ£o entre preÃ§o de entrada, preÃ§o de conduÃ§Ã£o e preÃ§o de coordenaÃ§Ã£o premium;
+5. mistura entre escopo-base e trabalho extra nÃ£o precificado;
+6. absorÃ§Ã£o silenciosa de complexidade nÃ£o contratada;
+7. desconto desordenado que destrÃ³i coerÃªncia do portfÃ³lio;
+8. baixa comparabilidade entre propostas similares;
+9. desgaste na negociaÃ§Ã£o por ausÃªncia de lÃ³gica objetiva;
+10. dissociaÃ§Ã£o entre esforÃ§o real, risco assumido, valor percebido e preÃ§o praticado.
+
+## 05.05 Padrões de Entregáveis, Evidên.md
+1. confusÃ£o entre serviÃ§o vendido e material efetivamente entregue;
+2. atrito por falta de clareza sobre o que o cliente deveria receber;
+3. envio de peÃ§as ou documentos sem contextualizaÃ§Ã£o adequada;
+4. falha de prova daquilo que foi executado ou comunicado;
+5. experiÃªncia fragmentada, opaca ou excessivamente reativa;
+6. comunicaÃ§Ã£o desproporcional, tardia ou insuficiente;
+7. encerramento de casos sem fechamento inteligÃ­vel e Ãºtil;
+8. percepÃ§Ã£o de valor inferior ao trabalho efetivamente realizado por falha de forma e evidÃªncia;
+9. desalinhamento entre proposta, preÃ§o, escopo e experiÃªncia;
+10. baixa padronizaÃ§Ã£o da qualidade percebida entre produtos do portfÃ³lio.
+
+## 06.00 Comercial, Captação e Relacion.md
+1. captaÃ§Ã£o difusa e desconectada do portfÃ³lio real;
+2. crescimento do funil com baixa qualidade de demanda;
+3. confusÃ£o entre triagem comercial e triagem jurÃ­dica;
+4. conversÃ£o baseada em improviso, urgÃªncia emocional ou discurso vago;
+5. dependÃªncia excessiva de proposta individual artesanal;
+6. perda de oportunidades por ausÃªncia de mÃ©todo de follow-up;
+7. relacionamento reativo e sem memÃ³ria;
+8. comunicaÃ§Ã£o comercial incompatÃ­vel com a Ã©tica da advocacia;
+9. baixa integraÃ§Ã£o entre CRM, proposta, onboarding e recorrÃªncia;
+10. desperdÃ­cio de energia com leads sem aderÃªncia enquanto oportunidades qualificadas se perdem.
+
+## 06.03 Jornada do Cliente, Onboarding.md
+1. ruptura entre o que foi prometido comercialmente e o que comeÃ§a operacionalmente;
+2. inÃ­cio de trabalho sem alinhamento suficiente de expectativa, documento e prÃ³ximos passos;
+3. onboarding informal, incompleto ou excessivamente improvisado;
+4. perda de informaÃ§Ãµes essenciais logo apÃ³s a contrataÃ§Ã£o;
+5. silÃªncio operacional mal interpretado como abandono;
+6. comunicaÃ§Ã£o errÃ¡tica, excessiva ou insuficiente;
+7. cliente sem clareza sobre estado do caso, pendÃªncias e responsabilidades;
+8. acompanhamento reativo sem marcos definidos;
+9. encerramento de etapa sem transiÃ§Ã£o inteligÃ­vel;
+10. desgaste de confianÃ§a por desorganizaÃ§Ã£o do inÃ­cio da relaÃ§Ã£o.
+
+## 06.07 CRM Comercial, Pipeline e Ge - Copia.md
+1. CRM inflado com contatos sem sentido operacional;
+2. pipeline com estados vagos ou sem regra de passagem;
+3. perda de memÃ³ria sobre origem, aderÃªncia, proposta e desfecho;
+4. confusÃ£o entre lead curioso, oportunidade madura e cliente convertido;
+5. acÃºmulo de oportunidades paradas sem decisÃ£o;
+6. reativaÃ§Ã£o caÃ³tica de contatos antigos;
+7. fechamento comercial sem rastreabilidade mÃ­nima;
+8. baixa confiabilidade dos dados para revisÃ£o do portfÃ³lio e da captaÃ§Ã£o;
+9. ausÃªncia de ligaÃ§Ã£o entre CRM, triagem, proposta, onboarding e recorrÃªncia;
+10. gestÃ£o comercial baseada em lembranÃ§a pessoal, e nÃ£o em sistema.
+
+## 06.08 Protocolo de Perda, Reativação.md
+1. descarte prematuro de boas oportunidades apenas porque nÃ£o fecharam no primeiro ciclo;
+2. insistÃªncia relacional inadequada sobre leads ou oportunidades sem contexto;
+3. reativaÃ§Ã£o desorganizada de contatos antigos sem memÃ³ria do histÃ³rico;
+4. inflamento do pipeline por registros mortos travestidos de â€œquase oportunidadeâ€;
+5. ausÃªncia de classificaÃ§Ã£o Ãºtil sobre por que a oportunidade se perdeu;
+6. reaproveitamento oportunista de lead sem aderÃªncia real ao portfÃ³lio;
+7. perda de inteligÃªncia comercial por nÃ£o distinguir timing, preÃ§o, escopo e maturidade;
+8. recontato sem critÃ©rio temporal, sem propÃ³sito ou sem lastro institucional.
+
+## 07.00 Marca, Comunicação e Presença .md
+1. dissociaÃ§Ã£o entre o que o escritÃ³rio Ã© e o que aparenta ser;
+2. comunicaÃ§Ã£o pÃºblica mais ampla ou mais agressiva do que a capacidade real de entrega;
+3. inconsistÃªncia entre site, blog, redes, documentos e materiais institucionais;
+4. multiplicaÃ§Ã£o de canais sem governanÃ§a de identidade;
+5. uso de linguagem incompatÃ­vel com a Ã©tica e a imagem desejada do escritÃ³rio;
+6. sinais visuais e verbais conflitantes, frÃ¡geis ou pouco profissionais;
+7. crescimento digital sem coerÃªncia reputacional;
+8. perda de autoridade por excesso de dispersÃ£o ou ruÃ­do;
+9. confusÃ£o entre presenÃ§a institucional sÃ©ria e performance promocional vazia;
+10. ausÃªncia de critÃ©rios de revisÃ£o da marca e da presenÃ§a pÃºblica.
+
+## 07.03 Arquitetura de Canais, Ativos .md
+1. multiplicaÃ§Ã£o de perfis, pÃ¡ginas ou canais sem funÃ§Ã£o clara;
+2. dependÃªncia excessiva de plataformas terceiras;
+3. confusÃ£o entre sede institucional e canal de distribuiÃ§Ã£o;
+4. duplicidade de conteÃºdo, mensagem ou autoridade em lugares inadequados;
+5. ativos pÃºblicos sem manutenÃ§Ã£o, sem hierarquia ou sem critÃ©rio de existÃªncia;
+6. inconsistÃªncia de dados institucionais entre perfis e pÃ¡ginas;
+7. criaÃ§Ã£o de canais que consomem mais energia do que devolvem valor;
+8. crescimento da presenÃ§a digital sem governanÃ§a de risco, coerÃªncia e memÃ³ria.
+
+## 08.00 Financeiro, Administrativo e P.md
+1. crescimento comercial sem sustentabilidade econÃ´mica;
+2. boa captaÃ§Ã£o com mÃ¡ conversÃ£o financeira;
+3. faturamento sem disciplina de recebimento, caixa e margem;
+4. rotinas administrativas tratadas como resÃ­duo informal do escritÃ³rio;
+5. aumento de volume com perda de controle, prazo e qualidade;
+6. indicadores abundantes, porÃ©m pouco Ãºteis para decisÃ£o;
+7. despesas e investimentos sem critÃ©rio de prioridade, retorno e capacidade;
+8. ausÃªncia de leitura integrada entre portfÃ³lio, demanda, operaÃ§Ã£o e resultado.
+
+## 08.03_politica_de_precificacao_execu.md
+1. precificaÃ§Ã£o intuitiva sem relaÃ§Ã£o com complexidade real;
+2. descontos concedidos para â€œfechar logoâ€, sem leitura de margem;
+3. propostas economicamente bonitas, porÃ©m operacionalmente ruins;
+4. preÃ§o fixado apenas por comparaÃ§Ã£o vaga com mercado;
+5. casos que consomem alta energia por baixa captura de valor;
+6. mistura indevida entre casos estratÃ©gicos, premium, recorrentes e satÃ©lites;
+7. aparente receita que se converte em baixa margem ou retrabalho;
+8. dificuldade de sustentar crescimento porque o escritÃ³rio vende abaixo do que consome.
+
+## 08.04_politica_de_faturamento_cobran.md
+1. faturamento tardio, incompleto ou dissociado do contrato;
+2. cobranÃ§a improvisada, emocional ou sem cadÃªncia;
+3. confusÃ£o entre valor contratado, faturado, vencido e efetivamente recebido;
+4. tolerÃ¢ncia silenciosa Ã  inadimplÃªncia recorrente;
+5. continuidade de serviÃ§o sem proteÃ§Ã£o econÃ´mica mÃ­nima;
+6. perda de crÃ©dito por ausÃªncia de prova, trilha ou disciplina;
+7. desgaste reputacional por comunicaÃ§Ã£o de cobranÃ§a inadequada;
+8. corrosÃ£o de caixa por baixa governanÃ§a de recebÃ­veis.
+
+## 08.05_politica_de_custos_estrutura_e.md
+1. crescimento de despesas sem leitura de utilidade real;
+2. confusÃ£o entre custo necessÃ¡rio, conforto operacional e investimento estratÃ©gico;
+3. contrataÃ§Ã£o de ferramentas, assinaturas ou serviÃ§os por impulso;
+4. estrutura incompatÃ­vel com o porte, o portfÃ³lio ou a fase do escritÃ³rio;
+5. erosÃ£o silenciosa de margem por custos invisÃ­veis ou mal classificados;
+6. expansÃ£o tecnolÃ³gica sem retorno operacional verificÃ¡vel;
+7. compras relevantes sem critÃ©rio de prioridade, caixa ou risco;
+8. captura de compromissos recorrentes que reduzem liberdade estratÃ©gica.
+
+## 08.06_politica_de_indicadores_kpis_e.md
+1. gestÃ£o por sensaÃ§Ã£o, memÃ³ria ou impressÃ£o subjetiva;
+2. uso de mÃ©tricas de vaidade sem relaÃ§Ã£o com valor real;
+3. excesso de nÃºmeros sem consequÃªncia decisÃ³ria;
+4. ausÃªncia de leitura consistente entre preÃ§o, custo, cobranÃ§a e resultado;
+5. produÃ§Ã£o de painÃ©is bonitos, porÃ©m economicamente inÃºteis;
+6. incapacidade de identificar degradaÃ§Ã£o de margem, produtividade ou conversÃ£o com antecedÃªncia;
+7. decisÃµes de expansÃ£o, corte, investimento ou reposicionamento sem base mensurÃ¡vel;
+8. perda de rastreabilidade sobre o que funciona, o que falha e o que precisa ser recalibrado.
+
+## 08.07_politica_de_risco_contingencia.md
+1. dependÃªncia excessiva de um Ãºnico fluxo de receita, ferramenta, rotina, canal ou fornecedor;
+2. exposiÃ§Ã£o silenciosa a atrasos de recebimento, quedas de caixa e descompasso entre compromissos e liquidez;
+3. fragilidade operacional diante de falhas tecnolÃ³gicas, indisponibilidade de sistemas, perda de acesso ou ruptura de sincronizaÃ§Ã£o;
+4. crescimento econÃ´mico sem leitura prÃ©via de risco estrutural;
+5. ausÃªncia de protocolos de continuidade para eventos crÃ­ticos;
+6. improviso decisÃ³rio em situaÃ§Ãµes de pressÃ£o econÃ´mica, tÃ©cnica ou reputacional;
+7. tolerÃ¢ncia a contingÃªncias recorrentes sem aprendizagem institucional;
+8. incapacidade de preservar operaÃ§Ã£o mÃ­nima, integridade informacional e estabilidade estratÃ©gica em cenÃ¡rios adversos.
+
+## 08.08_politica_de_revisao_economica_.md
+1. repetiÃ§Ã£o de erro econÃ´mico jÃ¡ identificado;
+2. manutenÃ§Ã£o de frentes, custos, rotinas ou investimentos que perderam racionalidade;
+3. insistÃªncia em portfÃ³lio, preÃ§o ou operaÃ§Ã£o apenas por hÃ¡bito;
+4. produÃ§Ã£o de indicadores sem consequÃªncia de reorientaÃ§Ã£o;
+5. tolerÃ¢ncia a desvios recorrentes tratados como â€œcasos isoladosâ€;
+6. desperdÃ­cio de caixa, energia e foco em estruturas sem aderÃªncia estratÃ©gica;
+7. ausÃªncia de mecanismo formal para encerrar, recalibrar, redimensionar ou reforÃ§ar decisÃµes;
+8. incapacidade de converter experiÃªncia em vantagem institucional cumulativa.
+
+## 09.00_politica_de_arquitetura_tecnol.md
+1. dependÃªncia desorganizada de plataformas externas para funÃ§Ãµes centrais do escritÃ³rio;
+2. fragmentaÃ§Ã£o de dados entre sistemas sem taxonomia, rastreabilidade ou governanÃ§a;
+3. uso de InteligÃªncia Artificial sem supervisÃ£o humana cogente;
+4. automaÃ§Ãµes opacas, nÃ£o auditÃ¡veis ou incompatÃ­veis com a Ã©tica profissional;
+5. captura excessiva de dados em desacordo com minimizaÃ§Ã£o, LGPD e sobriedade institucional;
+6. perda de continuidade por ausÃªncia de redundÃ¢ncia, versionamento ou padronizaÃ§Ã£o estrutural;
+7. crescimento tecnolÃ³gico sem aderÃªncia ao portfÃ³lio, Ã  operaÃ§Ã£o e ao regime documental da PAVIE;
+8. confusÃ£o entre ferramenta conveniente e infraestrutura estratÃ©gica.
+
+## 09.01_politica_do_nucleo_obsidian_cr.md
+1. uso do Obsidian como espaÃ§o informal, sem regime de governanÃ§a;
+2. registros sem metadados mÃ­nimos, sem taxonomia ou sem vÃ­nculo relacional suficiente;
+3. duplicidade desnecessÃ¡ria de dados entre clientes, matters, documentos e rotinas;
+4. confusÃ£o entre camada de captura e nÃºcleo real de gestÃ£o;
+5. acervo cognitivo dependente de memÃ³ria humana ou de ferramentas externas opacas;
+6. impossibilidade de busca, filtragem, auditoria e automaÃ§Ã£o por baixa qualidade estrutural dos registros;
+7. expansÃ£o desordenada do vault sem convenÃ§Ãµes estÃ¡veis de nomenclatura, status e ciclo de vida;
+8. perda de continuidade institucional por ausÃªncia de chaves, IDs, templates e regras de ligaÃ§Ã£o.
+
+## 09.02_politica_da_camada_de_captura_.md
+1. confusÃ£o entre formulÃ¡rio de captura e CRM principal do escritÃ³rio;
+2. entrada de dados brutos no nÃºcleo sem verificaÃ§Ã£o mÃ­nima de consistÃªncia;
+3. coleta excessiva de dados em desacordo com LGPD, minimizaÃ§Ã£o e sobriedade institucional;
+4. roteamento opaco, inseguro ou sem trilha auditÃ¡vel;
+5. dependÃªncia do ambiente web como repositÃ³rio definitivo de operaÃ§Ã£o;
+6. duplicidade, perda, conflito ou orfandade de registros oriundos da web;
+7. automaÃ§Ãµes de intake sem supervisÃ£o humana proporcional;
+8. quebra de continuidade entre camada pÃºblica, camada transitÃ³ria e nÃºcleo local-first.
+
+## 09.03_politica_de_versionamento_inte.md
+1. mudanÃ§as tÃ©cnicas sem trilha clara de autoria, contexto ou finalidade;
+2. publicaÃ§Ã£o direta e impulsiva em ambiente ativo sem validaÃ§Ã£o suficiente;
+3. quebra silenciosa de site, formulÃ¡rio, pipeline, integraÃ§Ãµes, schemas ou automaÃ§Ãµes por ausÃªncia de testes proporcionais;
+4. corrupÃ§Ã£o da coerÃªncia entre nÃºcleo local-first, camada web, camada transitÃ³ria e integraÃ§Ãµes auxiliares;
+5. dependÃªncia de memÃ³ria humana para entender o que mudou, por que mudou e como reverter;
+6. perda de continuidade por ausÃªncia de rollback, documentaÃ§Ã£o mÃ­nima ou separaÃ§Ã£o de ambientes;
+7. contaminaÃ§Ã£o da produÃ§Ã£o por experimentos, credenciais mal geridas ou mudanÃ§as nÃ£o revisadas;
+8. uso de IA ou codificaÃ§Ã£o agÃªntica sem supervisÃ£o humana suficiente na cadeia de implementaÃ§Ã£o.
+
+## 09.04_politica_de_observabilidade_lo.md
+1. operaÃ§Ã£o no escuro, sem sinais confiÃ¡veis sobre o estado real do sistema;
+2. dependÃªncia de percepÃ§Ã£o intuitiva para identificar falhas, regressÃµes ou indisponibilidades;
+3. ausÃªncia de logs Ãºteis para reconstruÃ§Ã£o de eventos crÃ­ticos;
+4. falhas silenciosas entre captura, trÃ¢nsito, nÃºcleo local-first e publicaÃ§Ã£o;
+5. tratamento improvisado de incidentes sem classificaÃ§Ã£o, trilha e responsÃ¡veis;
+6. perda de evidÃªncias tÃ©cnicas por contenÃ§Ã£o desorganizada;
+7. repetiÃ§Ã£o de falhas por ausÃªncia de revisÃ£o e aprendizado institucional;
+8. monitoramento meramente ornamental, incapaz de gerar reaÃ§Ã£o operacional Ãºtil.
+
+## 09.05_politica_de_seguranca_controle.md
+1. acessos excessivos, amplos ou permanentes sem necessidade operacional real;
+2. uso desorganizado de senhas, chaves, tokens, variÃ¡veis e segredos;
+3. exposiÃ§Ã£o indevida de superfÃ­cies pÃºblicas, rotas, webhooks, painÃ©is, repositÃ³rios ou backends;
+4. circulaÃ§Ã£o de dados sensÃ­veis sem base de necessidade e sem trilha suficiente;
+5. mistura entre ambientes, perfis, privilÃ©gios e camadas arquitetÃ´nicas;
+6. dependÃªncia de confianÃ§a tÃ¡cita em dispositivos, sessÃµes, integraÃ§Ãµes ou operadores;
+7. falhas de seguranÃ§a causadas por improviso, conveniÃªncia ou baixa governanÃ§a tÃ©cnica;
+8. ruptura entre seguranÃ§a, continuidade, observabilidade e conformidade.
+
+## 09.06_politica_de_backup_redundancia.md
+1. confianÃ§a ingÃªnua em sincronizaÃ§Ã£o como se fosse backup;
+2. dependÃªncia de ponto Ãºnico de falha para o nÃºcleo cognitivo e operacional do escritÃ³rio;
+3. perda irreversÃ­vel de dados, metadados, vÃ­nculos relacionais, configuraÃ§Ãµes ou histÃ³rico tÃ©cnico;
+4. backups sem verificaÃ§Ã£o de restauraÃ§Ã£o e, portanto, sem valor real;
+5. retenÃ§Ã£o caÃ³tica, cÃ³pias sem critÃ©rio ou preservaÃ§Ã£o incompatÃ­vel com seguranÃ§a e LGPD;
+6. retomada improvisada apÃ³s falha crÃ­tica, sem ordem de prioridade e sem trilha de decisÃ£o;
+7. ruptura entre seguranÃ§a, observabilidade, contingÃªncia, versionamento e recuperaÃ§Ã£o;
+8. incapacidade de demonstrar como o escritÃ³rio continuaria operando em cenÃ¡rio adverso plausÃ­vel.
+
+## 09.07_politica_de_governanca_de_ia_p.md
+1. uso de IA sem supervisÃ£o humana cogente;
+2. emprego de prompts improvisados, opacos ou sem finalidade claramente delimitada;
+3. agentes ou automaÃ§Ãµes que atuem alÃ©m do escopo autorizado;
+4. contaminaÃ§Ã£o de bases, alucinaÃ§Ãµes, inferÃªncias frÃ¡geis ou produÃ§Ã£o jurÃ­dica sem validaÃ§Ã£o crÃ­tica;
+5. circulaÃ§Ã£o indevida de dados sensÃ­veis em modelos, ferramentas ou integraÃ§Ãµes nÃ£o governadas;
+6. decisÃ£o jurÃ­dica, estratÃ©gica ou reputacional deslocada indevidamente ao sistema algorÃ­tmico;
+7. ausÃªncia de trilha, versionamento, teste ou accountability sobre fluxos cognitivos automatizados;
+8. confusÃ£o entre apoio de IA e substituiÃ§Ã£o do juÃ­zo profissional do advogado.
+
+## 09.08_politica_de_dados_derivados_me.md
+1. que registros derivados substituam, silenciosamente, a fonte primÃ¡ria de verdade;
+2. que sÃ­nteses, classificaÃ§Ãµes ou memÃ³rias assistidas passem a circular sem vÃ­nculo de proveniÃªncia;
+3. que a IA ou automaÃ§Ãµes introduzam contaminaÃ§Ã£o semÃ¢ntica, alucinaÃ§Ã£o ou inferÃªncia nÃ£o verificada no nÃºcleo institucional;
+4. que o sistema aprenda de forma opaca, automÃ¡tica ou irreversÃ­vel a partir de ruÃ­do, erro ou conveniÃªncia;
+5. que taxonomias, vÃ­nculos e classificaÃ§Ãµes se degradem lentamente sem revisÃ£o estrutural;
+6. que dados derivados ampliem duplicidade, contradiÃ§Ã£o, ruÃ­do operacional ou falsa sensaÃ§Ã£o de conhecimento;
+7. que memÃ³ria assistida, resumos e estruturas de apoio comprometam sigilo, LGPD, seguranÃ§a ou discriÃ§Ã£o institucional;
+8. que o escritÃ³rio perca controle cognitivo sobre o que foi derivado, de onde veio, para que serve e como pode ser revisto.
+
+## 10.00_politica_de_registros_evidenci.md
+1. perda de prova relevante por mÃ¡ organizaÃ§Ã£o, dispersÃ£o ou arquivamento indevido;
+2. confusÃ£o entre documento principal, comprovante, anexo acessÃ³rio, resumo e dado derivado;
+3. ruptura entre o ato praticado e a evidÃªncia capaz de demonstrÃ¡-lo;
+4. memÃ³ria institucional dependente de lembranÃ§a pessoal ou reconstruÃ§Ã£o informal posterior;
+5. manutenÃ§Ã£o de acervos digitais ou fÃ­sicos sem classificaÃ§Ã£o mÃ­nima, vÃ­nculo ou contexto;
+6. reuso de registros fora de escopo, sem higienizaÃ§Ã£o, sem versÃ£o ou sem comprovaÃ§Ã£o de adequaÃ§Ã£o;
+7. impossibilidade de reconstruÃ§Ã£o de um caso, entrega, cobranÃ§a, incidente ou decisÃ£o estrutural;
+8. degradaÃ§Ã£o silenciosa do patrimÃ´nio documental da PAVIE por ausÃªncia de governanÃ§a.
+
+## 10.01_matriz_de_classes_documentais_.md
+1. confusÃ£o entre documento central e documento acessÃ³rio;
+2. uso de resumo, cÃ³pia ou derivado como se fosse fonte primÃ¡ria;
+3. sobreposiÃ§Ã£o indevida entre mÃºltiplos arquivos concorrentes sem definiÃ§Ã£o de prevalÃªncia;
+4. perda de tempo, risco e ruÃ­do na localizaÃ§Ã£o do documento certo para cada finalidade;
+5. cadeia probatÃ³ria enfraquecida por classificaÃ§Ã£o deficiente;
+6. dossiÃªs com excesso de peÃ§as sem hierarquia documental clara;
+7. reuso de documentos sem saber qual Ã© a versÃ£o ou fonte confiÃ¡vel;
+8. falsa equivalÃªncia entre valor de arquivo e valor probatÃ³rio.
+
+## 10.02_politica_de_dossies_pastas_com.md
+1. dossiÃªs sem espinha dorsal documental clara;
+2. pastas que apenas acumulam arquivos sem lÃ³gica de completude;
+3. dispersÃ£o de peÃ§as centrais em mÃºltiplos locais sem vÃ­nculo entre si;
+4. reabertura de contexto dependente de memÃ³ria informal do operador;
+5. duplicidade, conflito ou concorrÃªncia silenciosa entre acervos;
+6. falsa sensaÃ§Ã£o de completude em dossiÃªs materialmente incompletos;
+7. desperdÃ­cio de tempo na reconstruÃ§Ã£o de conjuntos documentais mal compostos;
+8. fragilidade probatÃ³ria, operacional e histÃ³rica causada por ausÃªncia de reconciliaÃ§Ã£o.
+
+## 10.03_politica_de_evidencia_primaria.md
+1. afirmaÃ§Ã£o institucional de fatos sem lastro documental minimamente suficiente;
+2. confusÃ£o entre prova central, prova complementar, contexto e mera aparÃªncia de prova;
+3. uso de prints, resumos ou derivados como se fossem comprovaÃ§Ã£o plena;
+4. ruptura entre o ato praticado e a evidÃªncia apta a demonstrÃ¡-lo;
+5. inexistÃªncia de cadeia mÃ­nima entre origem, decisÃ£o, execuÃ§Ã£o e confirmaÃ§Ã£o;
+6. falsa sensaÃ§Ã£o de suficiÃªncia documental em dossiÃªs materialmente frÃ¡geis;
+7. reabertura de contexto sem conseguir demonstrar como o ato se formou;
+8. degradaÃ§Ã£o probatÃ³ria silenciosa por ausÃªncia de disciplina sobre comprovaÃ§Ã£o.
+
+## 10.04_politica_de_retencao_arquivame.md
+1. retenÃ§Ã£o infinita e desgovernada de todo e qualquer material;
+2. descarte prematuro de documento ainda Ãºtil, exigÃ­vel ou probatoriamente relevante;
+3. arquivamento que inviabilize futura localizaÃ§Ã£o, leitura ou reconstruÃ§Ã£o de contexto;
+4. confusÃ£o entre acervo ativo, intermediÃ¡rio, histÃ³rico, memorial e descartÃ¡vel;
+5. preservaÃ§Ã£o aparente sem garantia mÃ­nima de integridade e reabertura;
+6. descarte inseguro de informaÃ§Ãµes sensÃ­veis, sigilosas ou estruturais;
+7. perda silenciosa de valor documental por obsolescÃªncia, desorganizaÃ§Ã£o ou ausÃªncia de critÃ©rio temporal;
+8. manutenÃ§Ã£o de acervo excessivo que comprometa governanÃ§a, LGPD, custo cognitivo e eficiÃªncia do sistema.
+
+## 10.05_politica_de_registros_fisicos_.md
+1. digitalizaÃ§Ãµes apressadas que destruam legibilidade, contexto ou utilidade probatÃ³ria;
+2. conversÃµes que alterem, amputem, embaralhem ou obscureÃ§am o conteÃºdo relevante;
+3. confusÃ£o entre original fÃ­sico, cÃ³pia digital de preservaÃ§Ã£o, espelho operacional e derivado auxiliar;
+4. descarte prematuro de fÃ­sico ainda relevante apÃ³s digitalizaÃ§Ã£o insuficiente;
+5. perda de vÃ­nculo entre peÃ§a material e correspondente digital;
+6. uso de arquivo convertido como se fosse equivalente funcional sem validaÃ§Ã£o mÃ­nima;
+7. acervos hÃ­bridos em que fÃ­sico e digital se contradizem, se duplicam mal ou se desalinham silenciosamente;
+8. deterioraÃ§Ã£o da cadeia probatÃ³ria por captura, compressÃ£o, OCR, renomeaÃ§Ã£o ou manipulaÃ§Ã£o mal governadas.
+
+## 10.06_politica_de_resumos_de_ciclo_e.md
+1. encerramento de dossiÃª sem registro mÃ­nimo de estado;
+2. resumos que substituam indevidamente a fonte primÃ¡ria;
+3. memÃ³ria institucional dependente da cabeÃ§a do operador e nÃ£o do sistema;
+4. reabertura de contexto sem conseguir reconstruir o que jÃ¡ ocorreu;
+5. repetiÃ§Ã£o de erro, retrabalho ou perda de inteligÃªncia por ausÃªncia de sÃ­ntese Ãºtil;
+6. handoff deficiente entre ciclos, momentos, versÃµes ou responsÃ¡veis;
+7. contradiÃ§Ã£o entre memorial de encerramento e dossiÃª efetivamente existente;
+8. degradaÃ§Ã£o silenciosa da continuidade institucional por falta de fechamento documentado.
+
+## 10.07_politica_de_reuso_probatorio_e.md
+1. reaproveitamento de prova fora de contexto ou sem revisÃ£o material;
+2. transplante indevido de documentos entre casos, clientes, ciclos ou obrigaÃ§Ãµes;
+3. confusÃ£o entre precedente interno Ãºtil e prova automaticamente reaplicÃ¡vel;
+4. uso de memÃ³ria institucional como se fosse fonte originÃ¡ria do novo caso;
+5. formaÃ§Ã£o de bancos documentais inflados, duplicados ou semanticamente opacos;
+6. extraÃ§Ã£o de inteligÃªncia estratÃ©gica sem higienizaÃ§Ã£o, sem proveniÃªncia e sem controle de versÃ£o;
+7. perda de aprendizados relevantes por falta de consolidaÃ§Ã£o em dossiÃªs estratÃ©gicos;
+8. degradaÃ§Ã£o Ã©tica, probatÃ³ria ou reputacional por reuso documental mal governado.
+
+## 10.08_protocolo_de_higiene_documenta.md
+1. crescimento silencioso de massa documental desgovernada;
+2. coexistÃªncia de mÃºltiplas versÃµes sem definiÃ§Ã£o de prevalÃªncia;
+3. dossiÃªs aparentemente completos, mas estruturalmente ruidosos ou contraditÃ³rios;
+4. manutenÃ§Ã£o de cÃ³pias redundantes que competem com registros-mestre;
+5. uso de derivados, espelhos ou arquivos de circulaÃ§Ã£o como se fossem fontes principais;
+6. perda de tempo e confianÃ§a na busca documental por desordem, duplicidade ou conflito;
+7. reuso estratÃ©gico contaminado por acervo mal higienizado;
+8. degradaÃ§Ã£o progressiva da memÃ³ria institucional por ausÃªncia de saneamento recorrente.
+
+## 11.00 Política do Ecossistema Editorial.md
+1. existÃªncia de blog visualmente atraente, porÃ©m editorialmente desgovernado;
+2. divergÃªncia entre o que o Decap capta, o Markdown registra, a home do blog lista e a pÃ¡gina de leitura renderiza;
+3. publicaÃ§Ã£o de conteÃºdos sem trilha canÃ´nica, sem taxonomia Ãºtil ou sem funÃ§Ã£o institucional clara;
+4. ruptura entre identidade visual, UX, SEO, CTA, leitura longa e lÃ³gica de conversÃ£o Ã©tica;
+5. uso de IA, Codex ou automaÃ§Ãµes sem supervisÃ£o humana cogente, sem rastreabilidade ou sem contrato editorial explÃ­cito;
+6. fragmentaÃ§Ã£o entre site institucional, blog, Instagram e demais derivados, com repetiÃ§Ã£o caÃ³tica ou perda de coerÃªncia pÃºblica;
+7. transformaÃ§Ã£o do blog em arquivo cronolÃ³gico passivo, em vez de produto editorial de alto ROI e alto valor;
+8. produÃ§Ã£o de conteÃºdo incapaz de gerar interesse qualificado, aprofundamento, redistribuiÃ§Ã£o, autoridade ou captaÃ§Ã£o Ã©tica de clientes.
+
+## 11.01_politica_de_modelo_de_conteudo.md
+1. publicaÃ§Ã£o de artigos sem contrato de dados suficiente;
+2. divergÃªncia entre campos do Decap, nomes do frontmatter e necessidades reais dos templates;
+3. taxonomia ornamental, caÃ³tica, redundante ou sem funÃ§Ã£o operacional;
+4. campos excessivos, vagos ou ambÃ­guos que gerem erro humano e interpretaÃ§Ã£o maquÃ­nica defeituosa;
+5. criaÃ§Ã£o de pÃ¡ginas bonitas, porÃ©m incapazes de sustentar listagem, leitura, CTA, relacionados, SEO e analytics de forma coerente;
+6. perda de produtividade por falta de padronizaÃ§Ã£o editorial;
+7. reaproveitamento precÃ¡rio do conteÃºdo para Instagram, Ã¡udio, snippets, hubs e clusterizaÃ§Ã£o;
+8. uso de IA e assistentes de cÃ³digo sem contrato editorial legÃ­vel e validÃ¡vel.
+
+## 11.02_politica_da_pagina_principal_d.md
+1. home do blog tratada como mural desorganizado de artigos;
+2. predominÃ¢ncia de ordem cronolÃ³gica sobre lÃ³gica de descoberta e utilidade;
+3. cards editoriais inconsistentes, pouco informativos ou sem funÃ§Ã£o real;
+4. ruptura entre taxonomia, listagem, clusters, CTAs e caminhos do clique;
+5. ausÃªncia de hierarquia entre destaque principal, trilhas temÃ¡ticas, acervo recente e hubs permanentes;
+6. competiÃ§Ã£o indevida entre leitura, descoberta, conversÃ£o e identidade institucional;
+7. navegaÃ§Ã£o superficial, incapaz de conduzir o leitor a conteÃºdo correlato ou Ã  prÃ³xima aÃ§Ã£o legÃ­tima;
+8. home visualmente correta, porÃ©m editorialmente improdutiva.
+
+## 11.03_politica_da_pagina_de_leitura_.md
+1. pÃ¡ginas de leitura estruturalmente belas, mas cognitivamente confusas;
+2. concorrÃªncia indevida entre leitura principal, CTA, Ã­ndice e aprofundamento;
+3. ausÃªncia de hierarquia clara entre hero, corpo, lateral e fechamento institucional;
+4. pÃ¡ginas longas sem orientaÃ§Ã£o, sem escaneabilidade ou sem caminhos Ãºteis de continuidade;
+5. CTA agressivo, prematuro ou mal posicionado;
+6. bloco â€œAprofunde a leituraâ€ ornamental, desconectado da estratÃ©gia editorial;
+7. ruptura entre a promessa do card/listagem e a experiÃªncia real do artigo;
+8. perda de acessibilidade, legibilidade, performance e confianÃ§a institucional.
+
+## 11.04_politica_de_workflow_editorial.md
+1. publicaÃ§Ã£o de conteÃºdo juridicamente imaturo, desatualizado ou pouco verificÃ¡vel;
+2. difusÃ£o de textos sem revisÃ£o suficiente ou sem responsabilidade decisÃ³ria clara;
+3. confusÃ£o entre rascunho, peÃ§a publicada, conteÃºdo legado e conteÃºdo em revisÃ£o;
+4. uso de IA, Codex ou automaÃ§Ãµes sem gate humano de validaÃ§Ã£o;
+5. publicaÃ§Ã£o rÃ¡pida Ã  custa de integridade tÃ©cnica, clareza ou reputaÃ§Ã£o institucional;
+6. acervo pÃºblico envelhecido sem regime de atualizaÃ§Ã£o e sem sinalizaÃ§Ã£o de estado;
+7. reaproveitamento social ou multimÃ­dia de conteÃºdo ainda nÃ£o estabilizado;
+8. perda de rastreabilidade entre pauta, artigo, atualizaÃ§Ã£o, CTA, cluster e derivado.
+
+## 11.05_politica_de_seo_editorial_dado.md
+1. produÃ§Ã£o de conteÃºdo juridicamente Ãºtil, porÃ©m estruturalmente invisÃ­vel ou mal consolidado para descoberta;
+2. divergÃªncia entre URL publicada, URL canÃ´nica, sitemap e links internos;
+3. uso caÃ³tico de tÃ­tulos, descriÃ§Ãµes, taxonomia e schema;
+4. pÃ¡ginas indexadas quando deveriam estar fora do Ã­ndice, ou pÃ¡ginas estratÃ©gicas fora do Ã­ndice por erro tÃ©cnico;
+5. adoÃ§Ã£o de SEO raso, inflado por palavras-chave ou desconectado da utilidade do artigo;
+6. confusÃ£o entre descoberta orgÃ¢nica, interlinking, clusters, CTA e arquitetura editorial;
+7. metadados sociais, tÃ©cnicos e semÃ¢nticos inconsistentes com o conteÃºdo real;
+8. perda de autoridade interna por ausÃªncia de padrÃ£o de canonicalizaÃ§Ã£o, sitemap e feeds.
+
+## 11.06_politica_de_interlinking_ctas_.md
+1. artigos que terminem sem caminhos Ãºteis de continuidade;
+2. links internos aleatÃ³rios, repetitivos ou desconectados da arquitetura temÃ¡tica;
+3. blocos â€œAprofunde a leituraâ€ sem funÃ§Ã£o estratÃ©gica real;
+4. CTAs agressivos, precoces, irrelevantes ou descolados da dor do leitor;
+5. conversÃ£o tratada como pressÃ£o comercial em vez de consequÃªncia da boa leitura;
+6. mÃ©tricas de vaidade usadas como critÃ©rio central de valor;
+7. ausÃªncia de distinÃ§Ã£o entre leitura exploratÃ³ria, leitura diagnÃ³stica e intenÃ§Ã£o potencial de contrataÃ§Ã£o;
+8. perda de rastreabilidade entre cluster, CTA, clique, continuidade editorial e resultado institucional.
+
+## 11.07_politica_de_audio_midias_deriv.md
+1. circulaÃ§Ã£o de Ã¡udio ou derivado incompatÃ­vel com o conteÃºdo-base;
+2. publicaÃ§Ã£o de transcriÃ§Ã£o inexata, ausente ou desconectada da camada sonora quando esta fizer parte da experiÃªncia pÃºblica;
+3. reaproveitamento social ou multimÃ­dia que distorÃ§a a prudÃªncia jurÃ­dica do artigo;
+4. produÃ§Ã£o de derivados em escala sem trilha canÃ´nica, sem rastreabilidade ou sem gate humano;
+5. uso de IA de voz, resumo ou transformaÃ§Ã£o sem supervisÃ£o humana cogente;
+6. dissociaÃ§Ã£o entre blog, Instagram, home do blog, pÃ¡gina de leitura e demais canais da PAVIE;
+7. perda de valor do artigo-base por reaproveitamento inflado, redundante ou mal hierarquizado;
+8. manutenÃ§Ã£o de camadas derivadas desatualizadas apÃ³s mudanÃ§a material do conteÃºdo-base.
+
+## 11.08_protocolo_de_qa_editorial_test.md
+1. publicaÃ§Ã£o de artigo tecnicamente correto em tese, mas quebrado na prÃ¡tica;
+2. divergÃªncia silenciosa entre frontmatter, template, renderizaÃ§Ã£o, CTA, breadcrumbs, Ã¡udio e relacionados;
+3. falhas de links, canonical, schema, sitemap ou RSS descobertas apenas tardiamente;
+4. degradaÃ§Ã£o da pÃ¡gina de leitura por alteraÃ§Ã£o de componente, CSS, helper ou lÃ³gica de dados;
+5. regressÃ£o de acessibilidade, responsividade, foco, contraste ou navegaÃ§Ã£o por teclado;
+6. perda de performance que comprometa leitura, descoberta ou conversÃ£o;
+7. incidentes pÃºblicos sem protocolo claro de resposta e correÃ§Ã£o;
+8. uso de IA, Codex e automaÃ§Ãµes sem checagem suficientemente robusta do resultado produzido.
+

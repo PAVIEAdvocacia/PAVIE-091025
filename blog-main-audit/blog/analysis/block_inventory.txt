@@ -1,0 +1,122 @@
+﻿### BLOCO 00
+- 00.00 Carta Constitucional da PA.md :: 00. ConstituiÃ§Ã£o e Governo do EscritÃ³rio â€” Carta Constitucional da PAVIE Advocacia e Raiz da Ãrvore de Comando e ExecuÃ§Ã£o :: type= :: authority=
+
+### BLOCO 01
+- 01.00 Plano Diretor Estratégico e Op.md :: 01.00 Plano Diretor EstratÃ©gico e Operacional â€” versÃ£o constitucionalmente alinhada :: type= :: authority=
+- 01.01 Plano Anual de Execução.md :: 01.01 Plano Anual de ExecuÃ§Ã£o :: type= :: authority=
+- 01.02 Plano Trimestral de Prioridade.md :: 01.02 Plano Trimestral de Prioridades e RevisÃ£o :: type= :: authority=
+- 01.03 Mapa de Portfólio e Priorizaçã.md :: 01.03 Mapa de PortfÃ³lio e PriorizaÃ§Ã£o :: type= :: authority=
+- 01.04 Orçamento, Metas e Capacidade.md :: 01.04 OrÃ§amento, Metas e Capacidade :: type= :: authority=
+- 01.05 Roadmap de Evolução Estrutural.md :: 01.05 Roadmap de EvoluÃ§Ã£o Estrutural :: type= :: authority=
+
+### BLOCO 02
+- 02.00 Matriz de Papéis, Responsabili.md :: 02.00 Matriz de PapÃ©is, Responsabilidades e AlÃ§adas :: type= :: authority=
+- 02.01 Política de Revisão Humana e A.md :: 02.01 PolÃ­tica de RevisÃ£o Humana e AprovaÃ§Ã£o Final :: type= :: authority=
+- 02.02 Política de Delegação e Superv.md :: 02.02 PolÃ­tica de DelegaÃ§Ã£o e SupervisÃ£o :: type= :: authority=
+- 02.03 Regimento de Decisões Estrutur.md :: 02.03 Regimento de DecisÃµes Estruturais :: type= :: authority=
+- 02.04 Política de Terceiros, Parceir.md :: 02.04 PolÃ­tica de Terceiros, Parceiros e Correspondentes :: type= :: authority=
+
+### BLOCO 03
+- 03.00 Arquitetura Operacional do Sis.md :: 03.00 Arquitetura Operacional do Sistema PAVIE :: type= :: authority=
+- 03.01 Manual de Taxonomia, IDs e YAM.md :: 03.01 Manual de Taxonomia, IDs e YAML :: type= :: authority=
+- 03.02 Mapa de Processos do Escritóri.md :: 03.02 Mapa de Processos do EscritÃ³rio :: type= :: authority=
+- 03.03 Biblioteca de SOPs, Checklists.md :: 03.03 Biblioteca de SOPs, Checklists e Modelos Operacionais :: type= :: authority=
+- 03.04 Esteira de CRM, Captação, Tria.md :: 03.04 Esteira de CRM, CaptaÃ§Ã£o, Triagem e Onboarding :: type= :: authority=
+- 03.05 Esteira de Produção Jurídica, .md :: 03.05 Esteira de ProduÃ§Ã£o JurÃ­dica, Prazos e EntregÃ¡veis :: type= :: authority=
+- 03.06 Esteira Administrativo-Finance.md :: 03.06 Esteira Administrativo-Financeira e CobranÃ§a :: type= :: authority=
+- 03.07 Esteira de Conhecimento, Model.md :: 03.07 Esteira de Conhecimento, Modelos e ReutilizaÃ§Ã£o :: type= :: authority=
+- 03.08 Memória Operacional, Incidente.md :: 03.08 MemÃ³ria Operacional, Incidentes e Melhoria ContÃ­nua :: type= :: authority=
+
+### BLOCO 04
+- 04.00 Política de Controle, Risco e .md :: 04.00 PolÃ­tica de Controle, Risco e Conformidade :: type= :: authority=
+- 04.01 Matriz de Riscos Institucionai.md :: 04.01 Matriz de Riscos Institucionais :: type= :: authority=
+- 04.02 Política de LGPD, Segurança da.md :: 04.02 PolÃ­tica de LGPD, SeguranÃ§a da InformaÃ§Ã£o e Zero Trust :: type= :: authority=
+- 04.03 Política de IA, Automação e Su.md :: 04.03 PolÃ­tica de IA, AutomaÃ§Ã£o e SupervisÃ£o AlgorÃ­tmica :: type= :: authority=
+- 04.04 Protocolo PAVIE TRACE.md :: 04.04 Protocolo PAVIE TRACE :: type= :: authority=
+- 04.05 Política de Auditoria Contínua.md :: 04.05 PolÃ­tica de Auditoria ContÃ­nua, Indicadores e Testes de Controle :: type= :: authority=
+- 04.06 Plano de Continuidade de Negóc.md :: 04.06 Plano de Continuidade de NegÃ³cios e RecuperaÃ§Ã£o Operacional :: type= :: authority=
+- 04.07 Política de Diligência Reforça.md :: 04.07 PolÃ­tica de DiligÃªncia ReforÃ§ada, KYC, KYE, KYP, KYS e PLD :: type= :: authority=
+- 04.08 Política de Resposta a Inciden.md :: 04.08 PolÃ­tica de Resposta a Incidentes de Conformidade :: type= :: authority=
+- 04.09 Manual de Controles por Esteir.md :: 04.09 Manual de Controles por Esteira :: type= :: authority=
+- 04.10 Painel Executivo de Integridad.md :: 04.10 Painel Executivo de Integridade por Esteira :: type= :: authority=
+
+### BLOCO 05
+- 05.00 Portfólio Jurídico e Entrega d.md :: 05.00 PortfÃ³lio JurÃ­dico e Entrega de Valor :: type= :: authority=
+- 05.01 Mapa Oficial de Frentes, Áreas.md :: 05.01 Mapa Oficial de Frentes, Ãreas e Subnichos :: type= :: authority=
+- 05.02 Catálogo de Produtos Jurídicos.md :: 05.02 CatÃ¡logo de Produtos JurÃ­dicos e Classes de ServiÃ§o :: type= :: authority=
+- 05.03 Critérios de Aceitação, Recusa, Encaminhame.md :: 05.03 CritÃ©rios de AceitaÃ§Ã£o, Recusa, Encaminhamento e DespriorizaÃ§Ã£o :: type= :: authority=
+- 05.04 Matriz de Complexidade, Escopo.md :: 05.04 Matriz de Complexidade, Escopo e PrecificaÃ§Ã£o-Base :: type= :: authority=
+- 05.05 Padrões de Entregáveis, Evidên.md :: 05.05 PadrÃµes de EntregÃ¡veis, EvidÃªncias e ExperiÃªncia do Cliente :: type= :: authority=
+- 05.06 Política de Propostas, Pacotes.md :: 05.06 PolÃ­tica de Propostas, Pacotes e Arranjos de ServiÃ§o :: type= :: authority=
+- 05.07 Regime de Casos Estratégic .md :: 05.07 Regime de Casos EstratÃ©gicos, ExceÃ§Ãµes e MatÃ©rias SatÃ©lite :: type= :: authority=
+- 05.08 Protocolo de Revisão Periódica.md :: 05.08 Protocolo de RevisÃ£o PeriÃ³dica do PortfÃ³lio :: type= :: authority=
+
+### BLOCO 06
+- 06.00 Comercial, Captação e Relacion.md :: 06.00 Comercial, CaptaÃ§Ã£o e Relacionamento :: type= :: authority=
+- 06.01 Política de Triagem Comercial .md :: 06.01 PolÃ­tica de Triagem Comercial e QualificaÃ§Ã£o :: type= :: authority=
+- 06.02 Política de Orçamento, Convers.md :: 06.02 PolÃ­tica de OrÃ§amento, ConversÃ£o e Fechamento :: type= :: authority=
+- 06.03 Jornada do Cliente, Onboarding.md :: 06.03 Jornada do Cliente, Onboarding e Acompanhamento :: type= :: authority=
+- 06.04 Política de Relacionamento, Pó.md :: 06.04 PolÃ­tica de Relacionamento, PÃ³s-Entrega e RecorrÃªncia :: type= :: authority=
+- 06.05 Política de Indicações, Parcer.md :: 06.05 PolÃ­tica de IndicaÃ§Ãµes, Parcerias de CaptaÃ§Ã£o e Origem de Demanda :: type= :: authority=
+- 06.06 Política de Conteúdo, Autoridade e Captação.md :: 06.06 PolÃ­tica de ConteÃºdo, Autoridade e CaptaÃ§Ã£o Ã‰tica :: type= :: authority=
+- 06.07 CRM Comercial, Pipeline e Ge - Copia.md :: 06.07 CRM Comercial, Pipeline e GestÃ£o de Oportunidades :: type= :: authority=
+- 06.08 Protocolo de Perda, Reativação.md :: 06.08 Protocolo de Perda, ReativaÃ§Ã£o e Reaproveitamento de Leads :: type= :: authority=
+
+### BLOCO 07
+- 07.00 Marca, Comunicação e Presença .md :: 07.00 Marca, ComunicaÃ§Ã£o e PresenÃ§a Institucional :: type= :: authority=
+- 07.01_manual_de_identidade_verbal_to.md :: 07.01 Manual de Identidade Verbal, Tom e Mensagem Institucional :: type= :: authority=
+- 07.02 Manual de Identidade Visual e .md :: 07.02 Manual de Identidade Visual e Sistema de AplicaÃ§Ã£o da Marca :: type= :: authority=
+- 07.03 Arquitetura de Canais, Ativos .md :: 07.03 Arquitetura de Canais, Ativos Digitais e PresenÃ§a PÃºblica :: type= :: authority=
+- 07.04 Política de Site, Blog, Página.md :: 07.04 PolÃ­tica de Site, Blog, PÃ¡ginas EstratÃ©gicas e SEO Institucional :: type= :: authority=
+- 07.05 Política de Redes Sociais, Dis.md :: 07.05 PolÃ­tica de Redes Sociais, DistribuiÃ§Ã£o e CadÃªncia PÃºblica :: type= :: authority=
+- 07.06 Política de Reputação, Prova I.md :: 07.06 PolÃ­tica de ReputaÃ§Ã£o, Prova Institucional e Autoridade PÃºblica :: type= :: authority=
+- 07.07 Política de UX, Clareza, Conve.md :: 07.07 PolÃ­tica de UX, Clareza, ConversÃ£o Ã‰tica e Acessibilidade :: type= :: authority=
+- 07.08 Protocolo de Revisão, Coerênci.md :: 07.08 Protocolo de RevisÃ£o, CoerÃªncia e EvoluÃ§Ã£o da Marca :: type= :: authority=
+
+### BLOCO 08
+- 08.00 Financeiro, Administrativo e P.md :: 08.00 Financeiro, Administrativo e Performance :: type= :: authority=
+- 08.01 Política de Estrutura Financei.md :: 08.01 PolÃ­tica de Estrutura Financeira, Regimes, Contas e CompetÃªncias :: type= :: authority=
+- 08.02 Política de Orçamento Operacio.md :: 08.02 PolÃ­tica de OrÃ§amento Operacional, Fluxo de Caixa e Reserva :: type= :: authority=
+- 08.03_politica_de_precificacao_execu.md :: 08.03 PolÃ­tica de PrecificaÃ§Ã£o Executiva, Margem e Viabilidade :: type= :: authority=
+- 08.04_politica_de_faturamento_cobran.md :: 08.04 PolÃ­tica de Faturamento, CobranÃ§a, InadimplÃªncia e RecuperaÃ§Ã£o :: type= :: authority=
+- 08.05_politica_de_custos_estrutura_e.md :: 08.05 PolÃ­tica de Custos, Estrutura e Investimentos :: type= :: authority=
+- 08.06_politica_de_indicadores_kpis_e.md :: 08.06 PolÃ­tica de Indicadores, KPIs e Performance EconÃ´mica :: type= :: authority=
+- 08.07_politica_de_risco_contingencia.md :: 08.07 PolÃ­tica de Risco, ContingÃªncia e ResiliÃªncia EconÃ´mico-Operacional :: type= :: authority=
+- 08.08_politica_de_revisao_economica_.md :: 08.08 PolÃ­tica de RevisÃ£o EconÃ´mica Ampliada, Aprendizado Institucional e RealocaÃ§Ã£o de Capital :: type= :: authority=
+
+### BLOCO 09
+- 09.00_politica_de_arquitetura_tecnol.md :: 09.00 PolÃ­tica de Arquitetura TecnolÃ³gica, Dados Estruturados, IA Supervisionada e OperaÃ§Ã£o Local-First :: type= :: authority=
+- 09.01_politica_do_nucleo_obsidian_cr.md :: 09.01 PolÃ­tica do NÃºcleo Obsidian, CRM Local-First, Taxonomia YAML e VinculaÃ§Ã£o Relacional :: type= :: authority=
+- 09.02_politica_da_camada_de_captura_.md :: 09.02 PolÃ­tica da Camada de Captura, IngestÃ£o Controlada, Roteamento Seguro e SincronizaÃ§Ã£o com o NÃºcleo Local-First :: type= :: authority=
+- 09.03_politica_de_versionamento_inte.md :: 09.03 PolÃ­tica de Versionamento, Integridade de ImplementaÃ§Ã£o, Testes, Deploy, PublicaÃ§Ã£o Controlada e Rollback :: type= :: authority=
+- 09.04_politica_de_observabilidade_lo.md :: 09.04 PolÃ­tica de Observabilidade, Logs, Monitoramento ContÃ­nuo, Incidentes e Resposta Operacional :: type= :: authority=
+- 09.05_politica_de_seguranca_controle.md :: 09.05 PolÃ­tica de SeguranÃ§a, Controle de Acesso, Credenciais, SuperfÃ­cies de ExposiÃ§Ã£o e Zero Trust :: type= :: authority=
+- 09.06_politica_de_backup_redundancia.md :: 09.06 PolÃ­tica de Backup, RedundÃ¢ncia, PreservaÃ§Ã£o, RecuperaÃ§Ã£o e Continuidade TecnolÃ³gica :: type= :: authority=
+- 09.07_politica_de_governanca_de_ia_p.md :: 09.07 PolÃ­tica de GovernanÃ§a de IA, Prompts, Agentes, AutomaÃ§Ãµes Supervisionadas e Controle Cognitivo :: type= :: authority=
+- 09.08_politica_de_dados_derivados_me.md :: 09.08 PolÃ­tica de Dados Derivados, MemÃ³ria Institucional Assistida, Qualidade SemÃ¢ntica e Aprendizagem do Sistema :: type= :: authority=
+
+### BLOCO 10
+- 10.00_politica_de_registros_evidenci.md :: 10.00 PolÃ­tica de Registros, EvidÃªncias e MemÃ³ria Institucional :: type= :: authority=
+- 10.01_matriz_de_classes_documentais_.md :: 10.01 Matriz de Classes Documentais, Registros-Mestre e Natureza ProbatÃ³ria :: type= :: authority=
+- 10.02_politica_de_dossies_pastas_com.md :: 10.02 PolÃ­tica de DossiÃªs, Pastas, ComposiÃ§Ã£o MÃ­nima e ReconciliaÃ§Ã£o de Acervos :: type= :: authority=
+- 10.03_politica_de_evidencia_primaria.md :: 10.03 PolÃ­tica de EvidÃªncia PrimÃ¡ria, ComprovaÃ§Ã£o e Cadeia de FormaÃ§Ã£o do Ato :: type= :: authority=
+- 10.04_politica_de_retencao_arquivame.md :: 10.04 PolÃ­tica de RetenÃ§Ã£o, Arquivamento, PreservaÃ§Ã£o e Descarte Seguro :: type= :: authority=
+- 10.05_politica_de_registros_fisicos_.md :: 10.05 PolÃ­tica de Registros FÃ­sicos, DigitalizaÃ§Ã£o, ConversÃ£o e ValidaÃ§Ã£o :: type= :: authority=
+- 10.06_politica_de_resumos_de_ciclo_e.md :: 10.06 PolÃ­tica de Resumos de Ciclo, Encerramento, MemÃ³ria e Reabertura :: type= :: authority=
+- 10.07_politica_de_reuso_probatorio_e.md :: 10.07 PolÃ­tica de Reuso ProbatÃ³rio, ExtraÃ§Ã£o de Precedentes e DossiÃªs EstratÃ©gicos :: type= :: authority=
+- 10.08_protocolo_de_higiene_documenta.md :: 10.08 Protocolo de Higiene Documental, Saneamento, DeduplicaÃ§Ã£o e ReconciliaÃ§Ã£o :: type= :: authority=
+
+### BLOCO 11
+- 11.00 Política do Ecossistema Editorial.md :: 11.00 PolÃ­tica do Ecossistema Editorial, Blog JurÃ­dico e PublicaÃ§Ãµes Institucionais :: type= :: authority=
+- 11.01_politica_de_modelo_de_conteudo.md :: 11.01 PolÃ­tica de Modelo de ConteÃºdo, Frontmatter, Taxonomia e Campos do Decap :: type= :: authority=
+- 11.02_politica_da_pagina_principal_d.md :: 11.02 PolÃ­tica da PÃ¡gina Principal do Blog, Arquitetura de Listagem e NavegaÃ§Ã£o :: type= :: authority=
+- 11.03_politica_da_pagina_de_leitura_.md :: 11.03 PolÃ­tica da PÃ¡gina de Leitura, Componentes, UX e Acessibilidade :: type= :: authority=
+- 11.04_politica_de_workflow_editorial.md :: 11.04 PolÃ­tica de Workflow Editorial, RevisÃ£o JurÃ­dica, AtualizaÃ§Ã£o e GovernanÃ§a de PublicaÃ§Ã£o :: type= :: authority=
+- 11.05_politica_de_seo_editorial_dado.md :: 11.05 PolÃ­tica de SEO Editorial, Dados Estruturados, Canonical, Sitemap, RSS e Descoberta :: type= :: authority=
+- 11.06_politica_de_interlinking_ctas_.md :: 11.06 PolÃ­tica de Interlinking, CTAs, ConversÃ£o Ã‰tica e MÃ©tricas do Blog :: type= :: authority=
+- 11.07_politica_de_audio_midias_deriv.md :: 11.07 PolÃ­tica de Ãudio, MÃ­dias Derivadas, TranscriÃ§Ã£o e Reaproveitamento Editorial :: type= :: authority=
+- 11.08_protocolo_de_qa_editorial_test.md :: 11.08 Protocolo de QA Editorial, Testes Funcionais e Observabilidade do Blog :: type= :: authority=
+
+### BLOCO xx
+- pavie_blog_blueprint_execucao_prompt.md :: ExecuÃ§Ã£o do Prompt Mestre â€” EstruturaÃ§Ã£o do Blog JurÃ­dico da PAVIE Advocacia :: type= :: authority=
+

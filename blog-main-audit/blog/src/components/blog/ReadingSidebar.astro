@@ -1,0 +1,27 @@
+---
+import type { BlogPost } from '../../lib/posts';
+import type { TocItem } from '../../lib/toc';
+import ReadingCTA from './ReadingCTA.astro';
+import ReadingTOC from './ReadingTOC.astro';
+
+interface Props {
+	post: BlogPost;
+	toc: TocItem[];
+	related: BlogPost[];
+}
+
+const { post, toc, related } = Astro.props;
+---
+
+<aside class="reading-sidebar" aria-label="Recursos de leitura">
+	{toc.length > 1 && <ReadingTOC items={toc} />}
+	{related.length > 0 && (
+		<section class="reading-panel reading-sidebar-note" aria-labelledby="reading-sidebar-note-title">
+			<h2 id="reading-sidebar-note-title">Continue por leituras próximas</h2>
+			<p class="text-muted">
+				Se quiser aprofundar antes do contato, há outros artigos desta área logo abaixo do conteúdo principal.
+			</p>
+		</section>
+	)}
+	<ReadingCTA cta={post.cta} />
+</aside>

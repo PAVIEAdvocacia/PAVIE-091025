@@ -1,0 +1,45 @@
+﻿---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { MAIN_SITE_URL } from '../consts';
+import '../styles/institutional-pages.css';
+
+const title = 'Contato | PAVIE | Advocacia';
+const description =
+	'Canal institucional para orientação inicial da sua situação jurídica, com atendimento claro, ético e confidencial.';
+---
+
+<BaseLayout title={title} description={description} canonical={`${MAIN_SITE_URL}/contato/`}>
+	<div class="container-md institutional-page">
+		<span class="badge">Contato institucional</span>
+		<h1>
+			Descreva sua situação. O primeiro passo é entender o contexto com clareza.
+		</h1>
+		<p class="institutional-page__lead">
+			Este canal é destinado a orientação inicial e triagem responsável. Não há promessa de resultado.
+			Cada caso exige análise técnica individual.
+		</p>
+
+		<section class="surface-card institutional-card">
+			<h2>Canais de atendimento</h2>
+			<ul class="institutional-list">
+				<li>WhatsApp: <a href="https://wa.me/5521964382263" rel="noopener">+55 (21) 96438-2263</a></li>
+				<li>E-mail: <a href="mailto:contato@pavieadvocacia.com.br">contato@pavieadvocacia.com.br</a></li>
+				<li>Atendimento em horário comercial, com retorno organizado conforme a ordem de chegada e a natureza do caso.</li>
+			</ul>
+		</section>
+
+		<section class="surface-card institutional-card">
+			<h2>Para agilizar sua orientação</h2>
+			<p>Se possível, informe:</p>
+			<ul class="institutional-list">
+				<li>Qual é a situação principal e desde quando ela ocorre.</li>
+				<li>Quais pessoas ou documentos estão envolvidos.</li>
+				<li>Se existe prazo, urgência prática ou audiência agendada.</li>
+			</ul>
+			<div class="institutional-actions">
+				<a class="btn btn-primary" href="https://wa.me/5521964382263" rel="noopener">Enviar Solicitação</a>
+				<a class="btn btn-ghost" href="/blog/">Explorar temas</a>
+			</div>
+		</section>
+	</div>
+</BaseLayout>

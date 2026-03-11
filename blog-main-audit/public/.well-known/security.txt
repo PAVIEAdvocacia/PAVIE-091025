@@ -1,0 +1,10 @@
+# security.txt for PAVIE | Advocacia — RFC 9116 compliant
+Canonical: https://pavieadvocacia.com.br/.well-known/security.txt
+Contact: mailto:contato@pavieadvocacia.com.br
+Contact: https://pavieadvocacia.com.br/contato/
+Policy: https://pavieadvocacia.com.br/privacidade/privacidade.html
+Preferred-Languages: pt, en
+Expires: 2026-10-29T00:00:00Z
+# Optional fields you can add later:
+# Encryption: https://pavieadvocacia.com.br/.well-known/pgp-key.txt
+# Acknowledgments: https://pavieadvocacia.com.br/seguranca/agradecimentos

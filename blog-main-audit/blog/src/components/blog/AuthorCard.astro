@@ -1,0 +1,28 @@
+---
+import type { BlogPost } from '../../lib/posts';
+
+interface Props {
+	post: BlogPost;
+}
+
+const { post } = Astro.props;
+---
+
+<section class="author-card" aria-label="Informações do autor">
+	<img
+		class="author-card__photo"
+		src="/uploads/foto_001-ffundddo-escrit%C3%B3rio.png"
+		alt={`Foto do advogado ${post.authorName}`}
+		loading="lazy"
+	/>
+	<div class="author-card__body">
+		<span class="section-kicker">Responsável pelo conteúdo</span>
+		<h3>{post.authorName}</h3>
+		<p>{post.authorRole}</p>
+		<p class="author-card__note">
+			Conteúdo produzido no ecossistema de PAVIE | Advocacia para orientar com clareza,
+			sem substituir a análise individual do caso.
+		</p>
+		<a class="author-card__link" href="/sobre/">Conheça o escritório</a>
+	</div>
+</section>

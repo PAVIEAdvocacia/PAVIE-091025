@@ -1,0 +1,145 @@
+---
+import { getCollection } from 'astro:content';
+import Breadcrumbs from '../../../components/blog/Breadcrumbs.astro';
+import BlogGrid from '../../../components/blog/BlogGrid.astro';
+import FeaturedPost from '../../../components/blog/FeaturedPost.astro';
+import { BLOG_SITE_URL } from '../../../consts';
+import BlogLayout from '../../../layouts/BlogLayout.astro';
+import { buildBreadcrumbSchema } from '../../../lib/seo';
+import {
+	blogClusterHref,
+	buildBlogClusterDirectory,
+	getBlogClusterDirectoryItem,
+	getBlogClusterStaticKeys,
+} from '../../../lib/blog-clusters';
+import { isPublicPost, normalizePost, sortPostsByDate } from '../../../lib/posts';
+import { temaHref } from '../../../lib/taxonomy';
+
+export async function getStaticPaths() {
+	return getBlogClusterStaticKeys().map((area) => ({ params: { area } }));
+}
+
+const entries = await getCollection('blog');
+const allPosts = sortPostsByDate(entries.map((entry) => normalizePost(entry))).filter(isPublicPost);
+const cluster = getBlogClusterDirectoryItem(allPosts, Astro.params.area ?? '');
+
+if (!cluster) {
+	throw new Error(`Área jurídica não encontrada: ${Astro.params.area}`);
+}
+
+const remainingPosts = cluster.posts.filter((post) => post.slug !== cluster.featuredPost?.slug).slice(0, 6);
+const siblingClusters = buildBlogClusterDirectory(allPosts)
+	.filter((item) => item.key !== cluster.key)
+	.slice(0, 3);
+const pageTitle = `${cluster.title} | Artigos por área`;
+const canonicalUrl = `${BLOG_SITE_URL}${blogClusterHref(cluster.key)}`;
+const isAliasRoute = (Astro.params.area ?? '') !== cluster.key;
+const breadcrumbs = [
+	{ label: 'Início', href: '/' },
+	{ label: 'Publicações', href: '/blog/' },
+	{ label: 'Áreas jurídicas', href: '/blog/areas/' },
+	{ label: cluster.title },
+];
+const breadcrumbSchema = buildBreadcrumbSchema(breadcrumbs, canonicalUrl);
+---
+
+<BlogLayout
+	title={pageTitle}
+	description={cluster.description}
+	canonical={canonicalUrl}
+	noIndex={isAliasRoute}
+>
+	<div class="container blog-home">
+		<Breadcrumbs items={breadcrumbs} />
+		<section class="surface-card blog-map-hero" aria-labelledby="blog-area-title">
+			<span class="badge">Área jurídica</span>
+			<h1 id="blog-area-title">{cluster.title}</h1>
+			<p>{cluster.editorialSummary}</p>
+			<div class="meta-list">
+				<span><span class="meta-dot" aria-hidden="true"></span>{cluster.postCount} artigos nesta área</span>
+				<span><span class="meta-dot" aria-hidden="true"></span>Ligação direta com os serviços da PAVIE</span>
+				<span><span class="meta-dot" aria-hidden="true"></span>Contato quando a situação pede orientação</span>
+			</div>
+			<div class="blog-actions">
+				<a class="btn btn-primary" href={cluster.contactHref}>Solicitar orientação inicial</a>
+				<a class="btn btn-ghost" href={cluster.institutionalHref}>Conheça os Serviços</a>
+			</div>
+		</section>
+
+		<section class="blog-grid" aria-label="Como reconhecer esta área">
+			<div class="section-title">
+				<div>
+					<span class="section-kicker">Situações típicas</span>
+					<h2>Esta área ajuda a enquadrar situações como estas</h2>
+				</div>
+			</div>
+			<div class="editorial-guide-grid editorial-guide-grid--wide">
+				{cluster.typicalSituations.map((item) => (
+					<article class="surface-card editorial-guide-card">
+						<h3>{item}</h3>
+						<p>{cluster.description}</p>
+					</article>
+				))}
+			</div>
+		</section>
+
+		<section class="blog-grid" aria-label="Temas ligados a esta área">
+			<div class="section-title">
+				<div>
+					<span class="section-kicker">Temas ligados a esta área</span>
+					<h2>Recortes frequentes para continuar a leitura</h2>
+				</div>
+			</div>
+			<div class="theme-chip-list">
+				{cluster.topThemes.map((tema) => (
+					<a class="blog-chip blog-chip--theme" href={cluster.hasThemeRoutes ? temaHref(tema) : '/blog/temas/'}>{tema}</a>
+				))}
+			</div>
+		</section>
+
+		{cluster.featuredPost ? (
+			<FeaturedPost post={cluster.featuredPost} />
+		) : (
+			<section class="surface-card empty-state" aria-label="Novos artigos em breve">
+				<h2>Novos artigos em breve</h2>
+				<p>
+					Enquanto o acervo desta área cresce, você já pode reconhecer o assunto, explorar os serviços relacionados
+					e falar diretamente sobre a sua situação.
+				</p>
+				<div class="blog-actions">
+					<a class="btn btn-primary" href={cluster.contactHref}>Solicitar orientação inicial</a>
+					<a class="btn btn-ghost" href={cluster.institutionalHref}>Conheça os Serviços</a>
+				</div>
+			</section>
+		)}
+
+		{remainingPosts.length > 0 && (
+			<BlogGrid title="Leituras desta área" kicker="Continue a leitura" posts={remainingPosts} />
+		)}
+
+		<section class="blog-grid" aria-label="Outras áreas jurídicas">
+			<div class="section-title">
+				<div>
+					<span class="section-kicker">Outras áreas</span>
+					<h2>Se o seu tema tocar outra área jurídica, continue por aqui</h2>
+				</div>
+				<a class="btn btn-ghost" href="/blog/areas/">Explorar temas</a>
+			</div>
+			<div class="cluster-directory-grid">
+				{siblingClusters.map((item) => (
+					<article class="surface-card cluster-directory-card">
+						<h3>{item.title}</h3>
+						<p>{item.description}</p>
+						<p class="cluster-directory-meta">{item.postCount} artigos nesta área.</p>
+						<div class="cluster-directory-actions">
+							<a class="btn btn-primary" href={item.href}>Explorar temas</a>
+							<a class="btn btn-ghost" href={item.contactHref}>Solicitar orientação inicial</a>
+						</div>
+					</article>
+				))}
+			</div>
+		</section>
+	</div>
+
+	<script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+</BlogLayout>

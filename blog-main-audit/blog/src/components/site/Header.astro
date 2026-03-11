@@ -1,0 +1,194 @@
+---
+interface Props {
+	currentPath?: string;
+}
+
+const { currentPath = '/' } = Astro.props;
+
+const navItems = [
+	{ href: '/areas/', label: 'Áreas' },
+	{ href: '/sobre/', label: 'Sobre' },
+	{ href: '/blog/', label: 'Conteúdos' },
+	{ href: '/contato/', label: 'Contato' },
+];
+
+function isActive(href: string): boolean {
+	if (href.startsWith('http')) return false;
+	return currentPath === href || currentPath.startsWith(`${href.replace(/\/$/, '')}/`);
+}
+---
+
+<header class="site-header" role="banner">
+	<div class="site-header__bar container">
+		<a class="site-header__brand" href="/" aria-label="PAVIE | Advocacia, início do site institucional">
+			<strong>PAVIE</strong>
+			<small>| Advocacia</small>
+		</a>
+
+		<nav class="site-nav" aria-label="Navegação principal">
+			{navItems.map((item) => (
+				<a
+					href={item.href}
+					class:list={['site-nav__link', { 'is-active': isActive(item.href) }]}
+				>
+					{item.label}
+				</a>
+			))}
+		</nav>
+
+		<a class="btn btn-primary site-header__cta" href="/contato/">
+			Agendar Consulta Inicial
+		</a>
+
+		<details class="site-mobile-nav">
+			<summary aria-label="Abrir menu de navegação">Menu</summary>
+			<div class="site-mobile-nav__panel">
+				{navItems.map((item) => (
+					<a href={item.href}>
+						{item.label}
+					</a>
+				))}
+				<a href="/contato/">
+					Agendar Consulta Inicial
+				</a>
+			</div>
+		</details>
+	</div>
+</header>
+
+<style>
+	.site-header {
+		background: color-mix(in srgb, var(--surface-card) 96%, white);
+		border-bottom: 1px solid var(--color-line);
+		position: sticky;
+		top: 0;
+		z-index: 50;
+		backdrop-filter: blur(6px);
+	}
+
+	.site-header__bar {
+		min-height: 76px;
+		display: grid;
+		grid-template-columns: auto 1fr auto;
+		align-items: center;
+		gap: var(--space-md);
+	}
+
+	.site-header__brand {
+		display: inline-flex;
+		align-items: baseline;
+		gap: 0.5rem;
+		text-decoration: none;
+		color: var(--color-graphite);
+	}
+
+	.site-header__brand strong {
+		font-family: var(--font-serif);
+		font-size: 1.4rem;
+	}
+
+	.site-header__brand small {
+		font-size: 0.92rem;
+		text-transform: none;
+		letter-spacing: 0.02em;
+		color: color-mix(in srgb, var(--color-petrol) 52%, white);
+	}
+
+	.site-nav {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		gap: var(--space-lg);
+	}
+
+	.site-nav__link {
+		text-decoration: none;
+		font-size: var(--step-label);
+		font-weight: 700;
+		letter-spacing: var(--letter-label);
+		text-transform: uppercase;
+		color: color-mix(in srgb, var(--color-graphite) 82%, var(--color-mist));
+		padding: 0.35rem 0.25rem;
+	}
+
+	.site-nav__link.is-active {
+		color: var(--color-petrol);
+		text-decoration: underline;
+		text-decoration-color: color-mix(in srgb, var(--color-sand) 72%, white);
+	}
+
+	.site-nav__link:hover,
+	.site-nav__link:focus-visible {
+		color: var(--color-petrol);
+	}
+
+	.site-header__cta {
+		font-size: var(--step-small);
+		padding-inline: 1rem;
+	}
+
+	.site-mobile-nav {
+		display: none;
+		position: relative;
+	}
+
+	.site-mobile-nav summary {
+		list-style: none;
+		font-weight: 700;
+		font-size: 0.9rem;
+		cursor: pointer;
+		color: var(--color-petrol);
+	}
+
+	.site-mobile-nav summary::-webkit-details-marker {
+		display: none;
+	}
+
+	.site-mobile-nav__panel {
+		position: absolute;
+		top: 2rem;
+		right: 0;
+		display: grid;
+		gap: var(--space-2xs);
+		padding: var(--space-sm);
+		min-width: 220px;
+		background: var(--surface-card);
+		border: 1px solid var(--color-line);
+		border-radius: var(--radius-sm);
+		box-shadow: var(--shadow-soft);
+	}
+
+	.site-mobile-nav__panel a {
+		padding: 0.4rem 0.5rem;
+		border-radius: var(--radius-xs);
+		text-decoration: none;
+		font-size: 0.92rem;
+		color: var(--color-graphite);
+	}
+
+	.site-mobile-nav__panel a:hover,
+	.site-mobile-nav__panel a:focus-visible {
+		background: color-mix(in srgb, var(--color-soft) 78%, white);
+	}
+
+	@media (max-width: 1080px) {
+		.site-nav {
+			gap: 0.75rem;
+		}
+	}
+
+	@media (max-width: 960px) {
+		.site-header__bar {
+			grid-template-columns: 1fr auto;
+		}
+
+		.site-nav,
+		.site-header__cta {
+			display: none;
+		}
+
+		.site-mobile-nav {
+			display: inline-block;
+		}
+	}
+</style>

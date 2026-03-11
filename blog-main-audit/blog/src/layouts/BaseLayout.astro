@@ -1,0 +1,64 @@
+﻿---
+import BaseHead from '../components/BaseHead.astro';
+import SiteFooter from '../components/site/Footer.astro';
+import SiteHeader from '../components/site/Header.astro';
+import { DEFAULT_OG_IMAGE, MAIN_SITE_URL, SITE_DESCRIPTION, SITE_TITLE } from '../consts';
+import '../styles/global.css';
+
+interface Props {
+	title?: string;
+	description?: string;
+	canonical?: string;
+	image?: string;
+	type?: 'website' | 'article';
+	noIndex?: boolean;
+	publishedTime?: Date;
+	modifiedTime?: Date;
+	author?: string;
+	hideHeader?: boolean;
+	hideFooter?: boolean;
+}
+
+const {
+	title = SITE_TITLE,
+	description = SITE_DESCRIPTION,
+	canonical,
+	image = DEFAULT_OG_IMAGE,
+	type = 'website',
+	noIndex = false,
+	publishedTime,
+	modifiedTime,
+	author,
+	hideHeader = false,
+	hideFooter = false,
+} = Astro.props;
+
+const canonicalUrl = canonical || new URL(Astro.url.pathname, Astro.site ?? MAIN_SITE_URL).toString();
+---
+
+<!doctype html>
+<html lang="pt-BR">
+	<head>
+		<BaseHead
+			title={title}
+			description={description}
+			canonical={canonicalUrl}
+			image={image}
+			type={type}
+			noIndex={noIndex}
+			publishedTime={publishedTime}
+			modifiedTime={modifiedTime}
+			author={author}
+		/>
+	</head>
+	<body>
+		<a class="skip-link" href="#main-content">Pular para o conteúdo principal</a>
+		<div class="site-shell">
+			{!hideHeader && <SiteHeader currentPath={Astro.url.pathname} />}
+			<main id="main-content" class="site-main">
+				<slot />
+			</main>
+			{!hideFooter && <SiteFooter />}
+		</div>
+	</body>
+</html>

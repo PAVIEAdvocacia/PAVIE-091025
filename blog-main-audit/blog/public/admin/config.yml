@@ -1,0 +1,171 @@
+﻿backend:
+  name: github
+  repo: PAVIEAdvocacia/PAVIE-091025
+  branch: main
+
+local_backend: true
+publish_mode: simple
+site_url: "https://pavieadvocacia.com.br"
+locale: "pt"
+
+media_folder: "public/uploads"
+public_folder: "/uploads"
+
+collections:
+  - name: "blog"
+    label: "Artigos do Blog"
+    label_singular: "Artigo"
+    folder: "src/content/blog"
+    create: true
+    delete: true
+    identifier_field: "title"
+    summary: "{{title}} - {{status}}"
+    slug: "{{slug}}"
+    extension: "md"
+    editor:
+      preview: true
+    fields:
+      -
+        label: "Titulo"
+        name: "title"
+        widget: "string"
+        hint: "Obrigatorio. Titulo principal do artigo."
+      -
+        label: "Slug"
+        name: "slug"
+        widget: "string"
+        required: true
+        hint: "Obrigatorio. URL limpa e estavel. Ex.: divorcio-cartorio-filhos-menores"
+      -
+        label: "Descricao"
+        name: "description"
+        widget: "text"
+        required: true
+        hint: "Obrigatorio. Resumo curto para abertura do artigo e metadado basico."
+      -
+        label: "Area"
+        name: "area"
+        widget: "select"
+        required: true
+        hint: "Obrigatorio. Use exatamente uma das 5 areas canonicas do projeto."
+        options:
+          - "Familia, Sucessoes e Patrimonio"
+          - "Contratos, Obrigacoes e Responsabilidade Civil"
+          - "Imobiliario, Regularizacao e Condominios"
+          - "Consumidor, Saude e Previdencia"
+          - "Compliance, Integridade e Atuacao Empresarial"
+      -
+        label: "Data de publicacao"
+        name: "publish_date"
+        widget: "datetime"
+        required: true
+        hint: "Obrigatorio. Data principal de publicacao do artigo."
+      -
+        label: "Autor"
+        name: "author"
+        widget: "select"
+        required: true
+        hint: "Obrigatorio. Autor institucional do conteudo."
+        options:
+          - "Fabio Mathias Pavie"
+      -
+        label: "Status"
+        name: "status"
+        widget: "select"
+        required: true
+        default: "draft"
+        hint: "Obrigatorio. Estado editorial minimo e controlado."
+        options:
+          - "draft"
+          - "published"
+          - "archived"
+      -
+        label: "Estagio do funil"
+        name: "funnel_stage"
+        widget: "select"
+        required: true
+        default: "consideracao"
+        hint: "Obrigatorio. Indica o papel principal do artigo na jornada."
+        options:
+          - "descoberta"
+          - "consideracao"
+          - "aprofundamento"
+          - "orientacao"
+          - "contato"
+      -
+        label: "Resumo curto"
+        name: "excerpt"
+        widget: "text"
+        required: false
+        hint: "Opcional. Use quando precisar de um resumo especifico para listagens."
+      -
+        label: "Subarea"
+        name: "subarea"
+        widget: "string"
+        required: false
+        hint: "Opcional. Use apenas se ajudar de verdade a enquadrar o artigo."
+      -
+        label: "Temas"
+        name: "themes"
+        widget: "list"
+        required: false
+        hint: "Opcional. Liste 2 a 5 temas principais do artigo."
+      -
+        label: "Pain points"
+        name: "pain_points"
+        widget: "list"
+        required: false
+        hint: "Opcional. Dores ou situacoes que o artigo ajuda a esclarecer."
+      -
+        label: "Artigos relacionados"
+        name: "related_articles"
+        widget: "relation"
+        collection: "blog"
+        search_fields: ["title", "slug"]
+        value_field: "slug"
+        display_fields: ["title"]
+        multiple: true
+        required: false
+        hint: "Opcional. Selecione apenas artigos realmente ligados a esta leitura."
+      -
+        label: "CTA principal"
+        name: "primary_cta"
+        widget: "select"
+        required: false
+        hint: "Opcional. Use so quando quiser mudar o CTA padrao definido pelo estagio do funil."
+        options:
+          - { label: "Abrir Areas Editoriais", value: "areas_editoriais" }
+          - { label: "Solicitar Diagnostico Juridico", value: "diagnostico_juridico" }
+          - { label: "Ver Areas de Atuacao", value: "areas_de_atuacao" }
+      -
+        label: "SEO title"
+        name: "seo_title"
+        widget: "string"
+        required: false
+        hint: "Opcional. Use apenas se o titulo de metadado precisar divergir do titulo principal."
+      -
+        label: "OG image"
+        name: "og_image"
+        widget: "image"
+        required: false
+        hint: "Opcional. Imagem de compartilhamento e capa do artigo."
+      -
+        label: "Tempo de leitura (min)"
+        name: "reading_time"
+        widget: "number"
+        required: false
+        value_type: "int"
+        min: 1
+        hint: "Opcional. Se vazio, o tempo sera estimado automaticamente."
+      -
+        label: "Destaque editorial"
+        name: "featured"
+        widget: "boolean"
+        required: false
+        default: false
+        hint: "Opcional. Marque apenas quando o artigo precisar aparecer como destaque na home do blog."
+      -
+        label: "Conteudo"
+        name: "body"
+        widget: "markdown"
+        hint: "Corpo principal do artigo."

@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://pavieadvocacia.com.br/sitemap.xml
+
+# Proteção de rotas técnicas / administrativas
+Disallow: /api/
+Disallow: /admin/
+Disallow: /drafts/

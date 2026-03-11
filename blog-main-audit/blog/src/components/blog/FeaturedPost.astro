@@ -1,0 +1,42 @@
+﻿---
+import type { BlogPost } from '../../lib/posts';
+
+interface Props {
+	post: BlogPost;
+}
+
+const { post } = Astro.props;
+const dateLabel = post.publishedAt
+	? post.publishedAt.toLocaleDateString('pt-BR', { dateStyle: 'long' })
+	: 'Publicação recente';
+---
+
+<article class="featured-post" aria-labelledby="featured-post-title">
+	<div class="featured-post__media">
+		{post.image ? (
+			<img src={post.image} alt={post.imageAlt} loading="eager" />
+		) : (
+			<div class="featured-post__placeholder" role="presentation">
+				PAVIE | Advocacia
+			</div>
+		)}
+	</div>
+	<div class="featured-post__copy">
+		<span class="section-kicker">Leitura em destaque</span>
+		<span class="badge">{post.area}</span>
+		<h2 id="featured-post-title" class="featured-post__title">
+			{post.title}
+		</h2>
+		<p class="featured-post__description">{post.description}</p>
+		<div class="meta-list">
+			<span><span class="meta-dot" aria-hidden="true"></span>{dateLabel}</span>
+			<span><span class="meta-dot" aria-hidden="true"></span>{post.readingTime} min de leitura</span>
+		</div>
+		<div>
+			<a class="btn btn-primary" href={post.url}>
+				Ler artigo em destaque
+			</a>
+		</div>
+	</div>
+</article>
+

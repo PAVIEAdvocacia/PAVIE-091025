@@ -1,0 +1,68 @@
+---
+import { getCollection } from 'astro:content';
+import Breadcrumbs from '../../../components/blog/Breadcrumbs.astro';
+import { BLOG_SITE_URL } from '../../../consts';
+import BlogLayout from '../../../layouts/BlogLayout.astro';
+import { buildBreadcrumbSchema } from '../../../lib/seo';
+import { isPublicPost, normalizePost, sortPostsByDate } from '../../../lib/posts';
+import { temaHref, temaLabel, normalizeTemaKey } from '../../../lib/taxonomy';
+
+const entries = await getCollection('blog');
+const posts = sortPostsByDate(entries.map((entry) => normalizePost(entry))).filter(isPublicPost);
+
+const temaMap = new Map<string, { key: string; label: string; count: number }>();
+for (const post of posts) {
+	for (const tema of post.temas) {
+		const key = normalizeTemaKey(tema);
+		const item = temaMap.get(key);
+		if (item) {
+			item.count += 1;
+			continue;
+		}
+		temaMap.set(key, { key, label: temaLabel(tema), count: 1 });
+	}
+}
+
+const temas = [...temaMap.values()].sort((a, b) => b.count - a.count);
+const canonicalUrl = `${BLOG_SITE_URL}/blog/temas/`;
+const breadcrumbs = [
+	{ label: 'Início', href: '/' },
+	{ label: 'Publicações', href: '/blog/' },
+	{ label: 'Temas' },
+];
+const breadcrumbSchema = buildBreadcrumbSchema(breadcrumbs, canonicalUrl);
+---
+
+<BlogLayout
+	title="Temas do blog | PAVIE | Advocacia"
+	description="Acesse o acervo do blog da PAVIE por tema jurídico."
+	canonical={canonicalUrl}
+>
+	<div class="container blog-home">
+		<Breadcrumbs items={breadcrumbs} />
+		<section class="blog-grid" aria-label="Temas do blog">
+			<div class="section-title">
+				<div>
+					<span class="section-kicker">Temas</span>
+					<h1>Temas do blog</h1>
+				</div>
+			</div>
+			{temas.length === 0 ? (
+				<article class="surface-card empty-state">
+					<h2>Nenhum tema ativo</h2>
+					<p>Os temas serão listados automaticamente conforme novas publicações forem adicionadas.</p>
+				</article>
+			) : (
+				<div class="theme-chip-list">
+					{temas.map((tema) => (
+						<a class="blog-chip blog-chip--theme" href={temaHref(tema.key)}>
+							{tema.label} ({tema.count})
+						</a>
+					))}
+				</div>
+			)}
+		</section>
+	</div>
+
+	<script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+</BlogLayout>
