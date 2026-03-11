@@ -1,14 +1,14 @@
 ---
-import { getCollection } from 'astro:content';
 import Breadcrumbs from '../../../components/blog/Breadcrumbs.astro';
 import { BLOG_SITE_URL } from '../../../consts';
 import BlogLayout from '../../../layouts/BlogLayout.astro';
+import { getBlogEntries } from '../../../lib/blog-content';
 import { buildBreadcrumbSchema } from '../../../lib/seo';
 import { buildBlogClusterDirectory } from '../../../lib/blog-clusters';
 import { isPublicPost, normalizePost, sortPostsByDate } from '../../../lib/posts';
 import { temaHref } from '../../../lib/taxonomy';
 
-const entries = await getCollection('blog');
+const entries = await getBlogEntries();
 const posts = sortPostsByDate(entries.map((entry) => normalizePost(entry))).filter(isPublicPost);
 const clusterDirectory = buildBlogClusterDirectory(posts);
 const canonicalUrl = `${BLOG_SITE_URL}/blog/areas/`;

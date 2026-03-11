@@ -1,10 +1,10 @@
 ---
-import { getCollection } from 'astro:content';
 import Breadcrumbs from '../../../components/blog/Breadcrumbs.astro';
 import BlogGrid from '../../../components/blog/BlogGrid.astro';
 import FeaturedPost from '../../../components/blog/FeaturedPost.astro';
 import { BLOG_SITE_URL } from '../../../consts';
 import BlogLayout from '../../../layouts/BlogLayout.astro';
+import { getBlogEntries } from '../../../lib/blog-content';
 import { buildBreadcrumbSchema } from '../../../lib/seo';
 import {
 	blogClusterHref,
@@ -19,7 +19,7 @@ export async function getStaticPaths() {
 	return getBlogClusterStaticKeys().map((area) => ({ params: { area } }));
 }
 
-const entries = await getCollection('blog');
+const entries = await getBlogEntries();
 const allPosts = sortPostsByDate(entries.map((entry) => normalizePost(entry))).filter(isPublicPost);
 const cluster = getBlogClusterDirectoryItem(allPosts, Astro.params.area ?? '');
 

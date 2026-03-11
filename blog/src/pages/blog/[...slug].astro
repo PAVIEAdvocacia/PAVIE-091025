@@ -1,12 +1,13 @@
 ---
-import { getCollection, render } from 'astro:content';
+import { render } from 'astro:content';
 import ReadingLayout from '../../layouts/ReadingLayout.astro';
+import { getBlogEntries } from '../../lib/blog-content';
 import { getRelatedPosts } from '../../lib/related';
 import { isPublicPost, normalizePost, sortPostsByDate } from '../../lib/posts';
 import { buildToc } from '../../lib/toc';
 
 export async function getStaticPaths() {
-	const entries = await getCollection('blog');
+	const entries = await getBlogEntries();
 	const paths: Array<{ params: { slug: string }; props: { entryId: string } }> = [];
 	const seen = new Set<string>();
 
@@ -26,7 +27,7 @@ export async function getStaticPaths() {
 	return paths;
 }
 
-const entries = await getCollection('blog');
+const entries = await getBlogEntries();
 const currentEntry = entries.find((entry) => entry.id === Astro.props.entryId);
 
 if (!currentEntry) {

@@ -1,46 +1,48 @@
 ---
-import { getCollection } from 'astro:content';
 import Breadcrumbs from '../../../components/blog/Breadcrumbs.astro';
 import BlogGrid from '../../../components/blog/BlogGrid.astro';
 import { BLOG_SITE_URL } from '../../../consts';
 import BlogLayout from '../../../layouts/BlogLayout.astro';
+import { getBlogEntries } from '../../../lib/blog-content';
 import { buildBreadcrumbSchema } from '../../../lib/seo';
 import { isPublicPost, normalizePost, sortPostsByDate } from '../../../lib/posts';
 import { normalizeTemaKey, temaLabel } from '../../../lib/taxonomy';
 
 export async function getStaticPaths() {
-	const entries = await getCollection('blog');
+	const entries = await getBlogEntries();
 	const posts = sortPostsByDate(entries.map((entry) => normalizePost(entry))).filter(isPublicPost);
 	const keys = new Set(posts.flatMap((post) => post.temaKeys.map((tema) => normalizeTemaKey(tema))));
 	return [...keys].map((tema) => ({ params: { tema } }));
 }
 
-const entries = await getCollection('blog');
+const entries = await getBlogEntries();
 const allPosts = sortPostsByDate(entries.map((entry) => normalizePost(entry))).filter(isPublicPost);
 const temaKey = normalizeTemaKey(Astro.params.tema ?? '');
 const temaPosts = allPosts.filter((post) =>
 	post.temaKeys.some((tema) => normalizeTemaKey(tema) === temaKey),
 );
-
-if (temaPosts.length === 0) {
-	throw new Error(`Tema sem publicações: ${temaKey}`);
-}
-
-const pageTitle = `${temaLabel(temaKey)} | Tema`;
+const hasPosts = temaPosts.length > 0;
+const currentTemaLabel = temaLabel(temaKey || 'tema');
+const pageTitle = hasPosts ? `${currentTemaLabel} | Tema` : `${currentTemaLabel} | Conteudos em atualizacao`;
 const canonicalUrl = `${BLOG_SITE_URL}/blog/temas/${temaKey}/`;
 const breadcrumbs = [
-	{ label: 'Início', href: '/' },
-	{ label: 'Publicações', href: '/blog/' },
+	{ label: 'Inicio', href: '/' },
+	{ label: 'Publicacoes', href: '/blog/' },
 	{ label: 'Temas', href: '/blog/temas/' },
-	{ label: temaLabel(temaKey) },
+	{ label: currentTemaLabel },
 ];
 const breadcrumbSchema = buildBreadcrumbSchema(breadcrumbs, canonicalUrl);
 ---
 
 <BlogLayout
 	title={pageTitle}
-	description={`Publicações da PAVIE sobre ${temaLabel(temaKey)}.`}
+	description={
+		hasPosts
+			? `Publicacoes da PAVIE sobre ${currentTemaLabel}.`
+			: `Novos artigos sobre ${currentTemaLabel} entram em breve. Enquanto isso, a navegacao por area juridica e o contato institucional seguem disponiveis.`
+	}
 	canonical={canonicalUrl}
+	noIndex={!hasPosts}
 >
 	<div class="container blog-home">
 		<Breadcrumbs items={breadcrumbs} />
@@ -48,13 +50,25 @@ const breadcrumbSchema = buildBreadcrumbSchema(breadcrumbs, canonicalUrl);
 			<div class="section-title">
 				<div>
 					<span class="section-kicker">Tema do blog</span>
-					<h1>{temaLabel(temaKey)}</h1>
+					<h1>{currentTemaLabel}</h1>
 				</div>
 			</div>
-			<p class="text-muted">{temaPosts.length} publicações relacionadas.</p>
+			<p class="text-muted">
+				{hasPosts
+					? `${temaPosts.length} publicacoes relacionadas.`
+					: 'Novos artigos sobre este tema entram em breve.'}
+			</p>
 		</section>
 
-		<BlogGrid title="Publicações por tema" kicker="Aprofundamento" posts={temaPosts} />
+		<BlogGrid
+			title="Publicacoes por tema"
+			kicker="Aprofundamento"
+			posts={temaPosts}
+			emptyTitle="Conteudo em atualizacao"
+			emptyText="Ainda nao ha artigos publicados para este tema. Voce pode continuar pelas areas do blog ou falar sobre sua situacao pelos canais institucionais."
+			emptyHref="/blog/areas/"
+			emptyLabel="Explorar temas"
+		/>
 	</div>
 
 	<script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />

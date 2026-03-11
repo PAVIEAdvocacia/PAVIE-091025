@@ -221,6 +221,11 @@
 	grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
+.blog-grid__empty {
+	grid-column: 1 / -1;
+	align-content: start;
+}
+
 .blog-card {
 	display: grid;
 	grid-template-rows: auto 1fr;

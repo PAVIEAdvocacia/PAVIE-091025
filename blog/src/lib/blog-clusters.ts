@@ -173,9 +173,11 @@ export function getBlogClusterForPost(post: BlogPost): BlogClusterDefinition {
 	);
 }
 
-export function buildBlogClusterDirectory(posts: BlogPost[]): BlogClusterDirectoryItem[] {
+export function buildBlogClusterDirectory(posts: BlogPost[] = []): BlogClusterDirectoryItem[] {
+	const safePosts = Array.isArray(posts) ? posts : [];
+
 	return BLOG_CLUSTERS.map((cluster) => {
-		const clusterPosts = posts.filter(
+		const clusterPosts = safePosts.filter(
 			(post) => resolveBlogClusterKey(post.areaKey || post.area) === cluster.key,
 		);
 		return {
@@ -185,7 +187,7 @@ export function buildBlogClusterDirectory(posts: BlogPost[]): BlogClusterDirecto
 			hasPosts: clusterPosts.length > 0,
 			hasThemeRoutes: hasThemeRoutes(clusterPosts),
 			posts: clusterPosts,
-			featuredPost: clusterPosts[0],
+			featuredPost: clusterPosts.length > 0 ? clusterPosts[0] : undefined,
 			latestPosts: clusterPosts.slice(0, 3),
 			topThemes: uniqueThemes(clusterPosts, cluster.suggestedThemes),
 		};
@@ -197,7 +199,7 @@ export function getBlogClusterStaticKeys(): string[] {
 }
 
 export function getBlogClusterDirectoryItem(
-	posts: BlogPost[],
+	posts: BlogPost[] = [],
 	value: string,
 ): BlogClusterDirectoryItem | undefined {
 	const key = resolveBlogClusterKey(value);

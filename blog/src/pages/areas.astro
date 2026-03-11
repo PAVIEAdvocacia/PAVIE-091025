@@ -1,7 +1,7 @@
 ﻿---
-import { getCollection } from 'astro:content';
 import { MAIN_SITE_URL } from '../consts';
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { getBlogEntries } from '../lib/blog-content';
 import { buildHubDirectory } from '../lib/service-hubs';
 import { isPublicPost, normalizePost, sortPostsByDate } from '../lib/posts';
 import '../styles/institutional-pages.css';
@@ -10,7 +10,7 @@ const title = 'Áreas de Atuação | PAVIE | Advocacia';
 const description =
 	'Mapa institucional de serviços jurídicos da PAVIE, com áreas de atuação organizadas e ligação natural com os conteúdos do blog.';
 
-const entries = await getCollection('blog');
+const entries = await getBlogEntries();
 const posts = sortPostsByDate(entries.map((entry) => normalizePost(entry))).filter(isPublicPost);
 const hubDirectory = buildHubDirectory(posts);
 ---
@@ -54,4 +54,3 @@ const hubDirectory = buildHubDirectory(posts);
 		</div>
 	</div>
 </BaseLayout>
-

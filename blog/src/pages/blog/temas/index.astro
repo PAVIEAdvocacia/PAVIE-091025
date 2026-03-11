@@ -1,13 +1,13 @@
 ---
-import { getCollection } from 'astro:content';
 import Breadcrumbs from '../../../components/blog/Breadcrumbs.astro';
 import { BLOG_SITE_URL } from '../../../consts';
 import BlogLayout from '../../../layouts/BlogLayout.astro';
+import { getBlogEntries } from '../../../lib/blog-content';
 import { buildBreadcrumbSchema } from '../../../lib/seo';
 import { isPublicPost, normalizePost, sortPostsByDate } from '../../../lib/posts';
 import { temaHref, temaLabel, normalizeTemaKey } from '../../../lib/taxonomy';
 
-const entries = await getCollection('blog');
+const entries = await getBlogEntries();
 const posts = sortPostsByDate(entries.map((entry) => normalizePost(entry))).filter(isPublicPost);
 
 const temaMap = new Map<string, { key: string; label: string; count: number }>();
@@ -51,6 +51,10 @@ const breadcrumbSchema = buildBreadcrumbSchema(breadcrumbs, canonicalUrl);
 				<article class="surface-card empty-state">
 					<h2>Nenhum tema ativo</h2>
 					<p>Os temas serão listados automaticamente conforme novas publicações forem adicionadas.</p>
+					<div class="blog-actions">
+						<a class="btn btn-primary" href="/blog/areas/">Explorar temas</a>
+						<a class="btn btn-ghost" href="/blog/contato/">Solicitar orientação inicial</a>
+					</div>
 				</article>
 			) : (
 				<div class="theme-chip-list">

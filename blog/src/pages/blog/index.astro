@@ -1,16 +1,16 @@
 ---
-import { getCollection } from 'astro:content';
 import BlogGrid from '../../components/blog/BlogGrid.astro';
 import FeaturedPost from '../../components/blog/FeaturedPost.astro';
 import { BLOG_SITE_URL } from '../../consts';
 import BlogLayout from '../../layouts/BlogLayout.astro';
+import { getBlogEntries } from '../../lib/blog-content';
 import { buildBlogClusterDirectory } from '../../lib/blog-clusters';
 import { isPublicPost, normalizePost, sortPostsByDate } from '../../lib/posts';
 import { temaHref } from '../../lib/taxonomy';
 
-const entries = await getCollection('blog');
+const entries = await getBlogEntries();
 const posts = sortPostsByDate(entries.map((entry) => normalizePost(entry))).filter(isPublicPost);
-const featured = posts.find((post) => post.featured) ?? posts[0];
+const featured = posts.find((post) => post.featured) ?? (posts.length > 0 ? posts[0] : undefined);
 const continuityPosts = posts.filter((post) => post.slug !== featured?.slug).slice(0, 6);
 const clusterDirectory = buildBlogClusterDirectory(posts);
 const topThemes = Array.from(

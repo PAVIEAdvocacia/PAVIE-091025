@@ -1,10 +1,10 @@
-import { getCollection } from 'astro:content';
 import rss from '@astrojs/rss';
 import { BLOG_SITE_URL, SITE_DESCRIPTION, SITE_TITLE } from '../consts';
+import { getBlogEntries } from '../lib/blog-content';
 import { isPublicPost, normalizePost, sortPostsByDate } from '../lib/posts';
 
 export async function GET(context) {
-	const entries = await getCollection('blog');
+	const entries = await getBlogEntries();
 	const posts = sortPostsByDate(entries.map((entry) => normalizePost(entry))).filter(isPublicPost);
 
 	return rss({

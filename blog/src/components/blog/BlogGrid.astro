@@ -5,11 +5,27 @@ import BlogCard from './BlogCard.astro';
 interface Props {
 	title: string;
 	kicker?: string;
-	posts: BlogPost[];
+	posts?: BlogPost[];
 	compact?: boolean;
+	emptyTitle?: string;
+	emptyText?: string;
+	emptyHref?: string;
+	emptyLabel?: string;
 }
 
-const { title, kicker, posts, compact = false } = Astro.props;
+const {
+	title,
+	kicker,
+	posts = [],
+	compact = false,
+	emptyTitle = 'Novos artigos em breve',
+	emptyText = 'Esta selecao esta em atualizacao. Enquanto isso, voce pode continuar pela navegacao do blog ou falar sobre sua situacao pelos canais institucionais.',
+	emptyHref = '/blog/areas/',
+	emptyLabel = 'Explorar temas',
+} = Astro.props;
+
+const safePosts = Array.isArray(posts) ? posts : [];
+const hasPosts = safePosts.length > 0;
 ---
 
 <section class="blog-grid" aria-label={title}>
@@ -21,6 +37,14 @@ const { title, kicker, posts, compact = false } = Astro.props;
 	</div>
 
 	<div class:list={['blog-grid', compact ? 'blog-grid--compact' : 'blog-grid--cards']}>
-		{posts.map((post) => <BlogCard post={post} />)}
+		{hasPosts ? (
+			safePosts.map((post) => <BlogCard post={post} />)
+		) : (
+			<article class="surface-card empty-state blog-grid__empty">
+				<h3>{emptyTitle}</h3>
+				<p>{emptyText}</p>
+				<a class="btn btn-ghost" href={emptyHref}>{emptyLabel}</a>
+			</article>
+		)}
 	</div>
 </section>
