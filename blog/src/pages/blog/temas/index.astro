@@ -26,31 +26,31 @@ for (const post of posts) {
 const temas = [...temaMap.values()].sort((a, b) => b.count - a.count);
 const canonicalUrl = `${BLOG_SITE_URL}/blog/temas/`;
 const breadcrumbs = [
-	{ label: 'Inicio', href: '/' },
-	{ label: 'Publicacoes', href: '/blog/' },
+	{ label: 'Início', href: '/' },
+	{ label: 'Publicações', href: '/blog/' },
 	{ label: 'Temas' },
 ];
 const breadcrumbSchema = buildBreadcrumbSchema(breadcrumbs, canonicalUrl);
 ---
 
 <BlogLayout
-	title="Temas do Blog | PAVIE"
-	description="Acesse o acervo por tema juridico no blog da PAVIE."
+	title="Temas do blog | PAVIE | Advocacia"
+	description="Acesse o acervo do blog da PAVIE por tema jurídico."
 	canonical={canonicalUrl}
 >
 	<div class="container blog-home">
 		<Breadcrumbs items={breadcrumbs} />
-		<section class="blog-grid" aria-label="Temas editoriais">
+		<section class="blog-grid" aria-label="Temas do blog">
 			<div class="section-title">
 				<div>
-					<span class="section-kicker">Mapa de temas</span>
+					<span class="section-kicker">Temas</span>
 					<h1>Temas do blog</h1>
 				</div>
 			</div>
 			{temas.length === 0 ? (
 				<article class="surface-card empty-state">
 					<h2>Nenhum tema ativo</h2>
-					<p>Os temas serao listados automaticamente conforme novas publicacoes forem adicionadas.</p>
+					<p>Os temas serão listados automaticamente conforme novas publicações forem adicionadas.</p>
 				</article>
 			) : (
 				<div class="theme-chip-list">

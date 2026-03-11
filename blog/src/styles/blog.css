@@ -100,6 +100,30 @@
 	color: var(--text-muted);
 }
 
+.blog-section-intro {
+	max-width: 66ch;
+	margin-top: var(--space-xs);
+}
+
+.entry-point-card {
+	align-content: start;
+}
+
+.entry-point-card__link {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.4rem;
+	margin-top: var(--space-xs);
+	font-weight: 700;
+	color: var(--color-petrol);
+	text-decoration: none;
+}
+
+.entry-point-card__link:hover,
+.entry-point-card__link:focus-visible {
+	color: color-mix(in srgb, var(--color-petrol) 78%, black);
+}
+
 .blog-chip--theme {
 	background: var(--surface-card);
 	color: var(--color-petrol);

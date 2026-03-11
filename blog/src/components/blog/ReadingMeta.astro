@@ -1,4 +1,4 @@
----
+﻿---
 import type { BlogPost } from '../../lib/posts';
 
 interface Props {
@@ -9,7 +9,7 @@ const { post } = Astro.props;
 
 const publishedLabel = post.publishedAt
 	? post.publishedAt.toLocaleDateString('pt-BR', { dateStyle: 'long' })
-	: 'Data nao informada';
+	: 'Data não informada';
 const updatedLabel = post.updatedAt
 	? post.updatedAt.toLocaleDateString('pt-BR', { dateStyle: 'long' })
 	: undefined;

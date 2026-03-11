@@ -23,14 +23,14 @@ const temaPosts = allPosts.filter((post) =>
 );
 
 if (temaPosts.length === 0) {
-	throw new Error(`Tema sem publicacoes: ${temaKey}`);
+	throw new Error(`Tema sem publicações: ${temaKey}`);
 }
 
 const pageTitle = `${temaLabel(temaKey)} | Tema`;
 const canonicalUrl = `${BLOG_SITE_URL}/blog/temas/${temaKey}/`;
 const breadcrumbs = [
-	{ label: 'Inicio', href: '/' },
-	{ label: 'Publicacoes', href: '/blog/' },
+	{ label: 'Início', href: '/' },
+	{ label: 'Publicações', href: '/blog/' },
 	{ label: 'Temas', href: '/blog/temas/' },
 	{ label: temaLabel(temaKey) },
 ];
@@ -39,7 +39,7 @@ const breadcrumbSchema = buildBreadcrumbSchema(breadcrumbs, canonicalUrl);
 
 <BlogLayout
 	title={pageTitle}
-	description={`Publicacoes da PAVIE sobre ${temaLabel(temaKey)}.`}
+	description={`Publicações da PAVIE sobre ${temaLabel(temaKey)}.`}
 	canonical={canonicalUrl}
 >
 	<div class="container blog-home">
@@ -51,10 +51,10 @@ const breadcrumbSchema = buildBreadcrumbSchema(breadcrumbs, canonicalUrl);
 					<h1>{temaLabel(temaKey)}</h1>
 				</div>
 			</div>
-			<p class="text-muted">{temaPosts.length} publicacoes relacionadas.</p>
+			<p class="text-muted">{temaPosts.length} publicações relacionadas.</p>
 		</section>
 
-		<BlogGrid title="Publicacoes por tema" kicker="Aprofundamento" posts={temaPosts} />
+		<BlogGrid title="Publicações por tema" kicker="Aprofundamento" posts={temaPosts} />
 	</div>
 
 	<script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />

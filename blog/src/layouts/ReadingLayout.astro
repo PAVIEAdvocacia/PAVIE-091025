@@ -1,4 +1,4 @@
-﻿---
+---
 import type { BlogPost } from '../lib/posts';
 import type { TocItem } from '../lib/toc';
 import '../styles/reading.css';
@@ -32,7 +32,7 @@ const breadcrumbs = [
 ];
 
 const appliesTo = [
-	'postos em que você precisa entender risco antes de agir',
+	'casos em que você precisa entender risco antes de agir',
 	'cenários com decisão patrimonial ou familiar relevante',
 	'situações em que uma orientação inicial evita retrabalho jurídico',
 ];
@@ -112,9 +112,9 @@ const faqSchema =
 					</ul>
 				</section>
 
-				<section class="reading-bridge" aria-label="Ponte entre artigo, area e contato">
-					<span class="section-kicker">Area correspondente</span>
-					<h2>Este conteudo faz parte da trilha {cluster.title}</h2>
+				<section class="reading-bridge" aria-label="Área correspondente e próximo passo">
+					<span class="section-kicker">Área correspondente</span>
+					<h2>Este conteúdo está na área {cluster.title}</h2>
 					<p>{cluster.description}</p>
 					<ul>
 						{cluster.typicalSituations.slice(0, 3).map((item) => (
@@ -161,7 +161,7 @@ const faqSchema =
 					</section>
 					<RelatedPosts
 						posts={related}
-						title="Continue nesta trilha editorial"
+						title="Leituras desta área"
 						emptyHref={blogClusterHref(cluster.key)}
 						emptyLabel="Explorar temas"
 					/>
@@ -171,7 +171,7 @@ const faqSchema =
 			<ReadingSidebar post={post} toc={toc} related={related} />
 		</div>
 
-		<div class="mobile-reading-cta" aria-label="Acao rapida no mobile">
+		<div class="mobile-reading-cta" aria-label="Ação rápida no mobile">
 			<a class="btn btn-primary" href={post.cta.href}>{post.cta.label}</a>
 		</div>
 	</div>

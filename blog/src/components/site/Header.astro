@@ -6,9 +6,9 @@ interface Props {
 const { currentPath = '/' } = Astro.props;
 
 const navItems = [
-	{ href: '/areas/', label: 'Servicos' },
+	{ href: '/areas/', label: 'Serviços' },
 	{ href: '/sobre/', label: 'Sobre' },
-	{ href: '/blog/', label: 'Conteudos Juridicos' },
+	{ href: '/blog/', label: 'Conteúdos jurídicos' },
 	{ href: '/contato/', label: 'Contato' },
 ];
 
@@ -20,12 +20,12 @@ function isActive(href: string): boolean {
 
 <header class="site-header" role="banner">
 	<div class="site-header__bar container">
-		<a class="site-header__brand" href="/" aria-label="PAVIE Advocacia, inicio do site institucional">
+		<a class="site-header__brand" href="/" aria-label="PAVIE | Advocacia, início do site institucional">
 			<strong>PAVIE</strong>
 			<small>| Advocacia</small>
 		</a>
 
-		<nav class="site-nav" aria-label="Navegacao principal">
+		<nav class="site-nav" aria-label="Navegação principal">
 			{navItems.map((item) => (
 				<a
 					href={item.href}
@@ -41,7 +41,7 @@ function isActive(href: string): boolean {
 		</a>
 
 		<details class="site-mobile-nav">
-			<summary aria-label="Abrir menu de navegacao">Menu</summary>
+			<summary aria-label="Abrir menu de navegação">Menu</summary>
 			<div class="site-mobile-nav__panel" role="menu">
 				{navItems.map((item) => (
 					<a href={item.href} role="menuitem">

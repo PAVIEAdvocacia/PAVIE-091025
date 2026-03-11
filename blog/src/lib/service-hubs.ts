@@ -27,7 +27,7 @@ export const SERVICE_HUBS: ServiceHub[] = [
 		id: 'familia-sucessoes-patrimonio',
 		title: areaLabel('familia-sucessoes-patrimonio'),
 		areaKey: 'familia-sucessoes-patrimonio',
-		summary: 'Frente institucional para decisoes familiares, sucessorias e patrimoniais que pedem clareza, documentacao adequada e conducao responsavel.',
+		summary: 'Área de atuação para decisões familiares, sucessórias e patrimoniais que pedem clareza, documentação adequada e condução responsável.',
 		situations: ['Divorcio, guarda, convivencia e alimentos.', 'Inventario, partilha, testamento e heranca.', 'Patrimonio familiar, vulnerabilidade economica e temas com elemento internacional.'],
 		scopes: ['Diagnostico juridico inicial com foco em impacto familiar e patrimonial.', 'Organizacao documental e estrategia para solucao consensual ou contenciosa.', 'Acompanhamento tecnico em decisoes que exigem previsibilidade e prudencia.'],
 		themes: [
@@ -40,7 +40,7 @@ export const SERVICE_HUBS: ServiceHub[] = [
 		id: 'contratos-obrigacoes-responsabilidade-civil',
 		title: areaLabel('contratos-obrigacoes-responsabilidade-civil'),
 		areaKey: 'contratos-obrigacoes-responsabilidade-civil',
-		summary: 'Frente institucional para compromissos juridicos, descumprimento de obrigacoes, cobranca e reparacao de danos em relacoes civis.',
+		summary: 'Área de atuação para compromissos jurídicos, descumprimento de obrigações, cobrança e reparação de danos em relações civis.',
 		situations: ['Elaboracao, revisao e negociacao contratual.', 'Inadimplemento, cobranca e execucao de obrigacoes.', 'Responsabilidade civil, prova de dano e reparacao.'],
 		scopes: ['Leitura tecnica de risco e de clausulas sensiveis.', 'Estruturacao de estrategia em negociacao, cobranca ou litigio.', 'Conducao juridica com escopo claro e documentacao consistente.'],
 		themes: [
@@ -53,7 +53,7 @@ export const SERVICE_HUBS: ServiceHub[] = [
 		id: 'imobiliario-regularizacao-condominios',
 		title: areaLabel('imobiliario-regularizacao-condominios'),
 		areaKey: 'imobiliario-regularizacao-condominios',
-		summary: 'Frente institucional para imoveis, posse, regularizacao documental, locacao e conflitos condominiais com impacto patrimonial.',
+		summary: 'Área de atuação para imóveis, posse, regularização documental, locação e conflitos condominiais com impacto patrimonial.',
 		situations: ['Compra e venda, locacao e clausulas criticas.', 'Regularizacao registral e documental.', 'Condominios, posse e uso do imovel.'],
 		scopes: ['Analise de documentos e riscos da operacao imobiliaria.', 'Organizacao de regularizacao e estrategia registral.', 'Atuacao juridica em disputas ligadas ao uso ou propriedade do imovel.'],
 		themes: [
@@ -66,7 +66,7 @@ export const SERVICE_HUBS: ServiceHub[] = [
 		id: 'consumidor-saude-previdencia',
 		title: areaLabel('consumidor-saude-previdencia'),
 		areaKey: 'consumidor-saude-previdencia',
-		summary: 'Frente institucional para relacoes de consumo, cobertura de saude e situacoes previdenciarias que exigem leitura aplicada.',
+		summary: 'Área de atuação para relações de consumo, cobertura de saúde e situações previdenciárias que exigem leitura aplicada.',
 		situations: ['Falha de servico e cobranca indevida.', 'Negativa de cobertura e questoes ligadas a saude.', 'Beneficios, revisoes e organizacao previdenciaria.'],
 		scopes: ['Enquadramento juridico da situacao e dos documentos relevantes.', 'Definicao do melhor caminho entre negociacao, requerimento e litigio.', 'Conducao objetiva de demandas com impacto pratico imediato.'],
 		themes: [
@@ -79,7 +79,7 @@ export const SERVICE_HUBS: ServiceHub[] = [
 		id: 'compliance-integridade-atuacao-empresarial',
 		title: areaLabel('compliance-integridade-atuacao-empresarial'),
 		areaKey: 'compliance-integridade-atuacao-empresarial',
-		summary: 'Frente institucional para governanca, integridade, contratos empresariais e suporte juridico a decisoes de organizacao e operacao.',
+		summary: 'Área de atuação para governança, integridade, contratos empresariais e suporte jurídico a decisões de organização e operação.',
 		situations: ['Politicas internas, conduta e rotinas de integridade.', 'Governanca societaria e apoio juridico a operacoes.', 'Contratos empresariais e prevencao de risco.'],
 		scopes: ['Estruturacao de protocolos, fluxos e documentos essenciais.', 'Leitura de risco juridico e apoio a decisao empresarial.', 'Atuacao institucional em integridade, compliance e relacoes negociais.'],
 		themes: [

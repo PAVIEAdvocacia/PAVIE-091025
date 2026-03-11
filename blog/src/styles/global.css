@@ -218,28 +218,29 @@ main {
 
 .btn-secondary {
 	background: var(--action-secondary);
-	border-color: color-mix(in srgb, var(--color-sand) 55%, var(--color-line));
-	color: var(--color-graphite);
+	border: 1.5px solid var(--color-petrol);
+	color: var(--color-petrol);
+	box-shadow: none;
 }
 
 .btn-secondary:hover,
 .btn-secondary:focus-visible {
 	background: var(--action-secondary-strong);
-	border-color: color-mix(in srgb, var(--color-sand) 75%, var(--color-line));
-	color: var(--color-graphite);
+	border-color: var(--action-primary-strong);
+	color: var(--action-primary-strong);
 	transform: translateY(-1px);
 }
 
 .btn-ghost {
 	background: transparent;
-	border-color: var(--color-line);
+	border-color: color-mix(in srgb, var(--color-petrol) 42%, var(--color-line));
 	color: var(--color-graphite);
 }
 
 .btn-ghost:hover,
 .btn-ghost:focus-visible {
-	border-color: var(--color-sand);
-	background: color-mix(in srgb, var(--color-sand) 16%, white);
+	border-color: var(--color-petrol);
+	background: color-mix(in srgb, var(--color-petrol) 8%, white);
 }
 
 .skip-link {

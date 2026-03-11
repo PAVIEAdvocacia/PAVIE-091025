@@ -1,147 +1,157 @@
-﻿---
+---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { buildFaqSchema, LEGAL_SERVICE_BASE_SCHEMA, toAbsoluteUrl } from '../lib/seo';
 import { MAIN_SITE_URL } from '../consts';
 import '../styles/site-home.css';
 
-const title = 'PAVIE Advocacia | Clareza juridica para decisoes importantes';
+const title = 'PAVIE | Advocacia | Clareza jurídica para decisões importantes';
 const description =
-	'Sede institucional da PAVIE Advocacia para orientar decisoes em familia, patrimonio, contratos e relacoes civis com clareza, metodo e conversao etica.';
+	'Sede institucional da PAVIE | Advocacia para orientar decisões em família, patrimônio, contratos e relações civis com clareza, método e conversão ética.';
 
 const proofItems = [
 	{
 		title: 'OAB/RJ 134.947',
-		text: 'Atuacao com responsabilidade tecnica, contratacao formal e conducao profissional identificavel.',
+		text: 'Atuação com responsabilidade técnica, contratação formal e condução profissional identificável.',
 	},
 	{
 		title: 'Atendimento online e presencial',
-		text: 'O primeiro passo e organizado de acordo com o contexto do caso e a necessidade pratica de cada pessoa.',
+		text: 'O primeiro passo é organizado de acordo com o contexto do caso, a urgência prática e a forma de atendimento mais adequada.',
 	},
 	{
-		title: 'Mais de 20 anos de experiencia juridica',
-		text: 'Leitura madura de situacoes patrimoniais, familiares, contratuais e conflitos civis relevantes.',
+		title: 'Mais de 20 anos de experiência jurídica',
+		text: 'Leitura madura de situações patrimoniais, familiares, contratuais e conflitos civis relevantes.',
 	},
 	{
 		title: 'Dados tratados com confidencialidade',
-		text: 'A triagem pede apenas o necessario para entender o problema e orientar os proximos passos.',
+		text: 'A triagem pede apenas o necessário para entender o problema e orientar os próximos passos.',
 	},
 	{
-		title: 'Resposta inicial por ordem de triagem',
-		text: 'Sem promessa indevida: a expectativa do primeiro contato e clara desde o inicio.',
+		title: 'Retorno inicial organizado',
+		text: 'Sem promessa indevida: a expectativa do primeiro contato é clara desde o início.',
 	},
 ];
 
 const methodPoints = [
 	{
-		title: 'Clareza antes de estrategia',
-		text: 'O atendimento comeca pela leitura do contexto, da urgencia pratica e dos documentos que realmente importam.',
+		title: 'Clareza antes da estratégia',
+		text: 'O atendimento começa pela leitura do contexto, da urgência prática e dos documentos que realmente importam.',
 	},
 	{
-		title: 'Diagnostico juridico responsavel',
-		text: 'Riscos, caminhos possiveis e limites do caso sao explicados com linguagem compreensivel e enquadramento tecnico.',
+		title: 'Diagnóstico jurídico responsável',
+		text: 'Riscos, caminhos possíveis e limites do caso são explicados com linguagem compreensível e enquadramento técnico.',
 	},
 	{
-		title: 'Conducao com previsibilidade',
-		text: 'Escopo, etapas, honorarios e forma de acompanhamento sao apresentados de modo direto e formal.',
+		title: 'Condução com previsibilidade',
+		text: 'Escopo, etapas, honorários e forma de acompanhamento são apresentados de modo direto e formal.',
 	},
 ];
 
 const serviceClusters = [
 	{
-		title: 'Familia, Sucessoes e Patrimonio',
+		title: 'Família, Sucessões e Patrimônio',
+		lead: 'Divórcio com filhos, guarda, inventário, partilha e reorganização patrimonial.',
 		description:
-			'Demandas que envolvem relacoes familiares, reorganizacao patrimonial e decisoes com impacto pessoal duradouro.',
+			'Quando a vida familiar e o patrimônio pedem leitura técnica, documentação correta e condução serena.',
 		items: [
-			'Divorcio, guarda, alimentos e convivencia.',
-			'Inventario, partilha, testamento e planejamento sucessorio.',
-			'Protecao patrimonial e prevencao de conflito.',
+			'Convivência, alimentos e reorganização familiar.',
+			'Inventário, testamento e partilha.',
+			'Proteção patrimonial e prevenção de conflito.',
 		],
+		blogHref: '/blog/areas/familia-sucessoes-patrimonio/',
 	},
 	{
-		title: 'Contratos, Obrigacoes e Responsabilidade Civil',
+		title: 'Contratos, Obrigações e Responsabilidade Civil',
+		lead: 'Revisão contratual, cobrança, descumprimento de obrigação e reparação de danos.',
 		description:
-			'Atuacao em compromissos juridicos que exigem leitura precisa de escopo, cumprimento, dano e reparacao.',
+			'Quando o problema já envolve compromisso assumido, inadimplemento, dano ou necessidade de resposta técnica.',
 		items: [
-			'Elaboracao, revisao e negociacao contratual.',
-			'Inadimplemento, cobranca e execucao de obrigacoes.',
-			'Reparacao de danos e estrategia em conflitos civis.',
+			'Elaboração, revisão e negociação contratual.',
+			'Cobrança, execução e defesa em inadimplemento.',
+			'Leitura de risco e estratégia em conflitos civis.',
 		],
+		blogHref: '/blog/areas/contratos-obrigacoes-responsabilidade-civil/',
 	},
 	{
-		title: 'Imobiliario, Regularizacao e Condominios',
+		title: 'Imobiliário, Regularização e Condomínios',
+		lead: 'Compra e venda, matrícula, posse, locação e regularização de imóvel.',
 		description:
-			'Situacoes ligadas a imoveis, documentos, posse, uso e relacoes condominiais que pedem seguranca juridica.',
+			'Quando imóvel, documentos, posse ou uso pedem segurança jurídica antes que o problema cresça.',
 		items: [
-			'Compra e venda, locacao e clausulas criticas.',
-			'Regularizacao documental e registral.',
-			'Condominios, posse e conflitos sobre uso do imovel.',
+			'Compra e venda, locação e cláusulas críticas.',
+			'Regularização documental e registral.',
+			'Condomínios, posse e conflitos sobre uso do imóvel.',
 		],
+		blogHref: '/blog/areas/imobiliario-regularizacao-condominios/',
 	},
 	{
-		title: 'Consumidor, Saude e Previdencia',
+		title: 'Consumidor, Saúde e Previdência',
+		lead: 'Negativa de cobertura, cobrança indevida, falha de serviço e proteção social.',
 		description:
-			'Casos em que a relacao com empresas, operadoras ou beneficios exige resposta tecnica e orientacao clara.',
+			'Quando a relação com empresas, operadoras ou benefícios exige resposta técnica e orientação clara.',
 		items: [
-			'Falha de servico e problemas em relacoes de consumo.',
-			'Negativa de cobertura e questoes ligadas a saude.',
-			'Beneficios, revisoes e organizacao previdenciaria.',
+			'Falha de serviço e problemas em relações de consumo.',
+			'Negativa de cobertura e questões ligadas à saúde.',
+			'Benefícios, revisões e organização previdenciária.',
 		],
+		blogHref: '/blog/areas/consumidor-saude-previdencia/',
 	},
 	{
-		title: 'Compliance, Integridade e Atuacao Empresarial',
+		title: 'Compliance, Integridade e Atuação Empresarial',
+		lead: 'Rotinas internas, contratos empresariais e decisões sensíveis de organização.',
 		description:
-			'Suporte juridico para operacoes, rotinas internas e decisoes empresariais que pedem governanca e controle.',
+			'Quando a atuação jurídica precisa apoiar governança, prevenção de risco e decisões empresariais com critério.',
 		items: [
-			'Politicas, protocolos e rotinas de integridade.',
-			'Conduta, governanca e prevencao de risco.',
-			'Contratos empresariais e apoio juridico a operacoes.',
+			'Políticas, protocolos e rotinas de integridade.',
+			'Conduta, governança e prevenção de risco.',
+			'Contratos empresariais e apoio jurídico a operações.',
 		],
+		blogHref: '/blog/areas/compliance-integridade-atuacao-empresarial/',
 	},
 ];
 
 const processSteps = [
 	{
-		title: 'Contato inicial',
-		text: 'Voce apresenta a situacao principal, a urgencia pratica e o objetivo do contato.',
+		title: 'Contato e contexto',
+		text: 'Você apresenta a situação principal, a urgência prática e o objetivo do contato.',
 	},
 	{
 		title: 'Triagem e documentos',
-		text: 'O escritorio identifica o que precisa ser compreendido antes de avancar para analise mais profunda.',
+		text: 'A PAVIE identifica o que precisa ser compreendido antes de avançar para análise mais profunda.',
 	},
 	{
-		title: 'Analise inicial ou consulta',
-		text: 'Quando necessario, o caso passa por consulta ou leitura tecnica para enquadramento do caminho adequado.',
+		title: 'Consulta ou análise inicial',
+		text: 'Quando necessário, o caso passa por consulta ou leitura técnica para enquadramento do caminho adequado.',
 	},
 	{
-		title: 'Proposta e contratacao formal',
-		text: 'Escopo, etapas, honorarios e forma de acompanhamento sao apresentados com transparencia.',
+		title: 'Proposta formal',
+		text: 'Escopo, etapas, honorários e forma de acompanhamento são apresentados com transparência.',
 	},
 	{
-		title: 'Conducao juridica',
-		text: 'A atuacao segue com comunicacao objetiva, responsabilidade tecnica e registro do que foi definido.',
+		title: 'Condução do caso',
+		text: 'A atuação segue com comunicação objetiva, responsabilidade técnica e registro do que foi definido.',
 	},
 ];
 
 const faq = [
 	{
-		q: 'Quando vale buscar um diagnostico juridico?',
-		a: 'Quando ha decisao relevante a tomar, risco patrimonial, conflito em curso, duvida documental ou urgencia pratica que nao deve ser tratada no improviso.',
+		q: 'Quando vale buscar um diagnóstico jurídico?',
+		a: 'Quando há decisão relevante a tomar, risco patrimonial, conflito em curso, dúvida documental ou urgência prática que não deve ser tratada no improviso.',
 	},
 	{
-		q: 'A primeira conversa ja significa contratacao?',
-		a: 'Nao. O primeiro contato serve para triagem e orientacao inicial. A contratacao so acontece se houver aderencia, escopo definido e proposta formal.',
+		q: 'A primeira conversa já significa contratação?',
+		a: 'Não. O primeiro contato serve para triagem e orientação inicial. A contratação só acontece se houver aderência, escopo definido e proposta formal.',
 	},
 	{
 		q: 'O atendimento pode ser online?',
-		a: 'Sim. O atendimento pode ocorrer online ou presencialmente, conforme o caso, a localizacao e a necessidade pratica da situacao.',
+		a: 'Sim. O atendimento pode ocorrer online ou presencialmente, conforme o caso, a localização e a necessidade prática da situação.',
 	},
 	{
 		q: 'O que devo informar no primeiro contato?',
-		a: 'A situacao principal, desde quando ela ocorre, quem esta envolvido, quais documentos existem e se ha prazo, audiencia ou urgencia concreta.',
+		a: 'A situação principal, desde quando ela ocorre, quem está envolvido, quais documentos existem e se há prazo, audiência ou urgência concreta.',
 	},
 	{
-		q: 'Como os honorarios sao definidos?',
-		a: 'Os honorarios dependem do tipo de demanda, do escopo, da complexidade, da urgencia e da necessidade de acompanhamento. A proposta e sempre formal e clara.',
+		q: 'Como os honorários são definidos?',
+		a: 'Os honorários dependem do tipo de demanda, do escopo, da complexidade, da urgência e da necessidade de acompanhamento. A proposta é sempre formal e clara.',
 	},
 ];
 
@@ -163,36 +173,37 @@ const localBusinessSchema = {
 	<div class="container site-home">
 		<section class="site-hero surface-card" aria-labelledby="hero-title">
 			<div class="site-hero__content">
-				<span class="badge">PAVIE Advocacia | OAB/RJ 134.947</span>
+				<span class="badge">PAVIE | Advocacia | OAB/RJ 134.947</span>
 				<h1 id="hero-title">
-					Clareza juridica para decidir com seguranca em questoes de familia, patrimonio,
-					contratos e relacoes civis.
+					Clareza jurídica para situações que mexem com família, patrimônio, imóveis, contratos
+					e direitos em conflito.
 				</h1>
 				<p class="site-hero__lead">
-					A home institucional da PAVIE existe para organizar o que esta em jogo, mostrar
-					quem conduz o trabalho e indicar o proximo passo legitimo sem pressa artificial.
+					Se a dúvida envolve divórcio com filhos, inventário, regularização de imóvel, revisão
+					contratual ou negativa de cobertura, a PAVIE ajuda a enquadrar o problema e organizar o
+					próximo passo com responsabilidade.
 				</p>
 				<div class="site-hero__cta">
 					<a class="btn btn-primary" href="/contato/">Solicitar Diagnóstico Jurídico</a>
 					<a class="btn btn-secondary" href="#servicos">Conheça os Serviços</a>
 				</div>
 				<p class="site-hero__microcopy">
-					O primeiro contato serve para entender o contexto, identificar urgencias e orientar
-					os proximos passos possiveis. Nao ha promessa de resultado.
+					O primeiro contato serve para entender o contexto, identificar urgências e orientar os
+					próximos passos possíveis. Não há promessa de resultado.
 				</p>
 			</div>
 
 			<aside class="site-hero__panel" aria-labelledby="hero-panel-title">
 				<span class="section-kicker">Primeiro passo</span>
-				<h2 id="hero-panel-title">O que voce recebe na etapa inicial</h2>
+				<h2 id="hero-panel-title">O que a etapa inicial organiza</h2>
 				<ul class="hero-list">
-					<li>Leitura objetiva da situacao apresentada.</li>
-					<li>Identificacao de risco, prazo e necessidade documental.</li>
-					<li>Orientacao sobre consulta, proposta ou conducao adequada.</li>
+					<li>A situação principal e o que está realmente em risco.</li>
+					<li>Prazos, documentos e urgências que não convém tratar no improviso.</li>
+					<li>Se o caso pede consulta, proposta formal ou outra providência inicial.</li>
 				</ul>
 				<p>
-					Se fizer sentido avancar, a contratacao e formalizada com escopo claro, etapas
-					definidas e honorarios compatíveis com o caso.
+					Descreva sua situação. O primeiro passo é entender o contexto. Se houver aderência,
+					a contratação é formalizada com escopo claro, etapas definidas e honorários compatíveis com o caso.
 				</p>
 			</aside>
 		</section>
@@ -211,8 +222,8 @@ const localBusinessSchema = {
 				<div>
 					<span class="section-kicker">Quem conduz</span>
 					<h2 id="advogado-title">
-						Fabio Mathias Pavie conduz o atendimento com leitura tecnica, linguagem clara
-						e responsabilidade profissional.
+						Fabio Mathias Pavie conduz o atendimento com leitura técnica, linguagem clara e
+						responsabilidade profissional.
 					</h2>
 				</div>
 			</div>
@@ -228,21 +239,21 @@ const localBusinessSchema = {
 						<p class="professional-meta">Advogado | OAB/RJ 134.947</p>
 						<h3>Fabio Mathias Pavie</h3>
 						<p>
-							Atua em direito de familia, sucessoes, patrimonio, contratos, imobiliario e
-							conflitos civis com foco em orientar decisoes relevantes com metodo e sobriedade.
+							Atua em direito de família, sucessões, patrimônio, contratos, imobiliário e
+							conflitos civis com foco em orientar decisões relevantes com método e sobriedade.
 						</p>
 						<p>
-							A proposta institucional da PAVIE nao e vender urgencia. E transformar duvida
-							juridica em caminho compreensivel, com enquadramento tecnico e previsibilidade.
+							A proposta institucional da PAVIE não é vender urgência. É transformar dúvida
+							jurídica em caminho compreensível, com enquadramento técnico e previsibilidade.
 						</p>
 						<ul class="professional-highlights">
-							<li>Mais de 20 anos de experiencia juridica.</li>
-							<li>Membro do Instituto Brasileiro de Direito de Familia.</li>
-							<li>Conducao etica, escopo claro e comunicacao objetiva.</li>
+							<li>Mais de 20 anos de experiência jurídica.</li>
+							<li>Membro do Instituto Brasileiro de Direito de Família.</li>
+							<li>Condução ética, escopo claro e comunicação objetiva.</li>
 						</ul>
 						<div class="site-hero__cta">
 							<a class="btn btn-primary" href="/contato/">Solicitar Diagnóstico Jurídico</a>
-							<a class="btn btn-ghost" href="/areas/">Conheça os Serviços</a>
+							<a class="btn btn-ghost" href="/blog/areas/">Explorar temas</a>
 						</div>
 					</div>
 				</article>
@@ -261,37 +272,55 @@ const localBusinessSchema = {
 		<section id="servicos" class="site-section" aria-labelledby="servicos-title">
 			<div class="section-title">
 				<div>
-					<span class="section-kicker">Areas de atuacao</span>
-					<h2 id="servicos-title">Cinco clusters para orientar o tipo de demanda tratado pela PAVIE</h2>
+					<span class="section-kicker">Áreas de atuação</span>
+					<h2 id="servicos-title">Situações em que a orientação jurídica costuma fazer diferença mais cedo</h2>
 				</div>
 				<a class="btn btn-ghost" href="/areas/">Conheça os Serviços</a>
 			</div>
+
+			<p class="section-intro">
+				Em vez de uma lista fria de ramos, a home apresenta os contextos em que o escritório
+				costuma ser procurado: reorganização familiar e patrimonial, conflitos civis, imóvel,
+				contratos, consumo, saúde e decisões empresariais sensíveis.
+			</p>
 
 			<div class="service-cluster-grid">
 				{serviceClusters.map((cluster) => (
 					<article class="surface-card service-cluster">
 						<h3>{cluster.title}</h3>
+						<p class="service-cluster__lead">{cluster.lead}</p>
 						<p>{cluster.description}</p>
 						<ul>
 							{cluster.items.map((item) => (
 								<li>{item}</li>
 							))}
 						</ul>
+						<a class="service-cluster__link" href={cluster.blogHref}>Leia conteúdos desta área</a>
 					</article>
 				))}
 			</div>
 
-			<p class="coherence-note">
-				A home apresenta as frentes principais. O detalhamento institucional permanece em
-				Areas de Atuacao e os aprofundamentos editoriais continuam organizados no blog.
-			</p>
+			<article class="surface-card site-bridge">
+				<div>
+					<span class="section-kicker">Antes do contato</span>
+					<h3>Se quiser entender melhor uma situação, o blog reúne leituras introdutórias por tema e área.</h3>
+					<p>
+						Você pode começar por divórcio, inventário, regularização de imóvel, contratos,
+						cobranças ou negativa de cobertura e voltar ao contato quando o contexto já estiver mais claro.
+					</p>
+				</div>
+				<div class="site-hero__cta">
+					<a class="btn btn-secondary" href="/blog/areas/">Explorar temas</a>
+					<a class="btn btn-ghost" href="/blog/">Ler orientações do blog</a>
+				</div>
+			</article>
 		</section>
 
 		<section id="como-contratar" class="site-section" aria-labelledby="contratacao-title">
 			<div class="section-title">
 				<div>
 					<span class="section-kicker">Como contratar</span>
-					<h2 id="contratacao-title">O processo de contratacao e explicado antes de qualquer decisao</h2>
+					<h2 id="contratacao-title">O caminho é explicado antes de qualquer decisão</h2>
 				</div>
 			</div>
 
@@ -308,30 +337,30 @@ const localBusinessSchema = {
 
 		<section id="honorarios" class="site-section split" aria-labelledby="honorarios-title">
 			<article class="surface-card info-card">
-				<span class="section-kicker">Honorarios</span>
-				<h2 id="honorarios-title">Como os honorarios sao definidos</h2>
+				<span class="section-kicker">Honorários</span>
+				<h2 id="honorarios-title">Como os honorários são definidos</h2>
 				<p>
-					Os honorarios dependem do tipo de demanda, do escopo, da complexidade, da urgencia
-					e da necessidade de acompanhamento. Nao ha tabela promocional no site.
+					Os honorários dependem do tipo de demanda, do escopo, da complexidade, da urgência
+					e da necessidade de acompanhamento. Não há tabela promocional no site.
 				</p>
 				<ul class="info-list">
-					<li>Analise tecnica do problema apresentado.</li>
-					<li>Definicao clara do que sera feito e do que nao esta incluido.</li>
-					<li>Proposta formal, compatível com as normas eticas da advocacia.</li>
+					<li>Análise técnica do problema apresentado.</li>
+					<li>Definição clara do que será feito e do que não está incluído.</li>
+					<li>Proposta formal, compatível com as normas éticas da advocacia.</li>
 				</ul>
 			</article>
 
 			<article class="surface-card info-card">
-				<span class="section-kicker">Contratacao formal</span>
-				<h2>O que voce recebe antes de contratar</h2>
+				<span class="section-kicker">Contratação formal</span>
+				<h2>O que você recebe antes de contratar</h2>
 				<p>
-					Antes de qualquer inicio de trabalho, a PAVIE esclarece escopo, etapas, forma de
-					acompanhamento, honorarios e documentos necessarios para a conducao juridica.
+					Antes de qualquer início de trabalho, a PAVIE esclarece escopo, etapas, forma de
+					acompanhamento, honorários e documentos necessários para a condução jurídica.
 				</p>
 				<ul class="info-list">
 					<li>Escopo e objetivos do trabalho.</li>
-					<li>Etapas, prazos praticos e responsabilidades.</li>
-					<li>Forma de comunicacao e registro da contratacao.</li>
+					<li>Etapas, prazos práticos e responsabilidades.</li>
+					<li>Forma de comunicação e registro da contratação.</li>
 				</ul>
 			</article>
 		</section>
@@ -340,7 +369,7 @@ const localBusinessSchema = {
 			<div class="section-title">
 				<div>
 					<span class="section-kicker">Perguntas frequentes</span>
-					<h2 id="faq-title">Respostas curtas para atritos reais do primeiro contato</h2>
+					<h2 id="faq-title">Respostas curtas para as dúvidas que costumam travar o primeiro contato</h2>
 				</div>
 			</div>
 
@@ -358,11 +387,11 @@ const localBusinessSchema = {
 			<div>
 				<span class="section-kicker">Contato final</span>
 				<h2 id="contato-title">
-					Se fizer sentido avancar, envie sua solicitacao com o minimo necessario para triagem.
+					Descreva sua situação. O primeiro passo é entender o contexto com o mínimo necessário para triagem.
 				</h2>
 				<p>
-					O contato institucional pode seguir por formulario, e-mail ou WhatsApp. O objetivo do
-					primeiro retorno e entender o contexto, e nao prometer desfecho antecipado.
+					O contato institucional pode seguir por formulário, e-mail ou WhatsApp. O objetivo do
+					primeiro retorno é entender o contexto, e não prometer desfecho antecipado.
 				</p>
 			</div>
 
@@ -370,9 +399,9 @@ const localBusinessSchema = {
 				<article class="site-contact__panel">
 					<h3>O que informar</h3>
 					<ul>
-						<li>Situacao principal e desde quando ela ocorre.</li>
+						<li>Situação principal e desde quando ela ocorre.</li>
 						<li>Pessoas, documentos ou contratos envolvidos.</li>
-						<li>Se existe prazo, audiencia ou urgencia pratica.</li>
+						<li>Se existe prazo, audiência ou urgência prática.</li>
 					</ul>
 				</article>
 
@@ -380,8 +409,8 @@ const localBusinessSchema = {
 					<h3>O que acontece depois</h3>
 					<ul>
 						<li>A equipe faz a triagem inicial do que foi enviado.</li>
-						<li>Se necessario, orienta consulta, envio complementar ou proposta.</li>
-						<li>A contratacao so ocorre com escopo definido e aceite formal.</li>
+						<li>Se necessário, orienta consulta, envio complementar ou proposta.</li>
+						<li>A contratação só ocorre com escopo definido e aceite formal.</li>
 					</ul>
 				</article>
 			</div>
@@ -391,8 +420,8 @@ const localBusinessSchema = {
 			</div>
 
 			<p class="site-contact__note">
-				A PAVIE promete leitura inicial responsavel, confidencialidade e orientacao adequada ao
-				contexto apresentado. Nao promete resultado, prazo judicial fechado ou admissao automatica do caso.
+				A PAVIE promete leitura inicial responsável, confidencialidade e orientação adequada ao
+				contexto apresentado. Não promete resultado, prazo judicial fechado ou admissão automática do caso.
 			</p>
 		</section>
 	</div>

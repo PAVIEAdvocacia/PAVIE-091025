@@ -1,4 +1,4 @@
----
+﻿---
 import type { BlogPost } from '../../lib/posts';
 
 interface Props {
@@ -24,7 +24,7 @@ const { posts, title = 'Leituras relacionadas', emptyHref = '/blog/areas/', empt
 		))
 	) : (
 		<div class="related-posts__empty">
-			<p class="text-muted">Sem artigos relacionados no momento.</p>
+			<p class="text-muted">Ainda não há artigos relacionados no momento.</p>
 			<a class="btn btn-ghost" href={emptyHref}>{emptyLabel}</a>
 		</div>
 	)}

@@ -1,4 +1,4 @@
-import type { BlogPost } from './posts';
+﻿import type { BlogPost } from './posts';
 import { normalizeTemaKey } from './taxonomy';
 
 export interface BlogClusterDefinition {
@@ -45,9 +45,9 @@ export const BLOG_CLUSTERS: BlogClusterDefinition[] = [
 		key: 'familia-sucessoes-patrimonio',
 		title: 'Familia, Sucessoes e Patrimonio',
 		description:
-			'Leituras para decisoes familiares, sucessorias e patrimoniais que pedem clareza, documentacao correta e conducao serena.',
+			'Leituras para decisões familiares, sucessórias e patrimoniais que pedem clareza, documentação correta e condução serena.',
 		editorialSummary:
-			'Esta trilha editorial ajuda a entender impactos em divorcio, guarda, heranca, inventario e reorganizacao patrimonial.',
+			'Esta seleção de artigos ajuda a entender impactos em divórcio, guarda, herança, inventário e reorganização patrimonial.',
 		typicalSituations: [
 			'Divorcio, guarda, alimentos e convivencia.',
 			'Inventario, partilha, testamento e planejamento sucessorio.',
@@ -61,9 +61,9 @@ export const BLOG_CLUSTERS: BlogClusterDefinition[] = [
 		key: 'contratos-obrigacoes-responsabilidade-civil',
 		title: 'Contratos, Obrigacoes e Responsabilidade Civil',
 		description:
-			'Conteudos para compromissos juridicos, inadimplemento, cobranca, prova de dano e estrategia em conflitos civis.',
+			'Conteúdos para compromissos jurídicos, inadimplemento, cobrança, prova de dano e estratégia em conflitos civis.',
 		editorialSummary:
-			'Esta frente organiza leituras sobre descumprimento, reparacao, execucao e leitura tecnica de obrigacoes juridicas.',
+			'Esta área reúne leituras sobre descumprimento, reparação, execução e leitura técnica de obrigações jurídicas.',
 		typicalSituations: [
 			'Revisao, elaboracao e negociacao contratual.',
 			'Inadimplemento, cobranca extrajudicial e execucao.',
@@ -77,9 +77,9 @@ export const BLOG_CLUSTERS: BlogClusterDefinition[] = [
 		key: 'imobiliario-regularizacao-condominios',
 		title: 'Imobiliario, Regularizacao e Condominios',
 		description:
-			'Leitura orientada para imoveis, regularizacao documental, posse, locacao e situacoes condominiais com impacto patrimonial.',
+			'Leituras orientadas para imóveis, regularização documental, posse, locação e situações condominiais com impacto patrimonial.',
 		editorialSummary:
-			'Esta trilha editorial existe para reduzir inseguranca em compra, venda, uso e regularizacao de imoveis.',
+			'Esta área ajuda a reduzir insegurança em compra, venda, uso e regularização de imóveis.',
 		typicalSituations: [
 			'Compra e venda, locacao e clausulas criticas.',
 			'Regularizacao registral e documental do imovel.',
@@ -93,9 +93,9 @@ export const BLOG_CLUSTERS: BlogClusterDefinition[] = [
 		key: 'consumidor-saude-previdencia',
 		title: 'Consumidor, Saude e Previdencia',
 		description:
-			'Conteudos para relacoes de consumo, cobertura de saude e protecao social quando a situacao pede enquadramento tecnico.',
+			'Conteúdos para relações de consumo, cobertura de saúde e proteção social quando a situação pede enquadramento técnico.',
 		editorialSummary:
-			'Esta frente editorial ajuda a identificar quando a duvida ja exige orientacao mais aplicada em consumo, saude ou beneficios.',
+			'Esta área ajuda a identificar quando a dúvida já exige uma orientação mais aplicada em consumo, saúde ou benefícios.',
 		typicalSituations: [
 			'Falha de servico, cobranca indevida e relacao de consumo.',
 			'Negativa de cobertura e entraves em demandas de saude.',
@@ -109,9 +109,9 @@ export const BLOG_CLUSTERS: BlogClusterDefinition[] = [
 		key: 'compliance-integridade-atuacao-empresarial',
 		title: 'Compliance, Integridade e Atuacao Empresarial',
 		description:
-			'Leituras sobre governanca, integridade, contratos empresariais e estrutura juridica de operacoes com risco organizacional.',
+			'Leituras sobre governança, integridade, contratos empresariais e estrutura jurídica de operações com risco organizacional.',
 		editorialSummary:
-			'Esta trilha editorial conecta decisao empresarial, controles internos e suporte juridico institucional.',
+			'Esta área conecta decisão empresarial, controles internos e suporte jurídico institucional.',
 		typicalSituations: [
 			'Politicas internas, conduta e rotina de compliance.',
 			'Governanca, socios e apoio juridico a operacoes empresariais.',
@@ -167,10 +167,7 @@ export function getBlogClusterDefinition(value: string): BlogClusterDefinition |
 }
 
 export function getBlogClusterForPost(post: BlogPost): BlogClusterDefinition {
-	return (
-		getBlogClusterDefinition(post.areaKey || post.area) ??
-		BLOG_CLUSTERS[0]
-	);
+	return getBlogClusterDefinition(post.areaKey || post.area) ?? BLOG_CLUSTERS[0];
 }
 
 export function buildBlogClusterDirectory(posts: BlogPost[]): BlogClusterDirectoryItem[] {

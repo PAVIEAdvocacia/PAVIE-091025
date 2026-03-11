@@ -1,4 +1,4 @@
-export const EDITORIAL_AREAS = [
+﻿export const EDITORIAL_AREAS = [
 	{
 		key: 'familia-sucessoes-patrimonio',
 		label: 'Familia, Sucessoes e Patrimonio',
@@ -59,19 +59,19 @@ export const PRIMARY_CTA_OPTIONS = [
 		key: 'areas_editoriais',
 		label: 'Explorar temas',
 		href: '/blog/areas/',
-		description: 'Continue a leitura pela frente juridica correspondente e encontre novos caminhos de aprofundamento.',
+		description: 'Continue a leitura pela área jurídica correspondente e encontre novos caminhos de aprofundamento.',
 	},
 	{
 		key: 'diagnostico_juridico',
 		label: 'Solicitar orientação inicial',
 		href: '/blog/contato/',
-		description: 'Entenda quando faz sentido avancar para triagem inicial e quais informacoes ajudam no primeiro contato.',
+		description: 'Entenda quando faz sentido avançar para a triagem inicial e quais informações ajudam no primeiro contato.',
 	},
 	{
 		key: 'areas_de_atuacao',
 		label: 'Conheça os Serviços',
 		href: '/areas/',
-		description: 'Veja a camada institucional da PAVIE para a frente juridica relacionada a esta leitura.',
+		description: 'Veja as áreas de atuação da PAVIE relacionadas a esta leitura.',
 	},
 ] as const;
 
