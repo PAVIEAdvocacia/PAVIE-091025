@@ -9,8 +9,9 @@ import ReadingHero from '../components/blog/ReadingHero.astro';
 import ReadingSidebar from '../components/blog/ReadingSidebar.astro';
 import RelatedPosts from '../components/blog/RelatedPosts.astro';
 import BaseLayout from './BaseLayout.astro';
-import { BLOG_SITE_URL } from '../consts';
-import { areaHref, temaHref } from '../lib/taxonomy';
+import { blogClusterHref, getBlogClusterForPost } from '../lib/blog-clusters';
+import { buildBreadcrumbSchema, PUBLISHER_SCHEMA, toAbsoluteUrl } from '../lib/seo';
+import { temaHref } from '../lib/taxonomy';
 
 interface Props {
 	post: BlogPost;
@@ -20,11 +21,13 @@ interface Props {
 }
 
 const { post, toc, related, noIndex = false } = Astro.props;
+const cluster = getBlogClusterForPost(post);
+const canonicalUrl = post.canonicalUrl ?? toAbsoluteUrl(post.url);
 
 const breadcrumbs = [
 	{ label: 'Início', href: '/' },
 	{ label: 'Publicações', href: '/blog/' },
-	{ label: post.area, href: areaHref(post.areaKey || post.area) },
+	{ label: cluster.title, href: blogClusterHref(cluster.key) },
 	{ label: post.title },
 ];
 
@@ -39,36 +42,19 @@ const articleSchema = {
 	'@type': 'Article',
 	headline: post.title,
 	description: post.description,
-	image: post.image ? [post.image.startsWith('http') ? post.image : `${BLOG_SITE_URL}${post.image}`] : undefined,
+	url: canonicalUrl,
+	image: post.image ? [toAbsoluteUrl(post.image)] : undefined,
 	author: {
 		'@type': 'Person',
 		name: post.authorName,
 	},
-	publisher: {
-		'@type': 'Organization',
-		name: 'PAVIE Advocacia',
-	},
+	publisher: PUBLISHER_SCHEMA,
 	datePublished: post.publishedAt?.toISOString(),
 	dateModified: (post.updatedAt ?? post.publishedAt)?.toISOString(),
-	mainEntityOfPage: post.canonicalUrl,
+	mainEntityOfPage: canonicalUrl,
+	inLanguage: 'pt-BR',
 };
-
-function toAbsoluteUrl(href?: string): string {
-	if (!href) return post.canonicalUrl || BLOG_SITE_URL;
-	if (href.startsWith('http')) return href;
-	return `${BLOG_SITE_URL}${href}`;
-}
-
-const breadcrumbSchema = {
-	'@context': 'https://schema.org',
-	'@type': 'BreadcrumbList',
-	itemListElement: breadcrumbs.map((item, index) => ({
-		'@type': 'ListItem',
-		position: index + 1,
-		name: item.label,
-		item: toAbsoluteUrl(item.href),
-	})),
-};
+const breadcrumbSchema = buildBreadcrumbSchema(breadcrumbs, canonicalUrl);
 
 const faqSchema =
 	post.faqItems.length > 0
@@ -88,14 +74,15 @@ const faqSchema =
 ---
 
 <BaseLayout
-	title={`${post.title} | PAVIE`}
+	title={`${post.seoTitle ?? post.title} | PAVIE`}
 	description={post.description}
-	canonical={post.canonicalUrl}
+	canonical={canonicalUrl}
 	image={post.image}
 	type="article"
 	noIndex={noIndex}
 	publishedTime={post.publishedAt}
-	modifiedTime={post.updatedAt}
+	modifiedTime={post.updatedAt ?? post.publishedAt}
+	author={post.authorName}
 >
 	<div class="container reading-page">
 		<Breadcrumbs items={breadcrumbs} />
@@ -123,6 +110,22 @@ const faqSchema =
 							<li>{item}</li>
 						))}
 					</ul>
+				</section>
+
+				<section class="reading-bridge" aria-label="Ponte entre artigo, area e contato">
+					<span class="section-kicker">Area correspondente</span>
+					<h2>Este conteudo faz parte da trilha {cluster.title}</h2>
+					<p>{cluster.description}</p>
+					<ul>
+						{cluster.typicalSituations.slice(0, 3).map((item) => (
+							<li>{item}</li>
+						))}
+					</ul>
+					<div class="reading-bridge__actions">
+						<a class="btn btn-secondary" href={blogClusterHref(cluster.key)}>Explorar temas</a>
+						<a class="btn btn-ghost" href={cluster.institutionalHref}>Conheça os Serviços</a>
+						<a class="btn btn-primary" href={cluster.contactHref}>Solicitar orientação inicial</a>
+					</div>
 				</section>
 
 				<AudioPlayer
@@ -156,7 +159,12 @@ const faqSchema =
 						</a>
 						<p class="reading-ethics-note">Conteúdo informativo. Cada caso exige análise técnica individual.</p>
 					</section>
-					<RelatedPosts posts={related} />
+					<RelatedPosts
+						posts={related}
+						title="Continue nesta trilha editorial"
+						emptyHref={blogClusterHref(cluster.key)}
+						emptyLabel="Explorar temas"
+					/>
 				</div>
 			</article>
 

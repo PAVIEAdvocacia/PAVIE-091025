@@ -2,7 +2,7 @@
 import BaseHead from '../components/BaseHead.astro';
 import SiteFooter from '../components/site/Footer.astro';
 import SiteHeader from '../components/site/Header.astro';
-import { BLOG_SITE_URL, DEFAULT_OG_IMAGE, SITE_DESCRIPTION, SITE_TITLE } from '../consts';
+import { DEFAULT_OG_IMAGE, MAIN_SITE_URL, SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 import '../styles/global.css';
 
 interface Props {
@@ -14,6 +14,7 @@ interface Props {
 	noIndex?: boolean;
 	publishedTime?: Date;
 	modifiedTime?: Date;
+	author?: string;
 	hideHeader?: boolean;
 	hideFooter?: boolean;
 }
@@ -27,11 +28,12 @@ const {
 	noIndex = false,
 	publishedTime,
 	modifiedTime,
+	author,
 	hideHeader = false,
 	hideFooter = false,
 } = Astro.props;
 
-const canonicalUrl = canonical || new URL(Astro.url.pathname, Astro.site ?? BLOG_SITE_URL).toString();
+const canonicalUrl = canonical || new URL(Astro.url.pathname, Astro.site ?? MAIN_SITE_URL).toString();
 ---
 
 <!doctype html>
@@ -46,6 +48,7 @@ const canonicalUrl = canonical || new URL(Astro.url.pathname, Astro.site ?? BLOG
 			noIndex={noIndex}
 			publishedTime={publishedTime}
 			modifiedTime={modifiedTime}
+			author={author}
 		/>
 	</head>
 	<body>

@@ -1,5 +1,5 @@
 ---
-import { BLOG_SITE_URL, DEFAULT_OG_IMAGE, SITE_TITLE } from '../consts';
+import { BUSINESS_NAME, DEFAULT_OG_IMAGE, MAIN_SITE_URL, SITE_TITLE } from '../consts';
 
 interface Props {
 	title: string;
@@ -10,6 +10,7 @@ interface Props {
 	noIndex?: boolean;
 	publishedTime?: Date;
 	modifiedTime?: Date;
+	author?: string;
 }
 
 const {
@@ -21,16 +22,17 @@ const {
 	noIndex = false,
 	publishedTime,
 	modifiedTime,
+	author,
 } = Astro.props;
 
 const canonicalURL =
 	canonical ||
-	new URL(Astro.url.pathname, Astro.site ?? BLOG_SITE_URL).toString();
+	new URL(Astro.url.pathname, Astro.site ?? MAIN_SITE_URL).toString();
 
 const ogImageInput = image || DEFAULT_OG_IMAGE;
 const ogImage = /^https?:\/\//i.test(ogImageInput)
 	? ogImageInput
-	: new URL(ogImageInput, Astro.site ?? BLOG_SITE_URL).toString();
+	: new URL(ogImageInput, Astro.site ?? MAIN_SITE_URL).toString();
 ---
 
 <meta charset="utf-8" />
@@ -45,7 +47,7 @@ const ogImage = /^https?:\/\//i.test(ogImageInput)
 	rel="alternate"
 	type="application/rss+xml"
 	title={SITE_TITLE}
-	href={new URL('rss.xml', Astro.site ?? BLOG_SITE_URL)}
+	href={new URL('rss.xml', Astro.site ?? MAIN_SITE_URL)}
 />
 
 <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -58,6 +60,7 @@ const ogImage = /^https?:\/\//i.test(ogImageInput)
 <title>{title}</title>
 <meta name="title" content={title} />
 <meta name="description" content={description} />
+{author && <meta name="author" content={author} />}
 <meta
 	name="robots"
 	content={noIndex ? 'noindex,nofollow,max-snippet:-1,max-image-preview:large' : 'index,follow,max-snippet:-1,max-image-preview:large'}
@@ -65,7 +68,7 @@ const ogImage = /^https?:\/\//i.test(ogImageInput)
 
 <meta property="og:type" content={type} />
 <meta property="og:locale" content="pt_BR" />
-<meta property="og:site_name" content="PAVIE Advocacia" />
+<meta property="og:site_name" content={BUSINESS_NAME} />
 <meta property="og:url" content={canonicalURL} />
 <meta property="og:title" content={title} />
 <meta property="og:description" content={description} />

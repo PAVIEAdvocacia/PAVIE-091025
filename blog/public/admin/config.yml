@@ -12,235 +12,160 @@ media_folder: "public/uploads"
 public_folder: "/uploads"
 
 collections:
-  - name: "areas"
-    label: "Areas Juridicas"
-    label_singular: "Area"
-    folder: "src/content/taxonomy/areas"
-    create: true
-    delete: true
-    slug: "{{slug}}"
-    extension: "md"
-    summary: "{{title}}"
-    fields:
-      - { label: "Titulo", name: "title", widget: "string" }
-      - { label: "Slug", name: "slug", widget: "string" }
-      - { label: "Descricao", name: "description", widget: "text", required: false }
-      - { label: "Ordem", name: "order", widget: "number", value_type: "int", required: false }
-      - { label: "Ativa", name: "active", widget: "boolean", default: true, required: false }
-      - { label: "Conteudo", name: "body", widget: "markdown", required: false }
-
-  - name: "hubs"
-    label: "Hubs"
-    label_singular: "Hub"
-    folder: "src/content/taxonomy/hubs"
-    create: true
-    delete: true
-    slug: "{{slug}}"
-    extension: "md"
-    summary: "{{title}} ({{area}})"
-    fields:
-      - { label: "Titulo", name: "title", widget: "string" }
-      - { label: "Slug", name: "slug", widget: "string" }
-      -
-          label: "Area Juridica"
-          name: "area"
-          widget: "relation"
-          collection: "areas"
-          search_fields: ["title", "slug"]
-          value_field: "slug"
-          display_fields: ["title"]
-      - { label: "Descricao", name: "description", widget: "text", required: false }
-      - { label: "Ordem", name: "order", widget: "number", value_type: "int", required: false }
-      - { label: "Ativo", name: "active", widget: "boolean", default: true, required: false }
-      - { label: "Conteudo", name: "body", widget: "markdown", required: false }
-
-  - name: "themes"
-    label: "Temas"
-    label_singular: "Tema"
-    folder: "src/content/taxonomy/themes"
-    create: true
-    delete: true
-    slug: "{{slug}}"
-    extension: "md"
-    summary: "{{title}} ({{area}}/{{hub}})"
-    fields:
-      - { label: "Titulo", name: "title", widget: "string" }
-      - { label: "Slug", name: "slug", widget: "string" }
-      -
-          label: "Area Juridica"
-          name: "area"
-          widget: "relation"
-          collection: "areas"
-          search_fields: ["title", "slug"]
-          value_field: "slug"
-          display_fields: ["title"]
-      -
-          label: "Hub"
-          name: "hub"
-          widget: "relation"
-          collection: "hubs"
-          search_fields: ["title", "slug"]
-          value_field: "slug"
-          display_fields: ["title"]
-      - { label: "Descricao", name: "description", widget: "text", required: false }
-      - { label: "Ativo", name: "active", widget: "boolean", default: true, required: false }
-      - { label: "Conteudo", name: "body", widget: "markdown", required: false }
-
-  - name: "authors"
-    label: "Autores"
-    label_singular: "Autor"
-    folder: "src/content/authors"
-    create: true
-    delete: true
-    slug: "{{slug}}"
-    extension: "md"
-    summary: "{{name}}"
-    fields:
-      - { label: "Nome", name: "name", widget: "string" }
-      - { label: "Slug", name: "slug", widget: "string" }
-      - { label: "OAB", name: "oab", widget: "string", required: false }
-      - { label: "Cargo", name: "role", widget: "string", required: false }
-      - { label: "Bio", name: "bio", widget: "text", required: false }
-      - { label: "Imagem", name: "image", widget: "image", required: false }
-      -
-          label: "Areas de atuacao"
-          name: "areas"
-          widget: "relation"
-          collection: "areas"
-          search_fields: ["title", "slug"]
-          value_field: "slug"
-          display_fields: ["title"]
-          multiple: true
-          required: false
-      - { label: "Anos de experiencia", name: "experience_years", widget: "number", value_type: "int", required: false }
-      - { label: "Conteudo", name: "body", widget: "markdown", required: false }
-
   - name: "blog"
-    label: "Publicacoes do Blog"
-    label_singular: "Publicacao"
+    label: "Artigos do Blog"
+    label_singular: "Artigo"
     folder: "src/content/blog"
     create: true
     delete: true
     identifier_field: "title"
-    summary: "{{title}} - {{publish_status}}"
+    summary: "{{title}} - {{status}}"
     slug: "{{slug}}"
     extension: "md"
     editor:
       preview: true
     fields:
-      - { label: "Titulo", name: "title", widget: "string" }
       -
-          label: "Slug canonico"
-          name: "slug"
-          widget: "string"
-          required: true
-          hint: "URL amigavel. Ex.: inventario-extrajudicial-2026"
-      - { label: "Descricao", name: "description", widget: "text", required: true }
-      - { label: "Resumo", name: "excerpt", widget: "text", required: false }
+        label: "Titulo"
+        name: "title"
+        widget: "string"
+        hint: "Obrigatorio. Titulo principal do artigo."
       -
-          label: "Area Juridica"
-          name: "area"
-          widget: "relation"
-          collection: "areas"
-          search_fields: ["title", "slug"]
-          value_field: "slug"
-          display_fields: ["title"]
+        label: "Slug"
+        name: "slug"
+        widget: "string"
+        required: true
+        hint: "Obrigatorio. URL limpa e estavel. Ex.: divorcio-cartorio-filhos-menores"
       -
-          label: "Hub"
-          name: "hub"
-          widget: "relation"
-          collection: "hubs"
-          search_fields: ["title", "slug"]
-          value_field: "slug"
-          display_fields: ["title"]
+        label: "Descricao"
+        name: "description"
+        widget: "text"
+        required: true
+        hint: "Obrigatorio. Resumo curto para abertura do artigo e metadado basico."
       -
-          label: "Temas"
-          name: "tema"
-          widget: "relation"
-          collection: "themes"
-          search_fields: ["title", "slug"]
-          value_field: "slug"
-          display_fields: ["title"]
-          multiple: true
+        label: "Area"
+        name: "area"
+        widget: "select"
+        required: true
+        hint: "Obrigatorio. Use exatamente uma das 5 areas canonicas do projeto."
+        options:
+          - "Familia, Sucessoes e Patrimonio"
+          - "Contratos, Obrigacoes e Responsabilidade Civil"
+          - "Imobiliario, Regularizacao e Condominios"
+          - "Consumidor, Saude e Previdencia"
+          - "Compliance, Integridade e Atuacao Empresarial"
       -
-          label: "Autor"
-          name: "author_ref"
-          widget: "relation"
-          collection: "authors"
-          search_fields: ["name", "slug"]
-          value_field: "slug"
-          display_fields: ["name"]
-      - { label: "Nome do autor (override)", name: "author_name", widget: "string", required: false }
+        label: "Data de publicacao"
+        name: "publish_date"
+        widget: "datetime"
+        required: true
+        hint: "Obrigatorio. Data principal de publicacao do artigo."
       -
-          label: "Tipo de conteudo"
-          name: "content_type"
-          widget: "select"
-          required: true
-          options:
-            - "guia"
-            - "explicativo"
-            - "checklist"
-            - "comparativo"
-            - "faq"
-            - "atualizacao"
-            - "caso_pratico"
-            - "alerta"
-            - "glossario"
-            - "pagina_pilar"
+        label: "Autor"
+        name: "author"
+        widget: "select"
+        required: true
+        hint: "Obrigatorio. Autor institucional do conteudo."
+        options:
+          - "Fabio Mathias Pavie"
       -
-          label: "Intencao"
-          name: "intent"
-          widget: "select"
-          required: true
-          options: ["informar", "diagnosticar", "comparar", "aprofundar", "converter", "atualizar"]
+        label: "Status"
+        name: "status"
+        widget: "select"
+        required: true
+        default: "draft"
+        hint: "Obrigatorio. Estado editorial minimo e controlado."
+        options:
+          - "draft"
+          - "published"
+          - "archived"
       -
-          label: "Estagio do funil"
-          name: "funnel_stage"
-          widget: "select"
-          required: true
-          options: ["topo", "meio", "fundo"]
-      - { label: "Publicado em", name: "published_at", widget: "datetime", required: true }
-      - { label: "Atualizado em", name: "updated_at", widget: "datetime", required: false }
-      - { label: "Imagem de capa", name: "featured_image", widget: "image", required: false }
-      - { label: "Texto alternativo da imagem", name: "featured_image_alt", widget: "string", required: false }
-      - { label: "Tempo de leitura (min)", name: "reading_time", widget: "number", required: false, value_type: "int", min: 1 }
+        label: "Estagio do funil"
+        name: "funnel_stage"
+        widget: "select"
+        required: true
+        default: "consideracao"
+        hint: "Obrigatorio. Indica o papel principal do artigo na jornada."
+        options:
+          - "descoberta"
+          - "consideracao"
+          - "aprofundamento"
+          - "orientacao"
+          - "contato"
       -
-          label: "FAQ estruturado"
-          name: "faq_items"
-          widget: "list"
-          required: false
-          summary: "{{fields.question}}"
-          fields:
-            - { label: "Pergunta", name: "question", widget: "string" }
-            - { label: "Resposta", name: "answer", widget: "text" }
-      - { label: "FAQ habilitado", name: "faq_enabled", widget: "boolean", required: false, default: false }
+        label: "Resumo curto"
+        name: "excerpt"
+        widget: "text"
+        required: false
+        hint: "Opcional. Use quando precisar de um resumo especifico para listagens."
       -
-          label: "Variante de CTA"
-          name: "cta_variant"
-          widget: "select"
-          required: false
-          default: "consultoria"
-          options: ["consultoria", "checklist", "leitura_relacionada", "calculadora", "contato", "diagnostico"]
+        label: "Subarea"
+        name: "subarea"
+        widget: "string"
+        required: false
+        hint: "Opcional. Use apenas se ajudar de verdade a enquadrar o artigo."
       -
-          label: "Relacionados"
-          name: "related_manual"
-          widget: "relation"
-          collection: "blog"
-          search_fields: ["title", "slug"]
-          value_field: "slug"
-          display_fields: ["title"]
-          multiple: true
-          required: false
-      - { label: "Tags", name: "tags", widget: "list", required: false, default: [] }
+        label: "Temas"
+        name: "themes"
+        widget: "list"
+        required: false
+        hint: "Opcional. Liste 2 a 5 temas principais do artigo."
       -
-          label: "Status de publicacao"
-          name: "publish_status"
-          widget: "select"
-          required: true
-          default: "draft"
-          options: ["draft", "review", "scheduled", "published", "archived"]
-      - { label: "Canonical URL", name: "canonical_url", widget: "string", required: false }
-      - { label: "Escopo de jurisdicao", name: "jurisdiction_scope", widget: "string", required: false }
-      - { label: "Conteudo", name: "body", widget: "markdown" }
-      - { label: "ID interno (opcional)", name: "editorial_item_id", widget: "string", required: false }
-      - { label: "Referencia interna (opcional)", name: "trace_ref", widget: "string", required: false }
+        label: "Pain points"
+        name: "pain_points"
+        widget: "list"
+        required: false
+        hint: "Opcional. Dores ou situacoes que o artigo ajuda a esclarecer."
+      -
+        label: "Artigos relacionados"
+        name: "related_articles"
+        widget: "relation"
+        collection: "blog"
+        search_fields: ["title", "slug"]
+        value_field: "slug"
+        display_fields: ["title"]
+        multiple: true
+        required: false
+        hint: "Opcional. Selecione apenas artigos realmente ligados a esta leitura."
+      -
+        label: "CTA principal"
+        name: "primary_cta"
+        widget: "select"
+        required: false
+        hint: "Opcional. Use so quando quiser mudar o CTA padrao definido pelo estagio do funil."
+        options:
+          - { label: "Abrir Areas Editoriais", value: "areas_editoriais" }
+          - { label: "Solicitar Diagnostico Juridico", value: "diagnostico_juridico" }
+          - { label: "Ver Areas de Atuacao", value: "areas_de_atuacao" }
+      -
+        label: "SEO title"
+        name: "seo_title"
+        widget: "string"
+        required: false
+        hint: "Opcional. Use apenas se o titulo de metadado precisar divergir do titulo principal."
+      -
+        label: "OG image"
+        name: "og_image"
+        widget: "image"
+        required: false
+        hint: "Opcional. Imagem de compartilhamento e capa do artigo."
+      -
+        label: "Tempo de leitura (min)"
+        name: "reading_time"
+        widget: "number"
+        required: false
+        value_type: "int"
+        min: 1
+        hint: "Opcional. Se vazio, o tempo sera estimado automaticamente."
+      -
+        label: "Destaque editorial"
+        name: "featured"
+        widget: "boolean"
+        required: false
+        default: false
+        hint: "Opcional. Marque apenas quando o artigo precisar aparecer como destaque na home do blog."
+      -
+        label: "Conteudo"
+        name: "body"
+        widget: "markdown"
+        hint: "Corpo principal do artigo."

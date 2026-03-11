@@ -1,62 +1,103 @@
----
+﻿---
 import { getCollection } from 'astro:content';
+import Breadcrumbs from '../../../components/blog/Breadcrumbs.astro';
 import { BLOG_SITE_URL } from '../../../consts';
 import BlogLayout from '../../../layouts/BlogLayout.astro';
+import { buildBreadcrumbSchema } from '../../../lib/seo';
+import { buildBlogClusterDirectory } from '../../../lib/blog-clusters';
 import { isPublicPost, normalizePost, sortPostsByDate } from '../../../lib/posts';
-import { areaHref, areaLabel, normalizeAreaKey } from '../../../lib/taxonomy';
+import { temaHref } from '../../../lib/taxonomy';
 
 const entries = await getCollection('blog');
 const posts = sortPostsByDate(entries.map((entry) => normalizePost(entry))).filter(isPublicPost);
-
-const areaMap = new Map<string, { key: string; label: string; count: number; latestUrl: string }>();
-for (const post of posts) {
-	const key = normalizeAreaKey(post.areaKey || post.area);
-	const current = areaMap.get(key);
-	if (current) {
-		current.count += 1;
-		continue;
-	}
-	areaMap.set(key, {
-		key,
-		label: areaLabel(key),
-		count: 1,
-		latestUrl: post.url,
-	});
-}
-
-const areas = [...areaMap.values()].sort((a, b) => b.count - a.count);
+const clusterDirectory = buildBlogClusterDirectory(posts);
+const canonicalUrl = `${BLOG_SITE_URL}/blog/areas/`;
+const breadcrumbs = [
+	{ label: 'Inicio', href: '/' },
+	{ label: 'Publicacoes', href: '/blog/' },
+	{ label: 'Areas editoriais' },
+];
+const breadcrumbSchema = buildBreadcrumbSchema(breadcrumbs, canonicalUrl);
 ---
 
 <BlogLayout
-	title="Areas do Blog | PAVIE"
-	description="Navegue pelos conteudos do blog da PAVIE por area juridica."
-	canonical={`${BLOG_SITE_URL}/blog/areas/`}
+	title="Areas editoriais do blog | PAVIE"
+	description="Mapa editorial do blog da PAVIE organizado pelos 5 clusters canonicos, com ponte para leitura, area institucional e contato."
+	canonical={canonicalUrl}
 >
 	<div class="container blog-home">
-		<section class="blog-grid" aria-label="Areas do blog">
+		<Breadcrumbs items={breadcrumbs} />
+		<section class="surface-card blog-map-hero" aria-labelledby="blog-areas-title">
+			<span class="badge">Mapa editorial</span>
+			<h1 id="blog-areas-title">As areas do blog organizam o caminho entre tema, leitura e orientacao.</h1>
+			<p>
+				Aqui, o visitante nao encontra uma listagem solta. Encontra 5 frentes editoriais canonicas que ajudam a reconhecer
+				qual universo juridico esta em jogo, o que ja existe para leitura e quando vale migrar para a camada institucional.
+			</p>
+			<div class="blog-actions">
+				<a class="btn btn-primary" href="/blog/contato/">Solicitar orientação inicial</a>
+				<a class="btn btn-ghost" href="/areas/">Conheça os Serviços</a>
+			</div>
+		</section>
+
+		<section class="blog-grid" aria-label="Areas editoriais do blog">
 			<div class="section-title">
 				<div>
-					<span class="section-kicker">Mapa do blog</span>
-					<h1>Areas do blog</h1>
+					<span class="section-kicker">5 clusters canonicos</span>
+					<h2>Cada cluster funciona como ponte entre aprofundamento tematico, area correspondente e contato contextualizado</h2>
 				</div>
 			</div>
-			{areas.length === 0 ? (
-				<article class="surface-card empty-state">
-					<h2>Nenhuma área publicada</h2>
-					<p>As trilhas por área ficam visíveis assim que novos conteúdos forem publicados.</p>
-				</article>
-			) : (
-				<div class="blog-row">
-					{areas.map((area) => (
-						<article class="blog-row__item">
-							<h2>{area.label}</h2>
-							<p>{area.count} publicacoes nesta trilha.</p>
-							<a href={areaHref(area.key)}>Abrir area</a>
-							<p><a href={area.latestUrl}>Ler publicacao mais recente</a></p>
-						</article>
-					))}
-				</div>
-			)}
+			<div class="cluster-directory-grid cluster-directory-grid--wide">
+				{clusterDirectory.map((cluster) => (
+					<article class="surface-card cluster-directory-card">
+						<span class="section-kicker">Area editorial</span>
+						<h2>{cluster.title}</h2>
+						<p>{cluster.editorialSummary}</p>
+						<ul class="cluster-directory-list">
+							{cluster.typicalSituations.map((item) => (
+								<li>{item}</li>
+							))}
+						</ul>
+						<div class="theme-chip-list">
+							{cluster.topThemes.map((tema) => (
+								<a class="blog-chip blog-chip--theme" href={cluster.hasThemeRoutes ? temaHref(tema) : cluster.href}>{tema}</a>
+							))}
+						</div>
+						{cluster.hasPosts ? (
+							<div class="cluster-directory-posts">
+								<p class="cluster-directory-meta">{cluster.postCount} publicacoes nesta area editorial.</p>
+								<ul>
+									{cluster.latestPosts.map((post) => (
+										<li><a href={post.url}>{post.title}</a></li>
+									))}
+								</ul>
+							</div>
+						) : (
+							<p class="cluster-directory-empty">
+								Ainda sem artigos suficientes nesta frente. A trilha editorial ja esta aberta para orientar o tema e indicar a ponte institucional adequada.
+							</p>
+						)}
+						<div class="cluster-directory-actions">
+							<a class="btn btn-primary" href={cluster.href}>Explorar temas</a>
+							<a class="btn btn-ghost" href={cluster.institutionalHref}>Conheça os Serviços</a>
+						</div>
+					</article>
+				))}
+			</div>
+		</section>
+
+		<section class="editorial-cta" aria-label="Ponte editorial para contato">
+			<span class="section-kicker">Continuidade institucional</span>
+			<h2>Quando a leitura ja delimitou a frente juridica, o proximo passo nao precisa ser brusco.</h2>
+			<p>
+				A ponte de contato do blog explica o que informar, o que acontece depois do envio e quais limites existem na triagem inicial.
+			</p>
+			<div class="blog-actions">
+				<a class="btn btn-primary" href="/blog/contato/">Solicitar orientação inicial</a>
+				<a class="btn btn-ghost" href="/blog/">Explorar temas</a>
+			</div>
 		</section>
 	</div>
+
+	<script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
 </BlogLayout>

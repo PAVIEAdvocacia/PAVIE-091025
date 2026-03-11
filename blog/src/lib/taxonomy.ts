@@ -1,22 +1,12 @@
-const AREA_CANONICAL_LABELS: Record<string, string> = {
-	sucessoes: 'Sucessoes e Inventario',
-	familia: 'Familia e Patrimonio',
-	imobiliario: 'Imobiliario e Regularizacao',
-	internacional: 'Familia Internacional',
-	contratos: 'Contratos e Negocios',
-	cobranca: 'Cobranca e Recuperacao de Credito',
-	consumidor: 'Consumidor e Responsabilidade',
-	compliance: 'Compliance e Integridade',
-	empresarial: 'Empresarial e Societario',
-};
+import { EDITORIAL_AREAS } from './editorial-taxonomy';
 
-const AREA_ALIASES: Record<string, string> = {
-	'planejamento-sucessorio': 'sucessoes',
-	'sucessoes-e-patrimonio': 'sucessoes',
-	'familia-e-patrimonio': 'familia',
-	'direito-imobiliario': 'imobiliario',
-	'direito-e-patrimonio': 'familia',
-};
+const AREA_CANONICAL_LABELS = Object.fromEntries(
+	EDITORIAL_AREAS.map((area) => [area.key, area.label]),
+) as Record<string, string>;
+
+const AREA_ALIASES = Object.fromEntries(
+	EDITORIAL_AREAS.flatMap((area) => [area.key, area.label, ...area.aliases].map((alias) => [normalizeTaxonomyValue(alias), area.key])),
+) as Record<string, string>;
 
 function titleize(value: string): string {
 	return value
@@ -61,8 +51,12 @@ function normalizeTaxonomyValue(value: string): string {
 		.split('/')
 		.filter(Boolean)
 		.join('/')
-		.replace(/[_\s]+/g, '-')
 		.toLowerCase()
 		.normalize('NFD')
-		.replace(/[\u0300-\u036f]/g, '');
+		.replace(/[\u0300-\u036f]/g, '')
+		.replace(/[^a-z0-9/]+/g, '-')
+		.replace(/-+/g, '-')
+		.replace(/\/-/g, '/')
+		.replace(/-\/+/g, '/')
+		.replace(/^[-/]+|[-/]+$/g, '');
 }

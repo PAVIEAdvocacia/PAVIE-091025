@@ -1,38 +1,18 @@
 ﻿---
 import { getCollection } from 'astro:content';
 import BlogGrid from '../../components/blog/BlogGrid.astro';
-import BlogHero from '../../components/blog/BlogHero.astro';
 import FeaturedPost from '../../components/blog/FeaturedPost.astro';
 import { BLOG_SITE_URL } from '../../consts';
 import BlogLayout from '../../layouts/BlogLayout.astro';
-import { buildHubDirectory } from '../../lib/service-hubs';
-import { groupPostsByArea, isPublicPost, normalizePost, sortPostsByDate } from '../../lib/posts';
-import { areaHref, temaHref } from '../../lib/taxonomy';
+import { buildBlogClusterDirectory } from '../../lib/blog-clusters';
+import { isPublicPost, normalizePost, sortPostsByDate } from '../../lib/posts';
+import { temaHref } from '../../lib/taxonomy';
 
 const entries = await getCollection('blog');
 const posts = sortPostsByDate(entries.map((entry) => normalizePost(entry))).filter(isPublicPost);
-const featured = posts[0];
-const latestPosts = posts.slice(1, 7);
-const groupedByArea = groupPostsByArea(posts).slice(0, 4);
-const hubDirectory = buildHubDirectory(posts);
-const activeHubs = hubDirectory.filter((hub) => hub.postCount > 0);
-
-const practicalPosts = posts
-	.filter((post) => post.intent === 'diagnosticar' || post.intent === 'comparar' || post.funnelStage === 'fundo')
-	.slice(0, 4);
-
-const guidePosts = posts
-	.filter((post) => post.contentType.includes('guia') || post.contentType.includes('checklist'))
-	.slice(0, 4);
-
-const areaNames = groupedByArea.map((group) => group.area);
-const areaClusters = groupedByArea.slice(0, 3).map((group) => ({
-	area: group.area,
-	areaUrl: areaHref(group.posts[0]?.areaKey || group.area),
-	posts: group.posts.slice(0, 3),
-}));
-const shelfLead = practicalPosts[0] ?? featured;
-const shelfSide = posts.filter((post) => post.slug !== shelfLead?.slug).slice(0, 3);
+const featured = posts.find((post) => post.featured) ?? posts[0];
+const continuityPosts = posts.filter((post) => post.slug !== featured?.slug).slice(0, 6);
+const clusterDirectory = buildBlogClusterDirectory(posts);
 const topThemes = Array.from(
 	new Map(
 		posts
@@ -40,6 +20,20 @@ const topThemes = Array.from(
 			.map((tema) => [tema.toLowerCase(), tema]),
 	).values(),
 ).slice(0, 10);
+const editorialGuide = [
+	{
+		title: 'Identifique a frente juridica',
+		text: 'O blog organiza a leitura por clusters para que voce reconheca mais rapidamente o universo juridico da sua situacao.',
+	},
+	{
+		title: 'Aprofunde sem se perder',
+		text: 'Cada trilha editorial conecta artigo, area, temas frequentes e continuidade de leitura dentro do mesmo contexto.',
+	},
+	{
+		title: 'Busque orientacao quando fizer sentido',
+		text: 'A conversao aparece com contexto: primeiro leitura, depois area correspondente e so entao contato institucional.',
+	},
+];
 const searchIndex = posts.map((post) => ({
 	title: post.title,
 	excerpt: post.excerpt,
@@ -50,85 +44,100 @@ const searchIndex = posts.map((post) => ({
 const collectionSchema = {
 	'@context': 'https://schema.org',
 	'@type': 'CollectionPage',
-	name: 'Blog Jurídico PAVIE',
+	name: 'Blog Juridico PAVIE',
 	url: `${BLOG_SITE_URL}/blog/`,
-	description: 'Acervo de guias e analises juridicas para decisoes seguras.',
-	mainEntity: {
-		'@type': 'ItemList',
-		itemListElement: posts.slice(0, 12).map((post, index) => ({
-			'@type': 'ListItem',
-			position: index + 1,
-			url: `${BLOG_SITE_URL}${post.url}`,
-			name: post.title,
-		})),
-	},
+	description: 'Camada editorial da PAVIE para aprofundar temas juridicos, reconhecer a area correspondente e decidir com mais clareza.',
+	mainEntity:
+		posts.length > 0
+			? {
+					'@type': 'ItemList',
+					itemListElement: posts.slice(0, 12).map((post, index) => ({
+						'@type': 'ListItem',
+						position: index + 1,
+						url: `${BLOG_SITE_URL}${post.url}`,
+						name: post.title,
+					})),
+				}
+			: undefined,
 };
 ---
 
 <BlogLayout
-	title="Blog jurídico da PAVIE"
-	description="Leitura jurídica para entender cenários reais, organizar decisões e agir com segurança."
+	title="Blog juridico da PAVIE"
+	description="Leitura juridica para reconhecer o tema, aprofundar a frente correspondente e buscar orientacao com contexto."
 	canonical={`${BLOG_SITE_URL}/blog/`}
 >
 	<div class="container blog-home">
-		<BlogHero totalPosts={posts.length} areas={areaNames} />
-
-		{posts.length === 0 && (
-			<section class="surface-card empty-state" aria-label="Sem publicacoes">
-				<h2>Nenhuma publicação ativa no momento</h2>
+		<section class="blog-hero" aria-labelledby="blog-hero-title">
+			<div class="blog-hero__content">
+				<span class="badge">Blog Juridico PAVIE</span>
+				<h1 id="blog-hero-title">Leitura para entender o tema, reconhecer a area e so depois decidir o proximo passo.</h1>
 				<p>
-					Estamos organizando novos conteúdos para publicação. Em breve, esta área terá guias e análises
-					práticas para apoiar sua tomada de decisão.
+					O blog da PAVIE funciona como camada editorial do ecossistema institucional: ele organiza a leitura
+					por frentes juridicas, aprofunda situacoes reais e indica quando faz sentido sair do conteudo para buscar orientacao.
 				</p>
-				<a class="btn btn-primary" href="/contato/">Solicitar orientação inicial</a>
-			</section>
-		)}
-
-		{featured && <FeaturedPost post={featured} />}
-
-		{posts.length > 0 && (
-			<section class="surface-card blog-search" aria-label="Busca interna do blog">
-				<div>
-					<span class="section-kicker">Busca rápida</span>
-					<h2>Encontre conteúdo por tema, situação ou área jurídica</h2>
+				<div class="meta-list" aria-label="Informacoes do acervo">
+					<span><span class="meta-dot" aria-hidden="true"></span>{posts.length} artigos no acervo publico</span>
+					<span><span class="meta-dot" aria-hidden="true"></span>5 clusters editoriais canonicos</span>
+					<span><span class="meta-dot" aria-hidden="true"></span>Mesma estrutura de confianca do site institucional</span>
 				</div>
-				<label class="sr-only" for="blog-search-input">Buscar no blog</label>
-				<input
-					id="blog-search-input"
-					type="search"
-					placeholder="Ex.: inventário, guarda compartilhada, regularização de imóvel"
-					data-blog-search-input
-				/>
-				<ul class="blog-search__list" data-blog-search-list>
-					{posts.slice(0, 8).map((post) => (
-						<li>
-							<a href={post.url}>
-								<strong>{post.title}</strong>
-								<span>{post.area}</span>
-							</a>
-						</li>
+				<div class="blog-hero__actions">
+					<a class="btn btn-primary" href="/blog/areas/">Explorar temas</a>
+					<a class="btn btn-ghost" href="/blog/contato/">Solicitar orientação inicial</a>
+				</div>
+				<div class="blog-hero__chips">
+					{clusterDirectory.map((cluster) => (
+						<a class="blog-chip" href={cluster.href}>{cluster.title}</a>
 					))}
-				</ul>
-				<p class="text-muted" data-blog-search-empty hidden>Nenhum resultado para esse termo.</p>
-			</section>
-		)}
+				</div>
+			</div>
+		</section>
 
-		{shelfLead && shelfSide.length > 0 && (
-			<section class="editorial-lane" aria-label="Leituras em foco">
-				<article class="surface-card editorial-lane__lead">
-					<span class="section-kicker">Guia em foco</span>
-					<h2>{shelfLead.title}</h2>
-					<p>{shelfLead.excerpt}</p>
-					<div class="meta-list">
-						<span><span class="meta-dot" aria-hidden="true"></span>{shelfLead.area}</span>
-						<span><span class="meta-dot" aria-hidden="true"></span>{shelfLead.readingTime} min</span>
+		<section class="blog-grid" aria-label="Como usar o blog">
+			<div class="section-title">
+				<div>
+					<span class="section-kicker">Como este blog ajuda</span>
+					<h2>Uma navegacao editorial pensada para continuidade, e nao para cronologia bruta</h2>
+				</div>
+			</div>
+			<div class="editorial-guide-grid">
+				{editorialGuide.map((item) => (
+					<article class="surface-card editorial-guide-card">
+						<h3>{item.title}</h3>
+						<p>{item.text}</p>
+					</article>
+				))}
+			</div>
+		</section>
+
+		{posts.length === 0 ? (
+			<section class="surface-card empty-state" aria-label="Acervo em organizacao">
+				<h2>O acervo editorial esta em organizacao</h2>
+				<p>
+					As trilhas por area ja estao estruturadas. Enquanto novas publicacoes entram no ar, voce pode usar o mapa editorial
+					para reconhecer a frente correspondente ao seu tema e entender quando faz sentido buscar orientacao inicial.
+				</p>
+				<div class="blog-actions">
+					<a class="btn btn-primary" href="/blog/areas/">Explorar temas</a>
+					<a class="btn btn-ghost" href="/blog/contato/">Solicitar orientação inicial</a>
+				</div>
+			</section>
+		) : (
+			<>
+				<section class="surface-card blog-search" aria-label="Busca interna do blog">
+					<div>
+						<span class="section-kicker">Busca rapida</span>
+						<h2>Encontre conteudo por tema, situacao ou frente juridica</h2>
 					</div>
-					<a class="btn btn-primary" href={shelfLead.url}>Ler guia em foco</a>
-				</article>
-				<div class="surface-card editorial-lane__side">
-					<span class="section-kicker">Leituras complementares</span>
-					<ul>
-						{shelfSide.map((post) => (
+					<label class="sr-only" for="blog-search-input">Buscar no blog</label>
+					<input
+						id="blog-search-input"
+						type="search"
+						placeholder="Ex.: inventario, guarda compartilhada, regularizacao de imovel"
+						data-blog-search-input
+					/>
+					<ul class="blog-search__list" data-blog-search-list>
+						{posts.slice(0, 8).map((post) => (
 							<li>
 								<a href={post.url}>
 									<strong>{post.title}</strong>
@@ -137,125 +146,112 @@ const collectionSchema = {
 							</li>
 						))}
 					</ul>
-				</div>
-			</section>
+					<p class="text-muted" data-blog-search-empty hidden>Nenhum resultado para esse termo.</p>
+				</section>
+
+				{featured && <FeaturedPost post={featured} />}
+			</>
 		)}
 
-		<section id="hubs-conteudo" class="blog-grid" aria-label="Hubs de conteudo">
+		<section class="blog-grid" aria-label="Mapa editorial por area">
 			<div class="section-title">
 				<div>
-					<span class="section-kicker">Mapa por áreas e temas</span>
-					<h2>Hubs jurídicos para organizar leitura e decisão</h2>
+					<span class="section-kicker">Mapa editorial por area</span>
+					<h2>Os 5 clusters canonicos ligam tema, leitura e proximo passo</h2>
 				</div>
-				<a class="btn btn-ghost" href="/blog/areas/">Ver mapa de áreas</a>
+				<a class="btn btn-ghost" href="/areas/">Conheça os Serviços</a>
 			</div>
-			<div class="hub-grid">
-				{activeHubs.map((hub) => (
-					<article class="surface-card hub-card">
-						<h3>{hub.title}</h3>
-						<p>{hub.summary}</p>
-						<div class="hub-tag-list">
-							{hub.themes.map((theme) => (
-								<a class:list={['hub-tag', { 'is-muted': !theme.available }]} href={theme.href}>
-									{theme.label}
-								</a>
+			<div class="cluster-directory-grid">
+				{clusterDirectory.map((cluster) => (
+					<article class="surface-card cluster-directory-card">
+						<span class="section-kicker">Area editorial</span>
+						<h3>{cluster.title}</h3>
+						<p>{cluster.description}</p>
+						<ul class="cluster-directory-list">
+							{cluster.typicalSituations.map((item) => (
+								<li>{item}</li>
+							))}
+						</ul>
+						<div class="theme-chip-list">
+							{cluster.topThemes.map((tema) => (
+								<a class="blog-chip blog-chip--theme" href={cluster.hasThemeRoutes ? temaHref(tema) : cluster.href}>{tema}</a>
 							))}
 						</div>
-						<div class="hub-card__meta">
-							<span>{hub.postCount} publicações</span>
-							<a href={hub.areaUrl}>Abrir hub</a>
+						{cluster.hasPosts ? (
+							<div class="cluster-directory-posts">
+								<p class="cluster-directory-meta">{cluster.postCount} publicacoes nesta trilha.</p>
+								<ul>
+									{cluster.latestPosts.map((post) => (
+										<li><a href={post.url}>{post.title}</a></li>
+									))}
+								</ul>
+							</div>
+						) : (
+							<p class="cluster-directory-empty">
+								A trilha editorial desta frente esta em consolidacao. A area ja pode ser explorada e o contato institucional
+								permanece disponivel quando o tema sair do plano abstrato.
+							</p>
+						)}
+						<div class="cluster-directory-actions">
+							<a class="btn btn-primary" href={cluster.href}>Explorar temas</a>
+							<a class="btn btn-ghost" href={cluster.contactHref}>Solicitar orientação inicial</a>
 						</div>
 					</article>
 				))}
 			</div>
 		</section>
 
-		{areaClusters.length > 0 && (
-			<section class="blog-grid" aria-label="Clusters por area">
-				<div class="section-title">
-					<div>
-						<span class="section-kicker">Clusters por área</span>
-						<h2>Trilhas por problema jurídico</h2>
-					</div>
-				</div>
-				<div class="cluster-grid">
-					{areaClusters.map((cluster) => (
-						<article class="surface-card cluster-card">
-							<h3>{cluster.area}</h3>
-							<ul>
-								{cluster.posts.map((post) => (
-									<li>
-										<a href={post.url}>{post.title}</a>
-									</li>
-								))}
-							</ul>
-							<a href={cluster.areaUrl}>Ver todos da área</a>
-						</article>
-					))}
-				</div>
-			</section>
-		)}
-
-		{latestPosts.length > 0 && (
-			<BlogGrid title="Leituras recentes" kicker="Atualizações do acervo" posts={latestPosts} />
-		)}
-
-		{practicalPosts.length > 0 && (
-			<BlogGrid title="Casos práticos e decisão" kicker="Quando o tema pede ação" posts={practicalPosts} compact />
-		)}
-
-		{guidePosts.length > 0 && (
-			<BlogGrid title="Guias e fundamentos" kicker="Base para consulta" posts={guidePosts} compact />
+		{continuityPosts.length > 0 && (
+			<BlogGrid title="Continue a leitura" kicker="Aprofundamento" posts={continuityPosts} />
 		)}
 
 		{topThemes.length > 0 && (
 			<section class="blog-grid" aria-label="Temas em foco">
 				<div class="section-title">
 					<div>
-						<span class="section-kicker">Navegação por tema</span>
-						<h2>Temas em foco</h2>
+						<span class="section-kicker">Temas em foco</span>
+						<h2>Continue por tema quando quiser aprofundar um recorte especifico</h2>
 					</div>
-					<a class="btn btn-ghost" href="/blog/temas/">Explorar todos os temas</a>
+					<a class="btn btn-ghost" href="/blog/temas/">Explorar temas</a>
 				</div>
 				<div class="theme-chip-list">
 					{topThemes.map((tema) => (
-						<a class="blog-chip blog-chip--theme" href={temaHref(tema)}>
-							{tema}
-						</a>
+						<a class="blog-chip blog-chip--theme" href={temaHref(tema)}>{tema}</a>
 					))}
 				</div>
 			</section>
 		)}
 
-		<section class="editorial-cta" aria-label="Chamada institucional">
-			<span class="section-kicker">Leitura com utilidade prática</span>
-			<h2>Entender o tema é o primeiro passo. Decidir com segurança é o próximo.</h2>
+		<section class="editorial-cta" aria-label="Ponte editorial para contato">
+			<span class="section-kicker">Quando a leitura vira decisao</span>
+			<h2>Se o tema deixar de ser apenas duvida e passar a exigir leitura aplicada, a ponte de contato do blog organiza esse passo.</h2>
 			<p>
-				Se o seu cenário exige orientação aplicada, a equipe da PAVIE pode analisar contexto,
-				prioridades e riscos com uma proposta clara de condução.
+				A PAVIE nao promete resposta automatica nem patrocinio imediato. O primeiro movimento e contextualizar o caso,
+				entender o que precisa ser informado e explicar como a triagem funciona.
 			</p>
-			<div>
-				<a class="btn btn-primary" href="/contato/">Solicitar orientação</a>
+			<div class="blog-actions">
+				<a class="btn btn-primary" href="/blog/contato/">Solicitar orientação inicial</a>
+				<a class="btn btn-ghost" href="/areas/">Conheça os Serviços</a>
 			</div>
 		</section>
 
 		<section class="surface-card blog-author-spotlight" aria-label="Autor do blog">
 			<img
-				src="/uploads/foto_001-ffundddo-escritório.png"
+				src="/uploads/foto_001-ffundddo-escrit%C3%B3rio.png"
 				alt="Foto profissional do advogado Fabio Mathias Pavie"
 				loading="lazy"
 			/>
 			<div>
 				<span class="section-kicker">Autor do blog</span>
-				<h2>Fábio Mathias Pavie</h2>
-				<p>Advogado · OAB/RJ 134.947</p>
+				<h2>Fabio Mathias Pavie</h2>
+				<p>Advogado | OAB/RJ 134.947</p>
 				<p>
-					Atuação em direito de família, sucessões, patrimônio e conflitos cíveis. Mais de 20 anos de
-					experiência jurídica.
+					A camada editorial e conduzida para aprofundar temas que aparecem na pratica institucional da PAVIE,
+					sem transformar conteudo em promessa de resultado.
 				</p>
-				<div class="site-hero__cta">
-					<a class="btn btn-primary" href="/areas/">Ver serviços</a>
-					<a class="btn btn-ghost" href="/contato/">Solicitar orientação</a>
+				<div class="blog-actions">
+					<a class="btn btn-primary" href="/areas/">Conheça os Serviços</a>
+					<a class="btn btn-ghost" href="/blog/contato/">Solicitar orientação inicial</a>
 				</div>
 			</div>
 		</section>

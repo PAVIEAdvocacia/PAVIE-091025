@@ -1,4 +1,4 @@
-import type { BlogPost } from './posts';
+﻿import type { BlogPost } from './posts';
 import { normalizeSlug } from './posts';
 
 interface ScoredPost {
@@ -21,12 +21,12 @@ function intersectionSize(a: string[], b: string[]): number {
 function relevanceScore(current: BlogPost, candidate: BlogPost): number {
 	let score = 0;
 	if (current.areaKey === candidate.areaKey) score += 6;
-	if (current.hubKey === candidate.hubKey) score += 4;
+	if (current.subarea && candidate.subarea && current.subarea === candidate.subarea) score += 4;
 	score += intersectionSize(current.temaKeys, candidate.temaKeys) * 3;
-	score += intersectionSize(current.tags, candidate.tags) * 2;
-	if (current.contentType === candidate.contentType) score += 1;
-	if (current.intent === candidate.intent) score += 1;
+	score += intersectionSize(current.painPoints, candidate.painPoints) * 2;
+	score += intersectionSize(current.tags, candidate.tags) * 1;
 	if (current.funnelStage === candidate.funnelStage) score += 1;
+	if (candidate.featured) score += 0.5;
 	if (candidate.publishedAt) score += 0.5;
 	return score;
 }
@@ -45,7 +45,7 @@ export function getRelatedPosts(
 	}
 
 	const manual: BlogPost[] = [];
-	for (const manualKey of current.relatedManual) {
+	for (const manualKey of current.relatedArticles) {
 		const item = byKey.get(normalizeSlug(manualKey));
 		if (item && normalizeSlug(item.slug) !== key) {
 			manual.push(item);

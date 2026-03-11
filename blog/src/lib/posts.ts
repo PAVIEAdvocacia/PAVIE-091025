@@ -1,5 +1,6 @@
-import type { CollectionEntry } from 'astro:content';
-import { BLOG_SITE_URL, DEFAULT_AUTHOR_NAME, DEFAULT_AUTHOR_ROLE, DEFAULT_CTA } from '../consts';
+﻿import type { CollectionEntry } from 'astro:content';
+import { BLOG_SITE_URL, DEFAULT_AUTHOR_NAME, DEFAULT_AUTHOR_ROLE } from '../consts';
+import { PRIMARY_CTA_OPTIONS } from './editorial-taxonomy';
 import { areaLabel, normalizeAreaKey, normalizeTemaKey } from './taxonomy';
 
 export type RawPostEntry = CollectionEntry<'blog'>;
@@ -22,20 +23,17 @@ export interface BlogPost {
 	slugKey: string;
 	url: string;
 	title: string;
+	seoTitle?: string;
 	description: string;
 	excerpt: string;
 	area: string;
 	areaKey: string;
-	hub: string;
-	hubKey: string;
+	subarea?: string;
 	temas: string[];
 	temaKeys: string[];
+	painPoints: string[];
 	tags: string[];
-	contentType: string;
-	intent: string;
 	funnelStage: string;
-	editorialItemId?: string;
-	authorRef: string;
 	authorName: string;
 	authorRole: string;
 	publishedAt?: Date;
@@ -46,59 +44,19 @@ export interface BlogPost {
 	audioStatus: 'none' | 'planned' | 'published';
 	audioUrl?: string;
 	transcriptUrl?: string;
-	ctaVariant: string;
+	ctaKey: string;
 	cta: CtaConfig;
-	relatedManual: string[];
+	relatedArticles: string[];
 	faqItems: FaqItem[];
-	publishStatus: string;
-	updateStatus?: string;
+	status: string;
+	featured: boolean;
 	canonicalUrl?: string;
-	traceRef?: string;
 }
 
-const AREA_FALLBACK = 'Direito e Patrimonio';
-const HUB_FALLBACK = 'orientacao-juridica';
-const THEME_SPLIT_PATTERN = /[,;|]/;
 const WORDS_PER_MINUTE = 220;
-
-const CTA_BY_VARIANT: Record<string, CtaConfig> = {
-	consultoria: DEFAULT_CTA,
-	diagnostico: {
-		label: 'Solicitar Diagnostico Juridico',
-		href: '/contato/',
-		description: 'Receba uma avaliacao inicial para entender riscos, prazos e estrategia.',
-	},
-	aprofundamento: {
-		label: 'Ver Publicacoes Relacionadas',
-		href: '/blog/',
-		description: 'Continue estudando o tema com artigos relacionados.',
-	},
-	leitura_relacionada: {
-		label: 'Ver Publicacoes Relacionadas',
-		href: '/blog/',
-		description: 'Continue estudando o tema com artigos relacionados.',
-	},
-	checklist: {
-		label: 'Solicitar Checklist Aplicavel',
-		href: '/contato/',
-		description: 'Receba um roteiro inicial para organizar sua proxima decisao juridica.',
-	},
-	contato: {
-		label: 'Falar com a PAVIE',
-		href: '/contato/',
-		description: 'Entre em contato para avaliar o melhor caminho para o seu caso.',
-	},
-	calculadora: {
-		label: 'Agendar Simulacao Juridica',
-		href: '/contato/',
-		description: 'Solicite uma simulacao orientada para apoiar sua tomada de decisao.',
-	},
-	institucional: {
-		label: 'Conhecer Areas de Atuacao',
-		href: '/areas/',
-		description: 'Veja como a PAVIE atua em sucessoes, familia e organizacao patrimonial.',
-	},
-};
+const PRIMARY_CTA_BY_KEY = Object.fromEntries(
+	PRIMARY_CTA_OPTIONS.map((option) => [option.key, option]),
+) as Record<string, CtaConfig & { key?: string }>;
 
 function cleanString(value: unknown): string {
 	return typeof value === 'string' ? value.trim() : '';
@@ -106,28 +64,21 @@ function cleanString(value: unknown): string {
 
 function cleanList(value: unknown): string[] {
 	if (Array.isArray(value)) {
-		return value.map((item) => cleanString(item)).filter(Boolean);
+		return value
+			.map((item) => cleanString(item))
+			.filter(Boolean);
 	}
 	if (typeof value === 'string') {
 		return value
-			.split(THEME_SPLIT_PATTERN)
+			.split(/[,;|]/)
 			.map((item) => item.trim())
 			.filter(Boolean);
 	}
 	return [];
 }
 
-function cleanFaqItems(value: unknown): FaqItem[] {
-	if (!Array.isArray(value)) return [];
-	return value
-		.map((item) => {
-			if (!item || typeof item !== 'object') return undefined;
-			const maybeQuestion = cleanString((item as { question?: unknown }).question);
-			const maybeAnswer = cleanString((item as { answer?: unknown }).answer);
-			if (!maybeQuestion || !maybeAnswer) return undefined;
-			return { question: maybeQuestion, answer: maybeAnswer };
-		})
-		.filter((item): item is FaqItem => Boolean(item));
+function uniqueList(values: string[]): string[] {
+	return Array.from(new Map(values.filter(Boolean).map((value) => [value.toLowerCase(), value])).values());
 }
 
 function parseDate(value: unknown): Date | undefined {
@@ -188,56 +139,16 @@ function normalizeImagePath(rawValue: string): string | undefined {
 	return undefined;
 }
 
-function inferArea(title: string, description: string): string {
+function inferThemes(title: string, description: string): string[] {
 	const source = `${title} ${description}`.toLowerCase();
-	if (source.includes('inventario') || source.includes('sucess')) {
-		return 'Planejamento Sucessorio';
-	}
-	if (source.includes('divorcio') || source.includes('famil')) {
-		return 'Familia e Patrimonio';
-	}
-	if (source.includes('imovel') || source.includes('cartorio')) {
-		return 'Direito Imobiliario';
-	}
-	return AREA_FALLBACK;
-}
-
-function inferTemas(title: string, description: string): string[] {
-	const source = `${title} ${description}`.toLowerCase();
-	const temas: string[] = [];
-	if (source.includes('inventario')) temas.push('inventario');
-	if (source.includes('itcmd')) temas.push('itcmd');
-	if (source.includes('divorcio')) temas.push('divorcio');
-	if (source.includes('herdeir')) temas.push('heranca');
-	if (source.includes('partilha')) temas.push('partilha');
-	return temas;
-}
-
-function inferHub(areaKey: string, temas: string[]): string {
-	const tema = temas[0] || '';
-	if (tema) return tema;
-	switch (areaKey) {
-		case 'familia':
-			return 'divorcio-e-guarda';
-		case 'sucessoes':
-			return 'inventario-e-itcmd';
-		case 'imobiliario':
-			return 'compra-venda-imovel';
-		case 'contratos':
-			return 'revisao-contratual';
-		case 'consumidor':
-			return 'negativa-e-reparacao';
-		case 'empresarial':
-			return 'societario-e-governanca';
-		case 'compliance':
-			return 'lgpd-e-integridade';
-		case 'internacional':
-			return 'documentacao-internacional';
-		case 'cobranca':
-			return 'recuperacao-de-credito';
-		default:
-			return HUB_FALLBACK;
-	}
+	const themes: string[] = [];
+	if (source.includes('divorcio')) themes.push('Divorcio');
+	if (source.includes('guarda')) themes.push('Guarda');
+	if (source.includes('inventario')) themes.push('Inventario');
+	if (source.includes('partilha')) themes.push('Partilha');
+	if (source.includes('contrato')) themes.push('Contratos');
+	if (source.includes('imovel')) themes.push('Imovel');
+	return themes;
 }
 
 function ensureDescription(title: string, description: string): string {
@@ -245,22 +156,35 @@ function ensureDescription(title: string, description: string): string {
 	return `Analise juridica da PAVIE sobre ${title.toLowerCase()}.`;
 }
 
-function resolveCtaByVariant(variant: string): CtaConfig {
-	if (CTA_BY_VARIANT[variant]) {
-		return CTA_BY_VARIANT[variant];
-	}
-	return DEFAULT_CTA;
+function resolveStatus(rawValue: string): string {
+	const value = rawValue.toLowerCase();
+	if (['draft', 'published', 'archived'].includes(value)) return value;
+	if (['publicado', 'active'].includes(value)) return 'published';
+	if (['rascunho'].includes(value)) return 'draft';
+	if (['arquivado'].includes(value)) return 'archived';
+	return 'draft';
 }
 
-function resolvePublishedStatus(rawValue: string): string {
-	const value = rawValue.toLowerCase();
-	if (!value) return 'draft';
-	if (['published', 'publicado', 'active'].includes(value)) return 'published';
-	if (['draft', 'rascunho'].includes(value)) return 'draft';
-	if (['review', 'revisao'].includes(value)) return 'review';
-	if (['scheduled', 'agendado'].includes(value)) return 'scheduled';
-	if (['archived', 'arquivado'].includes(value)) return 'archived';
-	return value;
+function defaultPrimaryCtaKey(funnelStage: string): string {
+	if (funnelStage === 'orientacao' || funnelStage === 'contato') {
+		return 'diagnostico_juridico';
+	}
+	if (funnelStage === 'consideracao') {
+		return 'diagnostico_juridico';
+	}
+	return 'areas_editoriais';
+}
+
+function resolvePrimaryCtaKey(rawValue: string, funnelStage: string): string {
+	const key = rawValue.toLowerCase();
+	if (PRIMARY_CTA_BY_KEY[key]) {
+		return key;
+	}
+	return defaultPrimaryCtaKey(funnelStage);
+}
+
+function resolvePrimaryCta(key: string): CtaConfig {
+	return PRIMARY_CTA_BY_KEY[key] ?? PRIMARY_CTA_BY_KEY.areas_editoriais;
 }
 
 export function postRoute(slug: string): string {
@@ -268,11 +192,7 @@ export function postRoute(slug: string): string {
 }
 
 export function isPublicPost(post: BlogPost): boolean {
-	return (
-		post.publishStatus === 'published' &&
-		Boolean(post.slug) &&
-		Boolean(post.publishedAt)
-	);
+	return post.status === 'published' && Boolean(post.slug) && Boolean(post.publishedAt);
 }
 
 export function normalizePost(entry: RawPostEntry): BlogPost {
@@ -283,52 +203,27 @@ export function normalizePost(entry: RawPostEntry): BlogPost {
 	const routeSlug = cleanString(data.slug) || entry.id;
 	const slug = routeSlug.replace(/^\/+|\/+$/g, '');
 	const slugKey = normalizeSlug(slug || entry.id);
-	const area = cleanString(data.area) || inferArea(title, description);
-	const areaKey = normalizeAreaKey(area);
-	const areaDisplay = areaLabel(area);
-	const temas = cleanList(data.tema);
-	const hub = cleanString(data.hub);
-	const tags = cleanList(data.tags);
-	const contentType = cleanString(data.content_type) || 'artigo';
-	const intent = cleanString(data.intent) || 'informativo';
-	const funnelStage = cleanString(data.funnel_stage) || 'consideracao';
-	const editorialItemId = cleanString(data.editorial_item_id) || undefined;
-	const authorRef = cleanString(data.author_ref) || 'dr-fabio-pavie';
-	const authorName = cleanString(data.author_name) || DEFAULT_AUTHOR_NAME;
-	const authorRole = DEFAULT_AUTHOR_ROLE;
-	const publishedAt = parseDate(data.published_at) ?? parseDate(data.pubDate);
-	const updatedAt = parseDate(data.updated_at) ?? parseDate(data.updatedDate);
-	const explicitImage = cleanString(data.featured_image) || cleanString(data.heroImage);
-	const image = normalizeImagePath(explicitImage);
-	const imageAlt =
-		cleanString(data.featured_image_alt) ||
-		cleanString(data.heroImageAlt) ||
-		`Imagem de capa do artigo ${title}`;
+	const areaValue = cleanString(data.area) || 'Familia, Sucessoes e Patrimonio';
+	const areaKey = normalizeAreaKey(areaValue);
+	const area = areaLabel(areaValue);
+	const subarea = cleanString(data.subarea) || undefined;
+	const themes = cleanList(data.themes);
+	const painPoints = cleanList(data.pain_points);
+	const derivedThemes = themes.length > 0 ? themes : inferThemes(title, description);
+	const temaKeys = derivedThemes.map((item) => normalizeTemaKey(item));
+	const authorName = cleanString(data.author) || DEFAULT_AUTHOR_NAME;
+	const publishedAt = parseDate(data.publish_date);
 	const readingTime = buildReadingTime(entry.body, data.reading_time);
-	const rawAudioStatus = cleanString(data.audio_status).toLowerCase();
-	const audioStatus: BlogPost['audioStatus'] =
-		rawAudioStatus === 'published'
-			? 'published'
-			: rawAudioStatus === 'available'
-				? 'published'
-			: rawAudioStatus === 'planned'
-				? 'planned'
-				: 'none';
-	const audioUrl = cleanString(data.audio_url) || undefined;
-	const transcriptUrl = cleanString(data.transcript_url) || undefined;
-	const ctaVariant = cleanString(data.cta_variant).toLowerCase() || 'consultoria';
-	const relatedManual = cleanList(data.related_manual).map((item) => normalizeSlug(item));
-	const faqItems = cleanFaqItems(data.faq_items);
-	const publishStatus = resolvePublishedStatus(cleanString(data.publish_status));
-	const updateStatus = cleanString(data.update_status) || undefined;
-	const canonicalInput = cleanString(data.canonical_url);
-	const canonicalUrl = canonicalInput || `${BLOG_SITE_URL}${postRoute(slug)}`;
-	const traceRef = cleanString(data.trace_ref) || undefined;
-	const derivedTemas = temas.length > 0 ? temas : inferTemas(title, description);
-	const resolvedHub = hub || inferHub(areaKey, derivedTemas);
-	const hubKey = normalizeTemaKey(resolvedHub);
-	const temaKeys = derivedTemas.map((item) => normalizeTemaKey(item));
-	const allTags = tags.length > 0 ? tags : [...derivedTemas];
+	const image = normalizeImagePath(cleanString(data.og_image));
+	const imageAlt = `Imagem de capa do artigo ${title}`;
+	const funnelStage = cleanString(data.funnel_stage) || 'consideracao';
+	const ctaKey = resolvePrimaryCtaKey(cleanString(data.primary_cta), funnelStage);
+	const relatedArticles = cleanList(data.related_articles).map((item) => normalizeSlug(item));
+	const status = resolveStatus(cleanString(data.status));
+	const featured = Boolean(data.featured);
+	const seoTitle = cleanString(data.seo_title) || undefined;
+	const canonicalUrl = `${BLOG_SITE_URL}${postRoute(slug)}`;
+	const tags = uniqueList([...derivedThemes, ...painPoints, ...(subarea ? [subarea] : [])]);
 
 	return {
 		entry,
@@ -337,38 +232,34 @@ export function normalizePost(entry: RawPostEntry): BlogPost {
 		slugKey,
 		url: postRoute(slug),
 		title,
+		seoTitle,
 		description,
 		excerpt,
-		area: areaDisplay,
+		area,
 		areaKey,
-		hub: resolvedHub,
-		hubKey,
-		temas: derivedTemas,
+		subarea,
+		temas: derivedThemes,
 		temaKeys,
-		tags: allTags,
-		contentType,
-		intent,
+		painPoints,
+		tags,
 		funnelStage,
-		editorialItemId,
-		authorRef,
 		authorName,
-		authorRole,
+		authorRole: DEFAULT_AUTHOR_ROLE,
 		publishedAt,
-		updatedAt,
+		updatedAt: undefined,
 		image,
 		imageAlt,
 		readingTime,
-		audioStatus,
-		audioUrl,
-		transcriptUrl,
-		ctaVariant,
-		cta: resolveCtaByVariant(ctaVariant),
-		relatedManual,
-		faqItems,
-		publishStatus,
-		updateStatus,
+		audioStatus: 'none',
+		audioUrl: undefined,
+		transcriptUrl: undefined,
+		ctaKey,
+		cta: resolvePrimaryCta(ctaKey),
+		relatedArticles,
+		faqItems: [],
+		status,
+		featured,
 		canonicalUrl,
-		traceRef,
 	};
 }
 
@@ -383,7 +274,7 @@ export function sortPostsByDate(posts: BlogPost[]): BlogPost[] {
 export function groupPostsByArea(posts: BlogPost[]): Array<{ area: string; posts: BlogPost[] }> {
 	const bucket = new Map<string, { area: string; posts: BlogPost[] }>();
 	for (const post of posts) {
-		const areaKey = post.areaKey || normalizeAreaKey(post.area || AREA_FALLBACK);
+		const areaKey = post.areaKey || normalizeAreaKey(post.area);
 		const group = bucket.get(areaKey) ?? { area: post.area || areaLabel(areaKey), posts: [] };
 		group.posts.push(post);
 		bucket.set(areaKey, group);

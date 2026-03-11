@@ -23,26 +23,6 @@
 	background: linear-gradient(90deg, var(--color-petrol), color-mix(in srgb, var(--color-sand) 70%, white));
 }
 
-.breadcrumbs {
-	display: flex;
-	flex-wrap: wrap;
-	gap: 0.45rem;
-	list-style: none;
-	font-size: 0.9rem;
-	color: var(--text-muted);
-}
-
-.breadcrumbs li {
-	display: inline-flex;
-	align-items: center;
-	gap: 0.42rem;
-}
-
-.breadcrumbs li:not(:last-child)::after {
-	content: '/';
-	color: color-mix(in srgb, var(--color-mist) 68%, white);
-}
-
 .reading-hero {
 	position: relative;
 	border-radius: var(--radius-lg);
@@ -260,6 +240,40 @@
 	gap: 0.5rem;
 }
 
+.reading-bridge {
+	padding: 1rem 1.1rem;
+	border-radius: var(--radius-sm);
+	border: 1px solid color-mix(in srgb, var(--color-mist) 34%, var(--color-line));
+	background:
+		linear-gradient(
+			140deg,
+			color-mix(in srgb, var(--surface-card) 96%, white),
+			color-mix(in srgb, var(--surface-highlight) 76%, var(--surface-card)),
+			color-mix(in srgb, var(--surface-alt) 88%, var(--surface-card))
+		);
+	display: grid;
+	gap: 0.7rem;
+	margin-bottom: 1rem;
+}
+
+.reading-bridge p,
+.reading-bridge ul {
+	color: var(--text-muted);
+}
+
+.reading-bridge ul {
+	margin: 0;
+	padding-inline-start: 1.1rem;
+	display: grid;
+	gap: 0.35rem;
+}
+
+.reading-bridge__actions {
+	display: flex;
+	flex-wrap: wrap;
+	gap: var(--space-xs);
+}
+
 .reading-tag {
 	display: inline-flex;
 	align-items: center;
@@ -397,6 +411,15 @@
 .related-posts {
 	display: grid;
 	gap: 0.8rem;
+}
+
+.related-posts__empty {
+	display: grid;
+	gap: 0.7rem;
+	padding: 0.75rem;
+	border: 1px dashed color-mix(in srgb, var(--color-mist) 45%, var(--color-line));
+	border-radius: var(--radius-xs);
+	background: color-mix(in srgb, var(--surface-card) 88%, white);
 }
 
 .related-posts article {

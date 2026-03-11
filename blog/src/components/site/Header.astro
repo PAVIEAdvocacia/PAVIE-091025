@@ -8,7 +8,7 @@ const { currentPath = '/' } = Astro.props;
 const navItems = [
 	{ href: '/areas/', label: 'Servicos' },
 	{ href: '/sobre/', label: 'Sobre' },
-	{ href: 'https://blog.pavieadvocacia.com.br/blog/', label: 'Conteudos Juridicos' },
+	{ href: '/blog/', label: 'Conteudos Juridicos' },
 	{ href: '/contato/', label: 'Contato' },
 ];
 
@@ -20,7 +20,7 @@ function isActive(href: string): boolean {
 
 <header class="site-header" role="banner">
 	<div class="site-header__bar container">
-		<a class="site-header__brand" href="https://pavieadvocacia.com.br" aria-label="PAVIE Advocacia, inicio do site institucional">
+		<a class="site-header__brand" href="/" aria-label="PAVIE Advocacia, inicio do site institucional">
 			<strong>PAVIE</strong>
 			<small>| Advocacia</small>
 		</a>
@@ -37,7 +37,7 @@ function isActive(href: string): boolean {
 		</nav>
 
 		<a class="btn btn-primary site-header__cta" href="/contato/">
-			Orientacao Inicial
+			Agendar Consulta Inicial
 		</a>
 
 		<details class="site-mobile-nav">
@@ -49,7 +49,7 @@ function isActive(href: string): boolean {
 					</a>
 				))}
 				<a href="/contato/" role="menuitem">
-					Orientacao Inicial
+					Agendar Consulta Inicial
 				</a>
 			</div>
 		</details>
@@ -71,7 +71,7 @@ function isActive(href: string): boolean {
 		display: grid;
 		grid-template-columns: auto 1fr auto;
 		align-items: center;
-		gap: 1rem;
+		gap: var(--space-md);
 	}
 
 	.site-header__brand {
@@ -98,14 +98,14 @@ function isActive(href: string): boolean {
 		display: flex;
 		justify-content: center;
 		align-items: center;
-		gap: 1.1rem;
+		gap: var(--space-lg);
 	}
 
 	.site-nav__link {
 		text-decoration: none;
-		font-size: 0.84rem;
+		font-size: var(--step-label);
 		font-weight: 700;
-		letter-spacing: 0.06em;
+		letter-spacing: var(--letter-label);
 		text-transform: uppercase;
 		color: color-mix(in srgb, var(--color-graphite) 78%, var(--color-mist));
 		padding: 0.3rem 0.2rem;
@@ -118,8 +118,8 @@ function isActive(href: string): boolean {
 	}
 
 	.site-header__cta {
-		font-size: 0.86rem;
-		padding-inline: 0.95rem;
+		font-size: var(--step-small);
+		padding-inline: 1rem;
 	}
 
 	.site-mobile-nav {
@@ -143,8 +143,8 @@ function isActive(href: string): boolean {
 		top: 2rem;
 		right: 0;
 		display: grid;
-		gap: 0.25rem;
-		padding: 0.75rem;
+		gap: var(--space-2xs);
+		padding: var(--space-sm);
 		min-width: 220px;
 		background: var(--surface-card);
 		border: 1px solid var(--color-line);
@@ -153,7 +153,7 @@ function isActive(href: string): boolean {
 	}
 
 	.site-mobile-nav__panel a {
-		padding: 0.4rem 0.45rem;
+		padding: 0.4rem 0.5rem;
 		border-radius: var(--radius-xs);
 		text-decoration: none;
 		font-size: 0.92rem;

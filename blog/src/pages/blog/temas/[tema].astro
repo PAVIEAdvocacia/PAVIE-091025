@@ -1,8 +1,10 @@
 ---
 import { getCollection } from 'astro:content';
+import Breadcrumbs from '../../../components/blog/Breadcrumbs.astro';
 import BlogGrid from '../../../components/blog/BlogGrid.astro';
 import { BLOG_SITE_URL } from '../../../consts';
 import BlogLayout from '../../../layouts/BlogLayout.astro';
+import { buildBreadcrumbSchema } from '../../../lib/seo';
 import { isPublicPost, normalizePost, sortPostsByDate } from '../../../lib/posts';
 import { normalizeTemaKey, temaLabel } from '../../../lib/taxonomy';
 
@@ -25,14 +27,23 @@ if (temaPosts.length === 0) {
 }
 
 const pageTitle = `${temaLabel(temaKey)} | Tema`;
+const canonicalUrl = `${BLOG_SITE_URL}/blog/temas/${temaKey}/`;
+const breadcrumbs = [
+	{ label: 'Inicio', href: '/' },
+	{ label: 'Publicacoes', href: '/blog/' },
+	{ label: 'Temas', href: '/blog/temas/' },
+	{ label: temaLabel(temaKey) },
+];
+const breadcrumbSchema = buildBreadcrumbSchema(breadcrumbs, canonicalUrl);
 ---
 
 <BlogLayout
 	title={pageTitle}
 	description={`Publicacoes da PAVIE sobre ${temaLabel(temaKey)}.`}
-	canonical={`${BLOG_SITE_URL}/blog/temas/${temaKey}/`}
+	canonical={canonicalUrl}
 >
 	<div class="container blog-home">
+		<Breadcrumbs items={breadcrumbs} />
 		<section class="blog-grid" aria-label={pageTitle}>
 			<div class="section-title">
 				<div>
@@ -45,4 +56,6 @@ const pageTitle = `${temaLabel(temaKey)} | Tema`;
 
 		<BlogGrid title="Publicacoes por tema" kicker="Aprofundamento" posts={temaPosts} />
 	</div>
+
+	<script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
 </BlogLayout>
