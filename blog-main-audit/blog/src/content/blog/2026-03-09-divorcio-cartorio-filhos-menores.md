@@ -1,8 +1,8 @@
-ï»¿---
+---
 title: "Divorcio em 2025: cartorio, filhos menores e protecao patrimonial"
 slug: "divorcio-em-2025-cartorio-filhos-menores-protecao-patrimonial"
 description: "Entenda quando o divorcio pode seguir em cartorio, quando o Judiciario ainda e necessario e como proteger o conjuge economicamente mais vulneravel."
-area: "Familia, Sucessoes e Patrimonio"
+area: "Familia, Sucessões e Patrimonio"
 publish_date: 2026-03-09T00:59:00.000-03:00
 author: "Fabio Mathias Pavie"
 status: "published"
@@ -22,112 +22,112 @@ og_image: "/uploads/001-convertido-de-png.webp"
 featured: true
 ---
 
-![Casal assinando documentos de divÃ³rcio em cartÃ³rio, com anÃ©is de casamento e balanÃ§a da justiÃ§a sobre a mesa.](/uploads/001-convertido-de-png.webp "DivÃ³rcio em 2025 no cartÃ³rio")
+![Casal assinando documentos de divórcio em cartório, com anéis de casamento e balança da justiça sobre a mesa.](/uploads/001-convertido-de-png.webp "Divórcio em 2025 no cartório")
 
 
 
 
-## IntroduÃ§Ã£o
+## Introdução
 
-Em 2025, divorciar-se no Brasil Ã©, ao mesmo tempo, mais simples do que hÃ¡ alguns anos e mais complexo do ponto de vista estratÃ©gico. A simplificaÃ§Ã£o veio com a Emenda Constitucional n.Âº 66/2010, que transformou o divÃ³rcio em verdadeiro direito de nÃ£o permanecer casado, eliminando a exigÃªncia de prÃ©via separaÃ§Ã£o judicial. Esse entendimento foi confirmado pelo Supremo Tribunal Federal ao julgar o Tema 1.053 da repercussÃ£o geral, sob relatoria do ministro Luiz Fux.
+Em 2025, divorciar-se no Brasil é, ao mesmo tempo, mais simples do que há alguns anos e mais complexo do ponto de vista estratégico. A simplificação veio com a Emenda Constitucional n.º 66/2010, que transformou o divórcio em verdadeiro direito de não permanecer casado, eliminando a exigência de prévia separação judicial. Esse entendimento foi confirmado pelo Supremo Tribunal Federal ao julgar o Tema 1.053 da repercussão geral, sob relatoria do ministro Luiz Fux.
 
-Paralelamente, o Conselho Nacional de JustiÃ§a (CNJ) avanÃ§ou na desjudicializaÃ§Ã£o, permitindo que divÃ³rcios consensuais, inventÃ¡rios e partilhas sejam realizados em cartÃ³rio mesmo quando hÃ¡ filhos menores ou herdeiros incapazes, desde que observadas salvaguardas especÃ­ficas, previstas na ResoluÃ§Ã£o n.Âº 571/2024.
+Paralelamente, o Conselho Nacional de Justiça (CNJ) avançou na desjudicialização, permitindo que divórcios consensuais, inventários e partilhas sejam realizados em cartório mesmo quando há filhos menores ou herdeiros incapazes, desde que observadas salvaguardas específicas, previstas na Resolução n.º 571/2024.
 
-Ao mesmo tempo, os dados do IBGE revelam crescimento do nÃºmero de divÃ³rcios: em 2023, foram contabilizados cerca de 440,8 mil divÃ³rcios no paÃ­s, 4,9% a mais que em 2022. Esse cenÃ¡rio torna indispensÃ¡vel compreender quando o cartÃ³rio Ã© suficiente, quando o JudiciÃ¡rio ainda Ã© necessÃ¡rio e como proteger economicamente o cÃ´njuge mais vulnerÃ¡vel apÃ³s a dissoluÃ§Ã£o do casamento.
+Ao mesmo tempo, os dados do IBGE revelam crescimento do número de divórcios: em 2023, foram contabilizados cerca de 440,8 mil divórcios no país, 4,9% a mais que em 2022. Esse cenário torna indispensável compreender quando o cartório é suficiente, quando o Judiciário ainda é necessário e como proteger economicamente o cônjuge mais vulnerável após a dissolução do casamento.
 
-## 1. O divÃ³rcio como direito potestativo apÃ³s a EC 66/2010
+## 1. O divórcio como direito potestativo após a EC 66/2010
 
-A Emenda Constitucional n.Âº 66/2010 alterou o Â§ 6.Âº do art. 226 da ConstituiÃ§Ã£o Federal para prever, de forma direta, que o casamento pode ser dissolvido pelo divÃ³rcio, sem exigir prazos ou etapas intermediÃ¡rias. A partir daÃ­, consolidou-se a ideia de que o divÃ³rcio Ã© um direito potestativo: basta a manifestaÃ§Ã£o de vontade de um dos cÃ´njuges, independentemente de culpa ou concordÃ¢ncia do outro.
+A Emenda Constitucional n.º 66/2010 alterou o § 6.º do art. 226 da Constituição Federal para prever, de forma direta, que o casamento pode ser dissolvido pelo divórcio, sem exigir prazos ou etapas intermediárias. A partir daí, consolidou-se a ideia de que o divórcio é um direito potestativo: basta a manifestação de vontade de um dos cônjuges, independentemente de culpa ou concordância do outro.
 
-No julgamento do RE 1.167.478/RJ (Tema 1.053), o STF fixou tese clara: a separaÃ§Ã£o judicial nÃ£o Ã© mais requisito para o divÃ³rcio e tampouco subsiste como figura autÃ´noma, preservando-se apenas o estado civil de quem jÃ¡ se encontra separado por decisÃ£o judicial ou escritura.
+No julgamento do RE 1.167.478/RJ (Tema 1.053), o STF fixou tese clara: a separação judicial não é mais requisito para o divórcio e tampouco subsiste como figura autônoma, preservando-se apenas o estado civil de quem já se encontra separado por decisão judicial ou escritura.
 
-Esse entendimento reforÃ§a algumas consequÃªncias prÃ¡ticas importantes:
+Esse entendimento reforça algumas consequências práticas importantes:
 
-nÃ£o Ã© necessÃ¡rio demonstrar motivo para o divÃ³rcio; nÃ£o se discute "culpa" como condiÃ§Ã£o para dissoluÃ§Ã£o do vÃ­nculo; discussÃµes sobre guarda, alimentos e partilha podem ser resolvidas conjuntamente, mas nÃ£o impedem o decreto do divÃ³rcio.
+não é necessário demonstrar motivo para o divórcio; não se discute "culpa" como condição para dissolução do vínculo; discussões sobre guarda, alimentos e partilha podem ser resolvidas conjuntamente, mas não impedem o decreto do divórcio.
 
-A leitura constitucional privilegia a autonomia e a dignidade da pessoa, valores constantemente realÃ§ados pela jurisprudÃªncia do STF em matÃ©ria de Direito de FamÃ­lia.
+A leitura constitucional privilegia a autonomia e a dignidade da pessoa, valores constantemente realçados pela jurisprudência do STF em matéria de Direito de Família.
 
-## 2. DivÃ³rcio em cartÃ³rio em 2025: quando Ã© possÃ­vel?
+## 2. Divórcio em cartório em 2025: quando é possível?
 
-Desde a Lei n.Âº 11.441/2007, jÃ¡ era possÃ­vel realizar divÃ³rcio consensual em cartÃ³rio, sem processo judicial, desde que nÃ£o houvesse filhos menores ou incapazes e que todas as questÃµes patrimoniais estivessem pacificadas. A ResoluÃ§Ã£o n.Âº 35/2007 do CNJ estruturou os procedimentos para a via extrajudicial.
+Desde a Lei n.º 11.441/2007, já era possível realizar divórcio consensual em cartório, sem processo judicial, desde que não houvesse filhos menores ou incapazes e que todas as questões patrimoniais estivessem pacificadas. A Resolução n.º 35/2007 do CNJ estruturou os procedimentos para a via extrajudicial.
 
-Em 2024, o CNJ deu passo adiante com a ResoluÃ§Ã£o n.Âº 571/2024, autorizando que inventÃ¡rios, partilhas e divÃ³rcios consensuais possam ser feitos em tabelionato de notas mesmo havendo herdeiros menores ou incapazes, desde que a soluÃ§Ã£o nÃ£o envolva disposiÃ§Ã£o de bens em prejuÃ­zo desses interessados e haja manifestaÃ§Ã£o favorÃ¡vel do MinistÃ©rio PÃºblico.
+Em 2024, o CNJ deu passo adiante com a Resolução n.º 571/2024, autorizando que inventários, partilhas e divórcios consensuais possam ser feitos em tabelionato de notas mesmo havendo herdeiros menores ou incapazes, desde que a solução não envolva disposição de bens em prejuízo desses interessados e haja manifestação favorável do Ministério Público.
 
-Na prÃ¡tica, o divÃ³rcio em cartÃ³rio, em 2025, exige atenÃ§Ã£o a alguns requisitos:
+Na prática, o divórcio em cartório, em 2025, exige atenção a alguns requisitos:
 
-Consenso entre os cÃ´njuges sobre: vontade de se divorciar; regime de guarda e convivÃªncia dos filhos; alimentos para filhos e, se for o caso, para ex-cÃ´njuge; partilha de bens e eventuais dÃ­vidas.AssistÃªncia obrigatÃ³ria de advogado ou defensor pÃºblico para ambos ou para o casal.InexistÃªncia de litÃ­gio relevante: se houver conflito grave sobre guarda, violÃªncia domÃ©stica, alienaÃ§Ã£o parental ou controvÃ©rsias patrimoniais de maior complexidade, o tabeliÃ£o deve recusar o ato e orientar a busca do JudiciÃ¡rio.No caso de filhos menores ou incapazes: necessidade de estruturaÃ§Ã£o de acordo que resguarde integralmente o interesse das crianÃ§as; manifestaÃ§Ã£o favorÃ¡vel do MinistÃ©rio PÃºblico; vedaÃ§Ã£o Ã  disposiÃ§Ã£o de bens pertencentes ao menor ou incapaz, salvo autorizaÃ§Ã£o judicial especÃ­fica.
+Consenso entre os cônjuges sobre: vontade de se divorciar; regime de guarda e convivência dos filhos; alimentos para filhos e, se for o caso, para ex-cônjuge; partilha de bens e eventuais dívidas.Assistência obrigatória de advogado ou defensor público para ambos ou para o casal.Inexistência de litígio relevante: se houver conflito grave sobre guarda, violência doméstica, alienação parental ou controvérsias patrimoniais de maior complexidade, o tabelião deve recusar o ato e orientar a busca do Judiciário.No caso de filhos menores ou incapazes: necessidade de estruturação de acordo que resguarde integralmente o interesse das crianças; manifestação favorável do Ministério Público; vedação à disposição de bens pertencentes ao menor ou incapaz, salvo autorização judicial específica.
 
-Desse modo, o cartÃ³rio passa a ser uma porta de saÃ­da cÃ©lere para casais que conseguem dialogar, inclusive quando hÃ¡ filhos menores, desde que as garantias legais sejam efetivamente observadas.
+Desse modo, o cartório passa a ser uma porta de saída célere para casais que conseguem dialogar, inclusive quando há filhos menores, desde que as garantias legais sejam efetivamente observadas.
 
-## 3. Quando o processo judicial ainda Ã© o caminho adequado
+## 3. Quando o processo judicial ainda é o caminho adequado
 
-Apesar do avanÃ§o da desjudicializaÃ§Ã£o, hÃ¡ situaÃ§Ãµes em que a via judicial continua indispensÃ¡vel ou, ao menos, prudente:
+Apesar do avanço da desjudicialização, há situações em que a via judicial continua indispensável ou, ao menos, prudente:
 
-Conflitos intensos sobre guarda, convivÃªncia ou mudanÃ§a de domicÃ­lio de filhos menores, com alegaÃ§Ãµes de risco, violÃªncia ou alienaÃ§Ã£o parental;ViolÃªncia domÃ©stica e familiar, que exigem medidas protetivas, afastamento do lar e atuaÃ§Ã£o coordenada com o sistema de JustiÃ§a criminal;Desacordo sobre partilha de bens, especialmente em casamentos com grande patrimÃ´nio, empresas familiares, sociedades empresariais ou bens no exterior;IndÃ­cios de manipulaÃ§Ã£o, coaÃ§Ã£o econÃ´mica ou assimetria extrema de informaÃ§Ã£o, em que um dos cÃ´njuges nÃ£o tem plena consciÃªncia das consequÃªncias do acordo proposto.
+Conflitos intensos sobre guarda, convivência ou mudança de domicílio de filhos menores, com alegações de risco, violência ou alienação parental;Violência doméstica e familiar, que exigem medidas protetivas, afastamento do lar e atuação coordenada com o sistema de Justiça criminal;Desacordo sobre partilha de bens, especialmente em casamentos com grande patrimônio, empresas familiares, sociedades empresariais ou bens no exterior;Indícios de manipulação, coação econômica ou assimetria extrema de informação, em que um dos cônjuges não tem plena consciência das consequências do acordo proposto.
 
-Nesses casos, o JudiciÃ¡rio funciona como espaÃ§o de garantia de contraditÃ³rio e instruÃ§Ã£o probatÃ³ria, mitigando desigualdades de poder entre as partes. A atuaÃ§Ã£o prudente do advogado, aqui, consiste em avaliar se a celeridade do cartÃ³rio nÃ£o implicarÃ¡ renÃºncias irrecuperÃ¡veis para o cÃ´njuge mais vulnerÃ¡vel.
+Nesses casos, o Judiciário funciona como espaço de garantia de contraditório e instrução probatória, mitigando desigualdades de poder entre as partes. A atuação prudente do advogado, aqui, consiste em avaliar se a celeridade do cartório não implicará renúncias irrecuperáveis para o cônjuge mais vulnerável.
 
-## 4. ProteÃ§Ã£o patrimonial do cÃ´njuge economicamente vulnerÃ¡vel
+## 4. Proteção patrimonial do cônjuge economicamente vulnerável
 
 ### 4.1. Regime de bens e partilha
 
-O ponto de partida Ã© o regime de bens adotado no casamento (comunhÃ£o parcial, comunhÃ£o universal, separaÃ§Ã£o convencional ou obrigatÃ³ria, participaÃ§Ã£o final nos aquestos). Cada regime define:
+O ponto de partida é o regime de bens adotado no casamento (comunhão parcial, comunhão universal, separação convencional ou obrigatória, participação final nos aquestos). Cada regime define:
 
-quais bens integram a meaÃ§Ã£o; se hÃ¡ ou nÃ£o comunicaÃ§Ã£o de bens anteriores ao casamento; como se tratam heranÃ§as, doaÃ§Ãµes e aquisiÃ§Ãµes onerosas durante a uniÃ£o.
+quais bens integram a meação; se há ou não comunicação de bens anteriores ao casamento; como se tratam heranças, doações e aquisições onerosas durante a união.
 
-A correta identificaÃ§Ã£o dos bens comuns e particulares, com lastro documental (matrÃ­culas, contratos, extratos bancÃ¡rios), Ã© essencial para qualquer acordo de divÃ³rcio que pretenda ser estÃ¡vel e reduzir litÃ­gios futuros.
+A correta identificação dos bens comuns e particulares, com lastro documental (matrículas, contratos, extratos bancários), é essencial para qualquer acordo de divórcio que pretenda ser estável e reduzir litígios futuros.
 
-### 4.2. Alimentos x alimentos compensatÃ³rios
+### 4.2. Alimentos x alimentos compensatórios
 
-O STJ vem consolidando, hÃ¡ alguns anos, a distinÃ§Ã£o entre:
+O STJ vem consolidando, há alguns anos, a distinção entre:
 
-pensÃ£o alimentÃ­cia tradicional (art. 1.694 do CÃ³digo Civil), voltada Ã  subsistÃªncia de quem nÃ£o pode prover o prÃ³prio sustento; ealimentos ou pensÃ£o compensatÃ³ria, voltados a corrigir grave desequilÃ­brio econÃ´mico criado pela ruptura do vÃ­nculo conjugal, como ocorre quando um dos cÃ´njuges abandona a carreira para se dedicar ao trabalho domÃ©stico e ao cuidado dos filhos.
+pensão alimentícia tradicional (art. 1.694 do Código Civil), voltada à subsistência de quem não pode prover o próprio sustento; ealimentos ou pensão compensatória, voltados a corrigir grave desequilíbrio econômico criado pela ruptura do vínculo conjugal, como ocorre quando um dos cônjuges abandona a carreira para se dedicar ao trabalho doméstico e ao cuidado dos filhos.
 
-Em precedente frequentemente citado, o STJ destacou que esses alimentos compensatÃ³rios nÃ£o se confundem com a pensÃ£o alimentÃ­cia tradicional, pois buscam mitigar a abrupta alteraÃ§Ã£o do padrÃ£o de vida de quem sai do casamento sem patrimÃ´nio ou renda, apÃ³s anos de contribuiÃ§Ã£o nÃ£o remunerada ao projeto familiar.
+Em precedente frequentemente citado, o STJ destacou que esses alimentos compensatórios não se confundem com a pensão alimentícia tradicional, pois buscam mitigar a abrupta alteração do padrão de vida de quem sai do casamento sem patrimônio ou renda, após anos de contribuição não remunerada ao projeto familiar.
 
-Mais recentemente, a Quarta Turma do STJ manteve condenaÃ§Ã£o que fixou alimentos compensatÃ³rios de R$ 4 milhÃµes em favor de ex-companheira, justamente para recompor o desequilÃ­brio econÃ´mico apÃ³s longa uniÃ£o, em que ela usufruÃ­a gratuitamente imÃ³vel e padrÃ£o de vida elevado.
+Mais recentemente, a Quarta Turma do STJ manteve condenação que fixou alimentos compensatórios de R$ 4 milhões em favor de ex-companheira, justamente para recompor o desequilíbrio econômico após longa união, em que ela usufruía gratuitamente imóvel e padrão de vida elevado.
 
-Por outro lado, o mesmo Tribunal tambÃ©m tem ressaltado que:
+Por outro lado, o mesmo Tribunal também tem ressaltado que:
 
-nem todo divÃ³rcio justificarÃ¡ pensÃ£o compensatÃ³ria; o instituto possui natureza indenizatÃ³ria/compensatÃ³ria, o que afasta, por exemplo, a prisÃ£o civil como meio de cobranÃ§a, reservada aos alimentos estritamente de subsistÃªncia.
+nem todo divórcio justificará pensão compensatória; o instituto possui natureza indenizatória/compensatória, o que afasta, por exemplo, a prisão civil como meio de cobrança, reservada aos alimentos estritamente de subsistência.
 
-Em sÃ­ntese, a pensÃ£o compensatÃ³ria:
+Em síntese, a pensão compensatória:
 
-exige demonstraÃ§Ã£o concreta de desequilÃ­brio relevante; costuma ter prazo determinado ou ser fixada em parcela Ãºnica; Ã© avaliada caso a caso, com forte componente de equidade.
+exige demonstração concreta de desequilíbrio relevante; costuma ter prazo determinado ou ser fixada em parcela única; é avaliada caso a caso, com forte componente de equidade.
 
-### 4.3. Economia do cuidado e valorizaÃ§Ã£o do trabalho domÃ©stico
+### 4.3. Economia do cuidado e valorização do trabalho doméstico
 
-A doutrina contemporÃ¢nea e estudos recentes tÃªm insistido na necessidade de reconhecer o valor econÃ´mico do trabalho domÃ©stico e de cuidado, em geral exercido de forma desproporcional por mulheres, sem remuneraÃ§Ã£o e sem proteÃ§Ã£o previdenciÃ¡ria adequada.
+A doutrina contemporânea e estudos recentes têm insistido na necessidade de reconhecer o valor econômico do trabalho doméstico e de cuidado, em geral exercido de forma desproporcional por mulheres, sem remuneração e sem proteção previdenciária adequada.
 
-Esse debate dialoga com a prÃ¡tica forense: ao analisar alimentos compensatÃ³rios, guarda compartilhada e divisÃ£o de encargos parentais, juÃ­zes e tribunais sÃ£o chamados a considerar:
+Esse debate dialoga com a prática forense: ao analisar alimentos compensatórios, guarda compartilhada e divisão de encargos parentais, juízes e tribunais são chamados a considerar:
 
-o impacto da maternidade e do cuidado sobre a trajetÃ³ria profissional; a perda de oportunidades de carreira; a dependÃªncia econÃ´mica construÃ­da ao longo da uniÃ£o.
+o impacto da maternidade e do cuidado sobre a trajetória profissional; a perda de oportunidades de carreira; a dependência econômica construída ao longo da união.
 
-Nessa perspectiva, a proteÃ§Ã£o patrimonial do cÃ´njuge vulnerÃ¡vel nÃ£o Ã© "privilÃ©gio", mas mecanismo de correÃ§Ã£o de assimetrias estruturais, em linha com a compreensÃ£o de juristas como LuÃ­s Roberto Barroso e FlÃ¡vio Dino acerca da centralidade da dignidade humana e da igualdade substancial nas relaÃ§Ãµes familiares.
+Nessa perspectiva, a proteção patrimonial do cônjuge vulnerável não é "privilégio", mas mecanismo de correção de assimetrias estruturais, em linha com a compreensão de juristas como Luís Roberto Barroso e Flávio Dino acerca da centralidade da dignidade humana e da igualdade substancial nas relações familiares.
 
-## 5. Passo a passo prÃ¡tico antes de escolher cartÃ³rio ou JustiÃ§a
+## 5. Passo a passo prático antes de escolher cartório ou Justiça
 
-Antes de decidir se o divÃ³rcio serÃ¡ feito em cartÃ³rio ou por aÃ§Ã£o judicial, Ã© prudente que o casal (ou o cÃ´njuge interessado) responda, com apoio tÃ©cnico, Ã s seguintes perguntas:
+Antes de decidir se o divórcio será feito em cartório ou por ação judicial, é prudente que o casal (ou o cônjuge interessado) responda, com apoio técnico, às seguintes perguntas:
 
-HÃ¡ consenso real sobre o tÃ©rmino do casamento e seus efeitos?Se um dos cÃ´njuges se opÃµe frontalmente ou demonstra nÃ£o compreender os impactos patrimoniais do acordo, a via judicial pode ser mais segura.O regime de bens e o patrimÃ´nio do casal estÃ£o claramente identificados?MatrÃ­culas atualizadas de imÃ³veis, extratos bancÃ¡rios, contratos de veÃ­culos, quotas empresariais, aplicaÃ§Ãµes financeiras.Existe assimetria econÃ´mica significativa entre os cÃ´njuges?Um deles ficou fora do mercado de trabalho por longos anos para cuidar da casa e dos filhos? HÃ¡ necessidade de discutir alimentos compensatÃ³rios ou partilha mais cuidadosa?HÃ¡ filhos menores ou com deficiÃªncia ou doenÃ§a grave?Em caso positivo, Ã© necessÃ¡rio desenhar, com muita precisÃ£o, regras de guarda, convivÃªncia, pensÃ£o alimentÃ­cia e responsabilidades parentais. O cartÃ³rio somente poderÃ¡ atuar se houver plena proteÃ§Ã£o ao interesse dos filhos e manifestaÃ§Ã£o favorÃ¡vel do MinistÃ©rio PÃºblico.HÃ¡ histÃ³rico de violÃªncia domÃ©stica, abuso ou intimidaÃ§Ã£o?Nessas hipÃ³teses, a prioridade Ã© a proteÃ§Ã£o da integridade fÃ­sica e psÃ­quica da vÃ­tima; o divÃ³rcio judicial, com medidas protetivas, costuma ser o caminho adequado.
+Há consenso real sobre o término do casamento e seus efeitos?Se um dos cônjuges se opõe frontalmente ou demonstra não compreender os impactos patrimoniais do acordo, a via judicial pode ser mais segura.O regime de bens e o patrimônio do casal estão claramente identificados?Matrículas atualizadas de imóveis, extratos bancários, contratos de veículos, quotas empresariais, aplicações financeiras.Existe assimetria econômica significativa entre os cônjuges?Um deles ficou fora do mercado de trabalho por longos anos para cuidar da casa e dos filhos? Há necessidade de discutir alimentos compensatórios ou partilha mais cuidadosa?Há filhos menores ou com deficiência ou doença grave?Em caso positivo, é necessário desenhar, com muita precisão, regras de guarda, convivência, pensão alimentícia e responsabilidades parentais. O cartório somente poderá atuar se houver plena proteção ao interesse dos filhos e manifestação favorável do Ministério Público.Há histórico de violência doméstica, abuso ou intimidação?Nessas hipóteses, a prioridade é a proteção da integridade física e psíquica da vítima; o divórcio judicial, com medidas protetivas, costuma ser o caminho adequado.
 
-Responder a essas questÃµes, preferencialmente com assessoria jurÃ­dica, evita acordos apressados que gerem arrependimento ou litÃ­gios posteriores.
+Responder a essas questões, preferencialmente com assessoria jurídica, evita acordos apressados que gerem arrependimento ou litígios posteriores.
 
 ## 6. Perguntas frequentes
 
-1. Em 2025 ainda existe separaÃ§Ã£o judicial?O STF entendeu que, apÃ³s a EC 66/2010, a separaÃ§Ã£o judicial nÃ£o Ã© requisito para o divÃ³rcio e nÃ£o subsiste como figura autÃ´noma, preservando-se apenas a situaÃ§Ã£o de quem jÃ¡ estÃ¡ separado por decisÃ£o ou escritura anteriores.
+1. Em 2025 ainda existe separação judicial?O STF entendeu que, após a EC 66/2010, a separação judicial não é requisito para o divórcio e não subsiste como figura autônoma, preservando-se apenas a situação de quem já está separado por decisão ou escritura anteriores.
 
-2. Posso me divorciar em cartÃ³rio mesmo tendo filhos menores?Sim, desde que o divÃ³rcio seja consensual, todas as questÃµes de guarda, convivÃªncia e alimentos estejam bem definidas, nÃ£o haja prejuÃ­zo aos filhos e o MinistÃ©rio PÃºblico se manifeste favoravelmente, nos termos da ResoluÃ§Ã£o n.Âº 571/2024 do CNJ.
+2. Posso me divorciar em cartório mesmo tendo filhos menores?Sim, desde que o divórcio seja consensual, todas as questões de guarda, convivência e alimentos estejam bem definidas, não haja prejuízo aos filhos e o Ministério Público se manifeste favoravelmente, nos termos da Resolução n.º 571/2024 do CNJ.
 
-3. O cartÃ³rio Ã© sempre mais vantajoso do que o processo judicial?Nem sempre. O cartÃ³rio Ã© mais rÃ¡pido quando hÃ¡ consenso e equilÃ­brio entre as partes. PorÃ©m, em situaÃ§Ãµes de conflito intenso, desigualdade econÃ´mica ou necessidade de produÃ§Ã£o de provas, o processo judicial oferece maior proteÃ§Ã£o e controle.
+3. O cartório é sempre mais vantajoso do que o processo judicial?Nem sempre. O cartório é mais rápido quando há consenso e equilíbrio entre as partes. Porém, em situações de conflito intenso, desigualdade econômica ou necessidade de produção de provas, o processo judicial oferece maior proteção e controle.
 
-4. O cÃ´njuge que nunca trabalhou fora tem direito automÃ¡tico a pensÃ£o compensatÃ³ria?NÃ£o hÃ¡ "direito automÃ¡tico". A pensÃ£o compensatÃ³ria depende de prova do desequilÃ­brio concreto e das circunstÃ¢ncias do caso. O STJ reconhece o instituto, mas tambÃ©m Ã© rigoroso ao analisar sua necessidade, extensÃ£o e duraÃ§Ã£o.
+4. O cônjuge que nunca trabalhou fora tem direito automático a pensão compensatória?Não há "direito automático". A pensão compensatória depende de prova do desequilíbrio concreto e das circunstâncias do caso. O STJ reconhece o instituto, mas também é rigoroso ao analisar sua necessidade, extensão e duração.
 
-5. Alimentos compensatÃ³rios podem ser cobrados com ameaÃ§a de prisÃ£o civil?A jurisprudÃªncia do STJ tem entendido que os alimentos compensatÃ³rios possuem natureza indenizatÃ³ria/compensatÃ³ria, e nÃ£o estritamente alimentar, o que afasta, em regra, o rito da prisÃ£o civil, reservado Ã  pensÃ£o de subsistÃªncia.
+5. Alimentos compensatórios podem ser cobrados com ameaça de prisão civil?A jurisprudência do STJ tem entendido que os alimentos compensatórios possuem natureza indenizatória/compensatória, e não estritamente alimentar, o que afasta, em regra, o rito da prisão civil, reservado à pensão de subsistência.
 
-## ConclusÃ£o
+## Conclusão
 
-O divÃ³rcio em 2025 combina trÃªs tendÃªncias: (i) liberdade individual de nÃ£o permanecer casado, reforÃ§ada pela EC 66/2010 e pelo STF; (ii) desjudicializaÃ§Ã£o responsÃ¡vel, com ampliaÃ§Ã£o da via extrajudicial inclusive em cenÃ¡rios com filhos menores, sob a supervisÃ£o do MinistÃ©rio PÃºblico; e (iii) sensibilidade crescente Ã  proteÃ§Ã£o patrimonial do cÃ´njuge vulnerÃ¡vel, por meio da correta aplicaÃ§Ã£o dos regimes de bens, da partilha equilibrada e, quando cabÃ­vel, da pensÃ£o compensatÃ³ria.
+O divórcio em 2025 combina três tendências: (i) liberdade individual de não permanecer casado, reforçada pela EC 66/2010 e pelo STF; (ii) desjudicialização responsável, com ampliação da via extrajudicial inclusive em cenários com filhos menores, sob a supervisão do Ministério Público; e (iii) sensibilidade crescente à proteção patrimonial do cônjuge vulnerável, por meio da correta aplicação dos regimes de bens, da partilha equilibrada e, quando cabível, da pensão compensatória.
 
-Para quem vive essa realidade, a principal mensagem Ã© de prudÃªncia: nÃ£o basta escolher o caminho mais rÃ¡pido, Ã© essencial escolher o caminho mais seguro para o patrimÃ´nio, para os filhos e para a reconstruÃ§Ã£o da vida pÃ³s-divÃ³rcio. A anÃ¡lise individualizada, conduzida por advogado de confianÃ§a, continua sendo o melhor instrumento para transformar as garantias abstratas do sistema jurÃ­dico em proteÃ§Ã£o concreta no caso concreto.
+Para quem vive essa realidade, a principal mensagem é de prudência: não basta escolher o caminho mais rápido, é essencial escolher o caminho mais seguro para o patrimônio, para os filhos e para a reconstrução da vida pós-divórcio. A análise individualizada, conduzida por advogado de confiança, continua sendo o melhor instrumento para transformar as garantias abstratas do sistema jurídico em proteção concreta no caso concreto.
 
