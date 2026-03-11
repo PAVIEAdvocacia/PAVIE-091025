@@ -10,20 +10,16 @@ const { items } = Astro.props;
 
 <section class="reading-panel" aria-labelledby="toc-title">
 	<h2 id="toc-title">Neste artigo</h2>
-	{items.length > 0 ? (
-		<ol class="reading-toc">
-			{items.map((item) => (
-				<li>
-					<a href={`#${item.id}`} class:list={{ 'is-depth-3': item.depth === 3 }} data-toc-link={item.id}>
-						<span>{item.number}</span>
-						{item.text}
-					</a>
-				</li>
-			))}
-		</ol>
-	) : (
-		<p class="text-muted">Sem indice para este artigo.</p>
-	)}
+	<ol class="reading-toc">
+		{items.map((item) => (
+			<li>
+				<a href={`#${item.id}`} class:list={{ 'is-depth-3': item.depth === 3 }} data-toc-link={item.id}>
+					<span>{item.number}</span>
+					{item.text}
+				</a>
+			</li>
+		))}
+	</ol>
 </section>
 
 <script>

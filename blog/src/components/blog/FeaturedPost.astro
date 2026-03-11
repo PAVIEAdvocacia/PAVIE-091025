@@ -8,7 +8,7 @@ interface Props {
 const { post } = Astro.props;
 const dateLabel = post.publishedAt
 	? post.publishedAt.toLocaleDateString('pt-BR', { dateStyle: 'long' })
-	: 'Publicacao recente';
+	: 'Publicação recente';
 ---
 
 <article class="featured-post" aria-labelledby="featured-post-title">
@@ -17,7 +17,7 @@ const dateLabel = post.publishedAt
 			<img src={post.image} alt={post.imageAlt} loading="eager" />
 		) : (
 			<div class="featured-post__placeholder" role="presentation">
-				PAVIE Advocacia
+				PAVIE | Advocacia
 			</div>
 		)}
 	</div>

@@ -1,7 +1,7 @@
 export const EDITORIAL_AREAS = [
 	{
 		key: 'familia-sucessoes-patrimonio',
-		label: 'Familia, Sucessoes e Patrimonio',
+		label: 'Família, Sucessões e Patrimônio',
 		aliases: [
 			'familia',
 			'sucessoes',
@@ -14,22 +14,22 @@ export const EDITORIAL_AREAS = [
 	},
 	{
 		key: 'contratos-obrigacoes-responsabilidade-civil',
-		label: 'Contratos, Obrigacoes e Responsabilidade Civil',
+		label: 'Contratos, Obrigações e Responsabilidade Civil',
 		aliases: ['contratos', 'cobranca', 'contratos-e-negocios', 'cobranca-e-recuperacao-de-credito'],
 	},
 	{
 		key: 'imobiliario-regularizacao-condominios',
-		label: 'Imobiliario, Regularizacao e Condominios',
+		label: 'Imobiliário, Regularização e Condomínios',
 		aliases: ['imobiliario', 'direito-imobiliario', 'imobiliario-e-regularizacao'],
 	},
 	{
 		key: 'consumidor-saude-previdencia',
-		label: 'Consumidor, Saude e Previdencia',
+		label: 'Consumidor, Saúde e Previdência',
 		aliases: ['consumidor', 'consumidor-e-responsabilidade'],
 	},
 	{
 		key: 'compliance-integridade-atuacao-empresarial',
-		label: 'Compliance, Integridade e Atuacao Empresarial',
+		label: 'Compliance, Integridade e Atuação Empresarial',
 		aliases: [
 			'compliance',
 			'empresarial',
@@ -59,19 +59,19 @@ export const PRIMARY_CTA_OPTIONS = [
 		key: 'areas_editoriais',
 		label: 'Explorar temas',
 		href: '/blog/areas/',
-		description: 'Continue a leitura pela frente juridica correspondente e encontre novos caminhos de aprofundamento.',
+		description: 'Continue a leitura por assunto e encontre novos caminhos para aprofundar a situação.',
 	},
 	{
 		key: 'diagnostico_juridico',
 		label: 'Solicitar orientação inicial',
 		href: '/blog/contato/',
-		description: 'Entenda quando faz sentido avancar para triagem inicial e quais informacoes ajudam no primeiro contato.',
+		description: 'Entenda quando faz sentido avançar para a orientação inicial e quais informações ajudam no primeiro contato.',
 	},
 	{
 		key: 'areas_de_atuacao',
 		label: 'Conheça os Serviços',
 		href: '/areas/',
-		description: 'Veja a camada institucional da PAVIE para a frente juridica relacionada a esta leitura.',
+		description: 'Veja como a PAVIE apresenta esta área de atuação na camada institucional do site.',
 	},
 ] as const;
 

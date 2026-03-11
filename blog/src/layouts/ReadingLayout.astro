@@ -1,4 +1,4 @@
-﻿---
+---
 import type { BlogPost } from '../lib/posts';
 import type { TocItem } from '../lib/toc';
 import '../styles/reading.css';
@@ -31,15 +31,18 @@ const breadcrumbs = [
 	{ label: post.title },
 ];
 
-const appliesTo = [
-	'postos em que você precisa entender risco antes de agir',
-	'cenários com decisão patrimonial ou familiar relevante',
-	'situações em que uma orientação inicial evita retrabalho jurídico',
+const articleFocusPoints = [
+	'Quando a decisão já envolve documento, contrato, patrimônio ou registro relevante.',
+	'Quando existe prazo, audiência, urgência prática ou risco que não convém tratar no improviso.',
+	'Quando a leitura informa bem o tema, mas a estratégia ainda depende das particularidades do caso.',
 ];
+const introText = post.excerpt && post.excerpt !== post.description ? post.excerpt : '';
+const showIntroTags = post.temas.length > 0;
+const showIntroBlock = Boolean(introText) || showIntroTags;
 
 const articleSchema = {
 	'@context': 'https://schema.org',
-	'@type': 'Article',
+	'@type': 'BlogPosting',
 	headline: post.title,
 	description: post.description,
 	url: canonicalUrl,
@@ -53,6 +56,7 @@ const articleSchema = {
 	dateModified: (post.updatedAt ?? post.publishedAt)?.toISOString(),
 	mainEntityOfPage: canonicalUrl,
 	inLanguage: 'pt-BR',
+	articleSection: post.area,
 };
 const breadcrumbSchema = buildBreadcrumbSchema(breadcrumbs, canonicalUrl);
 
@@ -74,7 +78,7 @@ const faqSchema =
 ---
 
 <BaseLayout
-	title={`${post.seoTitle ?? post.title} | PAVIE`}
+	title={`${post.seoTitle ?? post.title} | PAVIE | Advocacia`}
 	description={post.description}
 	canonical={canonicalUrl}
 	image={post.image}
@@ -91,42 +95,18 @@ const faqSchema =
 
 		<div class="reading-shell">
 			<article class="reading-content" aria-labelledby="reading-hero-title">
-				<section class="reading-summary" aria-label="Resumo do artigo">
-					<h2>Resumo prático</h2>
-					<p>{post.excerpt}</p>
-					{post.temas.length > 0 && (
-						<div class="reading-summary__tags">
-							{post.temas.slice(0, 5).map((tema) => (
-								<a class="reading-tag" href={temaHref(tema)}>{tema}</a>
-							))}
-						</div>
-					)}
-				</section>
-
-				<section class="reading-summary" aria-label="Quando este conteúdo se aplica">
-					<h2>Quando este conteúdo se aplica</h2>
-					<ul>
-						{appliesTo.map((item) => (
-							<li>{item}</li>
-						))}
-					</ul>
-				</section>
-
-				<section class="reading-bridge" aria-label="Ponte entre artigo, area e contato">
-					<span class="section-kicker">Area correspondente</span>
-					<h2>Este conteudo faz parte da trilha {cluster.title}</h2>
-					<p>{cluster.description}</p>
-					<ul>
-						{cluster.typicalSituations.slice(0, 3).map((item) => (
-							<li>{item}</li>
-						))}
-					</ul>
-					<div class="reading-bridge__actions">
-						<a class="btn btn-secondary" href={blogClusterHref(cluster.key)}>Explorar temas</a>
-						<a class="btn btn-ghost" href={cluster.institutionalHref}>Conheça os Serviços</a>
-						<a class="btn btn-primary" href={cluster.contactHref}>Solicitar orientação inicial</a>
-					</div>
-				</section>
+				{showIntroBlock && (
+					<section class="reading-intro" aria-label="Introdução do artigo">
+						{introText && <p class="reading-intro__lead">{introText}</p>}
+						{showIntroTags && (
+							<div class="reading-summary__tags">
+								{post.temas.slice(0, 5).map((tema) => (
+									<a class="reading-tag" href={temaHref(tema)}>{tema}</a>
+								))}
+							</div>
+						)}
+					</section>
+				)}
 
 				<AudioPlayer
 					audioStatus={post.audioStatus}
@@ -136,6 +116,16 @@ const faqSchema =
 				<div class="article-content">
 					<slot />
 				</div>
+				<section class="reading-context" aria-label="Quando este tema costuma exigir análise do caso concreto">
+					<span class="section-kicker">Quando a leitura pede um próximo passo</span>
+					<h2>Este tema costuma exigir análise individual quando a decisão já envolve documento, prazo, risco ou impacto relevante.</h2>
+					<ul>
+						{articleFocusPoints.map((item) => (
+							<li>{item}</li>
+						))}
+					</ul>
+				</section>
+
 				{post.faqItems.length > 0 && (
 					<section class="reading-summary" aria-label="Perguntas frequentes do artigo">
 						<h2>Perguntas frequentes</h2>
@@ -150,29 +140,68 @@ const faqSchema =
 					</section>
 				)}
 				<div class="reading-footer">
-					<AuthorCard post={post} />
-					<section class="reading-panel" aria-label="Chamada final">
-						<h3>Precisa de orientação aplicada ao seu caso?</h3>
-						<p class="text-muted">{post.cta.description}</p>
-						<a class="btn btn-primary" href={post.cta.href}>
-							{post.cta.label}
-						</a>
+					<section class="reading-next-step surface-card" aria-label="Próximo passo após a leitura">
+						<div>
+							<span class="section-kicker">Próximo passo possível</span>
+							<h2>Se a leitura não basta sozinha, o primeiro passo é descrever a situação concreta com clareza.</h2>
+							<p>{post.cta.description}</p>
+						</div>
+						<div class="reading-next-step__grid">
+							<article class="reading-next-step__panel">
+								<h3>Área jurídica correspondente</h3>
+								<p>{cluster.description}</p>
+								<ul>
+									{cluster.typicalSituations.slice(0, 3).map((item) => (
+										<li>{item}</li>
+									))}
+								</ul>
+							</article>
+							<article class="reading-next-step__panel">
+								<h3>O que ajuda no primeiro contato</h3>
+								<ul>
+									<li>Descrição objetiva da situação principal.</li>
+									<li>Documentos, contratos ou registros que já existem.</li>
+									<li>Prazo, audiência, urgência prática ou impacto patrimonial.</li>
+								</ul>
+							</article>
+						</div>
+						<div class="reading-bridge__actions">
+							<a class="btn btn-secondary" href={blogClusterHref(cluster.key)}>Explorar temas</a>
+							<a class="btn btn-ghost" href={cluster.institutionalHref}>Conheça os Serviços</a>
+							<a
+								class="btn btn-primary"
+								href={post.cta.href}
+								data-contact-origin="article-final"
+								data-contact-intent="orientacao-inicial"
+							>
+								{post.cta.label}
+							</a>
+						</div>
 						<p class="reading-ethics-note">Conteúdo informativo. Cada caso exige análise técnica individual.</p>
 					</section>
+					<AuthorCard post={post} />
 					<RelatedPosts
 						posts={related}
-						title="Continue nesta trilha editorial"
+						title="Continue por leituras desta área"
 						emptyHref={blogClusterHref(cluster.key)}
 						emptyLabel="Explorar temas"
 					/>
+					<section class="reading-panel" aria-label="Chamada final resumida">
+						<h3>Prefere seguir direto para o contato?</h3>
+						<p class="text-muted">{post.cta.description}</p>
+						<a
+							class="btn btn-secondary"
+							href={post.cta.href}
+							data-contact-origin="article-summary"
+							data-contact-intent="orientacao-inicial"
+						>
+							{post.cta.label}
+						</a>
+					</section>
 				</div>
 			</article>
 
 			<ReadingSidebar post={post} toc={toc} related={related} />
-		</div>
-
-		<div class="mobile-reading-cta" aria-label="Acao rapida no mobile">
-			<a class="btn btn-primary" href={post.cta.href}>{post.cta.label}</a>
 		</div>
 	</div>
 

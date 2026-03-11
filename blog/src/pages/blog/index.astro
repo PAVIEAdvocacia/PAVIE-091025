@@ -1,4 +1,4 @@
-﻿---
+---
 import { getCollection } from 'astro:content';
 import BlogGrid from '../../components/blog/BlogGrid.astro';
 import FeaturedPost from '../../components/blog/FeaturedPost.astro';
@@ -20,18 +20,36 @@ const topThemes = Array.from(
 			.map((tema) => [tema.toLowerCase(), tema]),
 	).values(),
 ).slice(0, 10);
-const editorialGuide = [
+const quickStartItems = [
 	{
-		title: 'Identifique a frente juridica',
-		text: 'O blog organiza a leitura por clusters para que voce reconheca mais rapidamente o universo juridico da sua situacao.',
+		area: 'Família, Sucessões e Patrimônio',
+		title: 'Divórcio, guarda, convivência ou partilha',
+		text: 'Quando a dúvida envolve filhos, separação, alimentos, inventário ou patrimônio familiar.',
+		href: '/blog/areas/familia-sucessoes-patrimonio/',
 	},
 	{
-		title: 'Aprofunde sem se perder',
-		text: 'Cada trilha editorial conecta artigo, area, temas frequentes e continuidade de leitura dentro do mesmo contexto.',
+		area: 'Imobiliário, Regularização e Condomínios',
+		title: 'Imóvel, matrícula, posse ou regularização',
+		text: 'Quando a situação passa por compra e venda, locação, condomínio ou documentos do imóvel.',
+		href: '/blog/areas/imobiliario-regularizacao-condominios/',
 	},
 	{
-		title: 'Busque orientacao quando fizer sentido',
-		text: 'A conversao aparece com contexto: primeiro leitura, depois area correspondente e so entao contato institucional.',
+		area: 'Contratos, Obrigações e Responsabilidade Civil',
+		title: 'Contrato, cobrança, inadimplemento ou dano',
+		text: 'Quando o problema pede revisão de cláusulas, definição de responsabilidade ou reação a descumprimento.',
+		href: '/blog/areas/contratos-obrigacoes-responsabilidade-civil/',
+	},
+	{
+		area: 'Consumidor, Saúde e Previdência',
+		title: 'Negativa de cobertura, consumo ou benefício',
+		text: 'Quando a dúvida envolve plano de saúde, relação de consumo, cobrança indevida ou proteção social.',
+		href: '/blog/areas/consumidor-saude-previdencia/',
+	},
+	{
+		area: 'Compliance, Integridade e Atuação Empresarial',
+		title: 'Decisão empresarial, governança ou integridade',
+		text: 'Quando a situação exige organização jurídica de rotinas, contratos ou prevenção de risco.',
+		href: '/blog/areas/compliance-integridade-atuacao-empresarial/',
 	},
 ];
 const searchIndex = posts.map((post) => ({
@@ -44,9 +62,9 @@ const searchIndex = posts.map((post) => ({
 const collectionSchema = {
 	'@context': 'https://schema.org',
 	'@type': 'CollectionPage',
-	name: 'Blog Juridico PAVIE',
+	name: 'Blog Jurídico PAVIE',
 	url: `${BLOG_SITE_URL}/blog/`,
-	description: 'Camada editorial da PAVIE para aprofundar temas juridicos, reconhecer a area correspondente e decidir com mais clareza.',
+	description: 'Conteúdos jurídicos da PAVIE para aprofundar temas, reconhecer a área correspondente e decidir com mais clareza.',
 	mainEntity:
 		posts.length > 0
 			? {
@@ -63,23 +81,23 @@ const collectionSchema = {
 ---
 
 <BlogLayout
-	title="Blog juridico da PAVIE"
-	description="Leitura juridica para reconhecer o tema, aprofundar a frente correspondente e buscar orientacao com contexto."
+	title="Blog jurídico da PAVIE | Advocacia"
+	description="Leitura jurídica para reconhecer o tema, aprofundar a área correspondente e buscar orientação com contexto."
 	canonical={`${BLOG_SITE_URL}/blog/`}
 >
 	<div class="container blog-home">
 		<section class="blog-hero" aria-labelledby="blog-hero-title">
 			<div class="blog-hero__content">
-				<span class="badge">Blog Juridico PAVIE</span>
-				<h1 id="blog-hero-title">Leitura para entender o tema, reconhecer a area e so depois decidir o proximo passo.</h1>
+				<span class="badge">Blog jurídico PAVIE | Advocacia</span>
+				<h1 id="blog-hero-title">Comece pela dúvida que mais se parece com a sua situação.</h1>
 				<p>
-					O blog da PAVIE funciona como camada editorial do ecossistema institucional: ele organiza a leitura
-					por frentes juridicas, aprofunda situacoes reais e indica quando faz sentido sair do conteudo para buscar orientacao.
+					Divórcio, inventário, regularização de imóvel, revisão contratual, cobrança, negativa
+					de cobertura e outras situações sensíveis pedem leitura útil antes do próximo passo.
 				</p>
-				<div class="meta-list" aria-label="Informacoes do acervo">
-					<span><span class="meta-dot" aria-hidden="true"></span>{posts.length} artigos no acervo publico</span>
-					<span><span class="meta-dot" aria-hidden="true"></span>5 clusters editoriais canonicos</span>
-					<span><span class="meta-dot" aria-hidden="true"></span>Mesma estrutura de confianca do site institucional</span>
+				<div class="meta-list" aria-label="Informações do acervo">
+					<span><span class="meta-dot" aria-hidden="true"></span>{posts.length} artigos no acervo público</span>
+					<span><span class="meta-dot" aria-hidden="true"></span>5 áreas de atuação organizando a navegação</span>
+					<span><span class="meta-dot" aria-hidden="true"></span>Mesma estrutura de confiança do site institucional</span>
 				</div>
 				<div class="blog-hero__actions">
 					<a class="btn btn-primary" href="/blog/areas/">Explorar temas</a>
@@ -93,29 +111,35 @@ const collectionSchema = {
 			</div>
 		</section>
 
-		<section class="blog-grid" aria-label="Como usar o blog">
+		<section class="blog-grid" aria-labelledby="quick-start-title">
 			<div class="section-title">
 				<div>
-					<span class="section-kicker">Como este blog ajuda</span>
-					<h2>Uma navegacao editorial pensada para continuidade, e nao para cronologia bruta</h2>
+					<span class="section-kicker">Comece pela situação</span>
+					<h2 id="quick-start-title">Se a dúvida se parece com uma destas situações, este é o melhor ponto de entrada.</h2>
 				</div>
+				<p class="blog-section-intro">
+					Você não precisa saber o nome técnico do problema para começar. A navegação abaixo
+					ajuda a localizar a área jurídica correspondente e seguir por conteúdos próximos da sua realidade.
+				</p>
 			</div>
-			<div class="editorial-guide-grid">
-				{editorialGuide.map((item) => (
-					<article class="surface-card editorial-guide-card">
+			<div class="entry-point-grid">
+				{quickStartItems.map((item) => (
+					<article class="surface-card entry-point-card">
+						<span class="section-kicker">{item.area}</span>
 						<h3>{item.title}</h3>
 						<p>{item.text}</p>
+						<a class="entry-point-card__link" href={item.href}>Ler orientações desta área</a>
 					</article>
 				))}
 			</div>
 		</section>
 
 		{posts.length === 0 ? (
-			<section class="surface-card empty-state" aria-label="Acervo em organizacao">
-				<h2>O acervo editorial esta em organizacao</h2>
+			<section class="surface-card empty-state" aria-label="Acervo em organização">
+				<h2>O acervo está em organização</h2>
 				<p>
-					As trilhas por area ja estao estruturadas. Enquanto novas publicacoes entram no ar, voce pode usar o mapa editorial
-					para reconhecer a frente correspondente ao seu tema e entender quando faz sentido buscar orientacao inicial.
+					As áreas do blog já estão organizadas. Enquanto novas publicações entram no ar, você pode navegar
+					por assunto para reconhecer a área correspondente ao seu tema e entender quando faz sentido buscar orientação inicial.
 				</p>
 				<div class="blog-actions">
 					<a class="btn btn-primary" href="/blog/areas/">Explorar temas</a>
@@ -126,14 +150,14 @@ const collectionSchema = {
 			<>
 				<section class="surface-card blog-search" aria-label="Busca interna do blog">
 					<div>
-						<span class="section-kicker">Busca rapida</span>
-						<h2>Encontre conteudo por tema, situacao ou frente juridica</h2>
+						<span class="section-kicker">Busca rápida</span>
+						<h2>Encontre conteúdo por tema, situação ou área jurídica</h2>
 					</div>
 					<label class="sr-only" for="blog-search-input">Buscar no blog</label>
 					<input
 						id="blog-search-input"
 						type="search"
-						placeholder="Ex.: inventario, guarda compartilhada, regularizacao de imovel"
+						placeholder="Ex.: inventário, guarda compartilhada, regularização de imóvel"
 						data-blog-search-input
 					/>
 					<ul class="blog-search__list" data-blog-search-list>
@@ -153,18 +177,18 @@ const collectionSchema = {
 			</>
 		)}
 
-		<section class="blog-grid" aria-label="Mapa editorial por area">
+		<section class="blog-grid" aria-label="Conteúdos por área">
 			<div class="section-title">
 				<div>
-					<span class="section-kicker">Mapa editorial por area</span>
-					<h2>Os 5 clusters canonicos ligam tema, leitura e proximo passo</h2>
+					<span class="section-kicker">Conteúdos por área</span>
+					<h2>Se o tema já está melhor localizado, siga pela área correspondente</h2>
 				</div>
 				<a class="btn btn-ghost" href="/areas/">Conheça os Serviços</a>
 			</div>
 			<div class="cluster-directory-grid">
 				{clusterDirectory.map((cluster) => (
 					<article class="surface-card cluster-directory-card">
-						<span class="section-kicker">Area editorial</span>
+						<span class="section-kicker">Área jurídica</span>
 						<h3>{cluster.title}</h3>
 						<p>{cluster.description}</p>
 						<ul class="cluster-directory-list">
@@ -179,7 +203,7 @@ const collectionSchema = {
 						</div>
 						{cluster.hasPosts ? (
 							<div class="cluster-directory-posts">
-								<p class="cluster-directory-meta">{cluster.postCount} publicacoes nesta trilha.</p>
+								<p class="cluster-directory-meta">{cluster.postCount} artigos nesta área.</p>
 								<ul>
 									{cluster.latestPosts.map((post) => (
 										<li><a href={post.url}>{post.title}</a></li>
@@ -188,8 +212,8 @@ const collectionSchema = {
 							</div>
 						) : (
 							<p class="cluster-directory-empty">
-								A trilha editorial desta frente esta em consolidacao. A area ja pode ser explorada e o contato institucional
-								permanece disponivel quando o tema sair do plano abstrato.
+								Novos artigos em breve. Você pode falar diretamente sobre sua situação sempre que o tema
+								deixar de ser apenas uma dúvida geral.
 							</p>
 						)}
 						<div class="cluster-directory-actions">
@@ -210,7 +234,7 @@ const collectionSchema = {
 				<div class="section-title">
 					<div>
 						<span class="section-kicker">Temas em foco</span>
-						<h2>Continue por tema quando quiser aprofundar um recorte especifico</h2>
+						<h2>Continue por tema quando quiser aprofundar um recorte específico</h2>
 					</div>
 					<a class="btn btn-ghost" href="/blog/temas/">Explorar temas</a>
 				</div>
@@ -222,12 +246,12 @@ const collectionSchema = {
 			</section>
 		)}
 
-		<section class="editorial-cta" aria-label="Ponte editorial para contato">
-			<span class="section-kicker">Quando a leitura vira decisao</span>
-			<h2>Se o tema deixar de ser apenas duvida e passar a exigir leitura aplicada, a ponte de contato do blog organiza esse passo.</h2>
+		<section class="editorial-cta" aria-label="Primeiro passo para contato">
+			<span class="section-kicker">Quando a leitura ajuda a decidir</span>
+			<h2>Se o tema deixar de ser apenas dúvida, o primeiro passo é descrever sua situação com clareza.</h2>
 			<p>
-				A PAVIE nao promete resposta automatica nem patrocinio imediato. O primeiro movimento e contextualizar o caso,
-				entender o que precisa ser informado e explicar como a triagem funciona.
+				A PAVIE não promete resposta automática nem patrocínio imediato. O primeiro movimento é
+				contextualizar o caso, entender o que precisa ser informado e explicar como funciona o retorno inicial.
 			</p>
 			<div class="blog-actions">
 				<a class="btn btn-primary" href="/blog/contato/">Solicitar orientação inicial</a>
@@ -246,12 +270,11 @@ const collectionSchema = {
 				<h2>Fabio Mathias Pavie</h2>
 				<p>Advogado | OAB/RJ 134.947</p>
 				<p>
-					A camada editorial e conduzida para aprofundar temas que aparecem na pratica institucional da PAVIE,
-					sem transformar conteudo em promessa de resultado.
+					Os conteúdos aprofundam temas que aparecem na prática institucional da PAVIE,
+					sem transformar leitura em promessa de resultado.
 				</p>
 				<div class="blog-actions">
 					<a class="btn btn-primary" href="/areas/">Conheça os Serviços</a>
-					<a class="btn btn-ghost" href="/blog/contato/">Solicitar orientação inicial</a>
 				</div>
 			</div>
 		</section>

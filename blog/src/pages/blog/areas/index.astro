@@ -1,4 +1,4 @@
-﻿---
+---
 import { getCollection } from 'astro:content';
 import Breadcrumbs from '../../../components/blog/Breadcrumbs.astro';
 import { BLOG_SITE_URL } from '../../../consts';
@@ -13,26 +13,26 @@ const posts = sortPostsByDate(entries.map((entry) => normalizePost(entry))).filt
 const clusterDirectory = buildBlogClusterDirectory(posts);
 const canonicalUrl = `${BLOG_SITE_URL}/blog/areas/`;
 const breadcrumbs = [
-	{ label: 'Inicio', href: '/' },
-	{ label: 'Publicacoes', href: '/blog/' },
-	{ label: 'Areas editoriais' },
+	{ label: 'Início', href: '/' },
+	{ label: 'Publicações', href: '/blog/' },
+	{ label: 'Áreas jurídicas' },
 ];
 const breadcrumbSchema = buildBreadcrumbSchema(breadcrumbs, canonicalUrl);
 ---
 
 <BlogLayout
-	title="Areas editoriais do blog | PAVIE"
-	description="Mapa editorial do blog da PAVIE organizado pelos 5 clusters canonicos, com ponte para leitura, area institucional e contato."
+	title="Áreas jurídicas do blog | PAVIE | Advocacia"
+	description="Conteúdos do blog da PAVIE organizados por área jurídica, com ligação natural entre leitura, serviços e contato."
 	canonical={canonicalUrl}
 >
 	<div class="container blog-home">
 		<Breadcrumbs items={breadcrumbs} />
 		<section class="surface-card blog-map-hero" aria-labelledby="blog-areas-title">
-			<span class="badge">Mapa editorial</span>
-			<h1 id="blog-areas-title">As areas do blog organizam o caminho entre tema, leitura e orientacao.</h1>
+			<span class="badge">Conteúdos por área</span>
+			<h1 id="blog-areas-title">As áreas do blog organizam o caminho entre tema, leitura e orientação.</h1>
 			<p>
-				Aqui, o visitante nao encontra uma listagem solta. Encontra 5 frentes editoriais canonicas que ajudam a reconhecer
-				qual universo juridico esta em jogo, o que ja existe para leitura e quando vale migrar para a camada institucional.
+				Aqui, o visitante não encontra uma listagem solta. Encontra 5 áreas jurídicas que ajudam a reconhecer
+				qual universo jurídico está em jogo, o que já existe para leitura e quando vale seguir para a página de serviços da PAVIE.
 			</p>
 			<div class="blog-actions">
 				<a class="btn btn-primary" href="/blog/contato/">Solicitar orientação inicial</a>
@@ -40,17 +40,17 @@ const breadcrumbSchema = buildBreadcrumbSchema(breadcrumbs, canonicalUrl);
 			</div>
 		</section>
 
-		<section class="blog-grid" aria-label="Areas editoriais do blog">
+		<section class="blog-grid" aria-label="Áreas jurídicas do blog">
 			<div class="section-title">
 				<div>
-					<span class="section-kicker">5 clusters canonicos</span>
-					<h2>Cada cluster funciona como ponte entre aprofundamento tematico, area correspondente e contato contextualizado</h2>
+					<span class="section-kicker">5 áreas jurídicas</span>
+					<h2>Cada área aproxima aprofundamento por assunto, serviço correspondente e contato contextualizado</h2>
 				</div>
 			</div>
 			<div class="cluster-directory-grid cluster-directory-grid--wide">
 				{clusterDirectory.map((cluster) => (
 					<article class="surface-card cluster-directory-card">
-						<span class="section-kicker">Area editorial</span>
+						<span class="section-kicker">Área jurídica</span>
 						<h2>{cluster.title}</h2>
 						<p>{cluster.editorialSummary}</p>
 						<ul class="cluster-directory-list">
@@ -65,7 +65,7 @@ const breadcrumbSchema = buildBreadcrumbSchema(breadcrumbs, canonicalUrl);
 						</div>
 						{cluster.hasPosts ? (
 							<div class="cluster-directory-posts">
-								<p class="cluster-directory-meta">{cluster.postCount} publicacoes nesta area editorial.</p>
+								<p class="cluster-directory-meta">{cluster.postCount} artigos nesta área.</p>
 								<ul>
 									{cluster.latestPosts.map((post) => (
 										<li><a href={post.url}>{post.title}</a></li>
@@ -74,7 +74,7 @@ const breadcrumbSchema = buildBreadcrumbSchema(breadcrumbs, canonicalUrl);
 							</div>
 						) : (
 							<p class="cluster-directory-empty">
-								Ainda sem artigos suficientes nesta frente. A trilha editorial ja esta aberta para orientar o tema e indicar a ponte institucional adequada.
+								Novos artigos em breve. Você pode falar diretamente sobre sua situação enquanto o acervo desta área cresce.
 							</p>
 						)}
 						<div class="cluster-directory-actions">
@@ -86,11 +86,12 @@ const breadcrumbSchema = buildBreadcrumbSchema(breadcrumbs, canonicalUrl);
 			</div>
 		</section>
 
-		<section class="editorial-cta" aria-label="Ponte editorial para contato">
+		<section class="editorial-cta" aria-label="Continuidade institucional">
 			<span class="section-kicker">Continuidade institucional</span>
-			<h2>Quando a leitura ja delimitou a frente juridica, o proximo passo nao precisa ser brusco.</h2>
+			<h2>Quando a leitura já delimitou a área jurídica, o próximo passo não precisa ser brusco.</h2>
 			<p>
-				A ponte de contato do blog explica o que informar, o que acontece depois do envio e quais limites existem na triagem inicial.
+				O primeiro passo é descrever sua situação. A página de contato explica o que informar,
+				o que acontece depois do envio e quais limites existem na etapa inicial.
 			</p>
 			<div class="blog-actions">
 				<a class="btn btn-primary" href="/blog/contato/">Solicitar orientação inicial</a>

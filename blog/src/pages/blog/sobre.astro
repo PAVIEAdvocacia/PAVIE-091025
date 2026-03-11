@@ -4,13 +4,13 @@ import { BLOG_SITE_URL } from '../../consts';
 import BlogLayout from '../../layouts/BlogLayout.astro';
 import { buildBreadcrumbSchema } from '../../lib/seo';
 
-const title = 'Sobre o Autor | Blog PAVIE';
+const title = 'Sobre o autor | Blog PAVIE | Advocacia';
 const description =
-	'Perfil profissional de Fabio Mathias Pavie, advogado responsavel pelos conteudos juridicos do blog da PAVIE Advocacia.';
+	'Perfil profissional de Fabio Mathias Pavie, advogado responsável pelos conteúdos jurídicos do blog da PAVIE | Advocacia.';
 const canonicalUrl = `${BLOG_SITE_URL}/blog/sobre/`;
 const breadcrumbs = [
-	{ label: 'Inicio', href: '/' },
-	{ label: 'Publicacoes', href: '/blog/' },
+	{ label: 'Início', href: '/' },
+	{ label: 'Publicações', href: '/blog/' },
 	{ label: 'Sobre o autor' },
 ];
 const breadcrumbSchema = buildBreadcrumbSchema(breadcrumbs, canonicalUrl);
@@ -30,10 +30,10 @@ const breadcrumbSchema = buildBreadcrumbSchema(breadcrumbs, canonicalUrl);
 				<h1>Fabio Mathias Pavie</h1>
 				<p>Advogado | OAB/RJ 134.947</p>
 				<p>
-					Atuacao em direito de familia, sucessoes, patrimonio e conflitos civeis, com foco em
-					clareza juridica, prevencao de risco e conducao responsavel.
+					Atuação em direito de família, sucessões, patrimônio e conflitos cíveis, com foco em
+					clareza jurídica, prevenção de risco e condução responsável.
 				</p>
-				<p>Mais de 20 anos de experiencia juridica.</p>
+				<p>Mais de 20 anos de experiência jurídica.</p>
 				<div class="site-hero__cta">
 					<a class="btn btn-primary" href="/areas/">Conheça os Serviços</a>
 					<a class="btn btn-ghost" href="/blog/">Explorar temas</a>
