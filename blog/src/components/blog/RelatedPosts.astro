@@ -1,4 +1,4 @@
-﻿---
+---
 import type { BlogPost } from '../../lib/posts';
 
 interface Props {
@@ -11,11 +11,12 @@ interface Props {
 const { posts, title = 'Leituras relacionadas', emptyHref = '/blog/areas/', emptyLabel = 'Explorar temas' } = Astro.props;
 ---
 
-<section class="reading-footer related-posts" aria-labelledby="related-posts-title">
+<section class="related-posts" aria-labelledby="related-posts-title">
 	<h3 id="related-posts-title">{title}</h3>
 	{posts.length > 0 ? (
 		posts.map((post) => (
 			<article>
+				<p class="related-posts__meta">{post.area} · Leitura de {post.readingTime} min</p>
 				<h4>
 					<a href={post.url}>{post.title}</a>
 				</h4>
@@ -24,7 +25,7 @@ const { posts, title = 'Leituras relacionadas', emptyHref = '/blog/areas/', empt
 		))
 	) : (
 		<div class="related-posts__empty">
-			<p class="text-muted">Ainda não há artigos relacionados no momento.</p>
+			<p class="text-muted">Novos artigos desta área entram aos poucos. Enquanto isso, você pode seguir pela navegação por assunto.</p>
 			<a class="btn btn-ghost" href={emptyHref}>{emptyLabel}</a>
 		</div>
 	)}

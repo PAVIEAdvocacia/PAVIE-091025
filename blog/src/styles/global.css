@@ -220,21 +220,21 @@ main {
 	background: var(--action-secondary);
 	border: 1.5px solid var(--color-petrol);
 	color: var(--color-petrol);
-	box-shadow: none;
+	box-shadow: 0 6px 16px rgba(37, 40, 43, 0.05);
 }
 
 .btn-secondary:hover,
 .btn-secondary:focus-visible {
 	background: var(--action-secondary-strong);
-	border-color: var(--action-primary-strong);
-	color: var(--action-primary-strong);
+	border-color: var(--color-petrol);
+	color: var(--color-petrol);
 	transform: translateY(-1px);
 }
 
 .btn-ghost {
 	background: transparent;
-	border-color: color-mix(in srgb, var(--color-petrol) 42%, var(--color-line));
-	color: var(--color-graphite);
+	border-color: color-mix(in srgb, var(--color-petrol) 28%, var(--color-line));
+	color: var(--color-petrol);
 }
 
 .btn-ghost:hover,

@@ -1,4 +1,4 @@
-﻿---
+---
 interface Props {
 	currentPath?: string;
 }
@@ -6,9 +6,9 @@ interface Props {
 const { currentPath = '/' } = Astro.props;
 
 const navItems = [
-	{ href: '/areas/', label: 'Serviços' },
+	{ href: '/areas/', label: 'Áreas' },
 	{ href: '/sobre/', label: 'Sobre' },
-	{ href: '/blog/', label: 'Conteúdos jurídicos' },
+	{ href: '/blog/', label: 'Conteúdos' },
 	{ href: '/contato/', label: 'Contato' },
 ];
 
@@ -42,13 +42,13 @@ function isActive(href: string): boolean {
 
 		<details class="site-mobile-nav">
 			<summary aria-label="Abrir menu de navegação">Menu</summary>
-			<div class="site-mobile-nav__panel" role="menu">
+			<div class="site-mobile-nav__panel">
 				{navItems.map((item) => (
-					<a href={item.href} role="menuitem">
+					<a href={item.href}>
 						{item.label}
 					</a>
 				))}
-				<a href="/contato/" role="menuitem">
+				<a href="/contato/">
 					Agendar Consulta Inicial
 				</a>
 			</div>
@@ -58,7 +58,7 @@ function isActive(href: string): boolean {
 
 <style>
 	.site-header {
-		background: color-mix(in srgb, var(--surface-card) 95%, var(--surface-page));
+		background: color-mix(in srgb, var(--surface-card) 96%, white);
 		border-bottom: 1px solid var(--color-line);
 		position: sticky;
 		top: 0;
@@ -67,7 +67,7 @@ function isActive(href: string): boolean {
 	}
 
 	.site-header__bar {
-		min-height: 72px;
+		min-height: 76px;
 		display: grid;
 		grid-template-columns: auto 1fr auto;
 		align-items: center;
@@ -84,11 +84,11 @@ function isActive(href: string): boolean {
 
 	.site-header__brand strong {
 		font-family: var(--font-serif);
-		font-size: 1.25rem;
+		font-size: 1.4rem;
 	}
 
 	.site-header__brand small {
-		font-size: 0.88rem;
+		font-size: 0.92rem;
 		text-transform: none;
 		letter-spacing: 0.02em;
 		color: color-mix(in srgb, var(--color-petrol) 52%, white);
@@ -107,14 +107,19 @@ function isActive(href: string): boolean {
 		font-weight: 700;
 		letter-spacing: var(--letter-label);
 		text-transform: uppercase;
-		color: color-mix(in srgb, var(--color-graphite) 78%, var(--color-mist));
-		padding: 0.3rem 0.2rem;
+		color: color-mix(in srgb, var(--color-graphite) 82%, var(--color-mist));
+		padding: 0.35rem 0.25rem;
 	}
 
 	.site-nav__link.is-active {
 		color: var(--color-petrol);
 		text-decoration: underline;
 		text-decoration-color: color-mix(in srgb, var(--color-sand) 72%, white);
+	}
+
+	.site-nav__link:hover,
+	.site-nav__link:focus-visible {
+		color: var(--color-petrol);
 	}
 
 	.site-header__cta {
@@ -132,6 +137,7 @@ function isActive(href: string): boolean {
 		font-weight: 700;
 		font-size: 0.9rem;
 		cursor: pointer;
+		color: var(--color-petrol);
 	}
 
 	.site-mobile-nav summary::-webkit-details-marker {
@@ -157,6 +163,7 @@ function isActive(href: string): boolean {
 		border-radius: var(--radius-xs);
 		text-decoration: none;
 		font-size: 0.92rem;
+		color: var(--color-graphite);
 	}
 
 	.site-mobile-nav__panel a:hover,

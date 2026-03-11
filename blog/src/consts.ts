@@ -1,10 +1,10 @@
-﻿export const SITE_ORIGIN = 'https://pavieadvocacia.com.br';
+export const SITE_ORIGIN = 'https://pavieadvocacia.com.br';
 export const MAIN_SITE_URL = SITE_ORIGIN;
 export const BLOG_SITE_URL = SITE_ORIGIN;
 
-export const SITE_TITLE = 'PAVIE | Advocacia | Blog Jurídico';
+export const SITE_TITLE = 'PAVIE | Advocacia — Blog Jurídico';
 export const SITE_DESCRIPTION =
-	'Leituras jurídicas da PAVIE | Advocacia para reconhecer temas, áreas de atuação e o momento adequado para buscar orientação.';
+	'Conteúdos jurídicos da PAVIE | Advocacia para reconhecer situações, navegar por assunto e buscar orientação com contexto.';
 
 export const BUSINESS_NAME = 'PAVIE | Advocacia';
 export const BUSINESS_EMAIL = 'contato@pavieadvocacia.com.br';
@@ -25,5 +25,5 @@ export const DEFAULT_OG_IMAGE = '/uploads/001-convertido-de-png.webp';
 export const DEFAULT_CTA = {
 	label: 'Solicitar orientação inicial',
 	href: '/blog/contato/',
-	description: 'Descreva sua situação para entender quando faz sentido avançar para a triagem inicial.',
+	description: 'Descreva sua situação para entender quando faz sentido avançar para a orientação inicial.',
 };

@@ -1,4 +1,4 @@
-﻿import type { BlogPost } from './posts';
+import type { BlogPost } from './posts';
 import { normalizeTemaKey } from './taxonomy';
 
 export interface BlogClusterDefinition {
@@ -43,81 +43,81 @@ const BLOG_CLUSTER_ALIASES: Record<string, string> = {
 export const BLOG_CLUSTERS: BlogClusterDefinition[] = [
 	{
 		key: 'familia-sucessoes-patrimonio',
-		title: 'Familia, Sucessoes e Patrimonio',
+		title: 'Família, Sucessões e Patrimônio',
 		description:
 			'Leituras para decisões familiares, sucessórias e patrimoniais que pedem clareza, documentação correta e condução serena.',
 		editorialSummary:
-			'Esta seleção de artigos ajuda a entender impactos em divórcio, guarda, herança, inventário e reorganização patrimonial.',
+			'Artigos desta área ajudam a entender impactos em divórcio, guarda, herança, inventário e reorganização patrimonial.',
 		typicalSituations: [
-			'Divorcio, guarda, alimentos e convivencia.',
-			'Inventario, partilha, testamento e planejamento sucessorio.',
-			'Bens da familia, patrimonio vulneravel e documentos com elemento internacional.',
+			'Divórcio, guarda, alimentos e convivência.',
+			'Inventário, partilha, testamento e planejamento sucessório.',
+			'Bens da família, patrimônio vulnerável e documentos com elemento internacional.',
 		],
-		suggestedThemes: ['Divorcio', 'Inventario', 'Partilha', 'Testamento'],
+		suggestedThemes: ['Divórcio', 'Inventário', 'Partilha', 'Testamento'],
 		institutionalHref: '/areas/',
 		contactHref: '/blog/contato/',
 	},
 	{
 		key: 'contratos-obrigacoes-responsabilidade-civil',
-		title: 'Contratos, Obrigacoes e Responsabilidade Civil',
+		title: 'Contratos, Obrigações e Responsabilidade Civil',
 		description:
 			'Conteúdos para compromissos jurídicos, inadimplemento, cobrança, prova de dano e estratégia em conflitos civis.',
 		editorialSummary:
-			'Esta área reúne leituras sobre descumprimento, reparação, execução e leitura técnica de obrigações jurídicas.',
+			'Artigos desta área organizam leituras sobre descumprimento, reparação, execução e leitura técnica de obrigações jurídicas.',
 		typicalSituations: [
-			'Revisao, elaboracao e negociacao contratual.',
-			'Inadimplemento, cobranca extrajudicial e execucao.',
+			'Revisão, elaboração e negociação contratual.',
+			'Inadimplemento, cobrança extrajudicial e execução.',
 			'Dano material, dano moral e responsabilidade civil.',
 		],
-		suggestedThemes: ['Revisao contratual', 'Inadimplemento', 'Execucao', 'Responsabilidade civil'],
+		suggestedThemes: ['Revisão contratual', 'Inadimplemento', 'Execução', 'Responsabilidade civil'],
 		institutionalHref: '/areas/',
 		contactHref: '/blog/contato/',
 	},
 	{
 		key: 'imobiliario-regularizacao-condominios',
-		title: 'Imobiliario, Regularizacao e Condominios',
+		title: 'Imobiliário, Regularização e Condomínios',
 		description:
-			'Leituras orientadas para imóveis, regularização documental, posse, locação e situações condominiais com impacto patrimonial.',
+			'Leitura orientada para imóveis, regularização documental, posse, locação e situações condominiais com impacto patrimonial.',
 		editorialSummary:
-			'Esta área ajuda a reduzir insegurança em compra, venda, uso e regularização de imóveis.',
+			'Artigos desta área ajudam a reduzir insegurança em compra, venda, uso e regularização de imóveis.',
 		typicalSituations: [
-			'Compra e venda, locacao e clausulas criticas.',
-			'Regularizacao registral e documental do imovel.',
-			'Condominios, posse e conflitos sobre uso da propriedade.',
+			'Compra e venda, locação e cláusulas críticas.',
+			'Regularização registral e documental do imóvel.',
+			'Condomínios, posse e conflitos sobre uso da propriedade.',
 		],
-		suggestedThemes: ['Regularizacao de imovel', 'Locacao', 'Usucapiao', 'Compra e venda'],
+		suggestedThemes: ['Regularização de imóvel', 'Locação', 'Usucapião', 'Compra e venda'],
 		institutionalHref: '/areas/',
 		contactHref: '/blog/contato/',
 	},
 	{
 		key: 'consumidor-saude-previdencia',
-		title: 'Consumidor, Saude e Previdencia',
+		title: 'Consumidor, Saúde e Previdência',
 		description:
 			'Conteúdos para relações de consumo, cobertura de saúde e proteção social quando a situação pede enquadramento técnico.',
 		editorialSummary:
-			'Esta área ajuda a identificar quando a dúvida já exige uma orientação mais aplicada em consumo, saúde ou benefícios.',
+			'Artigos desta área ajudam a identificar quando a dúvida já exige orientação mais aplicada em consumo, saúde ou benefícios.',
 		typicalSituations: [
-			'Falha de servico, cobranca indevida e relacao de consumo.',
-			'Negativa de cobertura e entraves em demandas de saude.',
-			'Beneficios, revisoes e organizacao previdenciaria.',
+			'Falha de serviço, cobrança indevida e relação de consumo.',
+			'Negativa de cobertura e entraves em demandas de saúde.',
+			'Benefícios, revisões e organização previdenciária.',
 		],
-		suggestedThemes: ['Negativa de cobertura', 'Relacao de consumo', 'Saude', 'Previdencia'],
+		suggestedThemes: ['Negativa de cobertura', 'Relação de consumo', 'Saúde', 'Previdência'],
 		institutionalHref: '/areas/',
 		contactHref: '/blog/contato/',
 	},
 	{
 		key: 'compliance-integridade-atuacao-empresarial',
-		title: 'Compliance, Integridade e Atuacao Empresarial',
+		title: 'Compliance, Integridade e Atuação Empresarial',
 		description:
 			'Leituras sobre governança, integridade, contratos empresariais e estrutura jurídica de operações com risco organizacional.',
 		editorialSummary:
-			'Esta área conecta decisão empresarial, controles internos e suporte jurídico institucional.',
+			'Artigos desta área conectam decisão empresarial, controles internos e suporte jurídico institucional.',
 		typicalSituations: [
-			'Politicas internas, conduta e rotina de compliance.',
-			'Governanca, socios e apoio juridico a operacoes empresariais.',
-			'Contratos empresariais, controles e prevencao de risco.',
+			'Políticas internas, conduta e rotina de compliance.',
+			'Governança, sócios e apoio jurídico a operações empresariais.',
+			'Contratos empresariais, controles e prevenção de risco.',
 		],
-		suggestedThemes: ['LGPD', 'Codigo de conduta', 'Governanca', 'Contratos empresariais'],
+		suggestedThemes: ['LGPD', 'Código de conduta', 'Governança', 'Contratos empresariais'],
 		institutionalHref: '/areas/',
 		contactHref: '/blog/contato/',
 	},
@@ -167,7 +167,10 @@ export function getBlogClusterDefinition(value: string): BlogClusterDefinition |
 }
 
 export function getBlogClusterForPost(post: BlogPost): BlogClusterDefinition {
-	return getBlogClusterDefinition(post.areaKey || post.area) ?? BLOG_CLUSTERS[0];
+	return (
+		getBlogClusterDefinition(post.areaKey || post.area) ??
+		BLOG_CLUSTERS[0]
+	);
 }
 
 export function buildBlogClusterDirectory(posts: BlogPost[]): BlogClusterDirectoryItem[] {

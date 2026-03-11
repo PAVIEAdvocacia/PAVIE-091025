@@ -1,4 +1,4 @@
-﻿import type { BlogPost } from './posts';
+import type { BlogPost } from './posts';
 import { areaHref, areaLabel, normalizeAreaKey, normalizeTemaKey, temaHref } from './taxonomy';
 
 interface HubTheme {
@@ -28,11 +28,11 @@ export const SERVICE_HUBS: ServiceHub[] = [
 		title: areaLabel('familia-sucessoes-patrimonio'),
 		areaKey: 'familia-sucessoes-patrimonio',
 		summary: 'Área de atuação para decisões familiares, sucessórias e patrimoniais que pedem clareza, documentação adequada e condução responsável.',
-		situations: ['Divorcio, guarda, convivencia e alimentos.', 'Inventario, partilha, testamento e heranca.', 'Patrimonio familiar, vulnerabilidade economica e temas com elemento internacional.'],
-		scopes: ['Diagnostico juridico inicial com foco em impacto familiar e patrimonial.', 'Organizacao documental e estrategia para solucao consensual ou contenciosa.', 'Acompanhamento tecnico em decisoes que exigem previsibilidade e prudencia.'],
+		situations: ['Divórcio, guarda, convivência e alimentos.', 'Inventário, partilha, testamento e herança.', 'Patrimônio familiar, vulnerabilidade econômica e temas com elemento internacional.'],
+		scopes: ['Diagnóstico jurídico inicial com foco em impacto familiar e patrimonial.', 'Organização documental e estratégia para solução consensual ou contenciosa.', 'Acompanhamento técnico em decisões que exigem previsibilidade e prudência.'],
 		themes: [
-			{ key: 'divorcio', label: 'Divorcio' },
-			{ key: 'inventario', label: 'Inventario' },
+			{ key: 'divorcio', label: 'Divórcio' },
+			{ key: 'inventario', label: 'Inventário' },
 			{ key: 'partilha', label: 'Partilha' },
 		],
 	},
@@ -41,10 +41,10 @@ export const SERVICE_HUBS: ServiceHub[] = [
 		title: areaLabel('contratos-obrigacoes-responsabilidade-civil'),
 		areaKey: 'contratos-obrigacoes-responsabilidade-civil',
 		summary: 'Área de atuação para compromissos jurídicos, descumprimento de obrigações, cobrança e reparação de danos em relações civis.',
-		situations: ['Elaboracao, revisao e negociacao contratual.', 'Inadimplemento, cobranca e execucao de obrigacoes.', 'Responsabilidade civil, prova de dano e reparacao.'],
-		scopes: ['Leitura tecnica de risco e de clausulas sensiveis.', 'Estruturacao de estrategia em negociacao, cobranca ou litigio.', 'Conducao juridica com escopo claro e documentacao consistente.'],
+		situations: ['Elaboração, revisão e negociação contratual.', 'Inadimplemento, cobrança e execução de obrigações.', 'Responsabilidade civil, prova de dano e reparação.'],
+		scopes: ['Leitura técnica de risco e de cláusulas sensíveis.', 'Estruturação de estratégia em negociação, cobrança ou litígio.', 'Condução jurídica com escopo claro e documentação consistente.'],
 		themes: [
-			{ key: 'revisao-contratual', label: 'Revisao contratual' },
+			{ key: 'revisao-contratual', label: 'Revisão contratual' },
 			{ key: 'inadimplemento', label: 'Inadimplemento' },
 			{ key: 'responsabilidade-civil', label: 'Responsabilidade civil' },
 		],
@@ -54,12 +54,12 @@ export const SERVICE_HUBS: ServiceHub[] = [
 		title: areaLabel('imobiliario-regularizacao-condominios'),
 		areaKey: 'imobiliario-regularizacao-condominios',
 		summary: 'Área de atuação para imóveis, posse, regularização documental, locação e conflitos condominiais com impacto patrimonial.',
-		situations: ['Compra e venda, locacao e clausulas criticas.', 'Regularizacao registral e documental.', 'Condominios, posse e uso do imovel.'],
-		scopes: ['Analise de documentos e riscos da operacao imobiliaria.', 'Organizacao de regularizacao e estrategia registral.', 'Atuacao juridica em disputas ligadas ao uso ou propriedade do imovel.'],
+		situations: ['Compra e venda, locação e cláusulas críticas.', 'Regularização registral e documental.', 'Condomínios, posse e uso do imóvel.'],
+		scopes: ['Análise de documentos e riscos da operação imobiliária.', 'Organização de regularização e estratégia registral.', 'Atuação jurídica em disputas ligadas ao uso ou propriedade do imóvel.'],
 		themes: [
-			{ key: 'regularizacao-de-imovel', label: 'Regularizacao de imovel' },
-			{ key: 'locacao', label: 'Locacao' },
-			{ key: 'usucapiao', label: 'Usucapiao' },
+			{ key: 'regularizacao-de-imovel', label: 'Regularização de imóvel' },
+			{ key: 'locacao', label: 'Locação' },
+			{ key: 'usucapiao', label: 'Usucapião' },
 		],
 	},
 	{
@@ -67,12 +67,12 @@ export const SERVICE_HUBS: ServiceHub[] = [
 		title: areaLabel('consumidor-saude-previdencia'),
 		areaKey: 'consumidor-saude-previdencia',
 		summary: 'Área de atuação para relações de consumo, cobertura de saúde e situações previdenciárias que exigem leitura aplicada.',
-		situations: ['Falha de servico e cobranca indevida.', 'Negativa de cobertura e questoes ligadas a saude.', 'Beneficios, revisoes e organizacao previdenciaria.'],
-		scopes: ['Enquadramento juridico da situacao e dos documentos relevantes.', 'Definicao do melhor caminho entre negociacao, requerimento e litigio.', 'Conducao objetiva de demandas com impacto pratico imediato.'],
+		situations: ['Falha de serviço e cobrança indevida.', 'Negativa de cobertura e questões ligadas à saúde.', 'Benefícios, revisões e organização previdenciária.'],
+		scopes: ['Enquadramento jurídico da situação e dos documentos relevantes.', 'Definição do melhor caminho entre negociação, requerimento e litígio.', 'Condução objetiva de demandas com impacto prático imediato.'],
 		themes: [
 			{ key: 'negativa-de-cobertura', label: 'Negativa de cobertura' },
-			{ key: 'relacao-de-consumo', label: 'Relacao de consumo' },
-			{ key: 'previdencia', label: 'Previdencia' },
+			{ key: 'relacao-de-consumo', label: 'Relação de consumo' },
+			{ key: 'previdencia', label: 'Previdência' },
 		],
 	},
 	{
@@ -80,12 +80,12 @@ export const SERVICE_HUBS: ServiceHub[] = [
 		title: areaLabel('compliance-integridade-atuacao-empresarial'),
 		areaKey: 'compliance-integridade-atuacao-empresarial',
 		summary: 'Área de atuação para governança, integridade, contratos empresariais e suporte jurídico a decisões de organização e operação.',
-		situations: ['Politicas internas, conduta e rotinas de integridade.', 'Governanca societaria e apoio juridico a operacoes.', 'Contratos empresariais e prevencao de risco.'],
-		scopes: ['Estruturacao de protocolos, fluxos e documentos essenciais.', 'Leitura de risco juridico e apoio a decisao empresarial.', 'Atuacao institucional em integridade, compliance e relacoes negociais.'],
+		situations: ['Políticas internas, conduta e rotinas de integridade.', 'Governança societária e apoio jurídico a operações.', 'Contratos empresariais e prevenção de risco.'],
+		scopes: ['Estruturação de protocolos, fluxos e documentos essenciais.', 'Leitura de risco jurídico e apoio à decisão empresarial.', 'Atuação institucional em integridade, compliance e relações negociais.'],
 		themes: [
 			{ key: 'lgpd', label: 'LGPD' },
-			{ key: 'codigo-de-conduta', label: 'Codigo de conduta' },
-			{ key: 'governanca', label: 'Governanca' },
+			{ key: 'codigo-de-conduta', label: 'Código de conduta' },
+			{ key: 'governanca', label: 'Governança' },
 		],
 	},
 ];

@@ -1,4 +1,4 @@
-﻿---
+---
 import type { CtaConfig } from '../../lib/posts';
 
 interface Props {
@@ -9,9 +9,14 @@ const { cta } = Astro.props;
 ---
 
 <section class="reading-panel reading-cta" aria-labelledby="reading-cta-title">
-	<h3 id="reading-cta-title">Precisa entender o próximo passo do seu caso?</h3>
+	<h2 id="reading-cta-title">A leitura ajudou a localizar o problema?</h2>
 	<p>{cta.description}</p>
-	<a class="btn btn-primary" href={cta.href}>
+	<a
+		class="btn btn-secondary"
+		href={cta.href}
+		data-contact-origin="article-sidebar"
+		data-contact-intent="orientacao-inicial"
+	>
 		{cta.label}
 	</a>
 </section>

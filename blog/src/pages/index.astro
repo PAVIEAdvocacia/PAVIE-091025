@@ -15,7 +15,7 @@ const proofItems = [
 	},
 	{
 		title: 'Atendimento online e presencial',
-		text: 'O primeiro passo é organizado de acordo com o contexto do caso, a urgência prática e a forma de atendimento mais adequada.',
+		text: 'O primeiro passo e organizado de acordo com o contexto do caso e a necessidade pratica de cada pessoa.',
 	},
 	{
 		title: 'Mais de 20 anos de experiência jurídica',
@@ -49,33 +49,33 @@ const methodPoints = [
 const serviceClusters = [
 	{
 		title: 'Família, Sucessões e Patrimônio',
-		lead: 'Divórcio com filhos, guarda, inventário, partilha e reorganização patrimonial.',
+		lead: 'Quando a dúvida envolve divórcio com filhos, inventário, partilha ou reorganização patrimonial da família.',
 		description:
-			'Quando a vida familiar e o patrimônio pedem leitura técnica, documentação correta e condução serena.',
+			'Demandas que envolvem relações familiares, reorganização patrimonial e decisões com impacto pessoal duradouro.',
 		items: [
-			'Convivência, alimentos e reorganização familiar.',
-			'Inventário, testamento e partilha.',
+			'Divórcio, guarda, alimentos e convivência.',
+			'Inventário, partilha, testamento e planejamento sucessório.',
 			'Proteção patrimonial e prevenção de conflito.',
 		],
 		blogHref: '/blog/areas/familia-sucessoes-patrimonio/',
 	},
 	{
 		title: 'Contratos, Obrigações e Responsabilidade Civil',
-		lead: 'Revisão contratual, cobrança, descumprimento de obrigação e reparação de danos.',
+		lead: 'Quando um contrato precisa de revisão, uma cobrança saiu do controle ou um dano já exige resposta técnica.',
 		description:
-			'Quando o problema já envolve compromisso assumido, inadimplemento, dano ou necessidade de resposta técnica.',
+			'Atuação em compromissos jurídicos que exigem leitura precisa de escopo, cumprimento, dano e reparação.',
 		items: [
 			'Elaboração, revisão e negociação contratual.',
-			'Cobrança, execução e defesa em inadimplemento.',
-			'Leitura de risco e estratégia em conflitos civis.',
+			'Inadimplemento, cobrança e execução de obrigações.',
+			'Reparação de danos e estratégia em conflitos civis.',
 		],
 		blogHref: '/blog/areas/contratos-obrigacoes-responsabilidade-civil/',
 	},
 	{
 		title: 'Imobiliário, Regularização e Condomínios',
-		lead: 'Compra e venda, matrícula, posse, locação e regularização de imóvel.',
+		lead: 'Quando o problema passa por matrícula, posse, regularização documental, locação ou uso do imóvel.',
 		description:
-			'Quando imóvel, documentos, posse ou uso pedem segurança jurídica antes que o problema cresça.',
+			'Situações ligadas a imóveis, documentos, posse, uso e relações condominiais que pedem segurança jurídica.',
 		items: [
 			'Compra e venda, locação e cláusulas críticas.',
 			'Regularização documental e registral.',
@@ -85,9 +85,9 @@ const serviceClusters = [
 	},
 	{
 		title: 'Consumidor, Saúde e Previdência',
-		lead: 'Negativa de cobertura, cobrança indevida, falha de serviço e proteção social.',
+		lead: 'Quando há negativa de cobertura, falha de serviço, cobrança indevida ou dúvida sobre benefício e proteção social.',
 		description:
-			'Quando a relação com empresas, operadoras ou benefícios exige resposta técnica e orientação clara.',
+			'Casos em que a relação com empresas, operadoras ou benefícios exige resposta técnica e orientação clara.',
 		items: [
 			'Falha de serviço e problemas em relações de consumo.',
 			'Negativa de cobertura e questões ligadas à saúde.',
@@ -97,9 +97,9 @@ const serviceClusters = [
 	},
 	{
 		title: 'Compliance, Integridade e Atuação Empresarial',
-		lead: 'Rotinas internas, contratos empresariais e decisões sensíveis de organização.',
+		lead: 'Quando a decisão empresarial pede governança, controles internos, prevenção de risco ou leitura jurídica de operação.',
 		description:
-			'Quando a atuação jurídica precisa apoiar governança, prevenção de risco e decisões empresariais com critério.',
+			'Suporte jurídico para operações, rotinas internas e decisões empresariais que pedem governança e controle.',
 		items: [
 			'Políticas, protocolos e rotinas de integridade.',
 			'Conduta, governança e prevenção de risco.',
@@ -111,23 +111,23 @@ const serviceClusters = [
 
 const processSteps = [
 	{
-		title: 'Contato e contexto',
+		title: 'Contato inicial',
 		text: 'Você apresenta a situação principal, a urgência prática e o objetivo do contato.',
 	},
 	{
 		title: 'Triagem e documentos',
-		text: 'A PAVIE identifica o que precisa ser compreendido antes de avançar para análise mais profunda.',
+		text: 'O escritório identifica o que precisa ser compreendido antes de avançar para análise mais profunda.',
 	},
 	{
-		title: 'Consulta ou análise inicial',
+		title: 'Análise inicial ou consulta',
 		text: 'Quando necessário, o caso passa por consulta ou leitura técnica para enquadramento do caminho adequado.',
 	},
 	{
-		title: 'Proposta formal',
+		title: 'Proposta e contratação formal',
 		text: 'Escopo, etapas, honorários e forma de acompanhamento são apresentados com transparência.',
 	},
 	{
-		title: 'Condução do caso',
+		title: 'Condução jurídica',
 		text: 'A atuação segue com comunicação objetiva, responsabilidade técnica e registro do que foi definido.',
 	},
 ];
@@ -175,31 +175,31 @@ const localBusinessSchema = {
 			<div class="site-hero__content">
 				<span class="badge">PAVIE | Advocacia | OAB/RJ 134.947</span>
 				<h1 id="hero-title">
-					Clareza jurídica para situações que mexem com família, patrimônio, imóveis, contratos
-					e direitos em conflito.
+					Clareza jurídica para decidir com segurança em questões de família, patrimônio,
+					contratos e relações civis.
 				</h1>
 				<p class="site-hero__lead">
-					Se a dúvida envolve divórcio com filhos, inventário, regularização de imóvel, revisão
-					contratual ou negativa de cobertura, a PAVIE ajuda a enquadrar o problema e organizar o
-					próximo passo com responsabilidade.
+					Divórcio com filhos, inventário, regularização de imóvel, revisão contratual,
+					cobrança, dano civil ou negativa de cobertura pedem leitura técnica antes do
+					próximo passo.
 				</p>
 				<div class="site-hero__cta">
 					<a class="btn btn-primary" href="/contato/">Solicitar Diagnóstico Jurídico</a>
 					<a class="btn btn-secondary" href="#servicos">Conheça os Serviços</a>
 				</div>
 				<p class="site-hero__microcopy">
-					O primeiro contato serve para entender o contexto, identificar urgências e orientar os
-					próximos passos possíveis. Não há promessa de resultado.
+					O primeiro contato serve para entender o contexto, identificar urgências e orientar
+					os próximos passos possíveis. Não há promessa de resultado.
 				</p>
 			</div>
 
 			<aside class="site-hero__panel" aria-labelledby="hero-panel-title">
 				<span class="section-kicker">Primeiro passo</span>
-				<h2 id="hero-panel-title">O que a etapa inicial organiza</h2>
+				<h2 id="hero-panel-title">O que você recebe na etapa inicial</h2>
 				<ul class="hero-list">
-					<li>A situação principal e o que está realmente em risco.</li>
-					<li>Prazos, documentos e urgências que não convém tratar no improviso.</li>
-					<li>Se o caso pede consulta, proposta formal ou outra providência inicial.</li>
+					<li>Leitura objetiva da situação apresentada.</li>
+					<li>Identificação de risco, prazo e necessidade documental.</li>
+					<li>Orientação sobre consulta, proposta ou condução adequada.</li>
 				</ul>
 				<p>
 					Descreva sua situação. O primeiro passo é entender o contexto. Se houver aderência,
@@ -222,8 +222,8 @@ const localBusinessSchema = {
 				<div>
 					<span class="section-kicker">Quem conduz</span>
 					<h2 id="advogado-title">
-						Fabio Mathias Pavie conduz o atendimento com leitura técnica, linguagem clara e
-						responsabilidade profissional.
+						Fabio Mathias Pavie conduz o atendimento com leitura técnica, linguagem clara
+						e responsabilidade profissional.
 					</h2>
 				</div>
 			</div>
@@ -253,7 +253,7 @@ const localBusinessSchema = {
 						</ul>
 						<div class="site-hero__cta">
 							<a class="btn btn-primary" href="/contato/">Solicitar Diagnóstico Jurídico</a>
-							<a class="btn btn-ghost" href="/blog/areas/">Explorar temas</a>
+							<a class="btn btn-ghost" href="/blog/areas/">Leia conteúdos desta área</a>
 						</div>
 					</div>
 				</article>
@@ -273,16 +273,10 @@ const localBusinessSchema = {
 			<div class="section-title">
 				<div>
 					<span class="section-kicker">Áreas de atuação</span>
-					<h2 id="servicos-title">Situações em que a orientação jurídica costuma fazer diferença mais cedo</h2>
+					<h2 id="servicos-title">As áreas de atuação ajudam a localizar a situação e o melhor ponto de partida</h2>
 				</div>
 				<a class="btn btn-ghost" href="/areas/">Conheça os Serviços</a>
 			</div>
-
-			<p class="section-intro">
-				Em vez de uma lista fria de ramos, a home apresenta os contextos em que o escritório
-				costuma ser procurado: reorganização familiar e patrimonial, conflitos civis, imóvel,
-				contratos, consumo, saúde e decisões empresariais sensíveis.
-			</p>
 
 			<div class="service-cluster-grid">
 				{serviceClusters.map((cluster) => (
@@ -300,18 +294,25 @@ const localBusinessSchema = {
 				))}
 			</div>
 
+			<p class="coherence-note">
+				Se a sua dúvida ainda precisa ser melhor localizada, o blog aprofunda situações
+				reais antes do contato. Quando o caso já está claro, a página de serviços ajuda a
+				enquadrar a atuação correspondente.
+			</p>
+
 			<article class="surface-card site-bridge">
 				<div>
-					<span class="section-kicker">Antes do contato</span>
-					<h3>Se quiser entender melhor uma situação, o blog reúne leituras introdutórias por tema e área.</h3>
+					<span class="section-kicker">Leitura útil antes do contato</span>
+					<h3>Nem toda dúvida começa pronta para uma contratação. Às vezes, o melhor primeiro passo é entender melhor o tema.</h3>
 					<p>
-						Você pode começar por divórcio, inventário, regularização de imóvel, contratos,
-						cobranças ou negativa de cobertura e voltar ao contato quando o contexto já estiver mais claro.
+						O blog reúne orientações por assunto para ajudar você a reconhecer a área
+						jurídica do problema, separar o que é dúvida geral do que já exige análise do
+						caso concreto e chegar ao contato com mais clareza.
 					</p>
 				</div>
 				<div class="site-hero__cta">
-					<a class="btn btn-secondary" href="/blog/areas/">Explorar temas</a>
-					<a class="btn btn-ghost" href="/blog/">Ler orientações do blog</a>
+					<a class="btn btn-primary" href="/blog/areas/">Leia conteúdos por área</a>
+					<a class="btn btn-secondary" href="/blog/">Ir para o blog</a>
 				</div>
 			</article>
 		</section>
@@ -320,7 +321,7 @@ const localBusinessSchema = {
 			<div class="section-title">
 				<div>
 					<span class="section-kicker">Como contratar</span>
-					<h2 id="contratacao-title">O caminho é explicado antes de qualquer decisão</h2>
+					<h2 id="contratacao-title">O processo de contratação é explicado antes de qualquer decisão</h2>
 				</div>
 			</div>
 
@@ -337,7 +338,7 @@ const localBusinessSchema = {
 
 		<section id="honorarios" class="site-section split" aria-labelledby="honorarios-title">
 			<article class="surface-card info-card">
-				<span class="section-kicker">Honorários</span>
+				<span class="section-kicker">Honorarios</span>
 				<h2 id="honorarios-title">Como os honorários são definidos</h2>
 				<p>
 					Os honorários dependem do tipo de demanda, do escopo, da complexidade, da urgência
@@ -369,7 +370,7 @@ const localBusinessSchema = {
 			<div class="section-title">
 				<div>
 					<span class="section-kicker">Perguntas frequentes</span>
-					<h2 id="faq-title">Respostas curtas para as dúvidas que costumam travar o primeiro contato</h2>
+					<h2 id="faq-title">Respostas curtas para atritos reais do primeiro contato</h2>
 				</div>
 			</div>
 

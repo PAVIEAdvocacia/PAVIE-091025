@@ -80,6 +80,35 @@
 	gap: 0.6rem;
 }
 
+.blog-section-intro {
+	max-width: 56ch;
+	color: var(--text-muted);
+}
+
+.entry-point-grid {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: var(--space-sm);
+}
+
+.entry-point-card {
+	display: grid;
+	gap: var(--space-sm);
+	padding: var(--card-padding);
+}
+
+.entry-point-card__link {
+	font-weight: 700;
+	color: var(--color-petrol);
+	text-decoration: none;
+}
+
+.entry-point-card__link:hover,
+.entry-point-card__link:focus-visible {
+	color: color-mix(in srgb, var(--color-petrol) 86%, black);
+	text-decoration: underline;
+}
+
 .editorial-guide-grid {
 	display: grid;
 	grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -588,6 +617,7 @@
 
 	.editorial-lane,
 	.editorial-guide-grid,
+	.entry-point-grid,
 	.cluster-directory-grid,
 	.blog-contact-grid,
 	.blog-contact-split,
@@ -615,6 +645,7 @@
 	.blog-grid--cards,
 	.blog-grid--compact,
 	.blog-row,
+	.entry-point-grid,
 	.cluster-directory-grid {
 		grid-template-columns: 1fr;
 	}
@@ -626,6 +657,7 @@
 	.blog-map-hero,
 	.blog-contact-hero,
 	.editorial-guide-card,
+	.entry-point-card,
 	.cluster-directory-card,
 	.blog-contact-panel {
 		padding: 1rem;

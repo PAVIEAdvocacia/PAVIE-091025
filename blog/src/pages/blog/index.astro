@@ -22,34 +22,34 @@ const topThemes = Array.from(
 ).slice(0, 10);
 const quickStartItems = [
 	{
-		title: 'Divórcio, guarda e partilha',
-		text: 'Quando a dúvida começa na reorganização da vida familiar e do patrimônio.',
-		href: '/blog/temas/divorcio/',
-		linkLabel: 'Começar por aqui',
-	},
-	{
-		title: 'Inventário e patrimônio familiar',
-		text: 'Para entender documentos, partilha e decisões que não convém adiar.',
+		area: 'Família, Sucessões e Patrimônio',
+		title: 'Divórcio, guarda, convivência ou partilha',
+		text: 'Quando a dúvida envolve filhos, separação, alimentos, inventário ou patrimônio familiar.',
 		href: '/blog/areas/familia-sucessoes-patrimonio/',
-		linkLabel: 'Ler sobre esta área',
 	},
 	{
-		title: 'Regularização de imóvel',
-		text: 'Leituras sobre matrícula, documentos, compra e venda e riscos do imóvel.',
-		href: '/blog/temas/regularizacao-de-imovel/',
-		linkLabel: 'Começar por aqui',
+		area: 'Imobiliário, Regularização e Condomínios',
+		title: 'Imóvel, matrícula, posse ou regularização',
+		text: 'Quando a situação passa por compra e venda, locação, condomínio ou documentos do imóvel.',
+		href: '/blog/areas/imobiliario-regularizacao-condominios/',
 	},
 	{
-		title: 'Negativa de cobertura ou consumo',
-		text: 'Quando o problema envolve plano de saúde, cobrança indevida ou falha de serviço.',
-		href: '/blog/temas/negativa-de-cobertura/',
-		linkLabel: 'Começar por aqui',
-	},
-	{
-		title: 'Contrato, cobrança ou dano civil',
-		text: 'Para reconhecer se a questão é de obrigação, descumprimento ou reparação.',
+		area: 'Contratos, Obrigações e Responsabilidade Civil',
+		title: 'Contrato, cobrança, inadimplemento ou dano',
+		text: 'Quando o problema pede revisão de cláusulas, definição de responsabilidade ou reação a descumprimento.',
 		href: '/blog/areas/contratos-obrigacoes-responsabilidade-civil/',
-		linkLabel: 'Ler sobre esta área',
+	},
+	{
+		area: 'Consumidor, Saúde e Previdência',
+		title: 'Negativa de cobertura, consumo ou benefício',
+		text: 'Quando a dúvida envolve plano de saúde, relação de consumo, cobrança indevida ou proteção social.',
+		href: '/blog/areas/consumidor-saude-previdencia/',
+	},
+	{
+		area: 'Compliance, Integridade e Atuação Empresarial',
+		title: 'Decisão empresarial, governança ou integridade',
+		text: 'Quando a situação exige organização jurídica de rotinas, contratos ou prevenção de risco.',
+		href: '/blog/areas/compliance-integridade-atuacao-empresarial/',
 	},
 ];
 const searchIndex = posts.map((post) => ({
@@ -91,14 +91,13 @@ const collectionSchema = {
 				<span class="badge">Blog jurídico PAVIE | Advocacia</span>
 				<h1 id="blog-hero-title">Comece pela dúvida que mais se parece com a sua situação.</h1>
 				<p>
-					O blog da PAVIE reúne leituras para quem está diante de divórcio, inventário,
-					regularização de imóvel, contratos, cobranças ou negativas de cobertura e precisa
-					entender o contexto antes do próximo passo.
+					Divórcio, inventário, regularização de imóvel, revisão contratual, cobrança, negativa
+					de cobertura e outras situações sensíveis pedem leitura útil antes do próximo passo.
 				</p>
 				<div class="meta-list" aria-label="Informações do acervo">
 					<span><span class="meta-dot" aria-hidden="true"></span>{posts.length} artigos no acervo público</span>
 					<span><span class="meta-dot" aria-hidden="true"></span>5 áreas de atuação organizando a navegação</span>
-					<span><span class="meta-dot" aria-hidden="true"></span>Conteúdo escrito pela mesma advocacia que conduz o atendimento</span>
+					<span><span class="meta-dot" aria-hidden="true"></span>Mesma estrutura de confiança do site institucional</span>
 				</div>
 				<div class="blog-hero__actions">
 					<a class="btn btn-primary" href="/blog/areas/">Explorar temas</a>
@@ -112,24 +111,24 @@ const collectionSchema = {
 			</div>
 		</section>
 
-		<section class="blog-grid" aria-label="Comece pela situação">
+		<section class="blog-grid" aria-labelledby="quick-start-title">
 			<div class="section-title">
 				<div>
 					<span class="section-kicker">Comece pela situação</span>
-					<h2>Se a sua dúvida se parece com uma destas situações, comece por aqui</h2>
-					<p class="text-muted blog-section-intro">
-						A ideia é reduzir a sensação de arquivo abstrato e aproximar você do conteúdo que
-						mais ajuda a reconhecer o problema.
-					</p>
+					<h2 id="quick-start-title">Se a dúvida se parece com uma destas situações, este é o melhor ponto de entrada.</h2>
 				</div>
+				<p class="blog-section-intro">
+					Você não precisa saber o nome técnico do problema para começar. A navegação abaixo
+					ajuda a localizar a área jurídica correspondente e seguir por conteúdos próximos da sua realidade.
+				</p>
 			</div>
-			<div class="editorial-guide-grid">
+			<div class="entry-point-grid">
 				{quickStartItems.map((item) => (
-					<article class="surface-card editorial-guide-card entry-point-card">
-						<span class="section-kicker">Situação frequente</span>
+					<article class="surface-card entry-point-card">
+						<span class="section-kicker">{item.area}</span>
 						<h3>{item.title}</h3>
 						<p>{item.text}</p>
-						<a class="entry-point-card__link" href={item.href}>{item.linkLabel}</a>
+						<a class="entry-point-card__link" href={item.href}>Ler orientações desta área</a>
 					</article>
 				))}
 			</div>
@@ -140,7 +139,7 @@ const collectionSchema = {
 				<h2>O acervo está em organização</h2>
 				<p>
 					As áreas do blog já estão organizadas. Enquanto novas publicações entram no ar, você pode navegar
-					por assunto para reconhecer a área correspondente ao seu tema e entender quando a leitura já pede orientação inicial.
+					por assunto para reconhecer a área correspondente ao seu tema e entender quando faz sentido buscar orientação inicial.
 				</p>
 				<div class="blog-actions">
 					<a class="btn btn-primary" href="/blog/areas/">Explorar temas</a>
@@ -149,11 +148,9 @@ const collectionSchema = {
 			</section>
 		) : (
 			<>
-				{featured && <FeaturedPost post={featured} />}
-
 				<section class="surface-card blog-search" aria-label="Busca interna do blog">
 					<div>
-						<span class="section-kicker">Buscar por palavra-chave</span>
+						<span class="section-kicker">Busca rápida</span>
 						<h2>Encontre conteúdo por tema, situação ou área jurídica</h2>
 					</div>
 					<label class="sr-only" for="blog-search-input">Buscar no blog</label>
@@ -175,18 +172,16 @@ const collectionSchema = {
 					</ul>
 					<p class="text-muted" data-blog-search-empty hidden>Nenhum resultado para esse termo.</p>
 				</section>
+
+				{featured && <FeaturedPost post={featured} />}
 			</>
 		)}
 
 		<section class="blog-grid" aria-label="Conteúdos por área">
 			<div class="section-title">
 				<div>
-					<span class="section-kicker">Navegue por área</span>
-					<h2>Se a dúvida já está melhor enquadrada, siga pela área correspondente</h2>
-					<p class="text-muted blog-section-intro">
-						Cada área reúne temas recorrentes, ligações com a atuação institucional da PAVIE e
-						um caminho claro para contato quando a leitura já não basta.
-					</p>
+					<span class="section-kicker">Conteúdos por área</span>
+					<h2>Se o tema já está melhor localizado, siga pela área correspondente</h2>
 				</div>
 				<a class="btn btn-ghost" href="/areas/">Conheça os Serviços</a>
 			</div>
@@ -231,7 +226,7 @@ const collectionSchema = {
 		</section>
 
 		{continuityPosts.length > 0 && (
-			<BlogGrid title="Continue a leitura" kicker="Artigos em destaque" posts={continuityPosts} />
+			<BlogGrid title="Continue a leitura" kicker="Aprofundamento" posts={continuityPosts} />
 		)}
 
 		{topThemes.length > 0 && (
@@ -239,7 +234,7 @@ const collectionSchema = {
 				<div class="section-title">
 					<div>
 						<span class="section-kicker">Temas em foco</span>
-						<h2>Assuntos recorrentes para continuar sem se perder</h2>
+						<h2>Continue por tema quando quiser aprofundar um recorte específico</h2>
 					</div>
 					<a class="btn btn-ghost" href="/blog/temas/">Explorar temas</a>
 				</div>
@@ -252,12 +247,11 @@ const collectionSchema = {
 		)}
 
 		<section class="editorial-cta" aria-label="Primeiro passo para contato">
-			<span class="section-kicker">Quando a leitura já não basta</span>
-			<h2>Se a dúvida depende do seu caso concreto, o primeiro passo é descrever a situação com clareza.</h2>
+			<span class="section-kicker">Quando a leitura ajuda a decidir</span>
+			<h2>Se o tema deixar de ser apenas dúvida, o primeiro passo é descrever sua situação com clareza.</h2>
 			<p>
-				A PAVIE não promete resposta automática nem patrocínio imediato. O movimento institucional
-				correto é contextualizar o caso, entender o que precisa ser informado e explicar como
-				funciona o retorno inicial.
+				A PAVIE não promete resposta automática nem patrocínio imediato. O primeiro movimento é
+				contextualizar o caso, entender o que precisa ser informado e explicar como funciona o retorno inicial.
 			</p>
 			<div class="blog-actions">
 				<a class="btn btn-primary" href="/blog/contato/">Solicitar orientação inicial</a>
@@ -276,8 +270,8 @@ const collectionSchema = {
 				<h2>Fabio Mathias Pavie</h2>
 				<p>Advogado | OAB/RJ 134.947</p>
 				<p>
-					O blog é escrito pelo mesmo advogado que conduz o atendimento institucional da PAVIE.
-					A proposta é ajudar você a entender melhor o problema antes de decidir se já é hora de buscar orientação inicial.
+					Os conteúdos aprofundam temas que aparecem na prática institucional da PAVIE,
+					sem transformar leitura em promessa de resultado.
 				</p>
 				<div class="blog-actions">
 					<a class="btn btn-primary" href="/areas/">Conheça os Serviços</a>
