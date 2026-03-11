@@ -2,7 +2,7 @@
 title: "Titulo do artigo"
 slug: "slug-do-artigo"
 description: "Descricao curta e clara do que o artigo explica."
-area: "Familia, Sucessoes e Patrimonio"
+area: "familia-sucessoes-patrimonio"
 publish_date: 2026-03-11T09:00:00.000-03:00
 author: "Fabio Mathias Pavie"
 status: "draft"

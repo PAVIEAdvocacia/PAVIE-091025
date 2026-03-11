@@ -2,7 +2,7 @@
 title: "Como ler a matricula do imovel antes de comprar ou regularizar"
 slug: "como-ler-a-matricula-do-imovel-antes-de-comprar-ou-regularizar"
 description: "Entenda o que a matricula mostra, quais alertas costumam importar e por que registro e averbacao mudam a leitura juridica do imovel."
-area: "Imobiliario, Regularizacao e Condominios"
+area: "imobiliario-regularizacao-condominios"
 publish_date: 2026-03-11T13:00:00.000-03:00
 author: "Fabio Mathias Pavie"
 status: "published"

@@ -47,13 +47,13 @@ collections:
         name: "area"
         widget: "select"
         required: true
-        hint: "Obrigatorio. Use exatamente uma das 5 areas canonicas do projeto."
+        hint: "Obrigatorio. Use a chave estavel da area correspondente."
         options:
-          - "Familia, Sucessoes e Patrimonio"
-          - "Contratos, Obrigacoes e Responsabilidade Civil"
-          - "Imobiliario, Regularizacao e Condominios"
-          - "Consumidor, Saude e Previdencia"
-          - "Compliance, Integridade e Atuacao Empresarial"
+          - { label: "Familia, Sucessoes e Patrimonio", value: "familia-sucessoes-patrimonio" }
+          - { label: "Contratos, Obrigacoes e Responsabilidade Civil", value: "contratos-obrigacoes-responsabilidade-civil" }
+          - { label: "Imobiliario, Regularizacao e Condominios", value: "imobiliario-regularizacao-condominios" }
+          - { label: "Consumidor, Saude e Previdencia", value: "consumidor-saude-previdencia" }
+          - { label: "Compliance, Integridade e Atuacao Empresarial", value: "compliance-integridade-atuacao-empresarial" }
       -
         label: "Data de publicacao"
         name: "publish_date"

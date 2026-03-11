@@ -1,11 +1,11 @@
 import { getCollection, type CollectionEntry } from 'astro:content';
 import { readdir } from 'node:fs/promises';
-import { extname } from 'node:path';
+import { extname, resolve } from 'node:path';
 
-const BLOG_CONTENT_DIR = new URL('../content/blog/', import.meta.url);
+const BLOG_CONTENT_DIR = resolve(process.cwd(), 'src', 'content', 'blog');
 const MARKDOWN_EXTENSIONS = new Set(['.md', '.mdx']);
 
-async function hasContentFiles(directory: URL): Promise<boolean> {
+async function hasContentFiles(directory: string): Promise<boolean> {
 	let entries;
 
 	try {
@@ -24,7 +24,7 @@ async function hasContentFiles(directory: URL): Promise<boolean> {
 
 	for (const entry of entries) {
 		if (entry.isDirectory()) {
-			if (await hasContentFiles(new URL(`${entry.name}/`, directory))) {
+			if (await hasContentFiles(resolve(directory, entry.name))) {
 				return true;
 			}
 			continue;

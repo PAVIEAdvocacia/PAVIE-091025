@@ -2,7 +2,7 @@
 title: "Divorcio em 2025: cartorio, filhos menores e protecao patrimonial"
 slug: "divorcio-em-2025-cartorio-filhos-menores-protecao-patrimonial"
 description: "Entenda quando o divorcio pode seguir em cartorio, quando o Judiciario ainda e necessario e como proteger o conjuge economicamente mais vulneravel."
-area: "Familia, Sucessoes e Patrimonio"
+area: "familia-sucessoes-patrimonio"
 publish_date: 2026-03-09T00:59:00.000-03:00
 author: "Fabio Mathias Pavie"
 status: "published"

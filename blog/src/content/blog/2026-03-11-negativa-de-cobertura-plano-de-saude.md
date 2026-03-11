@@ -2,7 +2,7 @@
 title: "Negativa de cobertura do plano de saude: o que guardar antes de discutir o caso"
 slug: "negativa-de-cobertura-do-plano-de-saude-o-que-guardar"
 description: "Veja quais registros ajudam a transformar uma negativa de cobertura em quadro juridico mais claro: pedido medico, protocolo, justificativa por escrito e documentacao da urgencia."
-area: "Consumidor, Saude e Previdencia"
+area: "consumidor-saude-previdencia"
 publish_date: 2026-03-11T13:30:00.000-03:00
 author: "Fabio Mathias Pavie"
 status: "published"

@@ -1,18 +1,28 @@
-﻿import { defineCollection, z } from 'astro:content';
+import { defineCollection, z } from 'astro:content';
 import { glob } from 'astro/loaders';
 import {
-	EDITORIAL_AREA_LABELS,
+	EDITORIAL_AREA_KEYS,
 	EDITORIAL_AUTHORS,
 	EDITORIAL_FUNNEL_STAGES,
 	EDITORIAL_STATUSES,
 	PRIMARY_CTA_KEYS,
 } from './lib/editorial-taxonomy';
+import { normalizeAreaKey } from './lib/taxonomy';
 
-const areaOptions = [...EDITORIAL_AREA_LABELS] as [string, ...string[]];
+const areaOptions = [...EDITORIAL_AREA_KEYS] as [string, ...string[]];
 const authorOptions = [...EDITORIAL_AUTHORS] as [string, ...string[]];
 const funnelStageOptions = [...EDITORIAL_FUNNEL_STAGES] as [string, ...string[]];
 const statusOptions = [...EDITORIAL_STATUSES] as [string, ...string[]];
 const primaryCtaOptions = [...PRIMARY_CTA_KEYS] as [string, ...string[]];
+const areaOptionSet = new Set(areaOptions);
+
+const areaSchema = z
+	.string()
+	.trim()
+	.transform((value) => normalizeAreaKey(value))
+	.refine((value) => areaOptionSet.has(value), {
+		message: `Use uma das areas suportadas: ${areaOptions.join(', ')}`,
+	});
 
 const blog = defineCollection({
 	loader: glob({ base: './src/content/blog', pattern: '**/*.{md,mdx}' }),
@@ -21,7 +31,7 @@ const blog = defineCollection({
 			title: z.string(),
 			slug: z.string(),
 			description: z.string(),
-			area: z.enum(areaOptions),
+			area: areaSchema,
 			publish_date: z.coerce.date(),
 			author: z.enum(authorOptions),
 			status: z.enum(statusOptions),
