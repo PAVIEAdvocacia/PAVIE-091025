@@ -54,33 +54,34 @@ const personSchema = {
 		<section class="surface-card institutional-profile" aria-labelledby="author-title">
 			<img src={currentAuthor.data.image} alt={currentAuthor.data.imageAlt} loading="eager" />
 			<div>
-				<span class="badge">Autor canonico</span>
+				<span class="badge">Autor</span>
 				<h1 id="author-title">{currentAuthor.data.name}</h1>
 				<p>{currentAuthor.data.oab}</p>
 				<p>{currentAuthor.data.shortBio}</p>
 				<p>{currentAuthor.data.extendedBio}</p>
 				<div class="institutional-actions">
 					<a class="btn btn-primary" href="/areas/">Conheca as areas</a>
-					<a class="btn btn-ghost" href="/blog/categoria/">Explorar categorias</a>
+					<a class="btn btn-ghost" href="/blog/categoria/">Explorar categorias do blog</a>
 				</div>
 			</div>
 		</section>
 
 		<section class="institutional-grid" aria-label="Estrutura de autoria">
 			<article class="surface-card institutional-card">
-				<span class="section-kicker">Papel publico</span>
-				<h2>Autoria controlada e identificavel</h2>
+				<span class="section-kicker">Producao publica</span>
+				<h2>Escrita concentrada no foco atual do escritorio</h2>
 				<p>
-					Esta pagina centraliza a autoria publica homologada no ecossistema PAVIE e evita dispersao entre perfis
-					duplicados ou bios concorrentes.
+					Os textos assinados por Fabio Pavie acompanham o eixo institucional da PAVIE e priorizam
+					questoes em que patrimonio, familia, sucessao, imoveis, documentos e definicao da via adequada
+					tem relevancia pratica.
 				</p>
 			</article>
 			<article class="surface-card institutional-card">
-				<span class="section-kicker">Relacao com o acervo</span>
-				<h2>Publicacoes assinadas</h2>
+				<span class="section-kicker">Como navegar</span>
+				<h2>Conteudos reunidos em uma pagina unica de autoria</h2>
 				<p>
-					Os artigos abaixo sao os que ja operam com a taxonomia canonica aprovada para superficies publicas do site
-					e do blog.
+					Esta pagina concentra os artigos publicados desta assinatura e evita dispersao entre perfis,
+					bios ou referencias publicas concorrentes.
 				</p>
 			</article>
 		</section>
@@ -89,8 +90,8 @@ const personSchema = {
 			title="Publicacoes do autor"
 			kicker="Autoria"
 			posts={posts}
-			emptyTitle="Acervo em homologacao"
-			emptyText="A pagina de autor ja esta pronta, mas o acervo publico homologado desta assinatura ainda esta em expansao."
+			emptyTitle="Acervo em atualizacao"
+			emptyText="A pagina de autor ja esta disponivel. Novos artigos serao reunidos aqui conforme entrarem no acervo publico."
 			emptyHref="/blog/categoria/"
 			emptyLabel="Explorar categorias"
 		/>

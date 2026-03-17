@@ -1,16 +1,16 @@
 ---
-title: "Cobrança, Execução, Contratos e Recuperação de Crédito Seletiva"
+title: "Cobranca, Execucao, Contratos e Recuperacao de Credito Seletiva"
 slug: "cobranca-execucao-contratos-recuperacao-credito-seletiva"
 categoryCode: "CAT-06"
-shortDescription: "Área canônica para cobrança, execução, contratos selecionados e recuperação de crédito em chave seletiva."
-headline: "Nem toda inadimplência é apenas uma dívida; muitas vezes ela exige leitura contratual e estratégica."
+shortDescription: "Contratos selecionados, cobranca, execucao e recuperacao de credito exigem leitura de escopo, documentos e estrategia."
+headline: "Nem toda inadimplencia e apenas uma divida; muitas vezes ela exige leitura contratual e estrategica."
 ctaType: "contact"
 ctaTarget: "/contato/"
-seoTitle: "Cobrança, Execução, Contratos e Recuperação de Crédito Seletiva | PAVIE | Advocacia"
-description: "Registro canônico da área de cobrança, execução, contratos e recuperação de crédito seletiva para uso estrutural no ecossistema digital da PAVIE."
+seoTitle: "Cobranca, Execucao, Contratos e Recuperacao de Credito Seletiva | PAVIE | Advocacia"
+description: "Esta area concentra situacoes em que contratos, obrigacoes, cobranca ou recuperacao seletiva de credito pedem leitura cuidadosa do titulo, do inadimplemento e das alternativas juridicas disponiveis."
 order: 6
 isActive: true
 reviewStatus: "pending"
 ---
 
-Registro canônico de área para uso estrutural. Revisão humana obrigatória antes de qualquer publicação derivada.
+Registro canonico de area para uso estrutural. Revisao humana obrigatoria antes de qualquer publicacao derivada.

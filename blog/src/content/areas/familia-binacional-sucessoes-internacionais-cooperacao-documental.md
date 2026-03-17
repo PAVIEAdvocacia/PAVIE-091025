@@ -1,16 +1,16 @@
 ---
-title: "Família Binacional, Sucessões Internacionais e Cooperação Documental"
+title: "Familia Binacional, Sucessoes Internacionais e Cooperacao Documental"
 slug: "familia-binacional-sucessoes-internacionais-cooperacao-documental"
 categoryCode: "CAT-04"
-shortDescription: "Área canônica voltada a vínculos familiares, sucessórios e documentais com elementos internacionais."
-headline: "Questões com elementos internacionais exigem compatibilização entre documentos, jurisdições e estratégia."
+shortDescription: "Vinculos familiares, sucessorios e documentais com elementos internacionais pedem compatibilizacao de documentos, jurisdicoes e estrategia."
+headline: "Questoes com elementos internacionais exigem compatibilizacao entre documentos, jurisdicoes e estrategia."
 ctaType: "contact"
 ctaTarget: "/contato/"
-seoTitle: "Família Binacional, Sucessões Internacionais e Cooperação Documental | PAVIE | Advocacia"
-description: "Registro canônico da área internacional e binacional para uso estrutural no ecossistema digital da PAVIE."
+seoTitle: "Familia Binacional, Sucessoes Internacionais e Cooperacao Documental | PAVIE | Advocacia"
+description: "Esta area reune situacoes com componente internacional relevante, em que familia, sucessao, cooperacao documental ou repercussao patrimonial exigem enquadramento cuidadoso e coordenacao correta da informacao."
 order: 4
 isActive: true
 reviewStatus: "pending"
 ---
 
-Registro canônico de área para uso estrutural. Revisão humana obrigatória antes de qualquer publicação derivada.
+Registro canonico de area para uso estrutural. Revisao humana obrigatoria antes de qualquer publicacao derivada.

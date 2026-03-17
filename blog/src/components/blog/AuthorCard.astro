@@ -6,6 +6,10 @@ interface Props {
 }
 
 const { post } = Astro.props;
+const authorSignature =
+	post.authorSlug === 'fabio-pavie'
+		? 'Fabio Pavie escreve principalmente sobre questoes patrimoniais, familiares, sucessorias, imobiliarias e documentais, com rigor documental e linguagem clara.'
+		: 'Conteudo produzido no ecossistema PAVIE para orientar com clareza, sem substituir a analise individual do caso.';
 ---
 
 <section class="author-card" aria-label="Informacoes do autor">
@@ -19,10 +23,7 @@ const { post } = Astro.props;
 		<span class="section-kicker">Responsavel pelo conteudo</span>
 		<h3>{post.authorName}</h3>
 		<p>{post.authorRole}</p>
-		<p class="author-card__note">
-			Conteudo produzido no ecossistema de PAVIE | Advocacia para orientar com clareza,
-			sem substituir a analise individual do caso.
-		</p>
+		<p class="author-card__note">{authorSignature}</p>
 		<a class="author-card__link" href={post.authorUrl ?? '/sobre/'}>Conheca o autor</a>
 	</div>
 </section>

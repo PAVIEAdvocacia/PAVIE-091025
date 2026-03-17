@@ -49,13 +49,13 @@ const breadcrumbSchema = buildBreadcrumbSchema(breadcrumbs, canonicalUrl);
 	<div class="container blog-home">
 		<Breadcrumbs items={breadcrumbs} />
 		<section class="surface-card blog-map-hero" aria-labelledby="blog-category-title">
-			<span class="badge">Categoria canonica</span>
+			<span class="badge">Categoria do blog</span>
 			<h1 id="blog-category-title">{currentCategory.title}</h1>
 			<p>{currentCategory.headline}</p>
 			<div class="meta-list">
-				<span><span class="meta-dot" aria-hidden="true"></span>{currentCategory.postCount} publicacoes homologadas</span>
-				<span><span class="meta-dot" aria-hidden="true"></span>Interlinking operando apenas na taxonomia aprovada</span>
-				<span><span class="meta-dot" aria-hidden="true"></span>Ligacao direta com a pagina de area correspondente</span>
+				<span><span class="meta-dot" aria-hidden="true"></span>{currentCategory.postCount} artigo{currentCategory.postCount === 1 ? '' : 's'} publicado{currentCategory.postCount === 1 ? '' : 's'}</span>
+				<span><span class="meta-dot" aria-hidden="true"></span>Leituras relacionadas pela mesma categoria</span>
+				<span><span class="meta-dot" aria-hidden="true"></span>Ligacao com a area correspondente</span>
 			</div>
 			<div class="blog-actions">
 				<a class="btn btn-primary" href={currentCategory.href}>Conheca a area</a>
@@ -69,8 +69,8 @@ const breadcrumbSchema = buildBreadcrumbSchema(breadcrumbs, canonicalUrl);
 			<section class="surface-card empty-state" aria-label="Acervo em atualizacao">
 				<h2>Acervo em atualizacao</h2>
 				<p>
-					A categoria ja esta pronta para o Sprint 2, mas ainda nao ha publicacoes homologadas suficientes para
-					compor a listagem principal.
+					Esta categoria ja esta disponivel, mas ainda nao ha artigos suficientes para compor a
+					listagem principal.
 				</p>
 				<div class="blog-actions">
 					<a class="btn btn-primary" href={currentCategory.href}>Conheca a area</a>
@@ -81,10 +81,10 @@ const breadcrumbSchema = buildBreadcrumbSchema(breadcrumbs, canonicalUrl);
 
 		<BlogGrid
 			title="Leituras desta categoria"
-			kicker="Categoria canonica"
+			kicker="Categoria"
 			posts={remainingPosts}
-			emptyTitle="Sem outras publicacoes homologadas"
-			emptyText="A categoria ja integra a camada canonica e acumulara autoridade conforme o acervo for homologado."
+			emptyTitle="Sem outras publicacoes nesta categoria"
+			emptyText="A categoria ja esta estruturada e recebera novos textos conforme o acervo publicado crescer."
 			emptyHref={currentCategory.href}
 			emptyLabel="Conheca a area"
 		/>
@@ -94,7 +94,7 @@ const breadcrumbSchema = buildBreadcrumbSchema(breadcrumbs, canonicalUrl);
 				<div class="section-title">
 					<div>
 						<span class="section-kicker">Outras categorias</span>
-						<h2>Se a leitura atual nao for o melhor eixo, continue por outra categoria canonica</h2>
+						<h2>Se a leitura atual nao for o melhor eixo, continue por outra categoria</h2>
 					</div>
 					<a class="btn btn-ghost" href="/blog/categoria/">Ver todas as categorias</a>
 				</div>
@@ -103,7 +103,9 @@ const breadcrumbSchema = buildBreadcrumbSchema(breadcrumbs, canonicalUrl);
 						<article class="surface-card cluster-directory-card">
 							<h3>{category.title}</h3>
 							<p>{category.shortDescription}</p>
-							<p class="cluster-directory-meta">{category.postCount} publicacoes homologadas.</p>
+							<p class="cluster-directory-meta">
+								{category.postCount} artigo{category.postCount === 1 ? '' : 's'} publicado{category.postCount === 1 ? '' : 's'}.
+							</p>
 							<div class="cluster-directory-actions">
 								<a class="btn btn-primary" href={category.categoryHref}>Explorar categoria</a>
 								<a class="btn btn-ghost" href={category.href}>Conheca a area</a>

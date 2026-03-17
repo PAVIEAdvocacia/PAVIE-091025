@@ -30,6 +30,8 @@ const legacyAreaOptionSet = new Set(legacyAreaOptions);
 
 const listOrString = z.union([z.array(z.string()), z.string()]);
 const optionalStringList = z.array(z.string()).optional();
+const filePathId = ({ entry }: { entry: string }) =>
+	entry.replace(/\\/g, '/').replace(/\.[^.]+$/, '');
 
 const legacyAreaSchema = z
 	.string()
@@ -138,7 +140,7 @@ const posts = defineCollection({
 });
 
 const areas = defineCollection({
-	loader: glob({ base: './src/content/areas', pattern: '**/*.md' }),
+	loader: glob({ base: './src/content/areas', pattern: '**/*.md', generateId: filePathId }),
 	schema: z.object({
 		title: z.string().min(12),
 		slug: z.string().min(3),
@@ -156,7 +158,7 @@ const areas = defineCollection({
 });
 
 const authors = defineCollection({
-	loader: glob({ base: './src/content/authors', pattern: '**/*.md' }),
+	loader: glob({ base: './src/content/authors', pattern: '**/*.md', generateId: filePathId }),
 	schema: z.object({
 		id: z.enum(authorIdOptions),
 		name: z.string().min(3),

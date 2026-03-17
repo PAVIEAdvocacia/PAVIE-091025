@@ -1,16 +1,16 @@
 ---
-title: "Tributação Patrimonial e Recuperação Tributária Seletiva"
+title: "Tributacao Patrimonial e Recuperacao Tributaria Seletiva"
 slug: "tributacao-patrimonial-recuperacao-tributaria-seletiva"
 categoryCode: "CAT-07"
-shortDescription: "Área canônica para tributação patrimonial, regularização tributária e hipóteses seletivas de recuperação."
-headline: "Questões tributárias patrimoniais exigem leitura técnica do fato gerador, dos documentos e da via adequada."
+shortDescription: "Questoes de tributacao patrimonial e regularizacao tributaria seletiva exigem leitura tecnica de fatos, documentos e enquadramento correto."
+headline: "Questoes tributarias patrimoniais exigem leitura tecnica do fato gerador, dos documentos e da via adequada."
 ctaType: "contact"
 ctaTarget: "/contato/"
-seoTitle: "Tributação Patrimonial e Recuperação Tributária Seletiva | PAVIE | Advocacia"
-description: "Registro canônico da área de tributação patrimonial e recuperação tributária seletiva para uso estrutural no ecossistema digital da PAVIE."
+seoTitle: "Tributacao Patrimonial e Recuperacao Tributaria Seletiva | PAVIE | Advocacia"
+description: "Esta area reune hipoteses seletivas de tributacao patrimonial e recuperacao tributaria, quando a situacao depende de documentacao consistente, leitura tecnica do fato gerador e avaliacao prudente da via adequada."
 order: 7
 isActive: true
 reviewStatus: "pending"
 ---
 
-Registro canônico de área para uso estrutural. Revisão humana obrigatória antes de qualquer publicação derivada.
+Registro canonico de area para uso estrutural. Revisao humana obrigatoria antes de qualquer publicacao derivada.
