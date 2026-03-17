@@ -1,53 +1,63 @@
-﻿---
+---
 import { MAIN_SITE_URL } from '../consts';
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { getBlogEntries } from '../lib/blog-content';
-import { buildHubDirectory } from '../lib/service-hubs';
+import { getAreaEntries, getBlogEntries } from '../lib/blog-content';
+import { buildCanonicalAreaDirectory } from '../lib/canonical-directory';
 import { isPublicPost, normalizePost, sortPostsByDate } from '../lib/posts';
 import '../styles/institutional-pages.css';
 
-const title = 'Áreas de Atuação | PAVIE | Advocacia';
+const title = 'Areas de Atuacao | PAVIE | Advocacia';
 const description =
-	'Mapa institucional de serviços jurídicos da PAVIE, com áreas de atuação organizadas e ligação natural com os conteúdos do blog.';
+	'Camada canonica de areas da PAVIE, organizada pelos 7 rotulos aprovados e conectada ao acervo editorial homologado.';
 
-const entries = await getBlogEntries();
-const posts = sortPostsByDate(entries.map((entry) => normalizePost(entry))).filter(isPublicPost);
-const hubDirectory = buildHubDirectory(posts);
+const [areaEntries, blogEntries] = await Promise.all([getAreaEntries(), getBlogEntries()]);
+const posts = sortPostsByDate(blogEntries.map((entry) => normalizePost(entry))).filter(isPublicPost);
+const areaDirectory = buildCanonicalAreaDirectory(areaEntries, posts);
 ---
 
 <BaseLayout title={title} description={description} canonical={`${MAIN_SITE_URL}/areas/`}>
 	<div class="container-md institutional-page">
-		<span class="badge">Áreas de atuação</span>
-		<h1>Serviços jurídicos organizados pelas principais áreas de atuação da PAVIE.</h1>
+		<span class="badge">Areas canonicas</span>
+		<h1>As areas de atuacao da PAVIE seguem apenas os 7 rotulos canonicos aprovados.</h1>
 		<p class="institutional-page__lead">
-			Esta estrutura mantém coerência entre atendimento, páginas institucionais e conteúdos do
-			blog. Cada área abaixo reúne escopo jurídico, situações comuns e leituras úteis sobre o mesmo assunto.
+			Esta camada organiza a navegacao institucional por area, conecta cada pagina ao acervo editorial compativel
+			e evita reaproveitamento da taxonomia legada como estrutura publica.
 		</p>
 
+		<div class="meta-list" aria-label="Panorama das areas canonicas">
+			<span><span class="meta-dot" aria-hidden="true"></span>{areaDirectory.length} areas ativas</span>
+			<span><span class="meta-dot" aria-hidden="true"></span>{posts.length} publicacoes homologadas no acervo atual</span>
+			<span><span class="meta-dot" aria-hidden="true"></span>Navegacao institucional e editorial alinhadas</span>
+		</div>
+
 		<div class="hub-grid">
-			{hubDirectory.map((hub) => (
-				<article class="surface-card hub-card">
-					<h2>{hub.title}</h2>
-					<p>{hub.summary}</p>
+			{areaDirectory.map((area) => (
+				<article class="surface-card hub-card institutional-card">
+					<span class="section-kicker">Area canonica</span>
+					<h2>{area.title}</h2>
+					<p>{area.shortDescription}</p>
 					<ul class="institutional-list">
-						{hub.situations.map((situation) => (
-							<li>{situation}</li>
-						))}
+						<li>{area.headline}</li>
+						<li>
+							{area.postCount > 0
+								? `${area.postCount} publicacao${area.postCount > 1 ? 'oes' : ''} homologada${area.postCount > 1 ? 's' : ''} nesta area.`
+								: 'O acervo editorial desta area segue ciclo proprio de homologacao.'}
+						</li>
+						<li>A pagina de area e a categoria do blog apontam para o mesmo eixo canonico.</li>
 					</ul>
-					<div class="hub-tag-list">
-						{hub.themes.map((theme) => (
-							<a class:list={['hub-tag', { 'is-muted': !theme.available }]} href={theme.href}>
-								{theme.label}
-							</a>
-						))}
-					</div>
-					<div class="hub-card__meta">
-						<span>{hub.postCount} conteúdos publicados</span>
-						<a href={hub.areaUrl}>Explorar temas</a>
-					</div>
+					{area.latestPosts.length > 0 && (
+						<div class="cluster-directory-posts">
+							<p class="cluster-directory-meta">Leituras relacionadas</p>
+							<ul>
+								{area.latestPosts.map((post) => (
+									<li><a href={post.url}>{post.title}</a></li>
+								))}
+							</ul>
+						</div>
+					)}
 					<div class="institutional-actions">
-						<a class="btn btn-primary" href={hub.areaUrl}>Explorar temas</a>
-						<a class="btn btn-ghost" href="/contato/">Solicitar Diagnóstico Jurídico</a>
+						<a class="btn btn-primary" href={area.href}>Conheca esta area</a>
+						<a class="btn btn-ghost" href={area.categoryHref}>Explorar categoria no blog</a>
 					</div>
 				</article>
 			))}

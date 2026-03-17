@@ -1,4 +1,4 @@
-﻿backend:
+backend:
   name: github
   repo: PAVIEAdvocacia/PAVIE-091025
   branch: main
@@ -12,160 +12,349 @@ media_folder: "public/uploads"
 public_folder: "/uploads"
 
 collections:
-  - name: "blog"
-    label: "Artigos do Blog"
-    label_singular: "Artigo"
+  - name: "posts"
+    label: "Posts Canonicos"
+    label_singular: "Post"
     folder: "src/content/blog"
     create: true
     delete: true
     identifier_field: "title"
-    summary: "{{title}} - {{status}}"
+    summary: "{{title}} - {{categoryCode}} - {{migrationStatus}}"
     slug: "{{slug}}"
     extension: "md"
     editor:
       preview: true
     fields:
-      -
-        label: "Titulo"
+      - label: "Titulo"
         name: "title"
         widget: "string"
-        hint: "Obrigatorio. Titulo principal do artigo."
-      -
-        label: "Slug"
-        name: "slug"
+        hint: "Obrigatorio. Titulo principal do conteudo."
+      - label: "SEO title"
+        name: "seoTitle"
         widget: "string"
         required: true
-        hint: "Obrigatorio. URL limpa e estavel. Ex.: divorcio-cartorio-filhos-menores"
-      -
-        label: "Descricao"
+        hint: "Obrigatorio. Titulo principal de SEO do contrato canonico."
+      - label: "Descricao"
         name: "description"
         widget: "text"
         required: true
-        hint: "Obrigatorio. Resumo curto para abertura do artigo e metadado basico."
-      -
-        label: "Area"
-        name: "area"
-        widget: "select"
-        required: true
-        hint: "Obrigatorio. Use a chave estavel da area correspondente."
-        options:
-          - { label: "Familia, Sucessoes e Patrimonio", value: "familia-sucessoes-patrimonio" }
-          - { label: "Contratos, Obrigacoes e Responsabilidade Civil", value: "contratos-obrigacoes-responsabilidade-civil" }
-          - { label: "Imobiliario, Regularizacao e Condominios", value: "imobiliario-regularizacao-condominios" }
-          - { label: "Consumidor, Saude e Previdencia", value: "consumidor-saude-previdencia" }
-          - { label: "Compliance, Integridade e Atuacao Empresarial", value: "compliance-integridade-atuacao-empresarial" }
-      -
-        label: "Data de publicacao"
-        name: "publish_date"
-        widget: "datetime"
-        required: true
-        hint: "Obrigatorio. Data principal de publicacao do artigo."
-      -
-        label: "Autor"
-        name: "author"
-        widget: "select"
-        required: true
-        hint: "Obrigatorio. Autor institucional do conteudo."
-        options:
-          - "Fabio Mathias Pavie"
-      -
-        label: "Status"
-        name: "status"
-        widget: "select"
-        required: true
-        default: "draft"
-        hint: "Obrigatorio. Estado editorial minimo e controlado."
-        options:
-          - "draft"
-          - "published"
-          - "archived"
-      -
-        label: "Estagio do funil"
-        name: "funnel_stage"
-        widget: "select"
-        required: true
-        default: "consideracao"
-        hint: "Obrigatorio. Indica o papel principal do artigo na jornada."
-        options:
-          - "descoberta"
-          - "consideracao"
-          - "aprofundamento"
-          - "orientacao"
-          - "contato"
-      -
-        label: "Resumo curto"
+        hint: "Obrigatorio. Resumo principal do conteudo."
+      - label: "Excerpt"
         name: "excerpt"
         widget: "text"
-        required: false
-        hint: "Opcional. Use quando precisar de um resumo especifico para listagens."
-      -
-        label: "Subarea"
-        name: "subarea"
+        required: true
+        hint: "Obrigatorio. Versao curta para listagens."
+      - label: "Slug"
+        name: "slug"
+        widget: "string"
+        required: true
+        hint: "Obrigatorio. URL estavel sem prefixo /blog/."
+      - label: "Legacy slug"
+        name: "legacySlug"
         widget: "string"
         required: false
-        hint: "Opcional. Use apenas se ajudar de verdade a enquadrar o artigo."
-      -
-        label: "Temas"
-        name: "themes"
-        widget: "list"
+        hint: "Opcional. Use para compatibilidade com migracoes."
+      - label: "Data de publicacao"
+        name: "publishDate"
+        widget: "datetime"
+        required: true
+      - label: "Data de atualizacao"
+        name: "updatedDate"
+        widget: "datetime"
         required: false
-        hint: "Opcional. Liste 2 a 5 temas principais do artigo."
-      -
-        label: "Pain points"
-        name: "pain_points"
-        widget: "list"
-        required: false
-        hint: "Opcional. Dores ou situacoes que o artigo ajuda a esclarecer."
-      -
-        label: "Artigos relacionados"
-        name: "related_articles"
+      - label: "Autor"
+        name: "authorId"
         widget: "relation"
-        collection: "blog"
-        search_fields: ["title", "slug"]
-        value_field: "slug"
-        display_fields: ["title"]
-        multiple: true
-        required: false
-        hint: "Opcional. Selecione apenas artigos realmente ligados a esta leitura."
-      -
-        label: "CTA principal"
-        name: "primary_cta"
+        collection: "authors"
+        search_fields: ["name", "id", "slug"]
+        value_field: "id"
+        display_fields: ["name"]
+        required: true
+      - label: "Categoria canonica"
+        name: "categoryCode"
         widget: "select"
-        required: false
-        hint: "Opcional. Use so quando quiser mudar o CTA padrao definido pelo estagio do funil."
+        required: true
         options:
-          - { label: "Abrir Areas Editoriais", value: "areas_editoriais" }
-          - { label: "Solicitar Diagnostico Juridico", value: "diagnostico_juridico" }
-          - { label: "Ver Areas de Atuacao", value: "areas_de_atuacao" }
-      -
-        label: "SEO title"
-        name: "seo_title"
+          - { label: "CAT-01 | Sucessoes, Inventarios e Partilha Patrimonial", value: "CAT-01" }
+          - { label: "CAT-02 | Planejamento Patrimonial, Sucessorio e Arranjos Preventivos", value: "CAT-02" }
+          - { label: "CAT-03 | Familia Patrimonial e Dissolucoes", value: "CAT-03" }
+          - { label: "CAT-04 | Familia Binacional, Sucessoes Internacionais e Cooperacao Documental", value: "CAT-04" }
+          - { label: "CAT-05 | Imoveis, Registro, Regularizacoes e Litigios Patrimoniais", value: "CAT-05" }
+          - { label: "CAT-06 | Cobranca, Execucao, Contratos e Recuperacao de Credito Seletiva", value: "CAT-06" }
+          - { label: "CAT-07 | Tributacao Patrimonial e Recuperacao Tributaria Seletiva", value: "CAT-07" }
+      - label: "Tipo de conteudo"
+        name: "contentType"
+        widget: "select"
+        required: true
+        options:
+          - "cornerstone"
+          - "guide"
+          - "spoke"
+          - "faq"
+          - "checklist"
+          - "case-note"
+          - "institutional"
+      - label: "Estagio do leitor"
+        name: "readerStage"
+        widget: "select"
+        required: true
+        options:
+          - "discover"
+          - "clarify"
+          - "compare"
+          - "decide"
+      - label: "Tipo de CTA"
+        name: "ctaType"
+        widget: "select"
+        required: true
+        options:
+          - "area"
+          - "contact"
+          - "article-series"
+          - "document-review"
+      - label: "Destino do CTA"
+        name: "ctaTarget"
         widget: "string"
+        required: true
+        hint: "Obrigatorio. URL ou destino estruturado do CTA."
+      - label: "Rascunho"
+        name: "draft"
+        widget: "boolean"
         required: false
-        hint: "Opcional. Use apenas se o titulo de metadado precisar divergir do titulo principal."
-      -
-        label: "OG image"
-        name: "og_image"
-        widget: "image"
+        default: true
+      - label: "Noindex"
+        name: "noindex"
+        widget: "boolean"
         required: false
-        hint: "Opcional. Imagem de compartilhamento e capa do artigo."
-      -
-        label: "Tempo de leitura (min)"
-        name: "reading_time"
-        widget: "number"
-        required: false
-        value_type: "int"
-        min: 1
-        hint: "Opcional. Se vazio, o tempo sera estimado automaticamente."
-      -
-        label: "Destaque editorial"
+        default: true
+      - label: "Destaque editorial"
         name: "featured"
         widget: "boolean"
         required: false
         default: false
-        hint: "Opcional. Marque apenas quando o artigo precisar aparecer como destaque na home do blog."
-      -
-        label: "Conteudo"
+      - label: "Revisao juridica"
+        name: "legalReview"
+        widget: "select"
+        required: true
+        default: "pending"
+        options:
+          - "pending"
+          - "reviewed"
+          - "needs-adjustment"
+      - label: "Revisao editorial"
+        name: "editorialReview"
+        widget: "select"
+        required: true
+        default: "pending"
+        options:
+          - "pending"
+          - "reviewed"
+          - "needs-adjustment"
+      - label: "Status de migracao"
+        name: "migrationStatus"
+        widget: "select"
+        required: true
+        default: "native"
+        options:
+          - "native"
+          - "migrated"
+          - "revised"
+          - "archived"
+          - "redirected"
+      - label: "Tags"
+        name: "tags"
+        widget: "list"
+        required: false
+      - label: "Keywords"
+        name: "keywords"
+        widget: "list"
+        required: false
+      - label: "Areas relacionadas"
+        name: "relatedAreas"
+        widget: "relation"
+        collection: "areas"
+        search_fields: ["title", "slug", "categoryCode"]
+        value_field: "slug"
+        display_fields: ["title"]
+        multiple: true
+        required: false
+      - label: "Posts relacionados"
+        name: "relatedPosts"
+        widget: "relation"
+        collection: "posts"
+        search_fields: ["title", "slug", "categoryCode"]
+        value_field: "slug"
+        display_fields: ["title"]
+        multiple: true
+        required: false
+      - label: "Canonical URL"
+        name: "canonicalURL"
+        widget: "string"
+        required: false
+      - label: "Schema type"
+        name: "schemaType"
+        widget: "select"
+        required: false
+        options:
+          - "Article"
+          - "BlogPosting"
+      - label: "Imagem de capa"
+        name: "coverImage"
+        widget: "image"
+        required: false
+      - label: "Alt da imagem"
+        name: "coverAlt"
+        widget: "string"
+        required: false
+      - label: "Conteudo"
         name: "body"
         widget: "markdown"
-        hint: "Corpo principal do artigo."
+        hint: "Corpo principal do post. Revisao humana obrigatoria para copy sensivel."
+
+  - name: "areas"
+    label: "Areas Canonicas"
+    label_singular: "Area"
+    folder: "src/content/areas"
+    create: true
+    delete: false
+    identifier_field: "title"
+    summary: "{{title}} - {{categoryCode}}"
+    slug: "{{slug}}"
+    extension: "md"
+    editor:
+      preview: true
+    fields:
+      - label: "Titulo"
+        name: "title"
+        widget: "string"
+        required: true
+      - label: "Slug"
+        name: "slug"
+        widget: "string"
+        required: true
+      - label: "Categoria canonica"
+        name: "categoryCode"
+        widget: "select"
+        required: true
+        options:
+          - { label: "CAT-01", value: "CAT-01" }
+          - { label: "CAT-02", value: "CAT-02" }
+          - { label: "CAT-03", value: "CAT-03" }
+          - { label: "CAT-04", value: "CAT-04" }
+          - { label: "CAT-05", value: "CAT-05" }
+          - { label: "CAT-06", value: "CAT-06" }
+          - { label: "CAT-07", value: "CAT-07" }
+      - label: "Descricao curta"
+        name: "shortDescription"
+        widget: "text"
+        required: true
+      - label: "Headline"
+        name: "headline"
+        widget: "string"
+        required: true
+      - label: "Tipo de CTA"
+        name: "ctaType"
+        widget: "select"
+        required: true
+        options:
+          - "area"
+          - "contact"
+          - "article-series"
+          - "document-review"
+      - label: "Destino do CTA"
+        name: "ctaTarget"
+        widget: "string"
+        required: true
+      - label: "SEO title"
+        name: "seoTitle"
+        widget: "string"
+        required: true
+      - label: "Descricao"
+        name: "description"
+        widget: "text"
+        required: true
+      - label: "Ordem"
+        name: "order"
+        widget: "number"
+        value_type: "int"
+        min: 1
+        required: true
+      - label: "Ativa"
+        name: "isActive"
+        widget: "boolean"
+        required: false
+        default: true
+      - label: "Status de revisao"
+        name: "reviewStatus"
+        widget: "select"
+        required: true
+        default: "pending"
+        options:
+          - "pending"
+          - "reviewed"
+          - "needs-adjustment"
+      - label: "Conteudo"
+        name: "body"
+        widget: "markdown"
+        required: false
+
+  - name: "authors"
+    label: "Autores"
+    label_singular: "Autor"
+    folder: "src/content/authors"
+    create: true
+    delete: false
+    identifier_field: "name"
+    summary: "{{name}} - {{id}}"
+    slug: "{{slug}}"
+    extension: "md"
+    editor:
+      preview: true
+    fields:
+      - label: "ID"
+        name: "id"
+        widget: "select"
+        required: true
+        options:
+          - { label: "fabio-pavie", value: "fabio-pavie" }
+      - label: "Nome"
+        name: "name"
+        widget: "string"
+        required: true
+      - label: "Slug"
+        name: "slug"
+        widget: "string"
+        required: true
+      - label: "Bio curta"
+        name: "shortBio"
+        widget: "text"
+        required: true
+      - label: "Bio estendida"
+        name: "extendedBio"
+        widget: "text"
+        required: true
+      - label: "OAB"
+        name: "oab"
+        widget: "string"
+        required: true
+      - label: "Imagem"
+        name: "image"
+        widget: "image"
+        required: true
+      - label: "Alt da imagem"
+        name: "imageAlt"
+        widget: "string"
+        required: true
+      - label: "Status de revisao"
+        name: "reviewStatus"
+        widget: "select"
+        required: true
+        default: "pending"
+        options:
+          - "pending"
+          - "reviewed"
+          - "needs-adjustment"
+      - label: "Conteudo"
+        name: "body"
+        widget: "markdown"
+        required: false

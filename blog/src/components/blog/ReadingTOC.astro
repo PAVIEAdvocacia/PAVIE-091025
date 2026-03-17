@@ -29,7 +29,7 @@ const { items } = Astro.props;
 			const id = link.getAttribute('data-toc-link');
 			return id ? document.getElementById(id) : null;
 		})
-		.filter(Boolean);
+		.filter((heading) => heading instanceof HTMLElement);
 
 	if (links.length > 0 && headings.length > 0) {
 		const observer = new IntersectionObserver(

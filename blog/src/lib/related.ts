@@ -20,7 +20,9 @@ function intersectionSize(a: string[], b: string[]): number {
 
 function relevanceScore(current: BlogPost, candidate: BlogPost): number {
 	let score = 0;
-	if (current.areaKey === candidate.areaKey) score += 6;
+	if (current.categoryCode && candidate.categoryCode && current.categoryCode === candidate.categoryCode) {
+		score += 6;
+	}
 	if (current.subarea && candidate.subarea && current.subarea === candidate.subarea) score += 4;
 	score += intersectionSize(current.temaKeys, candidate.temaKeys) * 3;
 	score += intersectionSize(current.painPoints, candidate.painPoints) * 2;

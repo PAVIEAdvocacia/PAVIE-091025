@@ -5,7 +5,7 @@ import BlogLayout from '../../../layouts/BlogLayout.astro';
 import { getBlogEntries } from '../../../lib/blog-content';
 import { buildBreadcrumbSchema } from '../../../lib/seo';
 import { isPublicPost, normalizePost, sortPostsByDate } from '../../../lib/posts';
-import { temaHref, temaLabel, normalizeTemaKey } from '../../../lib/taxonomy';
+import { normalizeTemaKey, temaHref, temaLabel } from '../../../lib/taxonomy';
 
 const entries = await getBlogEntries();
 const posts = sortPostsByDate(entries.map((entry) => normalizePost(entry))).filter(isPublicPost);
@@ -26,8 +26,8 @@ for (const post of posts) {
 const temas = [...temaMap.values()].sort((a, b) => b.count - a.count);
 const canonicalUrl = `${BLOG_SITE_URL}/blog/temas/`;
 const breadcrumbs = [
-	{ label: 'Início', href: '/' },
-	{ label: 'Publicações', href: '/blog/' },
+	{ label: 'Inicio', href: '/' },
+	{ label: 'Publicacoes', href: '/blog/' },
 	{ label: 'Temas' },
 ];
 const breadcrumbSchema = buildBreadcrumbSchema(breadcrumbs, canonicalUrl);
@@ -35,25 +35,30 @@ const breadcrumbSchema = buildBreadcrumbSchema(breadcrumbs, canonicalUrl);
 
 <BlogLayout
 	title="Temas do blog | PAVIE | Advocacia"
-	description="Acesse o acervo do blog da PAVIE por tema jurídico."
+	description="Superficie secundaria do blog mantida apenas para exploracao auxiliar de temas."
 	canonical={canonicalUrl}
+	noIndex={true}
 >
 	<div class="container blog-home">
 		<Breadcrumbs items={breadcrumbs} />
 		<section class="blog-grid" aria-label="Temas do blog">
 			<div class="section-title">
 				<div>
-					<span class="section-kicker">Temas</span>
+					<span class="section-kicker">Temas secundarios</span>
 					<h1>Temas do blog</h1>
 				</div>
 			</div>
+			<p class="text-muted">
+				Os temas continuam disponiveis como apoio de leitura, mas a navegacao primaria do blog opera pelas
+				categorias canonicas.
+			</p>
 			{temas.length === 0 ? (
 				<article class="surface-card empty-state">
 					<h2>Nenhum tema ativo</h2>
-					<p>Os temas serão listados automaticamente conforme novas publicações forem adicionadas.</p>
+					<p>Os temas serao listados automaticamente conforme novas publicacoes forem adicionadas.</p>
 					<div class="blog-actions">
-						<a class="btn btn-primary" href="/blog/areas/">Explorar temas</a>
-						<a class="btn btn-ghost" href="/blog/contato/">Solicitar orientação inicial</a>
+						<a class="btn btn-primary" href="/blog/categoria/">Explorar categorias</a>
+						<a class="btn btn-ghost" href="/blog/contato/">Solicitar orientacao inicial</a>
 					</div>
 				</article>
 			) : (

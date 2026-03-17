@@ -2,100 +2,62 @@
 import Breadcrumbs from '../../../components/blog/Breadcrumbs.astro';
 import { BLOG_SITE_URL } from '../../../consts';
 import BlogLayout from '../../../layouts/BlogLayout.astro';
-import { getBlogEntries } from '../../../lib/blog-content';
-import { buildBreadcrumbSchema } from '../../../lib/seo';
-import { buildBlogClusterDirectory } from '../../../lib/blog-clusters';
+import { getAreaEntries, getBlogEntries } from '../../../lib/blog-content';
+import { buildCanonicalAreaDirectory } from '../../../lib/canonical-directory';
 import { isPublicPost, normalizePost, sortPostsByDate } from '../../../lib/posts';
-import { temaHref } from '../../../lib/taxonomy';
+import { buildBreadcrumbSchema } from '../../../lib/seo';
 
-const entries = await getBlogEntries();
-const posts = sortPostsByDate(entries.map((entry) => normalizePost(entry))).filter(isPublicPost);
-const clusterDirectory = buildBlogClusterDirectory(posts);
-const canonicalUrl = `${BLOG_SITE_URL}/blog/areas/`;
+const [areaEntries, blogEntries] = await Promise.all([getAreaEntries(), getBlogEntries()]);
+const posts = sortPostsByDate(blogEntries.map((entry) => normalizePost(entry))).filter(isPublicPost);
+const categoryDirectory = buildCanonicalAreaDirectory(areaEntries, posts);
+const canonicalUrl = `${BLOG_SITE_URL}/blog/categoria/`;
 const breadcrumbs = [
-	{ label: 'Início', href: '/' },
-	{ label: 'Publicações', href: '/blog/' },
-	{ label: 'Áreas jurídicas' },
+	{ label: 'Inicio', href: '/' },
+	{ label: 'Publicacoes', href: '/blog/' },
+	{ label: 'Mapa legado de areas' },
 ];
 const breadcrumbSchema = buildBreadcrumbSchema(breadcrumbs, canonicalUrl);
 ---
 
 <BlogLayout
-	title="Áreas jurídicas do blog | PAVIE | Advocacia"
-	description="Conteúdos do blog da PAVIE organizados por área jurídica, com ligação natural entre leitura, serviços e contato."
+	title="Mapa legado de areas do blog | PAVIE | Advocacia"
+	description="Superficie legada mantida apenas para continuidade de URL. A navegacao primaria do blog passou a usar categorias canonicas."
 	canonical={canonicalUrl}
+	noIndex={true}
 >
 	<div class="container blog-home">
 		<Breadcrumbs items={breadcrumbs} />
-		<section class="surface-card blog-map-hero" aria-labelledby="blog-areas-title">
-			<span class="badge">Conteúdos por área</span>
-			<h1 id="blog-areas-title">As áreas do blog organizam o caminho entre tema, leitura e orientação.</h1>
+		<section class="surface-card blog-map-hero" aria-labelledby="legacy-blog-areas-title">
+			<span class="badge">Superficie legada</span>
+			<h1 id="legacy-blog-areas-title">A navegacao principal do blog foi consolidada nas categorias canonicas.</h1>
 			<p>
-				Aqui, o visitante não encontra uma listagem solta. Encontra 5 áreas jurídicas que ajudam a reconhecer
-				qual universo jurídico está em jogo, o que já existe para leitura e quando vale seguir para a página de serviços da PAVIE.
+				Esta URL permanece ativa apenas como ponte controlada. Para descoberta editorial e interlinking publico,
+				use a pagina de categorias e as paginas de area correspondentes.
 			</p>
 			<div class="blog-actions">
-				<a class="btn btn-primary" href="/blog/contato/">Solicitar orientação inicial</a>
-				<a class="btn btn-ghost" href="/areas/">Conheça os Serviços</a>
+				<a class="btn btn-primary" href="/blog/categoria/">Explorar categorias</a>
+				<a class="btn btn-ghost" href="/areas/">Conheca as areas</a>
 			</div>
 		</section>
 
-		<section class="blog-grid" aria-label="Áreas jurídicas do blog">
+		<section class="blog-grid" aria-label="Categorias canonicas disponiveis">
 			<div class="section-title">
 				<div>
-					<span class="section-kicker">5 áreas jurídicas</span>
-					<h2>Cada área aproxima aprofundamento por assunto, serviço correspondente e contato contextualizado</h2>
+					<span class="section-kicker">Destino canonico</span>
+					<h2>Use estes destinos estaveis em vez das antigas areas do blog</h2>
 				</div>
 			</div>
 			<div class="cluster-directory-grid cluster-directory-grid--wide">
-				{clusterDirectory.map((cluster) => (
+				{categoryDirectory.map((category) => (
 					<article class="surface-card cluster-directory-card">
-						<span class="section-kicker">Área jurídica</span>
-						<h2>{cluster.title}</h2>
-						<p>{cluster.editorialSummary}</p>
-						<ul class="cluster-directory-list">
-							{cluster.typicalSituations.map((item) => (
-								<li>{item}</li>
-							))}
-						</ul>
-						<div class="theme-chip-list">
-							{cluster.topThemes.map((tema) => (
-								<a class="blog-chip blog-chip--theme" href={cluster.hasThemeRoutes ? temaHref(tema) : cluster.href}>{tema}</a>
-							))}
-						</div>
-						{cluster.hasPosts ? (
-							<div class="cluster-directory-posts">
-								<p class="cluster-directory-meta">{cluster.postCount} artigos nesta área.</p>
-								<ul>
-									{cluster.latestPosts.map((post) => (
-										<li><a href={post.url}>{post.title}</a></li>
-									))}
-								</ul>
-							</div>
-						) : (
-							<p class="cluster-directory-empty">
-								Novos artigos em breve. Você pode falar diretamente sobre sua situação enquanto o acervo desta área cresce.
-							</p>
-						)}
+						<h2>{category.title}</h2>
+						<p>{category.shortDescription}</p>
 						<div class="cluster-directory-actions">
-							<a class="btn btn-primary" href={cluster.href}>Explorar temas</a>
-							<a class="btn btn-ghost" href={cluster.institutionalHref}>Conheça os Serviços</a>
+							<a class="btn btn-primary" href={category.categoryHref}>Explorar categoria</a>
+							<a class="btn btn-ghost" href={category.href}>Conheca a area</a>
 						</div>
 					</article>
 				))}
-			</div>
-		</section>
-
-		<section class="editorial-cta" aria-label="Continuidade institucional">
-			<span class="section-kicker">Continuidade institucional</span>
-			<h2>Quando a leitura já delimitou a área jurídica, o próximo passo não precisa ser brusco.</h2>
-			<p>
-				O primeiro passo é descrever sua situação. A página de contato explica o que informar,
-				o que acontece depois do envio e quais limites existem na etapa inicial.
-			</p>
-			<div class="blog-actions">
-				<a class="btn btn-primary" href="/blog/contato/">Solicitar orientação inicial</a>
-				<a class="btn btn-ghost" href="/blog/">Explorar temas</a>
 			</div>
 		</section>
 	</div>

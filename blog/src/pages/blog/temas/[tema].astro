@@ -39,17 +39,17 @@ const breadcrumbSchema = buildBreadcrumbSchema(breadcrumbs, canonicalUrl);
 	description={
 		hasPosts
 			? `Publicacoes da PAVIE sobre ${currentTemaLabel}.`
-			: `Novos artigos sobre ${currentTemaLabel} entram em breve. Enquanto isso, a navegacao por area juridica e o contato institucional seguem disponiveis.`
+			: `Novos artigos sobre ${currentTemaLabel} entram em breve. Enquanto isso, a navegacao por categorias e o contato institucional seguem disponiveis.`
 	}
 	canonical={canonicalUrl}
-	noIndex={!hasPosts}
+	noIndex={true}
 >
 	<div class="container blog-home">
 		<Breadcrumbs items={breadcrumbs} />
 		<section class="blog-grid" aria-label={pageTitle}>
 			<div class="section-title">
 				<div>
-					<span class="section-kicker">Tema do blog</span>
+					<span class="section-kicker">Tema secundario</span>
 					<h1>{currentTemaLabel}</h1>
 				</div>
 			</div>
@@ -65,9 +65,9 @@ const breadcrumbSchema = buildBreadcrumbSchema(breadcrumbs, canonicalUrl);
 			kicker="Aprofundamento"
 			posts={temaPosts}
 			emptyTitle="Conteudo em atualizacao"
-			emptyText="Ainda nao ha artigos publicados para este tema. Voce pode continuar pelas areas do blog ou falar sobre sua situacao pelos canais institucionais."
-			emptyHref="/blog/areas/"
-			emptyLabel="Explorar temas"
+			emptyText="Ainda nao ha artigos publicados para este tema. Voce pode continuar pelas categorias canonicas ou falar sobre sua situacao pelos canais institucionais."
+			emptyHref="/blog/categoria/"
+			emptyLabel="Explorar categorias"
 		/>
 	</div>
 

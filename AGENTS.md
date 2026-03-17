@@ -1,1042 +1,362 @@
-\# AGENTS.md — Constituição Permanente do Projeto
+# AGENTS.md — Raiz Operacional do Projeto PAVIE
 
-\## PAVIE | Advocacia — Ecossistema Site + Blog + Codex (v2)
+## 1. Finalidade
 
+Este arquivo estabelece as instruções operacionais mínimas e estáveis para agentes, assistentes de código, GPTs de projeto e rotinas de execução que atuem no ecossistema digital da **PAVIE | Advocacia**.
 
+Sua função não é substituir os documentos normativos do projeto nem concentrar toda a estratégia do escritório. Sua função é mais restrita e mais importante: **traduzir a governança já homologada em regras executáveis de trabalho**, reduzindo improviso, regressão semântica, duplicação estrutural e conflito entre conteúdo, design, SEO, arquitetura e automação.
 
-Este arquivo define as regras permanentes de contexto, linguagem, arquitetura, governança, conformidade e operação do ecossistema digital da \*\*PAVIE | Advocacia\*\*.
+Este arquivo deve ser lido como **constituição operacional mínima do repositório**.
 
+---
 
+## 2. Escopo
 
-Ele deve ser tratado como \*\*constituição fixa do projeto\*\*.  
+Este `AGENTS.md` raiz aplica-se a todo o projeto, salvo quando houver `AGENTS.md` mais específico em subdiretório, hipótese em que o arquivo mais profundo prevalecerá dentro do seu próprio escopo.
 
-As sessões de trabalho no Codex devem obedecer primeiro a este arquivo e, depois, ao prompt específico da sprint em execução.
+Ele rege, especialmente:
 
+- criação, edição e refatoração de páginas do site;
+- criação, edição e manutenção do blog;
+- taxonomia, frontmatter e metadados;
+- copy pública e superfícies sensíveis;
+- componentes compartilhados, layout e padrões visuais;
+- SEO estrutural e editorial;
+- CMS, collections e conteúdo em Markdown;
+- distribuição derivada para canais externos;
+- uso de IA e execução via Codex.
 
+---
 
-\---
+## 3. Ordem obrigatória de leitura antes de agir
 
+Antes de editar, criar ou remover qualquer arquivo relevante, o agente deve verificar, nesta ordem, os documentos de maior autoridade disponíveis no projeto:
 
+1. **Constituição e Governo do Escritório** (`00.00` ou equivalente vigente);
+2. **Registro Mestre de Vigência Documental da PAVIE**;
+3. **Matriz Canônica Final de Superfícies Públicas da PAVIE**;
+4. **Norma de Compatibilização entre Portfólio Institucional e Taxonomia Editorial**;
+5. documentos do bloco de arquitetura web, SEO, design system, autoria, distribuição e Codex (`12.xx` e `13.xx`, quando presentes);
+6. eventuais `AGENTS.md` mais específicos do diretório afetado.
 
-\# 1. Contexto permanente do projeto
+Se houver conflito entre memória informal, texto legado e documento canônico, **prevalece o documento mais alto e mais específico na cadeia vigente**.
 
+---
 
+## 4. Princípios operacionais inegociáveis
 
-\## 1.1. Natureza do ecossistema
+### 4.1 Coerência institucional antes de conveniência
 
-A PAVIE | Advocacia opera um ecossistema digital composto por:
+Nenhuma alteração pode ampliar artificialmente o portfólio público, romper a taxonomia canônica, criar novas áreas sem autorização documental ou degradar a coerência entre site, blog, bios, CTAs e perfis externos.
 
+### 4.2 Fonte única de verdade antes de criatividade livre
 
+Quando houver matriz canônica, copy autorizada ou regra de superfície, o agente **não deve improvisar nova formulação base**. Deve reutilizar, adaptar dentro dos limites permitidos ou sinalizar lacuna documental.
 
-\- \*\*site institucional estático\*\* em HTML/CSS/JS;
+### 4.3 Refatorar antes de duplicar
 
-\- \*\*blog em Astro\*\*;
+Sempre que possível, o agente deve preferir:
 
-\- \*\*Decap CMS\*\* para gestão editorial;
+- refatorar componente existente;
+- reaproveitar layout, partial, collection ou template;
+- consolidar lógica repetida;
+- reduzir variação desnecessária.
 
-\- \*\*GitHub\*\* para versionamento;
+### 4.4 Alterar o mínimo necessário para produzir o efeito correto
 
-\- \*\*Cloudflare Pages\*\* para publicação.
+Mudanças amplas sem benefício proporcional são indesejadas. O agente deve evitar intervenções excessivas, cascatas não mapeadas e reescritas totais sem necessidade.
 
+### 4.5 Arquitetura antes de volume
 
+O projeto não existe para acumular páginas, posts ou componentes soltos. Toda criação deve saber:
 
-O projeto deve ser:
+- qual função cumpre;
+- qual superfície atende;
+- qual categoria ou coleção reforça;
+- qual ativo central aponta;
+- qual risco de canibalização ou dispersão pode gerar.
 
+### 4.6 Revisão humana obrigatória para atos sensíveis
 
+O agente pode estruturar, redigir, organizar, refatorar e validar tecnicamente, mas não deve tratar como “publicação pronta sem revisão” conteúdos sensíveis, incluindo:
 
-\- simples de manter;
+- copy institucional principal;
+- bios públicas;
+- textos jurídicos com afirmação normativa sensível;
+- conteúdo que pareça promessa, especialização implícita ou alegação biográfica dependente de prova;
+- textos de privacidade, consentimento, contratação ou honorários;
+- mudanças estruturais em rotas, taxonomia e arquitetura pública.
 
-\- tecnicamente elegante;
+### 4.7 Evidência antes da narrativa
 
-\- sustentável para operação solo;
+É vedado inventar:
 
-\- orientado a alto ROI;
+- fatos biográficos;
+- prêmios, cargos, certificações ou vínculos não comprovados;
+- dados de desempenho;
+- jurisprudência, legislação, estatísticas ou premissas técnicas não verificadas;
+- funcionalidades “já existentes” quando ainda não implementadas.
 
-\- institucionalmente coerente;
+---
 
-\- juridicamente sóbrio;
+## 5. Regras obrigatórias para conteúdo público
 
-\- editorialmente estratégico.
+### 5.1 Home, /sobre, /areas/, páginas de área, bios, autor e CTAs
 
+Toda superfície pública deve respeitar a **Matriz Canônica Final de Superfícies Públicas**.
 
+O agente não deve:
 
-\## 1.2. Regra operacional central
+- reabrir a taxonomia por entusiasmo redacional;
+- transformar repertório biográfico em menu principal;
+- listar áreas em excesso na home;
+- reinserir categorias satélite como eixo de posicionamento;
+- usar headline promocional agressiva;
+- usar CTA mercantilizado, apelativo ou artificialmente urgente.
 
-O projeto deve evoluir por \*\*refatoração inteligente do que já existe\*\*, e não por reconstrução total sem justificativa técnica forte.
+### 5.2 Blog
 
+O blog é ativo editorial de descoberta, aprofundamento, autoridade e conversão ética. Não é arquivo cronológico passivo nem repositório de volume.
 
+Cada conteúdo deve nascer sabendo:
 
-Preservar componentes bons, reduzir retrabalho e evitar complexidade ornamental.
+- a categoria canônica a que pertence;
+- o hub, subhub ou família temática que reforça;
+- a página estratégica que recebe ou distribui autoridade;
+- o CTA compatível com o estágio do leitor;
+- o destino central do ecossistema.
 
+### 5.3 Portfólio institucional versus taxonomia editorial
 
+O portfólio institucional pode ser mais amplo do que a taxonomia pública, mas essa amplitude **não autoriza** o agente a ampliar menus, categorias, rotas, headlines ou metadados estruturais.
 
-\## 1.3. Perfil operacional presumido
+Quando houver dúvida, usar o padrão mais seletivo e mais canônico.
 
-O operador principal do ecossistema é o próprio titular do projeto, em regime de \*\*operação solo\*\*.
+---
 
+## 6. Regras obrigatórias para design, UX e front-end
 
+### 6.1 Estado atual da regra
 
-\### Premissas
+Enquanto não houver documento mais específico e homologado para determinado detalhe visual ou funcional, o agente deve operar com **sobriedade conservadora**.
 
-\- precisa de sistema sustentável;
+### 6.2 Padrões preferenciais
 
-\- não deve depender de rotinas técnicas obscuras;
+Preferir:
 
-\- deve conseguir publicar, revisar e manter conteúdo sem atrito excessivo;
+- visual clean;
+- legibilidade alta;
+- contraste suficiente;
+- tipografia estável;
+- espaçamento generoso;
+- hierarquia clara;
+- componentes reutilizáveis;
+- baixo ruído visual;
+- responsividade real;
+- acessibilidade funcional.
 
-\- pode usar o Codex como apoio técnico;
+### 6.3 O que evitar
 
-\- o sistema final deve permanecer inteligível sem exigir conhecimento avançado de desenvolvimento.
+Evitar, salvo instrução formal em contrário:
 
+- efeitos chamativos sem função;
+- excesso de cores de apoio;
+- animações decorativas pesadas;
+- variações visuais ad hoc;
+- múltiplos padrões de card ou CTA para a mesma função;
+- blocos que aparentem produto massificado ou marketing agressivo.
 
+### 6.4 Regra de prudência quando faltar definição visual
 
-\### Regra
+Se o projeto ainda não tiver documento definitivo sobre design token, comportamento de componente ou funcionalidade específica, o agente deve:
 
-Toda decisão de arquitetura, CMS, taxonomia, design system, manutenção e fluxo editorial deve considerar a \*\*autonomia prática do operador\*\*.
+1. adotar a solução mais simples, limpa e reversível;
+2. documentar a lacuna;
+3. evitar cristalizar no código uma decisão estética ainda controversa.
 
+---
 
+## 7. Regras obrigatórias para SEO, informação e arquitetura
 
-\---
+### 7.1 SEO é consequência de arquitetura correta
 
+Não usar SEO como justificativa para:
 
+- inflar páginas;
+- repetir palavras-chave mecanicamente;
+- gerar posts órfãos;
+- duplicar intenção de busca;
+- criar slugs ou títulos em conflito com taxonomia canônica.
 
-\# 2. Identidade da marca
+### 7.2 Toda página deve ter função dominante clara
 
+Antes de criar ou alterar uma página, validar:
 
+- intenção primária;
+- papel da URL;
+- categoria/hub correspondente;
+- links internos principais;
+- CTA compatível;
+- risco de canibalização.
 
-\## 2.1. Fórmula institucional obrigatória
+### 7.3 Autor e prova institucional
 
-A PAVIE | Advocacia deve transmitir, em todo o ecossistema:
+Quando aplicável, preservar estrutura que favoreça:
 
+- autoria identificável;
+- página do autor;
+- dados estruturados compatíveis;
+- coerência entre autor, conteúdo e superfície.
 
+---
 
-\*\*SERIEDADE + CLAREZA + MÉTODO + SOBRIEDADE + PROXIMIDADE PROFISSIONAL\*\*
+## 8. Regras obrigatórias para Markdown, frontmatter e CMS
 
+### 8.1 Frontmatter canônico
 
+Sempre que o projeto usar conteúdo baseado em Markdown/CMS, o agente deve respeitar o frontmatter canônico vigente. Não criar chaves novas sem necessidade clara e sem compatibilidade com collections, templates e renderização.
 
-\## 2.2. Efeito desejado no visitante
+### 8.2 Naming e slugs
 
-A comunicação deve:
+Usar nomenclatura consistente, previsível e estável. Evitar:
 
+- slugs redundantes;
+- títulos conflitantes com a taxonomia;
+- nomes de arquivo vagos;
+- variação arbitrária entre singular/plural, PT/EN ou formas duplicadas.
 
+### 8.3 Migração e normalização
 
-\- reduzir ansiedade;
+Ao migrar conteúdo legado, o agente deve priorizar:
 
-\- organizar percepção;
+- limpeza estrutural;
+- preservação do que é útil;
+- descarte do que é redundante;
+- reclassificação do que é histórico;
+- alinhamento ao frontmatter e à taxonomia atuais.
 
-\- demonstrar método;
+---
 
-\- gerar confiança legítima;
+## 9. Regras obrigatórias para Instagram e demais canais derivados
 
-\- orientar próximo passo;
+### 9.1 Hierarquia de canais
 
-\- converter com ética.
+No ecossistema PAVIE, a hierarquia funcional é:
 
+1. **site institucional** — confiança, proposta de valor, serviço e conversão qualificada;
+2. **blog jurídico** — descoberta, aprofundamento, autoridade e organização temática;
+3. **Instagram** — reforço visual, síntese temática, atenção e retorno para ativos centrais;
+4. **Facebook e demais canais** — distribuição complementar adaptada.
 
+### 9.2 Regra central
 
-\## 2.3. Efeito proibido
+O Instagram **não é fonte primária de taxonomia, posicionamento ou arquitetura do projeto**. Ele é canal derivado de distribuição e síntese.
 
-A comunicação não deve:
+### 9.3 O que o agente pode assumir desde já
 
+Ao criar ou adaptar materiais para Instagram, o agente pode assumir apenas as regras já estabilizadas no acervo:
 
+- design limpo;
+- texto contido;
+- clareza e sequência lógica;
+- linguagem mais escaneável;
+- foco em dor real e utilidade;
+- apontamento para ativo central do ecossistema quando fizer sentido.
 
-\- prometer resultado;
+### 9.4 O que o agente não deve congelar no código ou na arquitetura central
 
-\- usar urgência artificial;
+Não transformar em regra rígida, sem documento específico posterior:
 
-\- soar mercantilista;
+- cadência detalhada de posts;
+- formatos obrigatórios por semana;
+- estilo visual fino de carrosséis;
+- estratégia de growth por hipótese não homologada;
+- qualquer decisão que faça a estratégia de Instagram governar site, blog ou taxonomia.
 
-\- parecer publicidade agressiva;
+---
 
-\- usar autoelogio inflado;
+## 10. Protocolo mínimo de trabalho do agente
 
-\- transformar o site em catálogo inflado de especialidades;
+### 10.1 Antes de editar
 
-\- converter por pressão.
+O agente deve:
 
+1. ler os arquivos relevantes do escopo;
+2. identificar a função dominante da alteração;
+3. verificar se há componente, layout, taxonomia ou copy já existentes;
+4. mapear riscos de conflito, regressão ou duplicação.
 
+### 10.2 Durante a edição
 
-\---
+O agente deve:
 
+- preservar consistência visual e estrutural;
+- comentar apenas quando isso melhorar manutenção;
+- registrar impacto quando alterar arquitetura, rotas, schema, CMS, taxonomia, design token ou comportamento compartilhado;
+- evitar mudanças colaterais não justificadas.
 
+### 10.3 Antes de encerrar
 
-\# 3. Identidade visual canônica
+O agente deve, na medida do possível:
 
+- validar build, lint, typecheck ou testes configurados no projeto;
+- revisar links internos afetados;
+- revisar metadados e frontmatter afetados;
+- conferir se a alteração manteve coerência com a Matriz Canônica e o Registro Mestre.
 
+---
 
-\## 3.1. Paleta principal
+## 11. Critérios de aceitação mínimos
 
-\- \*\*Verde Petróleo\*\*: `#2F4E4A`
+Uma tarefa só deve ser considerada bem executada quando, cumulativamente:
 
-\- \*\*Grafite\*\*: `#25282B`
+1. respeita a cadeia normativa do projeto;
+2. não rompe a taxonomia nem a matriz pública canônica;
+3. melhora ou preserva clareza, legibilidade e coerência;
+4. evita duplicação estrutural desnecessária;
+5. não cria promessa indevida nem generalismo artificial;
+6. é compatível com manutenção futura;
+7. deixa trilha suficiente para revisão humana.
 
-\- \*\*Areia\*\*: `#CCB093`
+---
 
-\- \*\*Azul Névoa\*\*: `#8FA4A7`
+## 12. Quando parar e sinalizar lacuna
 
-\- \*\*Marfim\*\*: `#F5F1EB`
+O agente deve interromper a criatividade expansiva e **sinalizar lacuna documental**, em vez de improvisar solução definitiva, quando faltar definição sobre:
 
+- design system fino ainda não homologado;
+- funcionalidade estrutural controversa do site ou do blog;
+- regra nova de taxonomia ou nova macroárea;
+- regime detalhado de Instagram ou outro canal derivado;
+- texto institucional sensível sem fonte canônica suficiente;
+- política pública de privacidade, consentimento, honorários ou contratação ainda não fechada.
 
+Nesses casos, a resposta correta é: **preservar o sistema, documentar a lacuna e propor solução reversível**.
 
-\## 3.2. Direção visual
+---
 
-O ecossistema deve comunicar:
+## 13. Próxima camada recomendada de governança
 
+Este `AGENTS.md` raiz é intencionalmente estável e mais abstrato. O projeto deverá, quando oportuno, ganhar arquivos mais específicos, por exemplo:
 
+- `site/AGENTS.md` — layout, componentes, páginas estratégicas, schema, navegação;
+- `blog/AGENTS.md` — frontmatter, coleções, templates de artigo, autoria, interlinking, revisão;
+- `content/AGENTS.md` — workflow editorial, combos, redistribuição, métricas e poda;
+- `social/AGENTS.md` — adaptação para Instagram/Facebook, formatos, reaproveitamento e limites;
+- `legal-copy/AGENTS.md` — bios, CTAs, padrões de superfície pública e revisão sensível.
 
-\- clean institucional;
+Até lá, este arquivo rege o projeto inteiro.
 
-\- calor sutil;
+---
 
-\- leitura confortável;
+## 14. Fórmula final de interpretação
 
-\- autoridade sem ostentação;
+Na dúvida, o agente deve preferir a alternativa que seja ao mesmo tempo:
 
-\- contraste equilibrado;
-
-\- leveza editorial.
-
-
-
-\## 3.3. Regra de coerência visual
-
-O \*\*blog é a referência visual mais madura\*\*.  
-
-O \*\*site deve migrar em direção ao blog\*\*, não o contrário.
-
-
-
-Site e blog devem parecer \*\*a mesma marca\*\*, com:
-
-
-
-\- mesma lógica cromática;
-
-\- mesma hierarquia de títulos;
-
-\- mesma família de componentes;
-
-\- mesma sobriedade institucional.
-
-
-
-\---
-
-
-
-\# 4. Identidade verbal
-
-
-
-\## 4.1. Vocabulário preferencial
-
-Usar preferencialmente termos como:
-
-
-
-\- clareza
-
-\- método
-
-\- condução
-
-\- estrutura
-
-\- regularização
-
-\- proteção
-
-\- critério
-
-\- processo
-
-\- diagnóstico
-
-\- análise
-
-\- responsabilidade
-
-\- orientação
-
-\- segurança
-
-
-
-\## 4.2. Terminologia vedada
-
-Evitar ou proibir:
-
-
-
-\- “garantimos”
-
-\- “certeza de êxito”
-
-\- “os melhores”
-
-\- “grátis”
-
-\- “promoção”
-
-\- “corra”
-
-\- “resultado certo”
-
-\- “urgente” sem base real
-
-\- expressões de autoengrandecimento incompatíveis com advocacia
-
-
-
-\## 4.3. Regra de tom
-
-O tom deve ser:
-
-
-
-\- claro;
-
-\- técnico sem juridiquês desnecessário;
-
-\- sereno;
-
-\- humano;
-
-\- profissional;
-
-\- objetivo;
-
-\- elegante;
-
-\- ético.
-
-
-
-\---
-
-
-
-\# 5. CTAs canônicos
-
-
-
-Os CTAs do ecossistema devem ser padronizados.  
-
-Não inventar variações desnecessárias.
-
-
-
-\## 5.1. CTAs principais
-
-\- \*\*CTA primário do site:\*\* `Solicitar Diagnóstico Jurídico`
-
-\- \*\*CTA da topbar:\*\* `Agendar Consulta Inicial`
-
-\- \*\*CTA de artigo/blog:\*\* `Solicitar orientação inicial`
-
-\- \*\*CTA da página de contato:\*\* `Enviar Solicitação`
-
-\- \*\*CTA secundário institucional:\*\* `Conheça os Serviços`
-
-\- \*\*CTA de hub/área:\*\* `Explorar temas`
-
-\- \*\*CTA do footer:\*\* `Iniciar contato`
-
-
-
-\## 5.2. Regra de CTA
-
-Nenhum CTA relevante deve aparecer:
-
-
-
-\- sem contexto;
-
-\- sem expectativa clara;
-
-\- sem coerência com o estágio do visitante;
-
-\- sem jornada pós-clique minimamente definida.
-
-
-
-\## 5.3. Regra do footer
-
-O footer não deve usar CTA residual, genérico ou variável por página.
-
-
-
-Seu CTA deve ser:
-
-
-
-\- curto;
-
-\- sóbrio;
-
-\- institucional;
-
-\- estável em todo o ecossistema.
-
-
-
-\---
-
-
-
-\# 6. Clusters canônicos de serviço
-
-
-
-A nomenclatura abaixo deve ser mantida de modo \*\*idêntico\*\* no:
-
-
-
-\- site;
-
-\- blog;
-
-\- CMS;
-
-\- taxonomia editorial;
-
-\- interlinking;
-
-\- futuras derivações de conteúdo.
-
-
-
-\## 6.1. Lista canônica
-
-1\. \*\*Família, Sucessões e Patrimônio\*\*
-
-2\. \*\*Contratos, Obrigações e Responsabilidade Civil\*\*
-
-3\. \*\*Imobiliário, Regularização e Condomínios\*\*
-
-4\. \*\*Consumidor, Saúde e Previdência\*\*
-
-5\. \*\*Compliance, Integridade e Atuação Empresarial\*\*
-
-
-
-\## 6.2. Regra de estrutura
-
-Não criar novos agrupamentos paralelos sem justificativa forte.  
-
-Evitar dispersão temática e duplicação de categorias.
-
-
-
-\## 6.3. Nota de escopo
-
-Matérias com lógica de público, vocabulário e jornada muito distintos não devem ser agrupadas apenas por conveniência de completude.
-
-
-
-Se determinada frente exigir estratégia própria de conteúdo, SEO e conversão, ela deve ser tratada como:
-
-
-
-\- cluster autônomo; ou
-
-\- atuação secundária fora da navegação principal.
-
-
-
-\---
-
-
-
-\# 7. Regras estruturais do ecossistema
-
-
-
-\## 7.1. Papel do site
-
-O \*\*site\*\* deve funcionar como:
-
-
-
-\- sede institucional;
-
-\- camada principal de confiança;
-
-\- explicação do método;
-
-\- organizador da oferta;
-
-\- destino de conversão qualificada.
-
-
-
-\## 7.2. Papel do blog
-
-O \*\*blog\*\* deve funcionar como:
-
-
-
-\- ativo editorial de longo prazo;
-
-\- sistema de hubs e temas;
-
-\- camada de descoberta;
-
-\- espaço de aprofundamento;
-
-\- motor de autoridade temática;
-
-\- ponte ética entre leitura e contato.
-
-
-
-\## 7.3. Regra de continuidade
-
-Toda página deve orientar pelo menos uma destas continuidades:
-
-
-
-\- leitura adicional;
-
-\- compreensão da área;
-
-\- contato institucional;
-
-\- aprofundamento útil.
-
-
-
-\## 7.4. Regra de navegação
-
-A navegação do ecossistema deve funcionar como \*\*sistema único\*\*.  
-
-O visitante não deve perceber site e blog como ambientes desconectados.
-
-
-
-\## 7.5. Regra do blog
-
-O blog \*\*não deve ser arquivo cronológico bruto\*\*.
-
-
-
-Ele deve funcionar por:
-
-
-
-\- hubs;
-
-\- temas;
-
-\- relações úteis;
-
-\- conteúdos relacionados;
-
-\- conexão com áreas de atuação.
-
-
-
-\## 7.6. Regra do site
-
-O site deve \*\*organizar a percepção antes de pedir ação\*\*.
-
-
-
-O visitante deve entender:
-
-
-
-\- quem conduz;
-
-\- como a atuação funciona;
-
-\- em que área sua situação se enquadra;
-
-\- qual é o próximo passo legítimo.
-
-
-
-\---
-
-
-
-\# 8. Limites absolutos
-
-
-
-As regras abaixo antecedem qualquer decisão de estrutura, design, copy ou conversão.
-
-
-
-\## 8.1. Limites jurídicos e éticos
-
-\- Estatuto da Advocacia
-
-\- Provimento 205/2021
-
-\- LGPD: minimização, finalidade e consentimento expresso quando aplicável
-
-
-
-\## 8.2. Proibições absolutas
-
-\- promessa de resultado;
-
-\- urgência artificial;
-
-\- captação mercantilista;
-
-\- coleta excessiva de dados;
-
-\- CTA sem contexto mínimo;
-
-\- estruturas visuais que pressionem artificialmente conversão;
-
-\- linguagem incompatível com sobriedade da advocacia.
-
-
-
-\## 8.3. Pontos críticos de aplicação da LGPD
-
-A LGPD deve ser observada de modo especialmente rigoroso em:
-
-
-
-\- formulários de contato;
-
-\- formulários ou blocos de orientação inicial vindos do blog;
-
-\- qualquer mecanismo de captura de e-mail;
-
-\- microcopies que expliquem coleta, finalidade e expectativa de retorno;
-
-\- armazenamento ou envio de dados sensíveis eventualmente narrados pelo visitante.
-
-
-
-\### Regra
-
-Coletar apenas o mínimo necessário para triagem responsável.
-
-
-
-Nunca pedir informação excessiva no primeiro contato.
-
-
-
-Sempre indicar:
-
-
-
-\- finalidade institucional clara;
-
-\- referência à política de privacidade, quando aplicável;
-
-\- natureza inicial e limitada da triagem.
-
-
-
-\---
-
-
-
-\# 9. Critério de profundidade da sessão
-
-
-
-Cada arquivo alterado deve ter:
-
-
-
-\- motivo claro de alteração;
-
-\- impacto verificável;
-
-\- diff legível;
-
-\- coerência com o escopo da sprint;
-
-\- baixa chance de retrabalho estrutural.
-
-
-
-\## 9.1. Regra prática
-
-A quantidade de arquivos alterados \*\*não é limite\*\*.  
-
-Ela é consequência.
-
-
-
-\*\*Profundidade, legibilidade e coerência valem mais que volume.\*\*
-
-
-
-\## 9.2. Regra inversa de escopo
-
-Uma alteração está proibida na sessão quando:
-
-
-
-\- pertence claramente à sprint seguinte;
-
-\- cria dependência estrutural ainda não definida;
-
-\- exige decisão de design system ainda não consolidada;
-
-\- altera taxonomia antes da sprint de taxonomia;
-
-\- altera copy estrutural fora da área prevista da sprint;
-
-\- aumenta retrabalho provável nas próximas etapas.
-
-
-
-Melhorias laterais identificadas durante a sessão devem ser \*\*registradas como pendência\*\*, não executadas automaticamente.
-
-
-
-\---
-
-
-
-\# 10. Modos de sessão
-
-
-
-As sessões de trabalho no Codex devem assumir explicitamente um destes modos:
-
-
-
-\- `diagnosticar`
-
-\- `propor`
-
-\- `implementar`
-
-\- `refatorar`
-
-\- `validar`
-
-
-
-\## 10.1. Regra de uso
-
-Cada sessão deve declarar o modo logo no início.  
-
-Não misturar auditoria, implementação e validação sem necessidade.
-
-
-
-\## 10.2. Guardrail negativo da sessão
-
-Em toda sessão, além do escopo positivo, deve haver um limite negativo explícito.
-
-
-
-\### Regra
-
-Nenhuma melhoria fora do escopo da sprint deve ser implementada apenas porque parece útil.
-
-
-
-Se a melhoria não pertence à sessão atual, ela deve ser:
-
-
-
-\- registrada;
-
-\- justificada como pendência;
-
-\- deixada para a sprint adequada.
-
-
-
-\---
-
-
-
-\# 11. Perguntas de governança
-
-
-
-Antes de encerrar qualquer sprint, aplicar estas perguntas:
-
-
-
-1\. Este elemento gera confiança ou ruído?
-
-2\. A leitura flui ou atrita?
-
-3\. A organização orienta ou confunde?
-
-4\. A conversão está contextualizada ou parece pressão?
-
-5\. O bloco ajuda o visitante a entender o próximo passo?
-
-6\. A linguagem está institucionalmente sóbria?
-
-7\. O elemento reforça ou enfraquece a unidade entre site e blog?
-
-8\. Há risco ético, excesso de promessa ou captação inadequada?
-
-
-
-Nenhuma sprint deve ser considerada madura sem essa revisão.
-
-
-
-\---
-
-
-
-\# 12. Jornada pós-CTA — padrão obrigatório
-
-
-
-Para cada CTA implementado ou revisado, declarar:
-
-
-
-1\. \*\*Texto do CTA\*\*
-
-2\. \*\*Local em que aparece\*\*
-
-3\. \*\*Destino do clique\*\*
-
-4\. \*\*Contexto que o antecede\*\*
-
-5\. \*\*Expectativa criada\*\*
-
-6\. \*\*O que o usuário precisa informar\*\*
-
-7\. \*\*O que a PAVIE promete\*\*
-
-8\. \*\*O que a PAVIE não promete\*\*
-
-9\. \*\*Como isso respeita conversão ética\*\*
-
-
-
-\## 12.1. Regra de aplicação
-
-Nenhum CTA relevante deve ser implementado sem esse quadro.
-
-
-
-\---
-
-
-
-\# 13. Critério de “done” do projeto inteiro
-
-
-
-O projeto estará em \*\*estado mínimo viável\*\* quando:
-
-
-
-1\. Um visitante chega por busca orgânica, entra em um artigo, encontra conteúdos relacionados, identifica a área correspondente e alcança o contato institucional sem atrito relevante.
-
-
-
-2\. Um visitante chega pela home do site, compreende quem conduz, entende o método, reconhece sua situação e consegue solicitar diagnóstico com expectativa realista.
-
-
-
-3\. Um novo artigo pode ser publicado pelo operador solo em até 20 minutos, com frontmatter completo e sem dúvida estrutural.
-
-
-
-4\. Nenhuma página principal do ecossistema está vazia, órfã, semanticamente fraca ou sem continuidade útil.
-
-
-
-5\. Site e blog são claramente a mesma marca em paleta, hierarquia visual, tom verbal e CTA.
-
-
-
-6\. Os 5 clusters canônicos estão padronizados no site, no blog e no CMS.
-
-
-
-7\. Os CTAs principais têm jornada pós-clique explícita, coerente e eticamente adequada.
-
-
-
-8\. O sistema possui ao menos a camada mínima de SEO estrutural:
-
-&#x20;  - LocalBusiness
-
-&#x20;  - FAQ relevante
-
-&#x20;  - Article
-
-&#x20;  - breadcrumbs
-
-&#x20;  - canonical
-
-
-
-9\. A operação solo consegue manter o sistema sem preencher metadados excessivos ou realizar ajustes manuais obscuros.
-
-
-
-10\. Não há violação perceptível de OAB, Provimento 205/2021 ou LGPD.
-
-
-
-\---
-
-
-
-\# 14. Sequência oficial de trabalho
-
-
-
-A execução no Codex deve seguir esta ordem:
-
-
-
-1\. \*\*Auditoria do repositório\*\*
-
-2\. \*\*Sprint 1 — Design System Mínimo\*\*
-
-3\. \*\*Sprint 2 — Home do Site\*\*
-
-4\. \*\*Sprint 3 — Fluxo Blog → Áreas → Contato\*\*
-
-5\. \*\*Sprint 4 — Taxonomia e Decap\*\*
-
-6\. \*\*Sprint 5 — SEO e Schema\*\*
-
-7\. \*\*Sprint 6 — Validação e Fechamento\*\*
-
-
-
-\## 14.1. Regra de ordem
-
-Não inverter a ordem sem justificativa técnica clara.
-
-
-
-\## 14.2. Regra de escopo da Sprint 1
-
-A Sprint 1 deve criar apenas o \*\*design system mínimo necessário\*\* para permitir a refatoração consistente da home do site na Sprint 2.
-
-
-
-\### Proibições da Sprint 1
-
-\- não transformar S1 em projeto autônomo de identidade visual;
-
-\- não perseguir perfeccionismo visual;
-
-\- não expandir S1 a ponto de consumir a energia do projeto antes de haver ganho visível.
-
-
-
-\### Função real de S1
-
-Preparar base suficiente, não esgotar o tema.
-
-
-
-\---
-
-
-
-\# 15. Regra final de operação
-
-
-
-\- Prefira refatorar com inteligência a reconstruir do zero.
-
-\- Preserve componentes bons.
-
-\- Priorize clareza, sustentabilidade e coerência.
-
-\- Não expandir escopo sem necessidade.
-
-\- Não tomar decisões visuais ou editoriais isoladas que gerem retrabalho nas próximas sprints.
-
-\- Não sacrificar manutenção futura por sofisticação aparente.
-
-\- Tratar o ecossistema como sistema coordenado de confiança, leitura, organização e conversão ética.
-
-
-
-\---
-
-
-
-\# 16. Uso deste arquivo
-
-
-
-Este `AGENTS.md` deve ser lido como base fixa antes da execução dos prompts específicos.
-
-
-
-Depois deste arquivo, usar os prompts na seguinte ordem:
-
-
-
-\- `A\_Auditoria\_do\_Repositorio.md`
-
-\- `S1\_Design\_System\_Minimo.md`
-
-\- `S2\_Home\_do\_Site.md`
-
-\- `S3\_Fluxo\_Blog\_Areas\_Contato.md`
-
-\- `S4\_Taxonomia\_e\_Decap.md`
-
-\- `S5\_SEO\_e\_Schema.md`
-
-\- `S6\_Validacao\_e\_Fechamento.md`
-
-
-
-\---
-
-
-
-\# 17. Apêndice — Checklist operacional rápido
-
-
-
-Este bloco serve para revisão rápida no dia a dia, sem necessidade de reler todo o documento.
-
-
-
-\## Projeto em estado mínimo viável quando:
-
-\- artigo leva a área e contato sem atrito;
-
-\- home explica método e leva a diagnóstico;
-
-\- novo artigo pode ser publicado em até 20 minutos;
-
-\- não há páginas vazias, órfãs ou fracas;
-
-\- site e blog parecem a mesma marca;
-
-\- clusters estão padronizados;
-
-\- CTAs têm jornada pós-clique clara;
-
-\- schema mínimo está ativo;
-
-\- manutenção solo é viável;
-
-\- não há violação ética ou de LGPD.
-
-
-
-\---
-
-
-
-Fim do arquivo.
-
+- mais coerente com o sistema;
+- mais seletiva do ponto de vista institucional;
+- mais clara para o usuário real;
+- mais simples de manter;
+- mais reversível;
+- menos dependente de memória tácita;
+- menos arriscada em termos éticos, reputacionais e arquitetônicos.

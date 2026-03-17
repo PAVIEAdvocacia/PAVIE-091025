@@ -1,16 +1,13 @@
-﻿---
-name: 'Fabio Mathias Pavie'
-slug: 'fabio-mathias-pavie'
-oab: 'OAB/RJ 134.947'
-role: 'Advogado e fundador da PAVIE Advocacia'
-bio: 'Atuacao em direito de familia, sucessoes, patrimonio e conflitos civeis com foco em clareza juridica.'
-image: '/uploads/foto_001-ffundddo-escritório.png'
-areas:
-  - 'familia'
-  - 'sucessoes'
-  - 'imobiliario'
-  - 'contratos'
-experience_years: 20
+---
+id: "fabio-pavie"
+name: "Fabio Mathias Pavie"
+slug: "fabio-pavie"
+shortBio: "Advogado e fundador da PAVIE | Advocacia, com produção pública concentrada em patrimônio, família, sucessões e imóveis."
+extendedBio: "Fabio Mathias Pavie conduz a PAVIE | Advocacia com foco em clareza jurídica, organização documental e leitura responsável do caso concreto."
+oab: "OAB/RJ 134.947"
+image: "/uploads/foto_001-ffundddo-escritório.png"
+imageAlt: "Foto profissional do advogado Fabio Mathias Pavie"
+reviewStatus: "pending"
 ---
 
-Perfil institucional do autor principal do blog juridico da PAVIE.
+Registro canônico inicial de autoria. Revisão humana obrigatória antes de uso público derivado.

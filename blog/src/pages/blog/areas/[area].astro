@@ -1,144 +1,97 @@
 ---
 import Breadcrumbs from '../../../components/blog/Breadcrumbs.astro';
-import BlogGrid from '../../../components/blog/BlogGrid.astro';
-import FeaturedPost from '../../../components/blog/FeaturedPost.astro';
 import { BLOG_SITE_URL } from '../../../consts';
 import BlogLayout from '../../../layouts/BlogLayout.astro';
-import { getBlogEntries } from '../../../lib/blog-content';
-import { buildBreadcrumbSchema } from '../../../lib/seo';
+import { getAreaEntries, getBlogEntries } from '../../../lib/blog-content';
+import { getCanonicalAreaDirectoryItem } from '../../../lib/canonical-directory';
 import {
-	blogClusterHref,
-	buildBlogClusterDirectory,
-	getBlogClusterDirectoryItem,
-	getBlogClusterStaticKeys,
-} from '../../../lib/blog-clusters';
+	canonicalCategoryHref,
+	getLegacyAreaMigrationDefinition,
+	getLegacyAreaRouteStaticKeys,
+	resolveApprovedCategoryCodeFromLegacyArea,
+	resolveLegacyAreaRouteKey,
+} from '../../../lib/canonical-content';
 import { isPublicPost, normalizePost, sortPostsByDate } from '../../../lib/posts';
-import { temaHref } from '../../../lib/taxonomy';
+import { buildBreadcrumbSchema } from '../../../lib/seo';
 
 export async function getStaticPaths() {
-	return getBlogClusterStaticKeys().map((area) => ({ params: { area } }));
+	return getLegacyAreaRouteStaticKeys().map((area) => ({ params: { area } }));
 }
 
-const entries = await getBlogEntries();
-const allPosts = sortPostsByDate(entries.map((entry) => normalizePost(entry))).filter(isPublicPost);
-const cluster = getBlogClusterDirectoryItem(allPosts, Astro.params.area ?? '');
+const [areaEntries, blogEntries] = await Promise.all([getAreaEntries(), getBlogEntries()]);
+const posts = sortPostsByDate(blogEntries.map((entry) => normalizePost(entry))).filter(isPublicPost);
+const legacyKey = resolveLegacyAreaRouteKey(Astro.params.area ?? '');
+const migration = getLegacyAreaMigrationDefinition(legacyKey);
 
-if (!cluster) {
-	throw new Error(`Área jurídica não encontrada: ${Astro.params.area}`);
+if (!migration) {
+	throw new Error(`Rota legada nao reconhecida: ${Astro.params.area}`);
 }
 
-const remainingPosts = cluster.posts.filter((post) => post.slug !== cluster.featuredPost?.slug).slice(0, 6);
-const siblingClusters = buildBlogClusterDirectory(allPosts)
-	.filter((item) => item.key !== cluster.key)
-	.slice(0, 3);
-const pageTitle = `${cluster.title} | Artigos por área`;
-const canonicalUrl = `${BLOG_SITE_URL}${blogClusterHref(cluster.key)}`;
-const isAliasRoute = (Astro.params.area ?? '') !== cluster.key;
+const approvedCategoryCode = resolveApprovedCategoryCodeFromLegacyArea(legacyKey);
+const targetCategoryHref = approvedCategoryCode ? canonicalCategoryHref(approvedCategoryCode) : '/blog/categoria/';
+const targetCategory = approvedCategoryCode
+	? getCanonicalAreaDirectoryItem(
+			areaEntries,
+			posts,
+			targetCategoryHref.replace('/blog/categoria/', '').replace(/\//g, ''),
+		)
+	: undefined;
+const canonicalUrl = approvedCategoryCode
+	? `${BLOG_SITE_URL}${targetCategoryHref}`
+	: `${BLOG_SITE_URL}/blog/categoria/`;
 const breadcrumbs = [
-	{ label: 'Início', href: '/' },
-	{ label: 'Publicações', href: '/blog/' },
-	{ label: 'Áreas jurídicas', href: '/blog/areas/' },
-	{ label: cluster.title },
+	{ label: 'Inicio', href: '/' },
+	{ label: 'Publicacoes', href: '/blog/' },
+	{ label: 'Mapa legado de areas', href: '/blog/areas/' },
+	{ label: migration.legacyAreaLabel },
 ];
 const breadcrumbSchema = buildBreadcrumbSchema(breadcrumbs, canonicalUrl);
+const hasDirectApprovedTarget = Boolean(approvedCategoryCode && targetCategory);
 ---
 
 <BlogLayout
-	title={pageTitle}
-	description={cluster.description}
+	title={`${migration.legacyAreaLabel} | Superficie legada do blog`}
+	description="URL legada mantida apenas para continuidade de navegacao. O destino principal do blog passou a operar com categorias canonicas."
 	canonical={canonicalUrl}
-	noIndex={isAliasRoute}
+	noIndex={true}
 >
 	<div class="container blog-home">
 		<Breadcrumbs items={breadcrumbs} />
-		<section class="surface-card blog-map-hero" aria-labelledby="blog-area-title">
-			<span class="badge">Área jurídica</span>
-			<h1 id="blog-area-title">{cluster.title}</h1>
-			<p>{cluster.editorialSummary}</p>
-			<div class="meta-list">
-				<span><span class="meta-dot" aria-hidden="true"></span>{cluster.postCount} artigos nesta área</span>
-				<span><span class="meta-dot" aria-hidden="true"></span>Ligação direta com os serviços da PAVIE</span>
-				<span><span class="meta-dot" aria-hidden="true"></span>Contato quando a situação pede orientação</span>
-			</div>
+		<section class="surface-card blog-map-hero" aria-labelledby="legacy-area-title">
+			<span class="badge">Superficie legada</span>
+			<h1 id="legacy-area-title">{migration.legacyAreaLabel}</h1>
+			<p>{migration.migrationRule}</p>
 			<div class="blog-actions">
-				<a class="btn btn-primary" href={cluster.contactHref}>Solicitar orientação inicial</a>
-				<a class="btn btn-ghost" href={cluster.institutionalHref}>Conheça os Serviços</a>
+				<a class="btn btn-primary" href={targetCategoryHref}>
+					{hasDirectApprovedTarget ? 'Ir para a categoria canonica' : 'Explorar categorias canonicas'}
+				</a>
+				<a class="btn btn-ghost" href="/areas/">Conheca as areas</a>
 			</div>
 		</section>
 
-		<section class="blog-grid" aria-label="Como reconhecer esta área">
-			<div class="section-title">
-				<div>
-					<span class="section-kicker">Situações típicas</span>
-					<h2>Esta área ajuda a enquadrar situações como estas</h2>
+		{hasDirectApprovedTarget ? (
+			<section class="surface-card editorial-guide-card" aria-label="Destino canonico aprovado">
+				<span class="section-kicker">Destino canonico</span>
+				<h2>{targetCategory?.title}</h2>
+				<p>{targetCategory?.shortDescription}</p>
+				<div class="blog-actions">
+					<a class="btn btn-primary" href={targetCategory?.categoryHref}>Explorar categoria</a>
+					<a class="btn btn-ghost" href={targetCategory?.href}>Conheca a area</a>
 				</div>
-			</div>
-			<div class="editorial-guide-grid editorial-guide-grid--wide">
-				{cluster.typicalSituations.map((item) => (
-					<article class="surface-card editorial-guide-card">
-						<h3>{item}</h3>
-						<p>{cluster.description}</p>
-					</article>
-				))}
-			</div>
-		</section>
-
-		<section class="blog-grid" aria-label="Temas ligados a esta área">
-			<div class="section-title">
-				<div>
-					<span class="section-kicker">Temas ligados a esta área</span>
-					<h2>Recortes frequentes para continuar a leitura</h2>
-				</div>
-			</div>
-			<div class="theme-chip-list">
-				{cluster.topThemes.map((tema) => (
-					<a class="blog-chip blog-chip--theme" href={cluster.hasThemeRoutes ? temaHref(tema) : '/blog/temas/'}>{tema}</a>
-				))}
-			</div>
-		</section>
-
-		{cluster.featuredPost ? (
-			<FeaturedPost post={cluster.featuredPost} />
+			</section>
 		) : (
-			<section class="surface-card empty-state" aria-label="Novos artigos em breve">
-				<h2>Novos artigos em breve</h2>
+			<section class="surface-card empty-state" aria-label="Sem correspondencia canonica direta">
+				<h2>Sem correspondencia canonica direta aprovada</h2>
 				<p>
-					Enquanto o acervo desta área cresce, você já pode reconhecer o assunto, explorar os serviços relacionados
-					e falar diretamente sobre a sua situação.
+					Esta rota legada nao aponta para uma categoria publica homologada. O tratamento correto depende de triagem
+					humana para reclassificar, migrar de forma extraordinaria ou arquivar o material relacionado.
 				</p>
 				<div class="blog-actions">
-					<a class="btn btn-primary" href={cluster.contactHref}>Solicitar orientação inicial</a>
-					<a class="btn btn-ghost" href={cluster.institutionalHref}>Conheça os Serviços</a>
+					<a class="btn btn-primary" href="/blog/categoria/">Explorar categorias canonicas</a>
+					<a class="btn btn-ghost" href="/areas/">Conheca as areas</a>
 				</div>
 			</section>
 		)}
-
-		{remainingPosts.length > 0 && (
-			<BlogGrid title="Leituras desta área" kicker="Continue a leitura" posts={remainingPosts} />
-		)}
-
-		<section class="blog-grid" aria-label="Outras áreas jurídicas">
-			<div class="section-title">
-				<div>
-					<span class="section-kicker">Outras áreas</span>
-					<h2>Se o seu tema tocar outra área jurídica, continue por aqui</h2>
-				</div>
-				<a class="btn btn-ghost" href="/blog/areas/">Explorar temas</a>
-			</div>
-			<div class="cluster-directory-grid">
-				{siblingClusters.map((item) => (
-					<article class="surface-card cluster-directory-card">
-						<h3>{item.title}</h3>
-						<p>{item.description}</p>
-						<p class="cluster-directory-meta">{item.postCount} artigos nesta área.</p>
-						<div class="cluster-directory-actions">
-							<a class="btn btn-primary" href={item.href}>Explorar temas</a>
-							<a class="btn btn-ghost" href={item.contactHref}>Solicitar orientação inicial</a>
-						</div>
-					</article>
-				))}
-			</div>
-		</section>
 	</div>
 
 	<script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />

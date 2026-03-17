@@ -5,6 +5,8 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
+    "check": "astro check",
+    "audit:pre-sprint-2": "node scripts/pre-sprint-2-audit.mjs",
     "preview": "astro preview",
     "astro": "astro"
   },
@@ -14,5 +16,9 @@
     "@astrojs/sitemap": "^3.6.0",
     "astro": "^5.15.8",
     "sharp": "^0.34.3"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.8",
+    "typescript": "^5.9.3"
   }
 }

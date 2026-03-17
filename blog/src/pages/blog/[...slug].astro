@@ -3,7 +3,7 @@ import { render } from 'astro:content';
 import ReadingLayout from '../../layouts/ReadingLayout.astro';
 import { getBlogEntries } from '../../lib/blog-content';
 import { getRelatedPosts } from '../../lib/related';
-import { isPublicPost, normalizePost, sortPostsByDate } from '../../lib/posts';
+import { isPublicPost, isPublishedPost, normalizePost, sortPostsByDate } from '../../lib/posts';
 import { buildToc } from '../../lib/toc';
 
 export async function getStaticPaths() {
@@ -13,7 +13,7 @@ export async function getStaticPaths() {
 
 	for (const entry of entries) {
 		const post = normalizePost(entry);
-		if (!isPublicPost(post)) continue;
+		if (!isPublishedPost(post)) continue;
 		const primarySlug = post.slug;
 		if (!seen.has(primarySlug)) {
 			paths.push({

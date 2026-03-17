@@ -6,17 +6,17 @@ import { buildBreadcrumbSchema } from '../../lib/seo';
 
 const title = 'Sobre o autor | Blog PAVIE | Advocacia';
 const description =
-	'Perfil profissional de Fabio Mathias Pavie, advogado responsável pelos conteúdos jurídicos do blog da PAVIE | Advocacia.';
-const canonicalUrl = `${BLOG_SITE_URL}/blog/sobre/`;
+	'Perfil profissional de Fabio Mathias Pavie, advogado responsavel pelos conteudos juridicos do blog da PAVIE | Advocacia.';
+const canonicalUrl = `${BLOG_SITE_URL}/autor/fabio-pavie/`;
 const breadcrumbs = [
-	{ label: 'Início', href: '/' },
-	{ label: 'Publicações', href: '/blog/' },
+	{ label: 'Inicio', href: '/' },
+	{ label: 'Publicacoes', href: '/blog/' },
 	{ label: 'Sobre o autor' },
 ];
 const breadcrumbSchema = buildBreadcrumbSchema(breadcrumbs, canonicalUrl);
 ---
 
-<BlogLayout title={title} description={description} canonical={canonicalUrl}>
+<BlogLayout title={title} description={description} canonical={canonicalUrl} noIndex={true}>
 	<div class="container blog-home">
 		<Breadcrumbs items={breadcrumbs} />
 		<section class="surface-card blog-author-spotlight" aria-label="Perfil do autor do blog">
@@ -26,17 +26,16 @@ const breadcrumbSchema = buildBreadcrumbSchema(breadcrumbs, canonicalUrl);
 				loading="eager"
 			/>
 			<div>
-				<span class="section-kicker">Autor do blog</span>
+				<span class="section-kicker">Superficie duplicada controlada</span>
 				<h1>Fabio Mathias Pavie</h1>
 				<p>Advogado | OAB/RJ 134.947</p>
 				<p>
-					Atuação em direito de família, sucessões, patrimônio e conflitos cíveis, com foco em
-					clareza jurídica, prevenção de risco e condução responsável.
+					O destino primario de autoria do ecossistema agora e a pagina canonica de autor. Esta rota permanece
+					apenas para continuidade de navegacao e nao deve concentrar sinal de SEO.
 				</p>
-				<p>Mais de 20 anos de experiência jurídica.</p>
 				<div class="site-hero__cta">
-					<a class="btn btn-primary" href="/areas/">Conheça os Serviços</a>
-					<a class="btn btn-ghost" href="/blog/">Explorar temas</a>
+					<a class="btn btn-primary" href="/autor/fabio-pavie/">Conheca o autor</a>
+					<a class="btn btn-ghost" href="/blog/categoria/">Explorar categorias</a>
 				</div>
 			</div>
 		</section>

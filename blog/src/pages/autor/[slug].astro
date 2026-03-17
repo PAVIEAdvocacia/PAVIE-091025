@@ -1,0 +1,101 @@
+---
+import Breadcrumbs from '../../components/blog/Breadcrumbs.astro';
+import BlogGrid from '../../components/blog/BlogGrid.astro';
+import { MAIN_SITE_URL } from '../../consts';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getAuthorEntries, getBlogEntries } from '../../lib/blog-content';
+import { getAuthorEntryBySlug } from '../../lib/canonical-directory';
+import { isPublicPost, normalizePost, sortPostsByDate } from '../../lib/posts';
+import { buildBreadcrumbSchema, toAbsoluteUrl } from '../../lib/seo';
+import '../../styles/blog.css';
+import '../../styles/institutional-pages.css';
+
+export async function getStaticPaths() {
+	const authorEntries = await getAuthorEntries();
+	return authorEntries.map((entry) => ({ params: { slug: entry.data.slug } }));
+}
+
+const [authorEntries, blogEntries] = await Promise.all([getAuthorEntries(), getBlogEntries()]);
+const currentAuthor = getAuthorEntryBySlug(authorEntries, Astro.params.slug ?? '');
+
+if (!currentAuthor) {
+	throw new Error(`Autor canonico nao encontrado: ${Astro.params.slug}`);
+}
+
+const posts = sortPostsByDate(blogEntries.map((entry) => normalizePost(entry)))
+	.filter(isPublicPost)
+	.filter((post) => post.authorSlug === currentAuthor.data.slug);
+const canonicalUrl = `${MAIN_SITE_URL}/autor/${currentAuthor.data.slug}/`;
+const breadcrumbs = [
+	{ label: 'Inicio', href: '/' },
+	{ label: 'Autor' },
+	{ label: currentAuthor.data.name },
+];
+const breadcrumbSchema = buildBreadcrumbSchema(breadcrumbs, canonicalUrl);
+const personSchema = {
+	'@context': 'https://schema.org',
+	'@type': 'Person',
+	name: currentAuthor.data.name,
+	url: canonicalUrl,
+	image: toAbsoluteUrl(currentAuthor.data.image),
+	description: currentAuthor.data.shortBio,
+	jobTitle: 'Advogado',
+};
+---
+
+<BaseLayout
+	title={`${currentAuthor.data.name} | Autor | PAVIE | Advocacia`}
+	description={currentAuthor.data.shortBio}
+	canonical={canonicalUrl}
+	image={currentAuthor.data.image}
+>
+	<div class="container institutional-page">
+		<Breadcrumbs items={breadcrumbs} />
+		<section class="surface-card institutional-profile" aria-labelledby="author-title">
+			<img src={currentAuthor.data.image} alt={currentAuthor.data.imageAlt} loading="eager" />
+			<div>
+				<span class="badge">Autor canonico</span>
+				<h1 id="author-title">{currentAuthor.data.name}</h1>
+				<p>{currentAuthor.data.oab}</p>
+				<p>{currentAuthor.data.shortBio}</p>
+				<p>{currentAuthor.data.extendedBio}</p>
+				<div class="institutional-actions">
+					<a class="btn btn-primary" href="/areas/">Conheca as areas</a>
+					<a class="btn btn-ghost" href="/blog/categoria/">Explorar categorias</a>
+				</div>
+			</div>
+		</section>
+
+		<section class="institutional-grid" aria-label="Estrutura de autoria">
+			<article class="surface-card institutional-card">
+				<span class="section-kicker">Papel publico</span>
+				<h2>Autoria controlada e identificavel</h2>
+				<p>
+					Esta pagina centraliza a autoria publica homologada no ecossistema PAVIE e evita dispersao entre perfis
+					duplicados ou bios concorrentes.
+				</p>
+			</article>
+			<article class="surface-card institutional-card">
+				<span class="section-kicker">Relacao com o acervo</span>
+				<h2>Publicacoes assinadas</h2>
+				<p>
+					Os artigos abaixo sao os que ja operam com a taxonomia canonica aprovada para superficies publicas do site
+					e do blog.
+				</p>
+			</article>
+		</section>
+
+		<BlogGrid
+			title="Publicacoes do autor"
+			kicker="Autoria"
+			posts={posts}
+			emptyTitle="Acervo em homologacao"
+			emptyText="A pagina de autor ja esta pronta, mas o acervo publico homologado desta assinatura ainda esta em expansao."
+			emptyHref="/blog/categoria/"
+			emptyLabel="Explorar categorias"
+		/>
+	</div>
+
+	<script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+	<script type="application/ld+json" set:html={JSON.stringify(personSchema)} />
+</BaseLayout>

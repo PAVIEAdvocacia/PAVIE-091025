@@ -1,9 +1,19 @@
-﻿import type { CollectionEntry } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
 import { BLOG_SITE_URL, DEFAULT_AUTHOR_NAME, DEFAULT_AUTHOR_ROLE } from '../consts';
+import {
+	canonicalAreaHref,
+	canonicalAuthorHref,
+	canonicalCategoryHref,
+	getAuthorDefinitionById,
+	hasApprovedCanonicalCorrespondenceForLegacyArea,
+	resolveApprovedCategoryCodeFromLegacyArea,
+	getCanonicalCategoryDefinition,
+	resolveLegacyFunnelStage,
+} from './canonical-content';
 import { PRIMARY_CTA_OPTIONS } from './editorial-taxonomy';
 import { areaLabel, normalizeAreaKey, normalizeTemaKey } from './taxonomy';
 
-export type RawPostEntry = CollectionEntry<'blog'>;
+export type RawPostEntry = CollectionEntry<'posts'>;
 
 export interface CtaConfig {
 	label: string;
@@ -28,14 +38,21 @@ export interface BlogPost {
 	excerpt: string;
 	area: string;
 	areaKey: string;
+	categoryCode?: string;
+	categorySlug?: string;
+	categoryUrl?: string;
+	areaUrl?: string;
 	subarea?: string;
 	temas: string[];
 	temaKeys: string[];
 	painPoints: string[];
 	tags: string[];
 	funnelStage: string;
+	authorId?: string;
 	authorName: string;
 	authorRole: string;
+	authorSlug?: string;
+	authorUrl?: string;
 	publishedAt?: Date;
 	updatedAt?: Date;
 	image?: string;
@@ -51,6 +68,9 @@ export interface BlogPost {
 	status: string;
 	featured: boolean;
 	canonicalUrl?: string;
+	contentModel: 'legacy' | 'canonical';
+	publicSurfaceStatus: 'allowed' | 'blocked_unresolved_taxonomy';
+	legacyAreaHasApprovedCanonicalCorrespondence: boolean;
 }
 
 const WORDS_PER_MINUTE = 220;
@@ -78,7 +98,9 @@ function cleanList(value: unknown): string[] {
 }
 
 function uniqueList(values: string[]): string[] {
-	return Array.from(new Map(values.filter(Boolean).map((value) => [value.toLowerCase(), value])).values());
+	return Array.from(
+		new Map(values.filter(Boolean).map((value) => [value.toLowerCase(), value])).values(),
+	);
 }
 
 function parseDate(value: unknown): Date | undefined {
@@ -156,7 +178,7 @@ function ensureDescription(title: string, description: string): string {
 	return `Analise juridica da PAVIE sobre ${title.toLowerCase()}.`;
 }
 
-function resolveStatus(rawValue: string): string {
+function resolveLegacyStatus(rawValue: string): string {
 	const value = rawValue.toLowerCase();
 	if (['draft', 'published', 'archived'].includes(value)) return value;
 	if (['publicado', 'active'].includes(value)) return 'published';
@@ -175,7 +197,7 @@ function defaultPrimaryCtaKey(funnelStage: string): string {
 	return 'areas_editoriais';
 }
 
-function resolvePrimaryCtaKey(rawValue: string, funnelStage: string): string {
+function resolveLegacyPrimaryCtaKey(rawValue: string, funnelStage: string): string {
 	const key = rawValue.toLowerCase();
 	if (PRIMARY_CTA_BY_KEY[key]) {
 		return key;
@@ -183,8 +205,205 @@ function resolvePrimaryCtaKey(rawValue: string, funnelStage: string): string {
 	return defaultPrimaryCtaKey(funnelStage);
 }
 
-function resolvePrimaryCta(key: string): CtaConfig {
+function resolveLegacyPrimaryCta(key: string): CtaConfig {
 	return PRIMARY_CTA_BY_KEY[key] ?? PRIMARY_CTA_BY_KEY.areas_editoriais;
+}
+
+function resolveCanonicalCta(
+	ctaType: string,
+	ctaTarget: string,
+	areaUrl: string,
+	categoryUrl: string,
+): { ctaKey: string; cta: CtaConfig } {
+	const safeCategoryHref = categoryUrl || '/blog/categoria/';
+	const safeAreaHref = areaUrl || '/areas/';
+
+	switch (ctaType) {
+		case 'contact':
+			return {
+				ctaKey: 'diagnostico_juridico',
+				cta: {
+					label: 'Solicitar orientação inicial',
+					href: ctaTarget || '/blog/contato/',
+					description:
+						'Entenda quando faz sentido avançar para a orientação inicial e quais informações ajudam no primeiro contato.',
+				},
+			};
+		case 'area': {
+			const href = ctaTarget || safeAreaHref;
+			const institutional = href.startsWith('/areas/');
+			return {
+				ctaKey: institutional ? 'areas_de_atuacao' : 'areas_editoriais',
+				cta: {
+					label: institutional ? 'Conheça os Serviços' : 'Explorar temas',
+					href,
+					description: institutional
+						? 'Veja como a PAVIE apresenta esta área de atuação na camada institucional do site.'
+						: 'Continue a leitura por assunto e encontre novos caminhos para aprofundar a situação.',
+				},
+			};
+		}
+		case 'article-series':
+			return {
+				ctaKey: 'areas_editoriais',
+				cta: {
+					label: 'Explorar temas',
+					href: ctaTarget || safeCategoryHref,
+					description:
+						'Continue a leitura por assunto e encontre novos caminhos para aprofundar a situação.',
+				},
+			};
+		case 'document-review':
+			return {
+				ctaKey: 'diagnostico_juridico',
+				cta: {
+					label: 'Organizar documentos',
+					href: ctaTarget || '/blog/contato/',
+					description:
+						'Comece reunindo os documentos principais para avaliar a via mais adequada para a situação.',
+				},
+			};
+		default:
+			return {
+				ctaKey: 'areas_editoriais',
+				cta: resolveLegacyPrimaryCta('areas_editoriais'),
+			};
+	}
+}
+
+function resolvePostStatus(data: RawPostEntry['data']): string {
+	if (typeof data.draft === 'boolean') {
+		if (data.draft) return 'draft';
+		if (cleanString(data.migrationStatus).toLowerCase() === 'archived') return 'archived';
+		return 'published';
+	}
+	return resolveLegacyStatus(cleanString(data.status));
+}
+
+function resolveContentModel(data: RawPostEntry['data']): 'legacy' | 'canonical' {
+	const hasCanonicalSignals =
+		Boolean(cleanString(data.categoryCode)) ||
+		Boolean(cleanString(data.authorId)) ||
+		Boolean(data.publishDate) ||
+		Boolean(cleanString(data.contentType)) ||
+		Boolean(cleanString(data.readerStage)) ||
+		Boolean(cleanString(data.ctaType)) ||
+		Boolean(cleanString(data.ctaTarget)) ||
+		Boolean(cleanString(data.legalReview)) ||
+		Boolean(cleanString(data.editorialReview)) ||
+		Boolean(cleanString(data.migrationStatus));
+
+	return hasCanonicalSignals ? 'canonical' : 'legacy';
+}
+
+function resolveAreaContext(data: RawPostEntry['data']): {
+	legacyAreaValue: string;
+	areaKey: string;
+	area: string;
+	categoryCode?: string;
+	categorySlug?: string;
+	categoryUrl?: string;
+	areaUrl?: string;
+} {
+	const explicitCategoryCode = cleanString(data.categoryCode) || undefined;
+	const legacyAreaValue = cleanString(data.area) || cleanString(data.legacyAreaKey) || '';
+	const mappedCategoryCode = legacyAreaValue
+		? resolveApprovedCategoryCodeFromLegacyArea(normalizeAreaKey(legacyAreaValue))
+		: undefined;
+	const categoryCode = explicitCategoryCode || mappedCategoryCode;
+	const categoryDefinition = categoryCode
+		? getCanonicalCategoryDefinition(categoryCode)
+		: undefined;
+	const fallbackAreaValue = legacyAreaValue || categoryDefinition?.slug || '';
+	const areaKey = normalizeAreaKey(fallbackAreaValue);
+
+	return {
+		legacyAreaValue,
+		areaKey,
+		area: categoryDefinition?.label ?? areaLabel(fallbackAreaValue),
+		categoryCode,
+		categorySlug: categoryDefinition?.slug,
+		categoryUrl: categoryCode ? canonicalCategoryHref(categoryCode) : undefined,
+		areaUrl: categoryDefinition ? canonicalAreaHref(categoryDefinition.code) : undefined,
+	};
+}
+
+function resolveAuthorContext(data: RawPostEntry['data']): {
+	authorId?: string;
+	authorName: string;
+	authorRole: string;
+	authorSlug?: string;
+	authorUrl?: string;
+} {
+	const authorId = cleanString(data.authorId) || undefined;
+	if (authorId) {
+		const definition = getAuthorDefinitionById(authorId);
+		if (definition) {
+			return {
+				authorId,
+				authorName: definition.name,
+				authorRole: definition.role,
+				authorSlug: definition.slug,
+				authorUrl: canonicalAuthorHref(definition.slug),
+			};
+		}
+	}
+
+	const legacyAuthorName = cleanString(data.author);
+	const matchedAuthor = legacyAuthorName
+		? getAuthorDefinitionById(
+				legacyAuthorName.toLowerCase() === 'fabio mathias pavie' ? 'fabio-pavie' : '',
+			)
+		: undefined;
+	if (matchedAuthor) {
+		return {
+			authorId: matchedAuthor.id,
+			authorName: matchedAuthor.name,
+			authorRole: matchedAuthor.role,
+			authorSlug: matchedAuthor.slug,
+			authorUrl: canonicalAuthorHref(matchedAuthor.slug),
+		};
+	}
+
+	return {
+		authorId,
+		authorName: legacyAuthorName || DEFAULT_AUTHOR_NAME,
+		authorRole: DEFAULT_AUTHOR_ROLE,
+		authorSlug: undefined,
+		authorUrl: undefined,
+	};
+}
+
+function resolveFunnelStage(data: RawPostEntry['data']): string {
+	const readerStage = cleanString(data.readerStage);
+	if (readerStage) {
+		return resolveLegacyFunnelStage(readerStage);
+	}
+	return cleanString(data.funnel_stage) || 'consideracao';
+}
+
+function resolveThemesAndTags(data: RawPostEntry['data'], title: string, description: string) {
+	const themes = cleanList(data.themes);
+	const tags = cleanList(data.tags);
+	const keywords = cleanList(data.keywords);
+	const painPoints = cleanList(data.pain_points);
+	const derivedThemes =
+		themes.length > 0 ? themes : tags.length > 0 ? tags : inferThemes(title, description);
+	const temaKeys = derivedThemes.map((item) => normalizeTemaKey(item));
+	const normalizedTags = uniqueList([
+		...tags,
+		...keywords,
+		...derivedThemes,
+		...painPoints,
+		...(cleanString(data.subarea) ? [cleanString(data.subarea)] : []),
+	]);
+
+	return {
+		derivedThemes,
+		temaKeys,
+		painPoints,
+		normalizedTags,
+	};
 }
 
 export function postRoute(slug: string): string {
@@ -192,6 +411,15 @@ export function postRoute(slug: string): string {
 }
 
 export function isPublicPost(post: BlogPost): boolean {
+	return (
+		post.status === 'published' &&
+		post.publicSurfaceStatus === 'allowed' &&
+		Boolean(post.slug) &&
+		Boolean(post.publishedAt)
+	);
+}
+
+export function isPublishedPost(post: BlogPost): boolean {
 	return post.status === 'published' && Boolean(post.slug) && Boolean(post.publishedAt);
 }
 
@@ -200,30 +428,61 @@ export function normalizePost(entry: RawPostEntry): BlogPost {
 	const title = cleanString(data.title) || 'Publicacao sem titulo';
 	const description = ensureDescription(title, cleanString(data.description));
 	const excerpt = cleanString(data.excerpt) || description;
-	const routeSlug = cleanString(data.slug) || entry.id;
+	const routeSlug = cleanString(data.slug) || cleanString(data.legacySlug) || entry.id;
 	const slug = routeSlug.replace(/^\/+|\/+$/g, '');
 	const slugKey = normalizeSlug(slug || entry.id);
-	const areaValue = cleanString(data.area) || 'Familia, Sucessoes e Patrimonio';
-	const areaKey = normalizeAreaKey(areaValue);
-	const area = areaLabel(areaValue);
+	const { areaKey, area, categoryCode, categorySlug, categoryUrl, areaUrl, legacyAreaValue } =
+		resolveAreaContext(data);
 	const subarea = cleanString(data.subarea) || undefined;
-	const themes = cleanList(data.themes);
-	const painPoints = cleanList(data.pain_points);
-	const derivedThemes = themes.length > 0 ? themes : inferThemes(title, description);
-	const temaKeys = derivedThemes.map((item) => normalizeTemaKey(item));
-	const authorName = cleanString(data.author) || DEFAULT_AUTHOR_NAME;
-	const publishedAt = parseDate(data.publish_date);
-	const readingTime = buildReadingTime(entry.body, data.reading_time);
-	const image = normalizeImagePath(cleanString(data.og_image));
-	const imageAlt = `Imagem de capa do artigo ${title}`;
-	const funnelStage = cleanString(data.funnel_stage) || 'consideracao';
-	const ctaKey = resolvePrimaryCtaKey(cleanString(data.primary_cta), funnelStage);
-	const relatedArticles = cleanList(data.related_articles).map((item) => normalizeSlug(item));
-	const status = resolveStatus(cleanString(data.status));
+	const { derivedThemes, temaKeys, painPoints, normalizedTags } = resolveThemesAndTags(
+		data,
+		title,
+		description,
+	);
+	const { authorId, authorName, authorRole, authorSlug, authorUrl } =
+		resolveAuthorContext(data);
+	const publishedAt = parseDate(data.publishDate ?? data.publish_date);
+	const updatedAt = parseDate(data.updatedDate);
+	const explicitReadingTime = typeof data.readingTime === 'number' ? data.readingTime : data.reading_time;
+	const readingTime = buildReadingTime(entry.body ?? '', explicitReadingTime);
+	const image = normalizeImagePath(cleanString(data.coverImage) || cleanString(data.og_image));
+	const imageAlt = cleanString(data.coverAlt) || `Imagem de capa do artigo ${title}`;
+	const funnelStage = resolveFunnelStage(data);
+	const canonicalCtaType = cleanString(data.ctaType);
+	const canonicalCtaTarget = cleanString(data.ctaTarget);
+	const { ctaKey, cta } = canonicalCtaType
+		? resolveCanonicalCta(canonicalCtaType, canonicalCtaTarget, areaUrl || '/areas/', categoryUrl || '/blog/categoria/')
+		: (() => {
+				const legacyKey = resolveLegacyPrimaryCtaKey(cleanString(data.primary_cta), funnelStage);
+				const legacyCta = resolveLegacyPrimaryCta(legacyKey);
+				const normalizedLegacyCta =
+					legacyKey === 'areas_editoriais'
+						? { ...legacyCta, href: categoryUrl || '/blog/categoria/' }
+						: legacyKey === 'areas_de_atuacao'
+							? { ...legacyCta, href: areaUrl || '/areas/' }
+							: legacyCta;
+				return {
+					ctaKey: legacyKey,
+					cta: normalizedLegacyCta,
+				};
+			})();
+	const relatedArticles = uniqueList([
+		...cleanList(data.relatedPosts),
+		...cleanList(data.related_articles),
+	]).map((item) => normalizeSlug(item));
+	const status = resolvePostStatus(data);
+	const contentModel = resolveContentModel(data);
+	const legacyAreaHasApprovedCanonicalCorrespondence =
+		Boolean(legacyAreaValue) &&
+		hasApprovedCanonicalCorrespondenceForLegacyArea(normalizeAreaKey(legacyAreaValue));
+	const publicSurfaceStatus =
+		categoryCode ? 'allowed' : 'blocked_unresolved_taxonomy';
 	const featured = Boolean(data.featured);
-	const seoTitle = cleanString(data.seo_title) || undefined;
-	const canonicalUrl = `${BLOG_SITE_URL}${postRoute(slug)}`;
-	const tags = uniqueList([...derivedThemes, ...painPoints, ...(subarea ? [subarea] : [])]);
+	const seoTitle = cleanString(data.seoTitle) || cleanString(data.seo_title) || undefined;
+	const canonicalUrlValue =
+		cleanString(data.canonicalURL) ||
+		cleanString(data.canonicalUrl) ||
+		`${BLOG_SITE_URL}${postRoute(slug)}`;
 
 	return {
 		entry,
@@ -237,16 +496,23 @@ export function normalizePost(entry: RawPostEntry): BlogPost {
 		excerpt,
 		area,
 		areaKey,
+		categoryCode,
+		categorySlug,
+		categoryUrl,
+		areaUrl,
 		subarea,
 		temas: derivedThemes,
 		temaKeys,
 		painPoints,
-		tags,
+		tags: normalizedTags,
 		funnelStage,
+		authorId,
 		authorName,
-		authorRole: DEFAULT_AUTHOR_ROLE,
+		authorRole,
+		authorSlug,
+		authorUrl,
 		publishedAt,
-		updatedAt: undefined,
+		updatedAt,
 		image,
 		imageAlt,
 		readingTime,
@@ -254,12 +520,15 @@ export function normalizePost(entry: RawPostEntry): BlogPost {
 		audioUrl: undefined,
 		transcriptUrl: undefined,
 		ctaKey,
-		cta: resolvePrimaryCta(ctaKey),
+		cta,
 		relatedArticles,
 		faqItems: [],
 		status,
 		featured,
-		canonicalUrl,
+		canonicalUrl: canonicalUrlValue,
+		contentModel,
+		publicSurfaceStatus,
+		legacyAreaHasApprovedCanonicalCorrespondence,
 	};
 }
 
@@ -275,7 +544,10 @@ export function groupPostsByArea(posts: BlogPost[]): Array<{ area: string; posts
 	const bucket = new Map<string, { area: string; posts: BlogPost[] }>();
 	for (const post of posts) {
 		const areaKey = post.areaKey || normalizeAreaKey(post.area);
-		const group = bucket.get(areaKey) ?? { area: post.area || areaLabel(areaKey), posts: [] };
+		const group = bucket.get(areaKey) ?? {
+			area: post.area || areaLabel(areaKey),
+			posts: [],
+		};
 		group.posts.push(post);
 		bucket.set(areaKey, group);
 	}

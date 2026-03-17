@@ -1,0 +1,136 @@
+---
+import Breadcrumbs from '../../components/blog/Breadcrumbs.astro';
+import BlogGrid from '../../components/blog/BlogGrid.astro';
+import FeaturedPost from '../../components/blog/FeaturedPost.astro';
+import { MAIN_SITE_URL } from '../../consts';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getAreaEntries, getBlogEntries } from '../../lib/blog-content';
+import {
+	buildCanonicalAreaDirectory,
+	getCanonicalAreaDirectoryItem,
+} from '../../lib/canonical-directory';
+import { isPublicPost, normalizePost, sortPostsByDate } from '../../lib/posts';
+import { buildBreadcrumbSchema } from '../../lib/seo';
+import '../../styles/blog.css';
+import '../../styles/institutional-pages.css';
+
+export async function getStaticPaths() {
+	const areaEntries = await getAreaEntries();
+	return areaEntries
+		.filter((entry) => entry.data.isActive !== false)
+		.map((entry) => ({ params: { slug: entry.data.slug } }));
+}
+
+const [areaEntries, blogEntries] = await Promise.all([getAreaEntries(), getBlogEntries()]);
+const posts = sortPostsByDate(blogEntries.map((entry) => normalizePost(entry))).filter(isPublicPost);
+const currentArea = getCanonicalAreaDirectoryItem(areaEntries, posts, Astro.params.slug ?? '');
+
+if (!currentArea) {
+	throw new Error(`Area canonica nao encontrada: ${Astro.params.slug}`);
+}
+
+const remainingPosts = currentArea.posts.filter((post) => post.slug !== currentArea.featuredPost?.slug);
+const siblingAreas = buildCanonicalAreaDirectory(areaEntries, posts)
+	.filter((item) => item.slug !== currentArea.slug)
+	.slice(0, 3);
+const canonicalUrl = `${MAIN_SITE_URL}${currentArea.href}`;
+const breadcrumbs = [
+	{ label: 'Inicio', href: '/' },
+	{ label: 'Areas', href: '/areas/' },
+	{ label: currentArea.title },
+];
+const breadcrumbSchema = buildBreadcrumbSchema(breadcrumbs, canonicalUrl);
+---
+
+<BaseLayout
+	title={currentArea.entry.data.seoTitle}
+	description={currentArea.shortDescription}
+	canonical={canonicalUrl}
+>
+	<div class="container institutional-page">
+		<Breadcrumbs items={breadcrumbs} />
+		<section class="surface-card blog-map-hero" aria-labelledby="area-title">
+			<span class="badge">Area canonica</span>
+			<h1 id="area-title">{currentArea.title}</h1>
+			<p>{currentArea.headline}</p>
+			<div class="meta-list">
+				<span><span class="meta-dot" aria-hidden="true"></span>{currentArea.postCount} publicacoes homologadas</span>
+				<span><span class="meta-dot" aria-hidden="true"></span>Ligacao direta com a categoria do blog</span>
+				<span><span class="meta-dot" aria-hidden="true"></span>CTA institucional preservado</span>
+			</div>
+			<div class="institutional-actions">
+				<a class="btn btn-primary" href={currentArea.categoryHref}>Explorar categoria no blog</a>
+				<a class="btn btn-ghost" href="/contato/">Solicitar orientacao inicial</a>
+			</div>
+		</section>
+
+		<section class="institutional-grid" aria-label="Contexto da area">
+			<article class="surface-card institutional-card">
+				<span class="section-kicker">Escopo da pagina</span>
+				<h2>Funcao desta area na arquitetura publica</h2>
+				<p>{currentArea.description}</p>
+			</article>
+			<article class="surface-card institutional-card">
+				<span class="section-kicker">Relacao editorial</span>
+				<h2>Como esta area conversa com o blog</h2>
+				<p>
+					A navegacao editorial desta area usa a mesma categoria canonica aprovada e nao reaproveita clusters ou
+					familias legadas como fallback.
+				</p>
+			</article>
+		</section>
+
+		{currentArea.featuredPost ? (
+			<FeaturedPost post={currentArea.featuredPost} />
+		) : (
+			<section class="surface-card empty-state" aria-label="Acervo em atualizacao">
+				<h2>Acervo em atualizacao</h2>
+				<p>
+					Esta area ja integra a camada canonica do site. Novas publicacoes entram na categoria correspondente
+					conforme validacao editorial e taxonomica.
+				</p>
+				<div class="blog-actions">
+					<a class="btn btn-primary" href={currentArea.categoryHref}>Explorar categoria</a>
+					<a class="btn btn-ghost" href="/contato/">Solicitar orientacao inicial</a>
+				</div>
+			</section>
+		)}
+
+		<BlogGrid
+			title="Leituras desta area"
+			kicker="Aprofundamento"
+			posts={remainingPosts}
+			emptyTitle="Sem outras publicacoes homologadas"
+			emptyText="A conexao estrutural da area ja esta pronta. O crescimento do acervo continua por ciclos de homologacao."
+			emptyHref={currentArea.categoryHref}
+			emptyLabel="Explorar categoria"
+		/>
+
+		{siblingAreas.length > 0 && (
+			<section class="blog-grid" aria-label="Outras areas canonicas">
+				<div class="section-title">
+					<div>
+						<span class="section-kicker">Outras areas</span>
+						<h2>Se a situacao tocar outro eixo canonico, siga por aqui</h2>
+					</div>
+					<a class="btn btn-ghost" href="/areas/">Ver todas as areas</a>
+				</div>
+				<div class="cluster-directory-grid">
+					{siblingAreas.map((area) => (
+						<article class="surface-card cluster-directory-card">
+							<h3>{area.title}</h3>
+							<p>{area.shortDescription}</p>
+							<p class="cluster-directory-meta">{area.postCount} publicacoes homologadas.</p>
+							<div class="cluster-directory-actions">
+								<a class="btn btn-primary" href={area.href}>Conheca a area</a>
+								<a class="btn btn-ghost" href={area.categoryHref}>Explorar categoria</a>
+							</div>
+						</article>
+					))}
+				</div>
+			</section>
+		)}
+	</div>
+
+	<script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+</BaseLayout>

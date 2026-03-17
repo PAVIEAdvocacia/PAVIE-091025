@@ -2,7 +2,9 @@ import { getCollection, type CollectionEntry } from 'astro:content';
 import { readdir } from 'node:fs/promises';
 import { extname, resolve } from 'node:path';
 
-const BLOG_CONTENT_DIR = resolve(process.cwd(), 'src', 'content', 'blog');
+const POSTS_CONTENT_DIR = resolve(process.cwd(), 'src', 'content', 'blog');
+const AREAS_CONTENT_DIR = resolve(process.cwd(), 'src', 'content', 'areas');
+const AUTHORS_CONTENT_DIR = resolve(process.cwd(), 'src', 'content', 'authors');
 const MARKDOWN_EXTENSIONS = new Set(['.md', '.mdx']);
 
 async function hasContentFiles(directory: string): Promise<boolean> {
@@ -38,10 +40,26 @@ async function hasContentFiles(directory: string): Promise<boolean> {
 	return false;
 }
 
-export async function getBlogEntries(): Promise<CollectionEntry<'blog'>[]> {
-	if (!(await hasContentFiles(BLOG_CONTENT_DIR))) {
+export async function getBlogEntries(): Promise<CollectionEntry<'posts'>[]> {
+	if (!(await hasContentFiles(POSTS_CONTENT_DIR))) {
 		return [];
 	}
 
-	return getCollection('blog');
+	return getCollection('posts');
+}
+
+export async function getAreaEntries(): Promise<CollectionEntry<'areas'>[]> {
+	if (!(await hasContentFiles(AREAS_CONTENT_DIR))) {
+		return [];
+	}
+
+	return getCollection('areas');
+}
+
+export async function getAuthorEntries(): Promise<CollectionEntry<'authors'>[]> {
+	if (!(await hasContentFiles(AUTHORS_CONTENT_DIR))) {
+		return [];
+	}
+
+	return getCollection('authors');
 }

@@ -3,68 +3,29 @@ import BlogGrid from '../../components/blog/BlogGrid.astro';
 import FeaturedPost from '../../components/blog/FeaturedPost.astro';
 import { BLOG_SITE_URL } from '../../consts';
 import BlogLayout from '../../layouts/BlogLayout.astro';
-import { getBlogEntries } from '../../lib/blog-content';
-import { buildBlogClusterDirectory } from '../../lib/blog-clusters';
+import { getAreaEntries, getBlogEntries } from '../../lib/blog-content';
+import { buildCanonicalAreaDirectory } from '../../lib/canonical-directory';
 import { isPublicPost, normalizePost, sortPostsByDate } from '../../lib/posts';
-import { temaHref } from '../../lib/taxonomy';
 
-const entries = await getBlogEntries();
-const posts = sortPostsByDate(entries.map((entry) => normalizePost(entry))).filter(isPublicPost);
+const [areaEntries, blogEntries] = await Promise.all([getAreaEntries(), getBlogEntries()]);
+const posts = sortPostsByDate(blogEntries.map((entry) => normalizePost(entry))).filter(isPublicPost);
 const featured = posts.find((post) => post.featured) ?? (posts.length > 0 ? posts[0] : undefined);
 const continuityPosts = posts.filter((post) => post.slug !== featured?.slug).slice(0, 6);
-const clusterDirectory = buildBlogClusterDirectory(posts);
-const topThemes = Array.from(
-	new Map(
-		posts
-			.flatMap((post) => post.temas)
-			.map((tema) => [tema.toLowerCase(), tema]),
-	).values(),
-).slice(0, 10);
-const quickStartItems = [
-	{
-		area: 'Família, Sucessões e Patrimônio',
-		title: 'Divórcio, guarda, convivência ou partilha',
-		text: 'Quando a dúvida envolve filhos, separação, alimentos, inventário ou patrimônio familiar.',
-		href: '/blog/areas/familia-sucessoes-patrimonio/',
-	},
-	{
-		area: 'Imobiliário, Regularização e Condomínios',
-		title: 'Imóvel, matrícula, posse ou regularização',
-		text: 'Quando a situação passa por compra e venda, locação, condomínio ou documentos do imóvel.',
-		href: '/blog/areas/imobiliario-regularizacao-condominios/',
-	},
-	{
-		area: 'Contratos, Obrigações e Responsabilidade Civil',
-		title: 'Contrato, cobrança, inadimplemento ou dano',
-		text: 'Quando o problema pede revisão de cláusulas, definição de responsabilidade ou reação a descumprimento.',
-		href: '/blog/areas/contratos-obrigacoes-responsabilidade-civil/',
-	},
-	{
-		area: 'Consumidor, Saúde e Previdência',
-		title: 'Negativa de cobertura, consumo ou benefício',
-		text: 'Quando a dúvida envolve plano de saúde, relação de consumo, cobrança indevida ou proteção social.',
-		href: '/blog/areas/consumidor-saude-previdencia/',
-	},
-	{
-		area: 'Compliance, Integridade e Atuação Empresarial',
-		title: 'Decisão empresarial, governança ou integridade',
-		text: 'Quando a situação exige organização jurídica de rotinas, contratos ou prevenção de risco.',
-		href: '/blog/areas/compliance-integridade-atuacao-empresarial/',
-	},
-];
+const categoryDirectory = buildCanonicalAreaDirectory(areaEntries, posts);
 const searchIndex = posts.map((post) => ({
 	title: post.title,
 	excerpt: post.excerpt,
 	url: post.url,
 	area: post.area,
-	tokens: `${post.title} ${post.excerpt} ${post.area} ${post.temas.join(' ')}`.toLowerCase(),
+	tokens: `${post.title} ${post.excerpt} ${post.area} ${post.tags.join(' ')}`.toLowerCase(),
 }));
 const collectionSchema = {
 	'@context': 'https://schema.org',
 	'@type': 'CollectionPage',
-	name: 'Blog Jurídico PAVIE',
+	name: 'Blog Juridico PAVIE',
 	url: `${BLOG_SITE_URL}/blog/`,
-	description: 'Conteúdos jurídicos da PAVIE para aprofundar temas, reconhecer a área correspondente e decidir com mais clareza.',
+	description:
+		'Conteudos juridicos da PAVIE organizados por categorias canonicas aprovadas e ligados as areas publicas correspondentes.',
 	mainEntity:
 		posts.length > 0
 			? {
@@ -81,31 +42,31 @@ const collectionSchema = {
 ---
 
 <BlogLayout
-	title="Blog jurídico da PAVIE | Advocacia"
-	description="Leitura jurídica para reconhecer o tema, aprofundar a área correspondente e buscar orientação com contexto."
+	title="Blog juridico da PAVIE | Advocacia"
+	description="Leitura juridica organizada por categorias canonicas, com conexao direta entre conteudo, areas e orientacao inicial."
 	canonical={`${BLOG_SITE_URL}/blog/`}
 >
 	<div class="container blog-home">
 		<section class="blog-hero" aria-labelledby="blog-hero-title">
 			<div class="blog-hero__content">
-				<span class="badge">Blog jurídico PAVIE | Advocacia</span>
-				<h1 id="blog-hero-title">Comece pela dúvida que mais se parece com a sua situação.</h1>
+				<span class="badge">Blog juridico PAVIE | Advocacia</span>
+				<h1 id="blog-hero-title">Comece pela categoria canonica que melhor enquadra a sua situacao.</h1>
 				<p>
-					Divórcio, inventário, regularização de imóvel, revisão contratual, cobrança, negativa
-					de cobertura e outras situações sensíveis pedem leitura útil antes do próximo passo.
+					O blog agora opera apenas com a taxonomia canonica aprovada. Cada leitura reforca uma categoria
+					editorial, uma area publica correspondente e um proximo passo compativel com o caso concreto.
 				</p>
-				<div class="meta-list" aria-label="Informações do acervo">
-					<span><span class="meta-dot" aria-hidden="true"></span>{posts.length} artigos no acervo público</span>
-					<span><span class="meta-dot" aria-hidden="true"></span>5 áreas de atuação organizando a navegação</span>
-					<span><span class="meta-dot" aria-hidden="true"></span>Mesma estrutura de confiança do site institucional</span>
+				<div class="meta-list" aria-label="Informacoes do acervo">
+					<span><span class="meta-dot" aria-hidden="true"></span>{posts.length} artigos homologados no acervo publico</span>
+					<span><span class="meta-dot" aria-hidden="true"></span>{categoryDirectory.length} categorias canonicas ativas</span>
+					<span><span class="meta-dot" aria-hidden="true"></span>Sem dependencia estrutural de clusters legados</span>
 				</div>
 				<div class="blog-hero__actions">
-					<a class="btn btn-primary" href="/blog/areas/">Explorar temas</a>
-					<a class="btn btn-ghost" href="/blog/contato/">Solicitar orientação inicial</a>
+					<a class="btn btn-primary" href="/blog/categoria/">Explorar categorias</a>
+					<a class="btn btn-ghost" href="/blog/contato/">Solicitar orientacao inicial</a>
 				</div>
 				<div class="blog-hero__chips">
-					{clusterDirectory.map((cluster) => (
-						<a class="blog-chip" href={cluster.href}>{cluster.title}</a>
+					{categoryDirectory.map((category) => (
+						<a class="blog-chip" href={category.categoryHref}>{category.title}</a>
 					))}
 				</div>
 			</div>
@@ -114,50 +75,47 @@ const collectionSchema = {
 		<section class="blog-grid" aria-labelledby="quick-start-title">
 			<div class="section-title">
 				<div>
-					<span class="section-kicker">Comece pela situação</span>
-					<h2 id="quick-start-title">Se a dúvida se parece com uma destas situações, este é o melhor ponto de entrada.</h2>
+					<span class="section-kicker">Mapa editorial</span>
+					<h2 id="quick-start-title">Cada categoria do blog aponta para um eixo publico estavel e auditavel.</h2>
 				</div>
-				<p class="blog-section-intro">
-					Você não precisa saber o nome técnico do problema para começar. A navegação abaixo
-					ajuda a localizar a área jurídica correspondente e seguir por conteúdos próximos da sua realidade.
-				</p>
+				<a class="btn btn-ghost" href="/areas/">Conheca as areas</a>
 			</div>
 			<div class="entry-point-grid">
-				{quickStartItems.map((item) => (
+				{categoryDirectory.map((category) => (
 					<article class="surface-card entry-point-card">
-						<span class="section-kicker">{item.area}</span>
-						<h3>{item.title}</h3>
-						<p>{item.text}</p>
-						<a class="entry-point-card__link" href={item.href}>Ler orientações desta área</a>
+						<span class="section-kicker">Categoria canonica</span>
+						<h3>{category.title}</h3>
+						<p>{category.shortDescription}</p>
+						<a class="entry-point-card__link" href={category.categoryHref}>Explorar esta categoria</a>
 					</article>
 				))}
 			</div>
 		</section>
 
 		{posts.length === 0 ? (
-			<section class="surface-card empty-state" aria-label="Acervo em organização">
-				<h2>O acervo está em organização</h2>
+			<section class="surface-card empty-state" aria-label="Acervo em organizacao">
+				<h2>O acervo esta em organizacao</h2>
 				<p>
-					As áreas do blog já estão organizadas. Enquanto novas publicações entram no ar, você pode navegar
-					por assunto para reconhecer a área correspondente ao seu tema e entender quando faz sentido buscar orientação inicial.
+					A arquitetura canonica do blog ja esta pronta. Enquanto novas publicacoes entram na camada homologada,
+					voce pode navegar pelas categorias e pelas areas correspondentes.
 				</p>
 				<div class="blog-actions">
-					<a class="btn btn-primary" href="/blog/areas/">Explorar temas</a>
-					<a class="btn btn-ghost" href="/blog/contato/">Solicitar orientação inicial</a>
+					<a class="btn btn-primary" href="/blog/categoria/">Explorar categorias</a>
+					<a class="btn btn-ghost" href="/areas/">Conheca as areas</a>
 				</div>
 			</section>
 		) : (
 			<>
 				<section class="surface-card blog-search" aria-label="Busca interna do blog">
 					<div>
-						<span class="section-kicker">Busca rápida</span>
-						<h2>Encontre conteúdo por tema, situação ou área jurídica</h2>
+						<span class="section-kicker">Busca rapida</span>
+						<h2>Encontre conteudo por categoria, situacao ou titulo</h2>
 					</div>
 					<label class="sr-only" for="blog-search-input">Buscar no blog</label>
 					<input
 						id="blog-search-input"
 						type="search"
-						placeholder="Ex.: inventário, guarda compartilhada, regularização de imóvel"
+						placeholder="Ex.: inventario, partilha, matricula do imovel"
 						data-blog-search-input
 					/>
 					<ul class="blog-search__list" data-blog-search-list>
@@ -177,48 +135,37 @@ const collectionSchema = {
 			</>
 		)}
 
-		<section class="blog-grid" aria-label="Conteúdos por área">
+		<section class="blog-grid" aria-label="Categorias canonicas do blog">
 			<div class="section-title">
 				<div>
-					<span class="section-kicker">Conteúdos por área</span>
-					<h2>Se o tema já está melhor localizado, siga pela área correspondente</h2>
+					<span class="section-kicker">Categorias canonicas</span>
+					<h2>Se a situacao ja esta localizada, siga pela categoria correspondente</h2>
 				</div>
-				<a class="btn btn-ghost" href="/areas/">Conheça os Serviços</a>
+				<a class="btn btn-ghost" href="/blog/categoria/">Ver todas as categorias</a>
 			</div>
 			<div class="cluster-directory-grid">
-				{clusterDirectory.map((cluster) => (
+				{categoryDirectory.map((category) => (
 					<article class="surface-card cluster-directory-card">
-						<span class="section-kicker">Área jurídica</span>
-						<h3>{cluster.title}</h3>
-						<p>{cluster.description}</p>
-						<ul class="cluster-directory-list">
-							{cluster.typicalSituations.map((item) => (
-								<li>{item}</li>
-							))}
-						</ul>
-						<div class="theme-chip-list">
-							{cluster.topThemes.map((tema) => (
-								<a class="blog-chip blog-chip--theme" href={cluster.hasThemeRoutes ? temaHref(tema) : cluster.href}>{tema}</a>
-							))}
-						</div>
-						{cluster.hasPosts ? (
+						<span class="section-kicker">Categoria</span>
+						<h3>{category.title}</h3>
+						<p>{category.shortDescription}</p>
+						{category.latestPosts.length > 0 ? (
 							<div class="cluster-directory-posts">
-								<p class="cluster-directory-meta">{cluster.postCount} artigos nesta área.</p>
+								<p class="cluster-directory-meta">{category.postCount} artigo(s) homologado(s).</p>
 								<ul>
-									{cluster.latestPosts.map((post) => (
+									{category.latestPosts.map((post) => (
 										<li><a href={post.url}>{post.title}</a></li>
 									))}
 								</ul>
 							</div>
 						) : (
 							<p class="cluster-directory-empty">
-								Novos artigos em breve. Você pode falar diretamente sobre sua situação sempre que o tema
-								deixar de ser apenas uma dúvida geral.
+								A estrutura da categoria ja esta pronta e aguardando novas publicacoes homologadas.
 							</p>
 						)}
 						<div class="cluster-directory-actions">
-							<a class="btn btn-primary" href={cluster.href}>Explorar temas</a>
-							<a class="btn btn-ghost" href={cluster.contactHref}>Solicitar orientação inicial</a>
+							<a class="btn btn-primary" href={category.categoryHref}>Explorar categoria</a>
+							<a class="btn btn-ghost" href={category.href}>Conheca a area</a>
 						</div>
 					</article>
 				))}
@@ -229,33 +176,16 @@ const collectionSchema = {
 			<BlogGrid title="Continue a leitura" kicker="Aprofundamento" posts={continuityPosts} />
 		)}
 
-		{topThemes.length > 0 && (
-			<section class="blog-grid" aria-label="Temas em foco">
-				<div class="section-title">
-					<div>
-						<span class="section-kicker">Temas em foco</span>
-						<h2>Continue por tema quando quiser aprofundar um recorte específico</h2>
-					</div>
-					<a class="btn btn-ghost" href="/blog/temas/">Explorar temas</a>
-				</div>
-				<div class="theme-chip-list">
-					{topThemes.map((tema) => (
-						<a class="blog-chip blog-chip--theme" href={temaHref(tema)}>{tema}</a>
-					))}
-				</div>
-			</section>
-		)}
-
 		<section class="editorial-cta" aria-label="Primeiro passo para contato">
 			<span class="section-kicker">Quando a leitura ajuda a decidir</span>
-			<h2>Se o tema deixar de ser apenas dúvida, o primeiro passo é descrever sua situação com clareza.</h2>
+			<h2>Se o tema deixar de ser apenas duvida, o primeiro passo e descrever sua situacao com clareza.</h2>
 			<p>
-				A PAVIE não promete resposta automática nem patrocínio imediato. O primeiro movimento é
-				contextualizar o caso, entender o que precisa ser informado e explicar como funciona o retorno inicial.
+				A PAVIE nao promete resposta automatica nem patrocinio imediato. O primeiro movimento e contextualizar o
+				caso, entender o que precisa ser informado e explicar como funciona o retorno inicial.
 			</p>
 			<div class="blog-actions">
-				<a class="btn btn-primary" href="/blog/contato/">Solicitar orientação inicial</a>
-				<a class="btn btn-ghost" href="/areas/">Conheça os Serviços</a>
+				<a class="btn btn-primary" href="/blog/contato/">Solicitar orientacao inicial</a>
+				<a class="btn btn-ghost" href="/areas/">Conheca as areas</a>
 			</div>
 		</section>
 
@@ -270,11 +200,12 @@ const collectionSchema = {
 				<h2>Fabio Mathias Pavie</h2>
 				<p>Advogado | OAB/RJ 134.947</p>
 				<p>
-					Os conteúdos aprofundam temas que aparecem na prática institucional da PAVIE,
-					sem transformar leitura em promessa de resultado.
+					Os conteudos aprofundam temas que aparecem na pratica institucional da PAVIE, sem transformar leitura em
+					promessa de resultado.
 				</p>
 				<div class="blog-actions">
-					<a class="btn btn-primary" href="/areas/">Conheça os Serviços</a>
+					<a class="btn btn-primary" href="/autor/fabio-pavie/">Conheca o autor</a>
+					<a class="btn btn-ghost" href="/blog/categoria/">Explorar categorias</a>
 				</div>
 			</div>
 		</section>
