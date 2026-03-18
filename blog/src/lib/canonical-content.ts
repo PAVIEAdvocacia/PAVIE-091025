@@ -92,6 +92,8 @@ export const AUTHOR_DEFINITIONS = [
 		name: 'Fabio Mathias Pavie',
 		slug: 'fabio-pavie',
 		role: 'Sócio-fundador da PAVIE | Advocacia',
+		image: '/uploads/fabio-pavie-profile.png',
+		imageAlt: 'Foto profissional do advogado Fabio Mathias Pavie',
 	},
 ] as const;
 

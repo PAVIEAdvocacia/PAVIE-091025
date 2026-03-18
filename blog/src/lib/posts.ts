@@ -53,6 +53,8 @@ export interface BlogPost {
 	authorRole: string;
 	authorSlug?: string;
 	authorUrl?: string;
+	authorImage?: string;
+	authorImageAlt?: string;
 	publishedAt?: Date;
 	updatedAt?: Date;
 	image?: string;
@@ -334,6 +336,8 @@ function resolveAuthorContext(data: RawPostEntry['data']): {
 	authorRole: string;
 	authorSlug?: string;
 	authorUrl?: string;
+	authorImage?: string;
+	authorImageAlt?: string;
 } {
 	const authorId = cleanString(data.authorId) || undefined;
 	if (authorId) {
@@ -345,6 +349,8 @@ function resolveAuthorContext(data: RawPostEntry['data']): {
 				authorRole: definition.role,
 				authorSlug: definition.slug,
 				authorUrl: canonicalAuthorHref(definition.slug),
+				authorImage: definition.image,
+				authorImageAlt: definition.imageAlt,
 			};
 		}
 	}
@@ -362,6 +368,8 @@ function resolveAuthorContext(data: RawPostEntry['data']): {
 			authorRole: matchedAuthor.role,
 			authorSlug: matchedAuthor.slug,
 			authorUrl: canonicalAuthorHref(matchedAuthor.slug),
+			authorImage: matchedAuthor.image,
+			authorImageAlt: matchedAuthor.imageAlt,
 		};
 	}
 
@@ -371,6 +379,8 @@ function resolveAuthorContext(data: RawPostEntry['data']): {
 		authorRole: DEFAULT_AUTHOR_ROLE,
 		authorSlug: undefined,
 		authorUrl: undefined,
+		authorImage: undefined,
+		authorImageAlt: undefined,
 	};
 }
 
@@ -439,8 +449,15 @@ export function normalizePost(entry: RawPostEntry): BlogPost {
 		title,
 		description,
 	);
-	const { authorId, authorName, authorRole, authorSlug, authorUrl } =
-		resolveAuthorContext(data);
+	const {
+		authorId,
+		authorName,
+		authorRole,
+		authorSlug,
+		authorUrl,
+		authorImage,
+		authorImageAlt,
+	} = resolveAuthorContext(data);
 	const publishedAt = parseDate(data.publishDate ?? data.publish_date);
 	const updatedAt = parseDate(data.updatedDate);
 	const explicitReadingTime = typeof data.readingTime === 'number' ? data.readingTime : data.reading_time;
@@ -511,6 +528,8 @@ export function normalizePost(entry: RawPostEntry): BlogPost {
 		authorRole,
 		authorSlug,
 		authorUrl,
+		authorImage,
+		authorImageAlt,
 		publishedAt,
 		updatedAt,
 		image,

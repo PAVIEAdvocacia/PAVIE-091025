@@ -10,15 +10,22 @@ const authorSignature =
 	post.authorSlug === 'fabio-pavie'
 		? 'Fabio Pavie escreve principalmente sobre questoes patrimoniais, familiares, sucessorias, imobiliarias e documentais, com rigor documental e linguagem clara.'
 		: 'Conteudo produzido no ecossistema PAVIE para orientar com clareza, sem substituir a analise individual do caso.';
+const authorPhoto = post.authorImage;
+const authorPhotoAlt =
+	post.authorImageAlt ?? `Foto do advogado ${post.authorName}`;
 ---
 
 <section class="author-card" aria-label="Informacoes do autor">
-	<img
-		class="author-card__photo"
-		src="/uploads/foto_001-ffundddo-escrit%C3%B3rio.png"
-		alt={`Foto do advogado ${post.authorName}`}
-		loading="lazy"
-	/>
+	{
+		authorPhoto && (
+			<img
+				class="author-card__photo"
+				src={authorPhoto}
+				alt={authorPhotoAlt}
+				loading="lazy"
+			/>
+		)
+	}
 	<div class="author-card__body">
 		<span class="section-kicker">Responsavel pelo conteudo</span>
 		<h3>{post.authorName}</h3>
