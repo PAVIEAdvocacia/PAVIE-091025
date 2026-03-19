@@ -4,12 +4,7 @@ import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 import mdx from '@astrojs/mdx';
 
-const sitemapExcludedPrefixes = ['/blog/areas/', '/blog/temas/'];
-const sitemapExcludedPaths = [
-	'/blog/sobre/',
-	'/blog/divorcio-em-2025-cartorio-filhos-menores-protecao-patrimonial/',
-	'/blog/negativa-de-cobertura-do-plano-de-saude-o-que-guardar/',
-];
+const sitemapExcludedPaths = ['/blog/sobre/'];
 
 /**
  * @param {string} page
@@ -22,13 +17,7 @@ function shouldIncludeInSitemap(page) {
 	if (matchesExcludedPath) {
 		return false;
 	}
-	const matchesExcludedPrefix = sitemapExcludedPrefixes.some(
-		(prefix) =>
-			pathname.startsWith(prefix) ||
-			pathname === prefix.replace(/\/$/, '') ||
-			page.includes(prefix),
-	);
-	return !matchesExcludedPrefix;
+	return true;
 }
 
 // https://astro.build/config

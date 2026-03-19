@@ -1,4 +1,6 @@
 ---
+import { getAuthorEntries } from '../../lib/blog-content';
+import { normalizeCmsImagePath } from '../../lib/content-media';
 import type { BlogPost } from '../../lib/posts';
 
 interface Props {
@@ -6,13 +8,21 @@ interface Props {
 }
 
 const { post } = Astro.props;
+const authorEntries = await getAuthorEntries();
+const matchedAuthor = authorEntries.find((entry) => {
+	if (post.authorId && entry.data.id === post.authorId) return true;
+	if (post.authorSlug && entry.data.slug === post.authorSlug) return true;
+	return entry.data.name === post.authorName;
+});
 const authorSignature =
-	post.authorSlug === 'fabio-pavie'
+	(matchedAuthor?.data.slug ?? post.authorSlug) === 'fabio-pavie'
 		? 'Fabio Pavie escreve principalmente sobre questoes patrimoniais, familiares, sucessorias, imobiliarias e documentais, com rigor documental e linguagem clara.'
 		: 'Conteudo produzido no ecossistema PAVIE para orientar com clareza, sem substituir a analise individual do caso.';
-const authorPhoto = post.authorImage;
+const authorName = matchedAuthor?.data.name ?? post.authorName;
+const authorPhoto = normalizeCmsImagePath(matchedAuthor?.data.image) ?? post.authorImage;
 const authorPhotoAlt =
-	post.authorImageAlt ?? `Foto do advogado ${post.authorName}`;
+	matchedAuthor?.data.imageAlt ?? post.authorImageAlt ?? `Foto do advogado ${authorName}`;
+const authorUrl = matchedAuthor ? `/autor/${matchedAuthor.data.slug}/` : post.authorUrl ?? '/sobre/';
 ---
 
 <section class="author-card" aria-label="Informacoes do autor">
@@ -28,9 +38,9 @@ const authorPhotoAlt =
 	}
 	<div class="author-card__body">
 		<span class="section-kicker">Responsavel pelo conteudo</span>
-		<h3>{post.authorName}</h3>
+		<h3>{authorName}</h3>
 		<p>{post.authorRole}</p>
 		<p class="author-card__note">{authorSignature}</p>
-		<a class="author-card__link" href={post.authorUrl ?? '/sobre/'}>Conheca o autor</a>
+		<a class="author-card__link" href={authorUrl}>Conheca o autor</a>
 	</div>
 </section>

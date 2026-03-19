@@ -2,7 +2,6 @@
 import type { BlogPost } from '../lib/posts';
 import type { TocItem } from '../lib/toc';
 import '../styles/reading.css';
-import AudioPlayer from '../components/blog/AudioPlayer.astro';
 import AuthorCard from '../components/blog/AuthorCard.astro';
 import Breadcrumbs from '../components/blog/Breadcrumbs.astro';
 import ReadingHero from '../components/blog/ReadingHero.astro';
@@ -126,11 +125,6 @@ const faqSchema =
 					</section>
 				)}
 
-				<AudioPlayer
-					audioStatus={post.audioStatus}
-					audioUrl={post.audioUrl}
-					transcriptUrl={post.transcriptUrl}
-				/>
 				<div class="article-content">
 					<slot />
 				</div>

@@ -40,19 +40,6 @@ export const EDITORIAL_AREAS = [
 ] as const;
 
 export const EDITORIAL_AREA_KEYS = EDITORIAL_AREAS.map((area) => area.key) as string[];
-export const EDITORIAL_AREA_LABELS = EDITORIAL_AREAS.map((area) => area.label) as string[];
-
-export const EDITORIAL_STATUSES = ['draft', 'published', 'archived'] as const;
-
-export const EDITORIAL_FUNNEL_STAGES = [
-	'descoberta',
-	'consideracao',
-	'aprofundamento',
-	'orientacao',
-	'contato',
-] as const;
-
-export const EDITORIAL_AUTHORS = ['Fabio Mathias Pavie'] as const;
 
 export const PRIMARY_CTA_OPTIONS = [
 	{
@@ -75,5 +62,3 @@ export const PRIMARY_CTA_OPTIONS = [
 		description: 'Veja como a PAVIE apresenta esta area de atuacao na camada institucional do site.',
 	},
 ] as const;
-
-export const PRIMARY_CTA_KEYS = PRIMARY_CTA_OPTIONS.map((option) => option.key) as string[];

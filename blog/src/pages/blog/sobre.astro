@@ -2,6 +2,8 @@
 import Breadcrumbs from '../../components/blog/Breadcrumbs.astro';
 import { BLOG_SITE_URL } from '../../consts';
 import BlogLayout from '../../layouts/BlogLayout.astro';
+import { getAuthorEntries } from '../../lib/blog-content';
+import { normalizeCmsImagePath } from '../../lib/content-media';
 import { buildBreadcrumbSchema } from '../../lib/seo';
 
 const title = 'Sobre o autor | Blog PAVIE | Advocacia';
@@ -13,6 +15,14 @@ const breadcrumbs = [
 	{ label: 'Publicacoes', href: '/blog/' },
 	{ label: 'Sobre o autor' },
 ];
+const authorEntries = await getAuthorEntries();
+const blogAuthor =
+	authorEntries.find((entry) => entry.data.slug === 'fabio-pavie' || entry.data.id === 'fabio-pavie') ??
+	authorEntries[0];
+const authorImage =
+	normalizeCmsImagePath(blogAuthor?.data.image) ?? '/uploads/foto_001-ffundddo-escrit%C3%B3rio.png';
+const authorImageAlt =
+	blogAuthor?.data.imageAlt ?? 'Foto profissional do advogado Fabio Mathias Pavie';
 const breadcrumbSchema = buildBreadcrumbSchema(breadcrumbs, canonicalUrl);
 ---
 
@@ -21,8 +31,8 @@ const breadcrumbSchema = buildBreadcrumbSchema(breadcrumbs, canonicalUrl);
 		<Breadcrumbs items={breadcrumbs} />
 		<section class="surface-card blog-author-spotlight" aria-label="Perfil do autor do blog">
 			<img
-				src="/uploads/foto_001-ffundddo-escrit%C3%B3rio.png"
-				alt="Foto profissional do advogado Fabio Mathias Pavie"
+				src={authorImage}
+				alt={authorImageAlt}
 				loading="eager"
 			/>
 			<div>

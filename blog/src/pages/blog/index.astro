@@ -3,15 +3,27 @@ import BlogGrid from '../../components/blog/BlogGrid.astro';
 import FeaturedPost from '../../components/blog/FeaturedPost.astro';
 import { BLOG_SITE_URL } from '../../consts';
 import BlogLayout from '../../layouts/BlogLayout.astro';
-import { getAreaEntries, getBlogEntries } from '../../lib/blog-content';
+import { getAreaEntries, getAuthorEntries, getBlogEntries } from '../../lib/blog-content';
 import { buildCanonicalAreaDirectory } from '../../lib/canonical-directory';
+import { normalizeCmsImagePath } from '../../lib/content-media';
 import { isPublicPost, normalizePost, sortPostsByDate } from '../../lib/posts';
 
-const [areaEntries, blogEntries] = await Promise.all([getAreaEntries(), getBlogEntries()]);
+const [areaEntries, authorEntries, blogEntries] = await Promise.all([
+	getAreaEntries(),
+	getAuthorEntries(),
+	getBlogEntries(),
+]);
 const posts = sortPostsByDate(blogEntries.map((entry) => normalizePost(entry))).filter(isPublicPost);
 const featured = posts.find((post) => post.featured) ?? (posts.length > 0 ? posts[0] : undefined);
 const continuityPosts = posts.filter((post) => post.slug !== featured?.slug).slice(0, 6);
 const categoryDirectory = buildCanonicalAreaDirectory(areaEntries, posts);
+const blogAuthor =
+	authorEntries.find((entry) => entry.data.slug === 'fabio-pavie' || entry.data.id === 'fabio-pavie') ??
+	authorEntries[0];
+const blogAuthorImage =
+	normalizeCmsImagePath(blogAuthor?.data.image) ?? '/uploads/foto_001-ffundddo-escrit%C3%B3rio.png';
+const blogAuthorAlt =
+	blogAuthor?.data.imageAlt ?? 'Foto profissional do advogado Fabio Mathias Pavie';
 const searchIndex = posts.map((post) => ({
 	title: post.title,
 	excerpt: post.excerpt,
@@ -191,14 +203,14 @@ const collectionSchema = {
 
 		<section class="surface-card blog-author-spotlight" aria-label="Autor do blog">
 			<img
-				src="/uploads/foto_001-ffundddo-escrit%C3%B3rio.png"
-				alt="Foto profissional do advogado Fabio Mathias Pavie"
+				src={blogAuthorImage}
+				alt={blogAuthorAlt}
 				loading="lazy"
 			/>
 			<div>
 				<span class="section-kicker">Autor do blog</span>
-				<h2>Fabio Mathias Pavie</h2>
-				<p>Advogado | OAB/RJ 134.947</p>
+				<h2>{blogAuthor?.data.name ?? 'Fabio Mathias Pavie'}</h2>
+				<p>{blogAuthor?.data.oab ?? 'Advogado | OAB/RJ 134.947'}</p>
 				<p>
 					Fabio Pavie escreve principalmente sobre questoes patrimoniais, familiares, sucessorias,
 					imobiliarias e documentais, com rigor documental e linguagem clara.

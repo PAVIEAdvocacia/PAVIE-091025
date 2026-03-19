@@ -27,20 +27,8 @@ export function areaLabel(value: string): string {
 	return AREA_CANONICAL_LABELS[key] ?? titleize(value);
 }
 
-export function areaHref(value: string): string {
-	return `/blog/areas/${normalizeAreaKey(value)}/`;
-}
-
 export function normalizeTemaKey(value: string): string {
 	return normalizeTaxonomyValue(value).replace(/\s+/g, '-');
-}
-
-export function temaLabel(value: string): string {
-	return titleize(value);
-}
-
-export function temaHref(value: string): string {
-	return `/blog/temas/${normalizeTemaKey(value)}/`;
 }
 
 function normalizeTaxonomyValue(value: string): string {

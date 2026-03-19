@@ -5,6 +5,7 @@ import { MAIN_SITE_URL } from '../../consts';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getAuthorEntries, getBlogEntries } from '../../lib/blog-content';
 import { getAuthorEntryBySlug } from '../../lib/canonical-directory';
+import { normalizeCmsImagePath } from '../../lib/content-media';
 import { isPublicPost, normalizePost, sortPostsByDate } from '../../lib/posts';
 import { buildBreadcrumbSchema, toAbsoluteUrl } from '../../lib/seo';
 import '../../styles/blog.css';
@@ -22,6 +23,7 @@ if (!currentAuthor) {
 	throw new Error(`Autor canonico nao encontrado: ${Astro.params.slug}`);
 }
 
+const authorImage = normalizeCmsImagePath(currentAuthor.data.image) ?? currentAuthor.data.image;
 const posts = sortPostsByDate(blogEntries.map((entry) => normalizePost(entry)))
 	.filter(isPublicPost)
 	.filter((post) => post.authorSlug === currentAuthor.data.slug);
@@ -37,7 +39,7 @@ const personSchema = {
 	'@type': 'Person',
 	name: currentAuthor.data.name,
 	url: canonicalUrl,
-	image: toAbsoluteUrl(currentAuthor.data.image),
+	image: toAbsoluteUrl(authorImage),
 	description: currentAuthor.data.shortBio,
 	jobTitle: 'Advogado',
 };
@@ -47,12 +49,12 @@ const personSchema = {
 	title={`${currentAuthor.data.name} | Autor | PAVIE | Advocacia`}
 	description={currentAuthor.data.shortBio}
 	canonical={canonicalUrl}
-	image={currentAuthor.data.image}
+	image={authorImage}
 >
 	<div class="container institutional-page">
 		<Breadcrumbs items={breadcrumbs} />
 		<section class="surface-card institutional-profile" aria-labelledby="author-title">
-			<img src={currentAuthor.data.image} alt={currentAuthor.data.imageAlt} loading="eager" />
+			<img src={authorImage} alt={currentAuthor.data.imageAlt} loading="eager" />
 			<div>
 				<span class="badge">Autor</span>
 				<h1 id="author-title">{currentAuthor.data.name}</h1>

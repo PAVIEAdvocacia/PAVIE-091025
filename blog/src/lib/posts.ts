@@ -10,6 +10,7 @@ import {
 	getCanonicalCategoryDefinition,
 	resolveLegacyFunnelStage,
 } from './canonical-content';
+import { normalizeCmsImagePath } from './content-media';
 import { PRIMARY_CTA_OPTIONS } from './editorial-taxonomy';
 import { areaLabel, normalizeAreaKey, normalizeTemaKey } from './taxonomy';
 
@@ -60,9 +61,6 @@ export interface BlogPost {
 	image?: string;
 	imageAlt: string;
 	readingTime: number;
-	audioStatus: 'none' | 'planned' | 'published';
-	audioUrl?: string;
-	transcriptUrl?: string;
 	ctaKey: string;
 	cta: CtaConfig;
 	relatedArticles: string[];
@@ -139,28 +137,6 @@ export function normalizeSlug(value: string): string {
 		.join('/');
 	if (!raw) return '';
 	return raw.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
-}
-
-function normalizeImagePath(rawValue: string): string | undefined {
-	const value = rawValue.trim();
-	if (!value) return undefined;
-	if (/^https?:\/\//i.test(value)) return value;
-	const normalized = value.replace(/\\/g, '/');
-	if (normalized.startsWith('/')) return normalized;
-	if (normalized.startsWith('blog/public/')) {
-		return `/${normalized.replace('blog/public/', '')}`;
-	}
-	if (normalized.startsWith('public/')) {
-		return `/${normalized.replace('public/', '')}`;
-	}
-	const uploadsIndex = normalized.indexOf('/uploads/');
-	if (uploadsIndex >= 0) {
-		return normalized.slice(uploadsIndex);
-	}
-	if (normalized.startsWith('uploads/')) {
-		return `/${normalized}`;
-	}
-	return undefined;
 }
 
 function inferThemes(title: string, description: string): string[] {
@@ -462,7 +438,7 @@ export function normalizePost(entry: RawPostEntry): BlogPost {
 	const updatedAt = parseDate(data.updatedDate);
 	const explicitReadingTime = typeof data.readingTime === 'number' ? data.readingTime : data.reading_time;
 	const readingTime = buildReadingTime(entry.body ?? '', explicitReadingTime);
-	const image = normalizeImagePath(cleanString(data.coverImage) || cleanString(data.og_image));
+	const image = normalizeCmsImagePath(cleanString(data.coverImage) || cleanString(data.og_image));
 	const imageAlt = cleanString(data.coverAlt) || `Imagem de capa do artigo ${title}`;
 	const funnelStage = resolveFunnelStage(data);
 	const canonicalCtaType = cleanString(data.ctaType);
@@ -535,9 +511,6 @@ export function normalizePost(entry: RawPostEntry): BlogPost {
 		image,
 		imageAlt,
 		readingTime,
-		audioStatus: 'none',
-		audioUrl: undefined,
-		transcriptUrl: undefined,
 		ctaKey,
 		cta,
 		relatedArticles,

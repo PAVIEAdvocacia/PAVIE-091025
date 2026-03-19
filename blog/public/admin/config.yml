@@ -70,8 +70,8 @@ collections:
         widget: "relation"
         collection: "authors"
         search_fields: ["name", "slug"]
-        value_field: "{{slug}}"
-        display_fields: ["name", "slug"]
+        value_field: "id"
+        display_fields: ["name", "id"]
         options_length: 10
         required: true
       - label: "Categoria canonica"
