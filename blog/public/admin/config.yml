@@ -10,15 +10,15 @@ display_url: "https://pavieadvocacia.com.br/blog/"
 show_preview_links: true
 locale: "pt"
 
-media_folder: "public/uploads"
+media_folder: "blog/public/uploads"
 public_folder: "/uploads"
 
 collections:
   - name: "posts"
     label: "Posts Canonicos"
     label_singular: "Post"
-    folder: "src/content/blog"
-    media_folder: "public/uploads"
+    folder: "blog/src/content/blog"
+    media_folder: "blog/public/uploads"
     public_folder: "/uploads"
     preview_path: "blog/{{slug}}"
     create: true
@@ -207,7 +207,7 @@ collections:
       - label: "Imagem de capa"
         name: "coverImage"
         widget: "image"
-        media_folder: "public/uploads"
+        media_folder: "blog/public/uploads"
         public_folder: "/uploads"
         required: false
       - label: "Alt da imagem"
@@ -222,7 +222,7 @@ collections:
   - name: "areas"
     label: "Areas Canonicas"
     label_singular: "Area"
-    folder: "src/content/areas"
+    folder: "blog/src/content/areas"
     preview_path: "areas/{{slug}}"
     create: true
     delete: false
@@ -310,8 +310,8 @@ collections:
   - name: "authors"
     label: "Autores"
     label_singular: "Autor"
-    folder: "src/content/authors"
-    media_folder: "public/uploads"
+    folder: "blog/src/content/authors"
+    media_folder: "blog/public/uploads"
     public_folder: "/uploads"
     preview_path: "autor/{{slug}}"
     create: true
@@ -352,7 +352,7 @@ collections:
       - label: "Imagem"
         name: "image"
         widget: "image"
-        media_folder: "public/uploads"
+        media_folder: "blog/public/uploads"
         public_folder: "/uploads"
         required: true
       - label: "Alt da imagem"
