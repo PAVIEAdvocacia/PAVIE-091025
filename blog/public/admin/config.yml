@@ -18,6 +18,8 @@ collections:
     label: "Posts Canonicos"
     label_singular: "Post"
     folder: "src/content/blog"
+    media_folder: "public/uploads"
+    public_folder: "/uploads"
     preview_path: "blog/{{slug}}"
     create: true
     delete: true
@@ -205,6 +207,8 @@ collections:
       - label: "Imagem de capa"
         name: "coverImage"
         widget: "image"
+        media_folder: "public/uploads"
+        public_folder: "/uploads"
         required: false
       - label: "Alt da imagem"
         name: "coverAlt"
@@ -307,6 +311,8 @@ collections:
     label: "Autores"
     label_singular: "Autor"
     folder: "src/content/authors"
+    media_folder: "public/uploads"
+    public_folder: "/uploads"
     preview_path: "autor/{{slug}}"
     create: true
     delete: false
@@ -346,6 +352,8 @@ collections:
       - label: "Imagem"
         name: "image"
         widget: "image"
+        media_folder: "public/uploads"
+        public_folder: "/uploads"
         required: true
       - label: "Alt da imagem"
         name: "imageAlt"
