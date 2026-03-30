@@ -6,14 +6,14 @@ import BlogLayout from '../../layouts/BlogLayout.astro';
 import { getAreaEntries, getAuthorEntries, getBlogEntries } from '../../lib/blog-content';
 import { buildCanonicalAreaDirectory } from '../../lib/canonical-directory';
 import { normalizeCmsImagePath } from '../../lib/content-media';
-import { isPublicPost, normalizePost, sortPostsByDate } from '../../lib/posts';
+import { isPublicPost, normalizePosts, sortPostsByDate } from '../../lib/posts';
 
 const [areaEntries, authorEntries, blogEntries] = await Promise.all([
 	getAreaEntries(),
 	getAuthorEntries(),
 	getBlogEntries(),
 ]);
-const posts = sortPostsByDate(blogEntries.map((entry) => normalizePost(entry))).filter(isPublicPost);
+const posts = sortPostsByDate(normalizePosts(blogEntries, authorEntries)).filter(isPublicPost);
 const featured = posts.find((post) => post.featured) ?? (posts.length > 0 ? posts[0] : undefined);
 const continuityPosts = posts.filter((post) => post.slug !== featured?.slug).slice(0, 6);
 const categoryDirectory = buildCanonicalAreaDirectory(areaEntries, posts);

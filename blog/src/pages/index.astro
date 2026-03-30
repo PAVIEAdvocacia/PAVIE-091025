@@ -2,9 +2,9 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { buildFaqSchema, LEGAL_SERVICE_BASE_SCHEMA, toAbsoluteUrl } from '../lib/seo';
 import { MAIN_SITE_URL } from '../consts';
-import { getAreaEntries, getBlogEntries } from '../lib/blog-content';
+import { getAreaEntries, getAuthorEntries, getBlogEntries } from '../lib/blog-content';
 import { buildCanonicalAreaDirectory } from '../lib/canonical-directory';
-import { isPublicPost, normalizePost, sortPostsByDate } from '../lib/posts';
+import { isPublicPost, normalizePosts, sortPostsByDate } from '../lib/posts';
 import '../styles/site-home.css';
 
 const title = 'PAVIE | Advocacia | Clareza, metodo e responsabilidade';
@@ -91,8 +91,12 @@ const faq = [
 	},
 ];
 
-const [areaEntries, blogEntries] = await Promise.all([getAreaEntries(), getBlogEntries()]);
-const posts = sortPostsByDate(blogEntries.map((entry) => normalizePost(entry))).filter(isPublicPost);
+const [areaEntries, authorEntries, blogEntries] = await Promise.all([
+	getAreaEntries(),
+	getAuthorEntries(),
+	getBlogEntries(),
+]);
+const posts = sortPostsByDate(normalizePosts(blogEntries, authorEntries)).filter(isPublicPost);
 const areaDirectory = buildCanonicalAreaDirectory(areaEntries, posts);
 
 const faqSchema = buildFaqSchema(

@@ -4,12 +4,12 @@ import BlogGrid from '../../../components/blog/BlogGrid.astro';
 import FeaturedPost from '../../../components/blog/FeaturedPost.astro';
 import { BLOG_SITE_URL } from '../../../consts';
 import BlogLayout from '../../../layouts/BlogLayout.astro';
-import { getAreaEntries, getBlogEntries } from '../../../lib/blog-content';
+import { getAreaEntries, getAuthorEntries, getBlogEntries } from '../../../lib/blog-content';
 import {
 	buildCanonicalAreaDirectory,
 	getCanonicalAreaDirectoryItem,
 } from '../../../lib/canonical-directory';
-import { isPublicPost, normalizePost, sortPostsByDate } from '../../../lib/posts';
+import { isPublicPost, normalizePosts, sortPostsByDate } from '../../../lib/posts';
 import { buildBreadcrumbSchema } from '../../../lib/seo';
 
 export async function getStaticPaths() {
@@ -19,8 +19,12 @@ export async function getStaticPaths() {
 		.map((entry) => ({ params: { category: entry.data.slug } }));
 }
 
-const [areaEntries, blogEntries] = await Promise.all([getAreaEntries(), getBlogEntries()]);
-const posts = sortPostsByDate(blogEntries.map((entry) => normalizePost(entry))).filter(isPublicPost);
+const [areaEntries, authorEntries, blogEntries] = await Promise.all([
+	getAreaEntries(),
+	getAuthorEntries(),
+	getBlogEntries(),
+]);
+const posts = sortPostsByDate(normalizePosts(blogEntries, authorEntries)).filter(isPublicPost);
 const currentCategory = getCanonicalAreaDirectoryItem(areaEntries, posts, Astro.params.category ?? '');
 
 if (!currentCategory) {

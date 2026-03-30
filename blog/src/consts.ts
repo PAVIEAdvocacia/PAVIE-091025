@@ -1,4 +1,4 @@
-export const SITE_ORIGIN = 'https://pavieadvocacia.com.br';
+export const SITE_ORIGIN = 'https://blog.pavieadvocacia.com.br';
 export const MAIN_SITE_URL = SITE_ORIGIN;
 export const BLOG_SITE_URL = SITE_ORIGIN;
 

@@ -5,9 +5,9 @@ import {
 	canonicalAuthorHref,
 	canonicalCategoryHref,
 	getAuthorDefinitionById,
+	getCanonicalCategoryDefinition,
 	hasApprovedCanonicalCorrespondenceForLegacyArea,
 	resolveApprovedCategoryCodeFromLegacyArea,
-	getCanonicalCategoryDefinition,
 	resolveLegacyFunnelStage,
 } from './canonical-content';
 import { normalizeCmsImagePath } from './content-media';
@@ -15,6 +15,7 @@ import { PRIMARY_CTA_OPTIONS } from './editorial-taxonomy';
 import { areaLabel, normalizeAreaKey, normalizeTemaKey } from './taxonomy';
 
 export type RawPostEntry = CollectionEntry<'posts'>;
+export type AuthorEntry = CollectionEntry<'authors'>;
 
 export interface CtaConfig {
 	label: string;
@@ -201,10 +202,10 @@ function resolveCanonicalCta(
 			return {
 				ctaKey: 'diagnostico_juridico',
 				cta: {
-					label: 'Solicitar orientação inicial',
+					label: 'Solicitar orientacao inicial',
 					href: ctaTarget || '/blog/contato/',
 					description:
-						'Entenda quando faz sentido avançar para a orientação inicial e quais informações ajudam no primeiro contato.',
+						'Entenda quando faz sentido avancar para a orientacao inicial e quais informacoes ajudam no primeiro contato.',
 				},
 			};
 		case 'area': {
@@ -213,11 +214,11 @@ function resolveCanonicalCta(
 			return {
 				ctaKey: institutional ? 'areas_de_atuacao' : 'areas_editoriais',
 				cta: {
-					label: institutional ? 'Conheça os Serviços' : 'Explorar temas',
+					label: institutional ? 'Conheca os servicos' : 'Explorar temas',
 					href,
 					description: institutional
-						? 'Veja como a PAVIE apresenta esta área de atuação na camada institucional do site.'
-						: 'Continue a leitura por assunto e encontre novos caminhos para aprofundar a situação.',
+						? 'Veja como a PAVIE apresenta esta area de atuacao na camada institucional do site.'
+						: 'Continue a leitura por assunto e encontre novos caminhos para aprofundar a situacao.',
 				},
 			};
 		}
@@ -228,7 +229,7 @@ function resolveCanonicalCta(
 					label: 'Explorar temas',
 					href: ctaTarget || safeCategoryHref,
 					description:
-						'Continue a leitura por assunto e encontre novos caminhos para aprofundar a situação.',
+						'Continue a leitura por assunto e encontre novos caminhos para aprofundar a situacao.',
 				},
 			};
 		case 'document-review':
@@ -238,7 +239,7 @@ function resolveCanonicalCta(
 					label: 'Organizar documentos',
 					href: ctaTarget || '/blog/contato/',
 					description:
-						'Comece reunindo os documentos principais para avaliar a via mais adequada para a situação.',
+						'Comece reunindo os documentos principais para avaliar a via mais adequada para a situacao.',
 				},
 			};
 		default:
@@ -306,7 +307,43 @@ function resolveAreaContext(data: RawPostEntry['data']): {
 	};
 }
 
-function resolveAuthorContext(data: RawPostEntry['data']): {
+function normalizeAuthorLookup(value: string): string {
+	return value
+		.trim()
+		.toLowerCase()
+		.normalize('NFD')
+		.replace(/[\u0300-\u036f]/g, '');
+}
+
+function findAuthorEntry(
+	authorEntries: AuthorEntry[],
+	data: RawPostEntry['data'],
+): AuthorEntry | undefined {
+	if (!authorEntries.length) return undefined;
+
+	const authorId = cleanString(data.authorId);
+	if (authorId) {
+		const byId = authorEntries.find((entry) => entry.data.id === authorId);
+		if (byId) return byId;
+	}
+
+	const legacyAuthor = cleanString(data.author);
+	if (!legacyAuthor) return undefined;
+
+	const normalizedLegacyAuthor = normalizeAuthorLookup(legacyAuthor);
+	return authorEntries.find((entry) => {
+		return (
+			normalizeAuthorLookup(entry.data.name) === normalizedLegacyAuthor ||
+			normalizeAuthorLookup(entry.data.slug) === normalizedLegacyAuthor ||
+			normalizeAuthorLookup(entry.data.id) === normalizedLegacyAuthor
+		);
+	});
+}
+
+function resolveAuthorContext(
+	data: RawPostEntry['data'],
+	authorEntries: AuthorEntry[] = [],
+): {
 	authorId?: string;
 	authorName: string;
 	authorRole: string;
@@ -315,6 +352,21 @@ function resolveAuthorContext(data: RawPostEntry['data']): {
 	authorImage?: string;
 	authorImageAlt?: string;
 } {
+	const matchedAuthorEntry = findAuthorEntry(authorEntries, data);
+	if (matchedAuthorEntry) {
+		const definition = getAuthorDefinitionById(matchedAuthorEntry.data.id);
+		return {
+			authorId: matchedAuthorEntry.data.id,
+			authorName: matchedAuthorEntry.data.name,
+			authorRole: definition?.role ?? DEFAULT_AUTHOR_ROLE,
+			authorSlug: matchedAuthorEntry.data.slug,
+			authorUrl: canonicalAuthorHref(matchedAuthorEntry.data.slug),
+			authorImage:
+				normalizeCmsImagePath(matchedAuthorEntry.data.image) ?? matchedAuthorEntry.data.image,
+			authorImageAlt: matchedAuthorEntry.data.imageAlt,
+		};
+	}
+
 	const authorId = cleanString(data.authorId) || undefined;
 	if (authorId) {
 		const definition = getAuthorDefinitionById(authorId);
@@ -409,7 +461,7 @@ export function isPublishedPost(post: BlogPost): boolean {
 	return post.status === 'published' && Boolean(post.slug) && Boolean(post.publishedAt);
 }
 
-export function normalizePost(entry: RawPostEntry): BlogPost {
+export function normalizePost(entry: RawPostEntry, authorEntries: AuthorEntry[] = []): BlogPost {
 	const data = entry.data;
 	const title = cleanString(data.title) || 'Publicacao sem titulo';
 	const description = ensureDescription(title, cleanString(data.description));
@@ -433,18 +485,27 @@ export function normalizePost(entry: RawPostEntry): BlogPost {
 		authorUrl,
 		authorImage,
 		authorImageAlt,
-	} = resolveAuthorContext(data);
+	} = resolveAuthorContext(data, authorEntries);
 	const publishedAt = parseDate(data.publishDate ?? data.publish_date);
-	const updatedAt = parseDate(data.updatedDate);
-	const explicitReadingTime = typeof data.readingTime === 'number' ? data.readingTime : data.reading_time;
+	const updatedAt = parseDate(data.updatedAt ?? data.updatedDate);
+	const explicitReadingTime =
+		typeof data.readingTime === 'number' ? data.readingTime : data.reading_time;
 	const readingTime = buildReadingTime(entry.body ?? '', explicitReadingTime);
 	const image = normalizeCmsImagePath(cleanString(data.coverImage) || cleanString(data.og_image));
-	const imageAlt = cleanString(data.coverAlt) || `Imagem de capa do artigo ${title}`;
+	const imageAlt =
+		cleanString(data.coverImageAlt) ||
+		cleanString(data.coverAlt) ||
+		`Imagem de capa do artigo ${title}`;
 	const funnelStage = resolveFunnelStage(data);
 	const canonicalCtaType = cleanString(data.ctaType);
 	const canonicalCtaTarget = cleanString(data.ctaTarget);
 	const { ctaKey, cta } = canonicalCtaType
-		? resolveCanonicalCta(canonicalCtaType, canonicalCtaTarget, areaUrl || '/areas/', categoryUrl || '/blog/categoria/')
+		? resolveCanonicalCta(
+				canonicalCtaType,
+				canonicalCtaTarget,
+				areaUrl || '/areas/',
+				categoryUrl || '/blog/categoria/',
+			)
 		: (() => {
 				const legacyKey = resolveLegacyPrimaryCtaKey(cleanString(data.primary_cta), funnelStage);
 				const legacyCta = resolveLegacyPrimaryCta(legacyKey);
@@ -468,13 +529,12 @@ export function normalizePost(entry: RawPostEntry): BlogPost {
 	const legacyAreaHasApprovedCanonicalCorrespondence =
 		Boolean(legacyAreaValue) &&
 		hasApprovedCanonicalCorrespondenceForLegacyArea(normalizeAreaKey(legacyAreaValue));
-	const publicSurfaceStatus =
-		categoryCode ? 'allowed' : 'blocked_unresolved_taxonomy';
+	const publicSurfaceStatus = categoryCode ? 'allowed' : 'blocked_unresolved_taxonomy';
 	const featured = Boolean(data.featured);
 	const seoTitle = cleanString(data.seoTitle) || cleanString(data.seo_title) || undefined;
 	const canonicalUrlValue =
-		cleanString(data.canonicalURL) ||
 		cleanString(data.canonicalUrl) ||
+		cleanString(data.canonicalURL) ||
 		`${BLOG_SITE_URL}${postRoute(slug)}`;
 
 	return {
@@ -522,6 +582,13 @@ export function normalizePost(entry: RawPostEntry): BlogPost {
 		publicSurfaceStatus,
 		legacyAreaHasApprovedCanonicalCorrespondence,
 	};
+}
+
+export function normalizePosts(
+	entries: RawPostEntry[],
+	authorEntries: AuthorEntry[] = [],
+): BlogPost[] {
+	return entries.map((entry) => normalizePost(entry, authorEntries));
 }
 
 export function sortPostsByDate(posts: BlogPost[]): BlogPost[] {

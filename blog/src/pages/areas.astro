@@ -1,17 +1,21 @@
 ---
 import { MAIN_SITE_URL } from '../consts';
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { getAreaEntries, getBlogEntries } from '../lib/blog-content';
+import { getAreaEntries, getAuthorEntries, getBlogEntries } from '../lib/blog-content';
 import { buildCanonicalAreaDirectory } from '../lib/canonical-directory';
-import { isPublicPost, normalizePost, sortPostsByDate } from '../lib/posts';
+import { isPublicPost, normalizePosts, sortPostsByDate } from '../lib/posts';
 import '../styles/institutional-pages.css';
 
 const title = 'Areas de Atuacao | PAVIE | Advocacia';
 const description =
 	'O escritorio organiza sua atuacao publica por 7 areas, pensadas para refletir com precisao o foco institucional atual e facilitar o entendimento do visitante.';
 
-const [areaEntries, blogEntries] = await Promise.all([getAreaEntries(), getBlogEntries()]);
-const posts = sortPostsByDate(blogEntries.map((entry) => normalizePost(entry))).filter(isPublicPost);
+const [areaEntries, authorEntries, blogEntries] = await Promise.all([
+	getAreaEntries(),
+	getAuthorEntries(),
+	getBlogEntries(),
+]);
+const posts = sortPostsByDate(normalizePosts(blogEntries, authorEntries)).filter(isPublicPost);
 const areaDirectory = buildCanonicalAreaDirectory(areaEntries, posts);
 ---
 

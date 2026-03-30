@@ -6,7 +6,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getAuthorEntries, getBlogEntries } from '../../lib/blog-content';
 import { getAuthorEntryBySlug } from '../../lib/canonical-directory';
 import { normalizeCmsImagePath } from '../../lib/content-media';
-import { isPublicPost, normalizePost, sortPostsByDate } from '../../lib/posts';
+import { isPublicPost, normalizePosts, sortPostsByDate } from '../../lib/posts';
 import { buildBreadcrumbSchema, toAbsoluteUrl } from '../../lib/seo';
 import '../../styles/blog.css';
 import '../../styles/institutional-pages.css';
@@ -24,7 +24,7 @@ if (!currentAuthor) {
 }
 
 const authorImage = normalizeCmsImagePath(currentAuthor.data.image) ?? currentAuthor.data.image;
-const posts = sortPostsByDate(blogEntries.map((entry) => normalizePost(entry)))
+const posts = sortPostsByDate(normalizePosts(blogEntries, authorEntries))
 	.filter(isPublicPost)
 	.filter((post) => post.authorSlug === currentAuthor.data.slug);
 const canonicalUrl = `${MAIN_SITE_URL}/autor/${currentAuthor.data.slug}/`;

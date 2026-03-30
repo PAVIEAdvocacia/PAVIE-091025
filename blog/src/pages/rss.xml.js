@@ -1,11 +1,11 @@
 import rss from '@astrojs/rss';
 import { BLOG_SITE_URL, SITE_DESCRIPTION, SITE_TITLE } from '../consts';
-import { getBlogEntries } from '../lib/blog-content';
-import { isPublicPost, normalizePost, sortPostsByDate } from '../lib/posts';
+import { getAuthorEntries, getBlogEntries } from '../lib/blog-content';
+import { isPublicPost, normalizePosts, sortPostsByDate } from '../lib/posts';
 
-export async function GET(context) {
-	const entries = await getBlogEntries();
-	const posts = sortPostsByDate(entries.map((entry) => normalizePost(entry))).filter(isPublicPost);
+export async function GET() {
+	const [entries, authorEntries] = await Promise.all([getBlogEntries(), getAuthorEntries()]);
+	const posts = sortPostsByDate(normalizePosts(entries, authorEntries)).filter(isPublicPost);
 
 	return rss({
 		title: SITE_TITLE,

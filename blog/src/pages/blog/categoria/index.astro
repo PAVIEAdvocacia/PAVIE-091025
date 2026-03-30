@@ -2,13 +2,17 @@
 import Breadcrumbs from '../../../components/blog/Breadcrumbs.astro';
 import { BLOG_SITE_URL } from '../../../consts';
 import BlogLayout from '../../../layouts/BlogLayout.astro';
-import { getAreaEntries, getBlogEntries } from '../../../lib/blog-content';
+import { getAreaEntries, getAuthorEntries, getBlogEntries } from '../../../lib/blog-content';
 import { buildCanonicalAreaDirectory } from '../../../lib/canonical-directory';
-import { isPublicPost, normalizePost, sortPostsByDate } from '../../../lib/posts';
+import { isPublicPost, normalizePosts, sortPostsByDate } from '../../../lib/posts';
 import { buildBreadcrumbSchema } from '../../../lib/seo';
 
-const [areaEntries, blogEntries] = await Promise.all([getAreaEntries(), getBlogEntries()]);
-const posts = sortPostsByDate(blogEntries.map((entry) => normalizePost(entry))).filter(isPublicPost);
+const [areaEntries, authorEntries, blogEntries] = await Promise.all([
+	getAreaEntries(),
+	getAuthorEntries(),
+	getBlogEntries(),
+]);
+const posts = sortPostsByDate(normalizePosts(blogEntries, authorEntries)).filter(isPublicPost);
 const categoryDirectory = buildCanonicalAreaDirectory(areaEntries, posts);
 const canonicalUrl = `${BLOG_SITE_URL}/blog/categoria/`;
 const breadcrumbs = [

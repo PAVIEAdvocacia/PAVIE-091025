@@ -5,8 +5,8 @@ backend:
 
 local_backend: true
 publish_mode: simple
-site_url: "https://pavieadvocacia.com.br"
-display_url: "https://pavieadvocacia.com.br/blog/"
+site_url: "https://blog.pavieadvocacia.com.br"
+display_url: "https://blog.pavieadvocacia.com.br/blog/"
 show_preview_links: true
 locale: "pt"
 
@@ -64,7 +64,7 @@ collections:
         widget: "datetime"
         required: true
       - label: "Data de atualizacao"
-        name: "updatedDate"
+        name: "updatedAt"
         widget: "datetime"
         required: false
       - label: "Autor"
@@ -194,7 +194,7 @@ collections:
         multiple: true
         required: false
       - label: "Canonical URL"
-        name: "canonicalURL"
+        name: "canonicalUrl"
         widget: "string"
         required: false
       - label: "Schema type"
@@ -211,7 +211,7 @@ collections:
         public_folder: "/uploads"
         required: false
       - label: "Alt da imagem"
-        name: "coverAlt"
+        name: "coverImageAlt"
         widget: "string"
         required: false
       - label: "Conteudo"

@@ -1,18 +1,18 @@
 ---
 import { render } from 'astro:content';
 import ReadingLayout from '../../layouts/ReadingLayout.astro';
-import { getBlogEntries } from '../../lib/blog-content';
+import { getAuthorEntries, getBlogEntries } from '../../lib/blog-content';
 import { getRelatedPosts } from '../../lib/related';
-import { isPublicPost, isPublishedPost, normalizePost, sortPostsByDate } from '../../lib/posts';
+import { isPublicPost, isPublishedPost, normalizePost, normalizePosts, sortPostsByDate } from '../../lib/posts';
 import { buildToc } from '../../lib/toc';
 
 export async function getStaticPaths() {
-	const entries = await getBlogEntries();
+	const [entries, authorEntries] = await Promise.all([getBlogEntries(), getAuthorEntries()]);
 	const paths: Array<{ params: { slug: string }; props: { entryId: string } }> = [];
 	const seen = new Set<string>();
 
 	for (const entry of entries) {
-		const post = normalizePost(entry);
+		const post = normalizePost(entry, authorEntries);
 		if (!isPublishedPost(post)) continue;
 		const primarySlug = post.slug;
 		if (!seen.has(primarySlug)) {
@@ -27,15 +27,15 @@ export async function getStaticPaths() {
 	return paths;
 }
 
-const entries = await getBlogEntries();
+const [entries, authorEntries] = await Promise.all([getBlogEntries(), getAuthorEntries()]);
 const currentEntry = entries.find((entry) => entry.id === Astro.props.entryId);
 
 if (!currentEntry) {
 	throw new Error(`Post nao encontrado: ${Astro.props.entryId}`);
 }
 
-const currentPost = normalizePost(currentEntry);
-const publicPosts = sortPostsByDate(entries.map((entry) => normalizePost(entry))).filter(isPublicPost);
+const currentPost = normalizePost(currentEntry, authorEntries);
+const publicPosts = sortPostsByDate(normalizePosts(entries, authorEntries)).filter(isPublicPost);
 const related = getRelatedPosts(publicPosts, currentPost, 3);
 const { Content, headings } = await render(currentEntry);
 const toc = buildToc(headings);

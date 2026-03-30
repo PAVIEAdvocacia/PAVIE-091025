@@ -12,6 +12,7 @@ import {
 	READER_STAGE_OPTIONS,
 	REVIEW_STATUS_OPTIONS,
 } from './lib/canonical-content';
+import { normalizeCmsImagePath } from './lib/content-media';
 import { EDITORIAL_AREA_KEYS } from './lib/editorial-taxonomy';
 import { normalizeAreaKey } from './lib/taxonomy';
 
@@ -27,9 +28,13 @@ const legacyFunnelStageOptions = [...LEGACY_FUNNEL_STAGE_OPTIONS] as [string, ..
 const legacyPrimaryCtaOptions = [...LEGACY_PRIMARY_CTA_OPTIONS] as [string, ...string[]];
 const legacyAreaOptions = [...EDITORIAL_AREA_KEYS] as [string, ...string[]];
 const legacyAreaOptionSet = new Set(legacyAreaOptions);
-
 const listOrString = z.union([z.array(z.string()), z.string()]);
-const optionalStringList = z.array(z.string()).optional();
+const schemaTypeOptions = ['Article', 'BlogPosting'] as const;
+
+function isCanonicalPublicImagePath(value: string): boolean {
+	if (/^https?:\/\//i.test(value)) return true;
+	return normalizeCmsImagePath(value) === value.trim();
+}
 
 const legacyAreaSchema = z
 	.string()
@@ -45,46 +50,48 @@ const posts = defineCollection({
 		z
 			.object({
 				title: z.string().min(12),
-				seoTitle: z.string().min(12).optional(),
+				seoTitle: z.string().min(12),
 				seo_title: z.string().min(12).optional(),
 				description: z.string().min(50),
-				excerpt: z.string().min(50).optional(),
+				excerpt: z.string().min(50),
 				slug: z.string().min(3),
 				legacySlug: z.string().optional(),
-				publishDate: z.coerce.date().optional(),
+				publishDate: z.coerce.date(),
 				publish_date: z.coerce.date().optional(),
+				updatedAt: z.coerce.date().optional(),
 				updatedDate: z.coerce.date().optional(),
-				authorId: z.enum(authorIdOptions).optional(),
+				authorId: z.enum(authorIdOptions),
 				author: z.string().optional(),
-				categoryCode: z.enum(categoryCodeOptions).optional(),
+				categoryCode: z.enum(categoryCodeOptions),
 				legacyAreaKey: legacyAreaSchema.optional(),
 				area: legacyAreaSchema.optional(),
-				contentType: z.enum(contentTypeOptions).optional(),
-				readerStage: z.enum(readerStageOptions).optional(),
+				contentType: z.enum(contentTypeOptions),
+				readerStage: z.enum(readerStageOptions),
 				funnel_stage: z.enum(legacyFunnelStageOptions).optional(),
-				ctaType: z.enum(ctaTypeOptions).optional(),
-				ctaTarget: z.string().optional(),
+				ctaType: z.enum(ctaTypeOptions),
+				ctaTarget: z.string().min(1),
 				primary_cta: z.enum(legacyPrimaryCtaOptions).optional(),
-				draft: z.boolean().optional(),
-				noindex: z.boolean().optional(),
+				draft: z.boolean().default(true),
+				noindex: z.boolean().default(true),
 				status: z.enum(legacyStatusOptions).optional(),
-				featured: z.boolean().optional(),
-				legalReview: z.enum(reviewStatusOptions).optional(),
-				editorialReview: z.enum(reviewStatusOptions).optional(),
+				featured: z.boolean().default(false),
+				legalReview: z.enum(reviewStatusOptions).default('pending'),
+				editorialReview: z.enum(reviewStatusOptions).default('pending'),
 				reviewStatus: z.enum(reviewStatusOptions).optional(),
-				migrationStatus: z.enum(migrationStatusOptions).optional(),
+				migrationStatus: z.enum(migrationStatusOptions).default('native'),
 				subarea: z.string().optional(),
 				themes: listOrString.optional(),
-				tags: optionalStringList,
-				keywords: optionalStringList,
+				tags: z.array(z.string()).default([]),
+				keywords: z.array(z.string()).default([]),
 				pain_points: listOrString.optional(),
-				relatedPosts: optionalStringList,
-				relatedAreas: optionalStringList,
+				relatedPosts: z.array(z.string()).default([]),
+				relatedAreas: z.array(z.string()).default([]),
 				related_articles: listOrString.optional(),
-				canonicalURL: z.string().optional(),
 				canonicalUrl: z.string().optional(),
-				schemaType: z.enum(['Article', 'BlogPosting']).optional(),
+				canonicalURL: z.string().optional(),
+				schemaType: z.enum(schemaTypeOptions).default('BlogPosting'),
 				coverImage: z.string().optional(),
+				coverImageAlt: z.string().optional(),
 				coverAlt: z.string().optional(),
 				og_image: z.string().optional(),
 				readingTime: z.coerce.number().optional(),
@@ -93,45 +100,45 @@ const posts = defineCollection({
 				redirectFrom: z.array(z.string()).optional(),
 			})
 			.superRefine((data, ctx) => {
-				const hasCanonicalCore =
-					Boolean(data.seoTitle) &&
-					Boolean(data.excerpt) &&
-					Boolean(data.publishDate) &&
-					Boolean(data.authorId) &&
-					Boolean(data.categoryCode) &&
-					Boolean(data.contentType) &&
-					Boolean(data.readerStage) &&
-					Boolean(data.ctaType) &&
-					Boolean(data.ctaTarget);
+				const coverImageAlt = data.coverImageAlt ?? data.coverAlt;
 
-				const hasLegacyCore =
-					Boolean(data.publish_date) &&
-					Boolean(data.author) &&
-					Boolean(data.area) &&
-					Boolean(data.status) &&
-					Boolean(data.funnel_stage);
-
-				if (!hasCanonicalCore && !hasLegacyCore) {
+				if (data.coverImage && !coverImageAlt) {
 					ctx.addIssue({
 						code: z.ZodIssueCode.custom,
-						message:
-							'Use o frontmatter canônico completo ou o conjunto mínimo legado compatível.',
+						path: ['coverImageAlt'],
+						message: 'coverImageAlt e obrigatorio quando houver coverImage.',
 					});
 				}
 
-				if (data.coverImage && !data.coverAlt) {
+				if (data.coverImage && !isCanonicalPublicImagePath(data.coverImage)) {
 					ctx.addIssue({
 						code: z.ZodIssueCode.custom,
-						path: ['coverAlt'],
-						message: 'coverAlt é obrigatório quando houver coverImage.',
+						path: ['coverImage'],
+						message: 'Use caminho publico canonico, como /uploads/arquivo.ext, para coverImage.',
 					});
 				}
 
-				if (data.ctaType && !data.ctaTarget) {
+				if (data.draft && data.noindex === false) {
 					ctx.addIssue({
 						code: z.ZodIssueCode.custom,
-						path: ['ctaTarget'],
-						message: 'ctaTarget é obrigatório quando ctaType estiver preenchido.',
+						path: ['noindex'],
+						message: 'Rascunhos devem permanecer com noindex ativado.',
+					});
+				}
+
+				if (!data.draft && data.legalReview !== 'reviewed') {
+					ctx.addIssue({
+						code: z.ZodIssueCode.custom,
+						path: ['legalReview'],
+						message: 'Posts publicaveis exigem revisao juridica concluida.',
+					});
+				}
+
+				if (!data.draft && data.editorialReview !== 'reviewed') {
+					ctx.addIssue({
+						code: z.ZodIssueCode.custom,
+						path: ['editorialReview'],
+						message: 'Posts publicaveis exigem revisao editorial concluida.',
 					});
 				}
 			}),
@@ -164,7 +171,12 @@ const authors = defineCollection({
 		shortBio: z.string().min(20),
 		extendedBio: z.string().min(20),
 		oab: z.string().min(3),
-		image: z.string().min(1),
+		image: z
+			.string()
+			.min(1)
+			.refine((value) => isCanonicalPublicImagePath(value), {
+				message: 'Use caminho publico canonico, como /uploads/arquivo.ext, para a imagem do autor.',
+			}),
 		imageAlt: z.string().min(3),
 		reviewStatus: z.enum(reviewStatusOptions),
 	}),

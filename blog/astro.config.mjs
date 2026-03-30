@@ -22,7 +22,7 @@ function shouldIncludeInSitemap(page) {
 
 // https://astro.build/config
 export default defineConfig({
-	site: 'https://pavieadvocacia.com.br',
+	site: 'https://blog.pavieadvocacia.com.br',
 	integrations: [
 		mdx(),
 		sitemap({
