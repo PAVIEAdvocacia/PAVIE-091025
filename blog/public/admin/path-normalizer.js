@@ -6,6 +6,12 @@
   const nativeInputValueDescriptor = Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, 'value');
   const nativeTextareaValueDescriptor = Object.getOwnPropertyDescriptor(HTMLTextAreaElement.prototype, 'value');
   const normalizedDispatchGuard = new WeakSet();
+  const reactFiberKeyPrefix = '__reactFiber';
+  const chooseSelectedLabelPattern = /escolher selecionado/i;
+
+  function canQueryDescendants(root) {
+    return !!root && typeof root.querySelectorAll === 'function';
+  }
 
   function normalizeAdminImagePath(rawValue) {
     if (typeof rawValue !== 'string') return null;
@@ -75,8 +81,57 @@
     dispatchNormalizedEvents(element);
   }
 
+  function collectSelectedFileStateNodes(root) {
+    const stateNodes = new Set();
+    if (!canQueryDescendants(root)) return stateNodes;
+
+    root.querySelectorAll('*').forEach((element) => {
+      for (const key of Object.keys(element)) {
+        if (!key.startsWith(reactFiberKeyPrefix)) continue;
+
+        let fiber = element[key];
+
+        while (fiber) {
+          const stateNode = fiber.stateNode;
+          if (stateNode && stateNode.state && typeof stateNode.state === 'object' && stateNode.state.selectedFile) {
+            stateNodes.add(stateNode);
+          }
+
+          fiber = fiber.return;
+        }
+      }
+    });
+
+    return stateNodes;
+  }
+
+  function normalizeSelectedFileState(root) {
+    let didNormalize = false;
+
+    collectSelectedFileStateNodes(root).forEach((stateNode) => {
+      const selectedFile = stateNode.state && stateNode.state.selectedFile;
+      const normalizedPath = normalizeAdminImagePath(selectedFile && selectedFile.path);
+
+      if (!selectedFile || !normalizedPath || normalizedPath === selectedFile.path) {
+        return;
+      }
+
+      selectedFile.path = normalizedPath;
+      didNormalize = true;
+    });
+
+    return didNormalize;
+  }
+
+  function isChooseSelectedButton(node) {
+    const button = node instanceof Element ? node.closest('button') : null;
+    if (!(button instanceof HTMLButtonElement)) return null;
+    if (!chooseSelectedLabelPattern.test(button.textContent || '')) return null;
+    return button;
+  }
+
   function scanForImagePaths(root) {
-    if (!(root instanceof ParentNode)) return;
+    if (!canQueryDescendants(root)) return;
 
     root.querySelectorAll('input, textarea').forEach((element) => {
       normalizeFieldValue(element);
@@ -95,6 +150,32 @@
     'change',
     (event) => {
       normalizeFieldValue(event.target);
+    },
+    true,
+  );
+
+  document.addEventListener(
+    'click',
+    (event) => {
+      const chooseButton = isChooseSelectedButton(event.target);
+      if (!chooseButton) return;
+
+      const modalRoot = chooseButton.closest('.ReactModalPortal') || document;
+      normalizeSelectedFileState(modalRoot);
+    },
+    true,
+  );
+
+  document.addEventListener(
+    'keydown',
+    (event) => {
+      if (event.key !== 'Enter' && event.key !== ' ') return;
+
+      const chooseButton = isChooseSelectedButton(event.target);
+      if (!chooseButton) return;
+
+      const modalRoot = chooseButton.closest('.ReactModalPortal') || document;
+      normalizeSelectedFileState(modalRoot);
     },
     true,
   );
