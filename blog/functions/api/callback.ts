@@ -1,11 +1,11 @@
 export interface Env {
+  GITHUB_CLIENT_ID?: string;
   GITHUB_CLIENT_SECRET?: string;
 }
 
 const GITHUB_TOKEN_URL = "https://github.com/login/oauth/access_token";
 const CALLBACK_PATH = "/api/callback";
 const STATE_COOKIE_NAME = "decap_oauth_state";
-const DECAP_GITHUB_CLIENT_ID = "Ov23liQidMMKZXOSzq3e";
 
 function parseStateCookie(cookieHeader: string | null) {
   if (!cookieHeader) return "";
@@ -74,14 +74,22 @@ function renderCallbackPage(status: "success" | "error", payload: Record<string,
 
 export const onRequestGet: PagesFunction<Env> = async ({ request, env }) => {
   const requestUrl = new URL(request.url);
+  const clientId = env.GITHUB_CLIENT_ID?.trim() || "";
+  const clientSecret = env.GITHUB_CLIENT_SECRET?.trim() || "";
   const code = requestUrl.searchParams.get("code") || "";
   const state = requestUrl.searchParams.get("state") || "";
   const expectedState = parseStateCookie(request.headers.get("Cookie"));
   const redirectUri = new URL(CALLBACK_PATH, requestUrl.origin).toString();
 
-  if (!env.GITHUB_CLIENT_SECRET) {
+  if (!clientId || !clientSecret) {
+    const message = !clientId && !clientSecret
+      ? "Missing GITHUB_CLIENT_ID or GITHUB_CLIENT_SECRET"
+      : !clientId
+        ? "Missing GITHUB_CLIENT_ID"
+        : "Missing GITHUB_CLIENT_SECRET";
+
     return new Response(
-      renderCallbackPage("error", { message: "Missing GITHUB_CLIENT_SECRET" }),
+      renderCallbackPage("error", { message }),
       {
         status: 500,
         headers: {
@@ -89,9 +97,9 @@ export const onRequestGet: PagesFunction<Env> = async ({ request, env }) => {
           "Cache-Control": "no-store",
           "Set-Cookie": clearStateCookie(),
           ...buildOAuthDebugHeaders({
-            clientId: DECAP_GITHUB_CLIENT_ID,
+            clientId,
             redirectUri,
-            secretPresent: false,
+            secretPresent: Boolean(clientSecret),
           }),
         },
       },
@@ -120,8 +128,8 @@ export const onRequestGet: PagesFunction<Env> = async ({ request, env }) => {
       "user-agent": "decap-cms-cloudflare-pages",
     },
     body: JSON.stringify({
-      client_id: DECAP_GITHUB_CLIENT_ID,
-      client_secret: env.GITHUB_CLIENT_SECRET,
+      client_id: clientId,
+      client_secret: clientSecret,
       code,
       redirect_uri: redirectUri,
     }),
@@ -146,7 +154,7 @@ export const onRequestGet: PagesFunction<Env> = async ({ request, env }) => {
           "Cache-Control": "no-store",
           "Set-Cookie": clearStateCookie(),
           ...buildOAuthDebugHeaders({
-            clientId: DECAP_GITHUB_CLIENT_ID,
+            clientId,
             redirectUri,
             secretPresent: true,
             tokenError: tokenData.error || "OAuth token exchange failed",
