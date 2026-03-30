@@ -1,11 +1,8 @@
-export interface Env {
-  GITHUB_CLIENT_ID?: string;
-}
-
 const GITHUB_AUTHORIZE_URL = "https://github.com/login/oauth/authorize";
 const CALLBACK_PATH = "/api/callback";
 const STATE_COOKIE_NAME = "decap_oauth_state";
 const STATE_MAX_AGE_SECONDS = 600;
+const DECAP_GITHUB_CLIENT_ID = "Ov23liQidMMKZXOSzq3e";
 
 function buildStateCookie(value: string) {
   return [
@@ -18,19 +15,12 @@ function buildStateCookie(value: string) {
   ].join("; ");
 }
 
-export const onRequestGet: PagesFunction<Env> = async ({ request, env }) => {
-  if (!env.GITHUB_CLIENT_ID) {
-    return new Response("Missing GITHUB_CLIENT_ID", {
-      status: 500,
-      headers: { "Cache-Control": "no-store" },
-    });
-  }
-
+export const onRequestGet: PagesFunction = async ({ request }) => {
   const requestUrl = new URL(request.url);
   const state = crypto.randomUUID();
   const authorizeUrl = new URL(GITHUB_AUTHORIZE_URL);
 
-  authorizeUrl.searchParams.set("client_id", env.GITHUB_CLIENT_ID);
+  authorizeUrl.searchParams.set("client_id", DECAP_GITHUB_CLIENT_ID);
   authorizeUrl.searchParams.set("redirect_uri", new URL(CALLBACK_PATH, requestUrl.origin).toString());
   authorizeUrl.searchParams.set("scope", "repo");
   authorizeUrl.searchParams.set("state", state);

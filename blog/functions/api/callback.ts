@@ -1,11 +1,11 @@
 export interface Env {
-  GITHUB_CLIENT_ID?: string;
   GITHUB_CLIENT_SECRET?: string;
 }
 
 const GITHUB_TOKEN_URL = "https://github.com/login/oauth/access_token";
 const CALLBACK_PATH = "/api/callback";
 const STATE_COOKIE_NAME = "decap_oauth_state";
+const DECAP_GITHUB_CLIENT_ID = "Ov23liQidMMKZXOSzq3e";
 
 function parseStateCookie(cookieHeader: string | null) {
   if (!cookieHeader) return "";
@@ -59,9 +59,9 @@ export const onRequestGet: PagesFunction<Env> = async ({ request, env }) => {
   const state = requestUrl.searchParams.get("state") || "";
   const expectedState = parseStateCookie(request.headers.get("Cookie"));
 
-  if (!env.GITHUB_CLIENT_ID || !env.GITHUB_CLIENT_SECRET) {
+  if (!env.GITHUB_CLIENT_SECRET) {
     return new Response(
-      renderCallbackPage("error", { message: "Missing GITHUB_CLIENT_ID or GITHUB_CLIENT_SECRET" }),
+      renderCallbackPage("error", { message: "Missing GITHUB_CLIENT_SECRET" }),
       {
         status: 500,
         headers: {
@@ -95,7 +95,7 @@ export const onRequestGet: PagesFunction<Env> = async ({ request, env }) => {
       "user-agent": "decap-cms-cloudflare-pages",
     },
     body: JSON.stringify({
-      client_id: env.GITHUB_CLIENT_ID,
+      client_id: DECAP_GITHUB_CLIENT_ID,
       client_secret: env.GITHUB_CLIENT_SECRET,
       code,
       redirect_uri: new URL(CALLBACK_PATH, requestUrl.origin).toString(),
