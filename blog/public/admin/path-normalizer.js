@@ -3,6 +3,7 @@
   const repoPublicPattern = /^(?:\.\/)?(?:blog\/)?public\/(uploads\/.+)$/i;
   const relativeUploadsPattern = /^(?:\.\/)?(uploads\/.+)$/i;
   const legacyBlogPublicUrlPattern = /^\/?(?:blog\/)(uploads\/.+)$/i;
+  const contentDraftAssetPattern = /^\/?(?:blog\/)?src\/content\/blog\/(.+)$/i;
   const nativeInputValueDescriptor = Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, 'value');
   const nativeTextareaValueDescriptor = Object.getOwnPropertyDescriptor(HTMLTextAreaElement.prototype, 'value');
   const normalizedDispatchGuard = new WeakSet();
@@ -38,6 +39,12 @@
     const relativeMatch = value.match(relativeUploadsPattern);
     if (relativeMatch) {
       return `/${relativeMatch[1]}`;
+    }
+
+    const contentDraftMatch = value.match(contentDraftAssetPattern);
+    if (contentDraftMatch) {
+      const filename = contentDraftMatch[1].split('/').pop();
+      return filename ? `/uploads/${filename}` : null;
     }
 
     return null;
