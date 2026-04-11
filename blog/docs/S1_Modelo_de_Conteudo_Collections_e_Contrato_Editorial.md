@@ -140,7 +140,7 @@ Você **não pode**:
 ## Critérios de aceite
 
 - [ ] `astro check` ou validação equivalente sem erro de schema
-- [ ] todas as 7 categorias canônicas mapeadas
+- [ ] todas as 8 categorias canônicas mapeadas
 - [ ] `posts`, `areas` e `authors` renderizáveis pelo novo contrato
 - [ ] suporte explícito ao legado via compatibilização documentada
 - [ ] nenhuma ampliação indevida do portfólio público
@@ -150,5 +150,5 @@ Você **não pode**:
 ## Prompt pronto para Codex
 
 ```text
-Sprint S1. Leia AGENTS.md raiz, blog/AGENTS.md, legal-copy/AGENTS.md, 12.02, 12.06 e 13.05. Audite o contrato de conteúdo atual do repositório real do blog.pavieadvocacia.com.br e implemente a camada canônica de content collections em Astro. Crie ou refatore `src/content/config.ts`, normalize `posts`, `areas` e `authors`, preserve compatibilidade com slugs legados atuais, introduza enums estáveis para as 7 categorias canônicas da PAVIE e entregue um diff mínimo, validável e documentado. Não mexa ainda em layout amplo, nem reescreva o acervo inteiro.
+Sprint S1. Leia AGENTS.md raiz, blog/AGENTS.md, legal-copy/AGENTS.md, 12.02, 12.06 e 13.05. Audite o contrato de conteúdo atual do repositório real do blog.pavieadvocacia.com.br e implemente a camada canônica de content collections em Astro. Crie ou refatore `src/content/config.ts`, normalize `posts`, `areas` e `authors`, preserve compatibilidade com slugs legados atuais, introduza enums estáveis para as 8 categorias canônicas da PAVIE e entregue um diff mínimo, validável e documentado. Não mexa ainda em layout amplo, nem reescreva o acervo inteiro.
 ```

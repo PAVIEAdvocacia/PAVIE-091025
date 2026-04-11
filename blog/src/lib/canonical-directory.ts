@@ -10,6 +10,8 @@ export interface CanonicalAreaDirectoryItem {
 	code: string;
 	slug: string;
 	title: string;
+	canonicalTitle: string;
+	displayTitle: string;
 	shortDescription: string;
 	headline: string;
 	description: string;
@@ -43,6 +45,8 @@ export function buildCanonicalAreaDirectory(
 				code: entry.data.categoryCode,
 				slug: entry.data.slug,
 				title: entry.data.title,
+				canonicalTitle: entry.data.canonicalTitle ?? entry.data.title,
+				displayTitle: entry.data.displayTitle ?? entry.data.title,
 				shortDescription: entry.data.shortDescription,
 				headline: entry.data.headline,
 				description: entry.data.description,

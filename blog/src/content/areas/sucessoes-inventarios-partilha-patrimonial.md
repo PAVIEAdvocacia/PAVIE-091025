@@ -1,16 +1,62 @@
 ---
 title: "Sucessoes, Inventarios e Partilha Patrimonial"
+canonicalTitle: "Sucessoes, Inventarios e Partilha Patrimonial"
+displayTitle: "Sucessoes e Inventarios"
 slug: "sucessoes-inventarios-partilha-patrimonial"
 categoryCode: "CAT-01"
-shortDescription: "Questoes de sucessao, inventario, partilha patrimonial e transmissao de bens exigem leitura segura de fatos, vinculos e documentos."
-headline: "Questoes sucessorias exigem leitura segura dos fatos, dos vinculos familiares e dos documentos relevantes."
+shortDescription: "Inventarios, partilhas e transmissao patrimonial exigem organizacao documental, leitura sucessoria e definicao tecnica da via adequada."
+headline: "Questões de sucessao, inventario, partilha patrimonial e transmissao de bens exigem leitura segura de fatos, vinculos e documentos."
+heroTitle: "Sucessoes, Inventarios e Partilha Patrimonial"
+heroDescription: "Questões de sucessao, inventario, partilha patrimonial e transmissao de bens exigem leitura segura de fatos, vinculos e documentos."
+framingTitle: "Enquadramento da area"
+framingText:
+  - "Esta frente envolve a organizacao juridica de inventarios, partilhas, transmissao de bens, leitura de herdeiros, testamentos, doacoes anteriores e efeitos patrimoniais decorrentes do falecimento."
+  - "A atuacao exige avaliar documentos, identificar riscos, compreender a composicao patrimonial e definir se o caminho adequado e extrajudicial, judicial ou preparatorio."
+criteria:
+  - "Identificacao dos herdeiros, meeiros, testamentos e eventuais interessados."
+  - "Levantamento da composicao patrimonial, dividas, bens declarados e pendencias documentais."
+  - "Analise da viabilidade de inventario extrajudicial ou necessidade de via judicial."
+  - "Leitura de doacoes, adiantamentos de legitima, pactos e documentos familiares relevantes."
+  - "Organizacao dos impactos fiscais e registrais vinculados a transmissao patrimonial."
+  - "Definicao de estrategia para reduzir conflito, evitar nulidades e preservar seguranca documental."
+documentsTitle: "Documentacao tipica"
+documentsNote: "Os documentos abaixo ajudam na triagem inicial e nao esgotam as necessidades do caso."
+documents:
+  - "Certidao de obito."
+  - "Documentos pessoais do falecido, herdeiros e conjuge ou companheiro."
+  - "Certidoes de casamento, uniao estavel, divorcio ou pacto antenupcial."
+  - "Documentos de imoveis, veiculos, participacoes societarias, contas e investimentos."
+  - "Testamento, doacoes anteriores ou documentos patrimoniais relevantes."
+  - "Informacoes sobre dividas, financiamentos e pendencias fiscais."
+  - "Comprovantes de residencia e dados de contato dos envolvidos."
+cautionsTitle: "Limites e cautelas"
+cautionsIntro: "A leitura sucessoria depende de documentos e de fatos verificaveis. Por isso, alguns limites precisam ser preservados desde o inicio."
+cautions:
+  - "A existencia de consenso nao dispensa verificacao tecnica da documentacao."
+  - "A via extrajudicial depende de requisitos legais e da situacao concreta dos herdeiros e bens."
+  - "A presenca de testamento, menores, incapazes ou conflito pode alterar o caminho adequado."
+  - "Estimativas de prazo e custo dependem da composicao patrimonial, dos tributos e das exigencias documentais."
+faqTitle: "Duvidas frequentes sobre inventarios e sucessoes"
+faqItems:
+  - question: "O inventario pode ser feito em cartorio?"
+    answer: "Pode ser possivel quando ha consenso, documentos adequados e preenchimento dos requisitos legais. A viabilidade precisa ser confirmada com base nos fatos e na documentacao."
+  - question: "E necessario abrir inventario mesmo com poucos bens?"
+    answer: "Em muitos casos, sim. A necessidade depende da existencia de bens, direitos, dividas, contas, veiculos, imoveis ou valores a regularizar."
+  - question: "Posso iniciar a analise sem todos os documentos?"
+    answer: "Sim. O primeiro contato pode organizar o que ja existe e indicar quais documentos faltam para a avaliacao tecnica."
+readingTitle: "Leitura util antes do contato"
+readingDescription: "Se voce ainda esta reunindo informacoes, a categoria editorial correspondente ajuda a compreender inventario, partilha, documentos e cuidados iniciais."
+readingCategoryLabel: "Sucessoes e Inventario"
+finalTitle: "Organizar a sucessao com metodo"
+finalText: "O enquadramento correto evita perdas patrimoniais, atrasos e conflitos desnecessarios. Se o seu caso ja exige leitura tecnica, envie as informacoes iniciais para avaliacao."
+finalCtaLabel: "Solicitar analise inicial"
 ctaType: "contact"
 ctaTarget: "/#contato"
-seoTitle: "Sucessoes, Inventarios e Partilha Patrimonial | PAVIE | Advocacia"
-description: "Esta area reune situacoes em que a sucessao patrimonial, o inventario, a partilha e a transmissao de bens pedem enquadramento tecnico, organizacao documental e definicao correta da via adequada."
+seoTitle: "Sucessoes, Inventarios e Partilha Patrimonial | PAVIE Advocacia"
+description: "Inventario, partilha patrimonial, leitura sucessoria e organizacao documental com direcao tecnica e criterios claros para definicao da via adequada."
 order: 1
 isActive: true
 reviewStatus: "pending"
 ---
 
-Registro canonico de area para uso estrutural. Revisao humana obrigatoria antes de qualquer publicacao derivada.
+Registro S2 canonico de area para uso estrutural. Revisao humana obrigatoria antes de publicacao derivada.

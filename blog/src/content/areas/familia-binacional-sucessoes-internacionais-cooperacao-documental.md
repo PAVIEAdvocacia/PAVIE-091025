@@ -1,16 +1,61 @@
 ---
 title: "Familia Binacional, Sucessoes Internacionais e Cooperacao Documental"
+canonicalTitle: "Familia Binacional, Sucessoes Internacionais e Cooperacao Documental"
+displayTitle: "Familia Binacional"
 slug: "familia-binacional-sucessoes-internacionais-cooperacao-documental"
 categoryCode: "CAT-04"
-shortDescription: "Vinculos familiares, sucessorios e documentais com elementos internacionais pedem compatibilizacao de documentos, jurisdicoes e estrategia."
-headline: "Questoes com elementos internacionais exigem compatibilizacao entre documentos, jurisdicoes e estrategia."
+shortDescription: "Casos familiares e sucessorios com elemento internacional exigem compatibilizacao documental, traducao, apostilamento e estrategia."
+headline: "Questoes com elementos internacionais exigem compatibilizacao entre documentos, jurisdicoes e estrategia, com leitura tecnica do que cada pais efetivamente exige."
+heroTitle: "Familia Binacional, Sucessoes Internacionais e Cooperacao Documental"
+heroDescription: "Questoes com elementos internacionais exigem compatibilizacao entre documentos, jurisdicoes e estrategia, com leitura tecnica do que cada pais efetivamente exige."
+framingTitle: "Enquadramento da area"
+framingText:
+  - "Esta frente envolve situacoes familiares, sucessorias ou documentais com conexao entre Brasil e exterior, incluindo documentos estrangeiros, pessoas residentes em paises diferentes, bens fora do pais ou atos que precisam produzir efeitos em mais de uma jurisdicao."
+  - "A atuacao exige separar o que pode ser conduzido no Brasil, o que depende de profissional estrangeiro e quais documentos precisam ser organizados antes de qualquer medida."
+criteria:
+  - "Situacoes familiares com pessoas, documentos ou bens em mais de um pais."
+  - "Compatibilizacao documental inicial para uso no Brasil ou no exterior."
+  - "Leitura preliminar de reflexos sucessorios internacionais."
+  - "Organizacao de prova documental para atos transnacionais."
+  - "Identificacao de dependencias de traducao, apostilamento, registro e validacao formal."
+  - "Estruturacao inicial de estrategia documental e informacional em cenarios binacionais."
+documentsTitle: "Documentacao tipica"
+documentsNote: "A documentacao varia conforme o pais envolvido, mas alguns elementos ajudam na organizacao inicial."
+documents:
+  - "Documentos de identificacao e estado civil das pessoas envolvidas."
+  - "Certidoes brasileiras ou estrangeiras relacionadas ao caso."
+  - "Passaportes, comprovantes de residencia e informacoes sobre nacionalidade."
+  - "Testamento, certidoes de obito, documentos de bens ou informacoes sucessorias, quando aplicavel."
+  - "Traducoes, apostilas, registros consulares ou documentos ja utilizados em outro pais."
+  - "Relacao basica dos paises envolvidos e dos efeitos pretendidos."
+cautionsTitle: "Limites e cautelas"
+cautionsIntro: "Casos internacionais dependem de limites de jurisdicao, prova documental e validacao formal. A cautela evita promessas indevidas."
+cautions:
+  - "Nem toda questao internacional pode ser resolvida apenas pela via brasileira."
+  - "Documentos estrangeiros podem exigir traducao, apostilamento, registro ou validacao especifica."
+  - "A validade de atos praticados no exterior depende das regras do pais envolvido e de sua aceitacao no Brasil."
+  - "Quando necessario, a atuacao deve ser coordenada com profissionais habilitados na jurisdicao estrangeira."
+faqTitle: "Duvidas frequentes sobre familia binacional"
+faqItems:
+  - question: "Todo documento estrangeiro precisa de traducao juramentada?"
+    answer: "Nao necessariamente em todos os usos, mas muitos procedimentos formais no Brasil exigem traducao juramentada e, em alguns casos, apostilamento ou legalizacao."
+  - question: "Um bem em outro pais entra no inventario brasileiro?"
+    answer: "A resposta depende da natureza do bem, da jurisdicao e das regras aplicaveis. A analise precisa separar efeitos brasileiros e estrangeiros."
+  - question: "E possivel iniciar a organizacao mesmo sem todos os documentos?"
+    answer: "Sim. O primeiro passo pode ser justamente identificar documentos faltantes, dependencias de traducao, apostilamento e paises envolvidos."
+readingTitle: "Leitura util antes do contato"
+readingDescription: "A categoria editorial correspondente ajuda a compreender documentos internacionais, validacao formal e cautelas em casos familiares ou sucessorios com elemento estrangeiro."
+readingCategoryLabel: "Familia Binacional"
+finalTitle: "Organizar o caso internacional antes da medida"
+finalText: "A leitura inicial evita deslocamentos desnecessarios, documentos incompletos e estrategia fora da jurisdicao adequada. Envie as informacoes iniciais para avaliacao."
+finalCtaLabel: "Solicitar analise inicial"
 ctaType: "contact"
 ctaTarget: "/#contato"
-seoTitle: "Familia Binacional, Sucessoes Internacionais e Cooperacao Documental | PAVIE | Advocacia"
-description: "Esta area reune situacoes com componente internacional relevante, em que familia, sucessao, cooperacao documental ou repercussao patrimonial exigem enquadramento cuidadoso e coordenacao correta da informacao."
+seoTitle: "Familia Binacional e Sucessoes Internacionais | PAVIE Advocacia"
+description: "Questoes familiares e sucessorias com elemento internacional, compatibilizacao documental, traducao, apostilamento e estrategia transnacional."
 order: 4
 isActive: true
 reviewStatus: "pending"
 ---
 
-Registro canonico de area para uso estrutural. Revisao humana obrigatoria antes de qualquer publicacao derivada.
+Registro S2 canonico de area para uso estrutural. Revisao humana obrigatoria antes de publicacao derivada.

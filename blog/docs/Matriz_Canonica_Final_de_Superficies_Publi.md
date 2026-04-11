@@ -151,6 +151,7 @@ As categorias públicas autorizadas da PAVIE são as seguintes:
 5. **Imóveis, Registro, Regularizações e Litígios Patrimoniais**
 6. **Cobrança, Execução, Contratos e Recuperação de Crédito Seletiva**
 7. **Tributação Patrimonial e Recuperação Tributária Seletiva**
+8. **Direito do Consumidor e Responsabilidade Civil**
 
 Esses nomes devem ser tratados como **rótulos canônicos**, especialmente em /areas/, páginas de área, breadcrumbs, taxonomia editorial, metadados, sitemap interno, frontmatter e instruções para CMS ou agentes.
 
@@ -265,7 +266,7 @@ O escritório organiza sua atuação pública por áreas canônicas, pensadas pa
 
 ### 6.3.5 Cards autorizados
 
-Os cards da página /areas/ devem usar, sem variação estrutural, os sete rótulos canônicos do item 5.
+Os cards da seção de áreas da home devem usar, sem variação estrutural, os oito rótulos canônicos do item 5.
 
 ## 6.4 Páginas das áreas canônicas
 
@@ -470,7 +471,7 @@ Perfis externos não devem:
 |---|---|---|---|---|---|
 | Home | seletivo | patrimônio, família, sucessão, imóveis, documentos, contratos/cobrança seletivos | internacional seletivo; tributação patrimonial seletiva | baixo | não pode virar catálogo |
 | /Sobre | ampliado controlado | foco atual + trajetória + método | contencioso cível e conformidade institucional como repertório derivado | médio | deve reconduzir ao foco |
-| /Areas/ | estrito | 7 categorias canônicas | nenhum eixo extra | mínimo | taxonomia prevalece integralmente |
+| /Areas/ | estrito | 8 categorias canônicas | nenhum eixo extra | mínimo | taxonomia prevalece integralmente |
 | Página de área | estrito temático | categoria correspondente | temas limítrofes subordinados | baixo | não criar sinônimos competitivos |
 | Blog post | seletivo funcional | dor, dúvida, critério, decisão | áreas correlatas por interlinking | médio | não abrir texto como catálogo |
 | Assinatura curta | seletivo | foco principal de escrita | seletivos derivados resumidos | baixo | evitar currículo |

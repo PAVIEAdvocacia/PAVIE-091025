@@ -1,16 +1,61 @@
 ---
 title: "Tributacao Patrimonial e Recuperacao Tributaria Seletiva"
+canonicalTitle: "Tributacao Patrimonial e Recuperacao Tributaria Seletiva"
+displayTitle: "Tributacao Patrimonial"
 slug: "tributacao-patrimonial-recuperacao-tributaria-seletiva"
 categoryCode: "CAT-07"
-shortDescription: "Questoes de tributacao patrimonial e regularizacao tributaria seletiva exigem leitura tecnica de fatos, documentos e enquadramento correto."
-headline: "Questoes tributarias patrimoniais exigem leitura tecnica do fato gerador, dos documentos e da via adequada."
+shortDescription: "Questoes tributarias patrimoniais exigem leitura do fato gerador, documentos fiscais e viabilidade real de revisao ou recuperacao."
+headline: "Questoes tributarias patrimoniais exigem leitura tecnica do fato gerador, dos documentos e da via adequada, com recorte criterioso do que efetivamente pode ser revisto."
+heroTitle: "Tributacao Patrimonial e Recuperacao Tributaria Seletiva"
+heroDescription: "Questoes tributarias patrimoniais exigem leitura tecnica do fato gerador, dos documentos e da via adequada, com recorte criterioso do que efetivamente pode ser revisto."
+framingTitle: "Enquadramento da area"
+framingText:
+  - "Esta frente envolve tributos incidentes sobre patrimonio, transmissao, imoveis, sucessoes, doacoes e situacoes especificas em que pode haver revisao, recuperacao ou discussao seletiva."
+  - "A atuacao nao parte da promessa de economia tributaria. Ela começa pela leitura do fato gerador, da documentacao e da viabilidade juridica da medida."
+criteria:
+  - "Identificacao do tributo, fato gerador, data, base de calculo e sujeito passivo."
+  - "Analise de guias, comprovantes, declaracoes, lancamentos e documentos fiscais."
+  - "Leitura de vinculo com imoveis, inventarios, doacoes, partilhas ou reorganizacoes patrimoniais."
+  - "Avaliacao de prescricao, decadencia, risco, custo e viabilidade da discussao."
+  - "Separacao entre recuperacao possivel, revisao administrativa e judicializacao."
+  - "Definicao de medidas proporcionais ao valor envolvido e a prova disponivel."
+documentsTitle: "Documentacao tipica"
+documentsNote: "A analise tributaria depende de documentos fiscais e patrimoniais concretos."
+documents:
+  - "Guias, DARFs, comprovantes de pagamento ou cobrancas recebidas."
+  - "Documentos do imovel, inventario, doacao, partilha ou operacao patrimonial."
+  - "Declaracoes, lancamentos, notificacoes fiscais ou processos administrativos."
+  - "Certidoes, avaliacoes, bases de calculo e documentos de suporte."
+  - "Datas dos fatos, pagamentos e comunicacoes com o fisco."
+  - "Documentos pessoais ou societarios dos envolvidos, quando aplicavel."
+cautionsTitle: "Limites e cautelas"
+cautionsIntro: "Recuperacao ou revisao tributaria exige base tecnica. O recorte seletivo evita medidas aventureiras."
+cautions:
+  - "Nem todo pagamento de tributo permite recuperacao."
+  - "A viabilidade depende de prazo, prova, tese aplicavel e valor envolvido."
+  - "Discussoes tributarias podem envolver custo, demora e risco de indeferimento."
+  - "A analise inicial nao substitui estudo completo quando o caso exige apuracao detalhada."
+faqTitle: "Duvidas frequentes sobre tributacao patrimonial"
+faqItems:
+  - question: "Todo tributo pago indevidamente pode ser recuperado?"
+    answer: "Nao. E preciso avaliar prazo, fundamento juridico, comprovantes, base de calculo e risco da medida."
+  - question: "E possivel discutir imposto em inventario ou doacao?"
+    answer: "Pode ser possivel em situacoes especificas, especialmente quando ha duvida sobre base de calculo, avaliacao, incidencia ou procedimento. A documentacao define o caminho."
+  - question: "A analise inicial ja calcula o valor recuperavel?"
+    answer: "A analise inicial identifica viabilidade e documentos necessarios. Calculos completos podem exigir levantamento especifico e conferencia detalhada."
+readingTitle: "Leitura util antes do contato"
+readingDescription: "A categoria editorial correspondente ajuda a entender tributos patrimoniais, base de calculo, revisao seletiva e cuidados antes de discutir valores."
+readingCategoryLabel: "Tributacao Patrimonial"
+finalTitle: "Separar possibilidade real de expectativa"
+finalText: "A leitura tributaria responsavel evita promessas e medidas improdutivas. Se ha tributo patrimonial a avaliar, envie as informacoes iniciais para analise."
+finalCtaLabel: "Solicitar analise inicial"
 ctaType: "contact"
 ctaTarget: "/#contato"
-seoTitle: "Tributacao Patrimonial e Recuperacao Tributaria Seletiva | PAVIE | Advocacia"
-description: "Esta area reune hipoteses seletivas de tributacao patrimonial e recuperacao tributaria, quando a situacao depende de documentacao consistente, leitura tecnica do fato gerador e avaliacao prudente da via adequada."
+seoTitle: "Tributacao Patrimonial e Recuperacao Tributaria | PAVIE Advocacia"
+description: "Tributacao patrimonial, fato gerador, revisao seletiva e leitura documental de incidencias fiscais ligadas ao patrimonio e a transmissao."
 order: 7
 isActive: true
 reviewStatus: "pending"
 ---
 
-Registro canonico de area para uso estrutural. Revisao humana obrigatoria antes de qualquer publicacao derivada.
+Registro S2 canonico de area para uso estrutural. Revisao humana obrigatoria antes de publicacao derivada.

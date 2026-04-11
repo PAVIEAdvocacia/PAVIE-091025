@@ -1,16 +1,61 @@
 ---
 title: "Cobranca, Execucao, Contratos e Recuperacao de Credito Seletiva"
+canonicalTitle: "Cobranca, Execucao, Contratos e Recuperacao de Credito Seletiva"
+displayTitle: "Cobranca e Contratos"
 slug: "cobranca-execucao-contratos-recuperacao-credito-seletiva"
 categoryCode: "CAT-06"
-shortDescription: "Contratos selecionados, cobranca, execucao e recuperacao de credito exigem leitura de escopo, documentos e estrategia."
-headline: "Nem toda inadimplencia e apenas uma divida; muitas vezes ela exige leitura contratual e estrategica."
+shortDescription: "Contratos, cobrancas, execucoes e recuperacao seletiva de credito exigem prova documental, exigibilidade e estrategia."
+headline: "Cobrancas, contratos e recuperacao de credito exigem leitura de documentos, exigibilidade, solvencia e custo real da medida."
+heroTitle: "Cobranca, Execucao, Contratos e Recuperacao de Credito Seletiva"
+heroDescription: "Cobrancas, contratos e recuperacao de credito exigem leitura de documentos, exigibilidade, solvencia e custo real da medida."
+framingTitle: "Enquadramento da area"
+framingText:
+  - "Esta frente envolve cobrancas, execucoes, contratos, inadimplemento, recuperacao seletiva de credito e definicao da medida adequada para buscar cumprimento de obrigacoes."
+  - "A atuacao exige avaliar documento, prova da divida, exigibilidade, prazo, custo, risco de insolvencia e utilidade concreta de cada providencia."
+criteria:
+  - "Existencia de contrato, titulo, comprovante, confissao de divida ou outro documento de suporte."
+  - "Verificacao de valor, vencimento, mora, prescricao e exigibilidade."
+  - "Analise da solvencia aparente do devedor e da utilidade da medida."
+  - "Leitura de riscos de discussao contratual, abusividade, nulidade ou prova insuficiente."
+  - "Definicao entre notificacao, negociacao, cobranca judicial, execucao ou outra via adequada."
+  - "Avaliacao do custo-beneficio antes de iniciar medida formal."
+documentsTitle: "Documentacao tipica"
+documentsNote: "A documentacao inicial permite identificar se ha base tecnica para cobranca ou execucao."
+documents:
+  - "Contrato, proposta, pedido, nota fiscal, boleto, recibo ou documento equivalente."
+  - "Comprovantes de entrega, prestacao do servico ou cumprimento da obrigacao."
+  - "Mensagens, e-mails, notificacoes ou historico de negociacao."
+  - "Demonstrativo do valor devido e criterios de atualizacao."
+  - "Dados do devedor, CNPJ ou CPF, endereco e informacoes patrimoniais conhecidas."
+  - "Processos ou protestos anteriores, quando houver."
+cautionsTitle: "Limites e cautelas"
+cautionsIntro: "Cobranca eficiente nao e automatica. Ela depende da prova, do devedor e da utilidade economica da medida."
+cautions:
+  - "Nem toda divida documentada pode ser executada imediatamente."
+  - "A existencia de credito nao garante recuperacao efetiva."
+  - "Medidas judiciais podem ser antieconomicas quando o devedor nao apresenta solvencia minima."
+  - "A estrategia deve considerar prazo, custo, prova, risco de defesa e possibilidade real de recuperacao."
+faqTitle: "Duvidas frequentes sobre cobranca e contratos"
+faqItems:
+  - question: "Qual a diferenca entre cobranca e execucao?"
+    answer: "A execucao depende de titulo executivo e permite uma via mais direta. Quando nao ha titulo executivo, pode ser necessaria acao de cobranca ou outra medida para reconhecer o credito."
+  - question: "Vale a pena entrar com acao para qualquer valor?"
+    answer: "Nem sempre. A decisao deve considerar valor, prova, custo, prazo, risco de defesa e possibilidade real de recuperacao."
+  - question: "Mensagens de WhatsApp servem como prova?"
+    answer: "Podem ajudar, mas precisam ser analisadas junto com documentos, contexto, autoria, integridade e demais elementos do caso."
+readingTitle: "Leitura util antes do contato"
+readingDescription: "A categoria editorial correspondente ajuda a entender prova da divida, contrato, exigibilidade, cobranca, execucao e cuidados antes de agir."
+readingCategoryLabel: "Cobranca e Contratos"
+finalTitle: "Avaliar a recuperacao antes da medida"
+finalText: "Uma cobranca tecnica começa pela leitura da prova e da utilidade da medida. Se ha credito a avaliar, envie as informacoes iniciais para analise."
+finalCtaLabel: "Solicitar analise inicial"
 ctaType: "contact"
 ctaTarget: "/#contato"
-seoTitle: "Cobranca, Execucao, Contratos e Recuperacao de Credito Seletiva | PAVIE | Advocacia"
-description: "Esta area concentra situacoes em que contratos, obrigacoes, cobranca ou recuperacao seletiva de credito pedem leitura cuidadosa do titulo, do inadimplemento e das alternativas juridicas disponiveis."
+seoTitle: "Cobranca, Execucao e Contratos | PAVIE Advocacia"
+description: "Cobranca, execucao, contratos e recuperacao de credito com leitura documental, exigibilidade e estrategia tecnica inicial."
 order: 6
 isActive: true
 reviewStatus: "pending"
 ---
 
-Registro canonico de area para uso estrutural. Revisao humana obrigatoria antes de qualquer publicacao derivada.
+Registro S2 canonico de area para uso estrutural. Revisao humana obrigatoria antes de publicacao derivada.

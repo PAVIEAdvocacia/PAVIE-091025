@@ -1,0 +1,61 @@
+---
+title: "Direito do Consumidor e Responsabilidade Civil"
+canonicalTitle: "Direito do Consumidor e Responsabilidade Civil"
+displayTitle: "Direitos do Consumidor"
+slug: "direito-do-consumidor-responsabilidade-civil"
+categoryCode: "CAT-08"
+shortDescription: "Falhas relevantes de consumo, negativacao indevida, cobrancas abusivas e responsabilidade civil exigem prova, cronologia e leitura objetiva."
+headline: "Falhas relevantes de consumo, negativacao indevida, cobrancas abusivas e responsabilidade civil exigem prova, cronologia e leitura objetiva do dano."
+heroTitle: "Direito do Consumidor e Responsabilidade Civil"
+heroDescription: "Falhas relevantes de consumo, negativacao indevida, cobrancas abusivas e responsabilidade civil exigem prova, cronologia e leitura objetiva do dano."
+framingTitle: "Enquadramento da area"
+framingText:
+  - "Esta frente trata de conflitos de consumo e responsabilidade civil em que ha falha objetiva de servico, cobranca indevida, negativacao indevida, atraso relevante, cancelamento, dano material, dano moral ou descumprimento contratual relevante."
+  - "A atuacao exige separar insatisfacao cotidiana de lesao juridicamente relevante, organizando documentos, provas, cronologia e impactos concretos antes de definir a via adequada."
+criteria:
+  - "Identificacao do fornecedor, servico, produto ou relacao juridica envolvida."
+  - "Organizacao da cronologia dos fatos, tentativas de solucao e respostas recebidas."
+  - "Verificacao de documentos, protocolos, comprovantes, mensagens e registros de atendimento."
+  - "Analise de dano material, dano moral, perda de tempo util ou impacto patrimonial demonstravel."
+  - "Leitura de risco, proporcionalidade e via adequada para notificacao, negociacao ou demanda."
+  - "Separacao entre conflito de baixa expressao e caso que justifica atuacao tecnica individualizada."
+documentsTitle: "Documentacao tipica"
+documentsNote: "A prova inicial ajuda a distinguir falha demonstravel de mera percepcao subjetiva."
+documents:
+  - "Contrato, comprovante de compra, nota fiscal, bilhete, reserva, fatura ou documento equivalente."
+  - "Protocolos de atendimento, mensagens, e-mails, prints e respostas do fornecedor."
+  - "Comprovantes de pagamento, cobranca, estorno, cancelamento ou negativacao."
+  - "Comprovantes de prejuizo material, gastos adicionais ou impacto financeiro."
+  - "Documentos pessoais e dados completos do fornecedor."
+  - "Linha do tempo resumida com datas, tentativas de solucao e consequencias."
+cautionsTitle: "Limites e cautelas"
+cautionsIntro: "A defesa de direitos do consumidor depende de prova, proporcionalidade e dano demonstravel. Nem toda insatisfacao gera indenizacao."
+cautions:
+  - "Nao ha promessa de indenizacao ou valor de reparacao sem analise do caso concreto."
+  - "A existencia de falha precisa ser demonstrada por documentos, registros ou elementos verificaveis."
+  - "Casos muito simples podem ser mais adequados a solucao administrativa ou juizado, conforme o contexto."
+  - "A estrategia considera custo, prova, gravidade, risco, prazo e utilidade da medida."
+faqTitle: "Duvidas frequentes sobre consumidor e responsabilidade civil"
+faqItems:
+  - question: "Todo problema de consumo gera dano moral?"
+    answer: "Nao. E necessario avaliar a gravidade da falha, a prova, os efeitos concretos e o entendimento aplicavel ao tipo de situacao."
+  - question: "Negativacao indevida sempre permite indenizacao?"
+    answer: "Pode permitir em muitos casos, mas e preciso verificar origem da divida, comunicacoes, existencia de outras restricoes e documentos disponiveis."
+  - question: "Atraso ou cancelamento de voo sempre gera reparacao?"
+    answer: "Nao automaticamente. A analise considera tempo de atraso, assistencia prestada, motivo, provas, prejuizos e impacto concreto."
+readingTitle: "Leitura util antes do contato"
+readingDescription: "A categoria editorial correspondente ajuda a compreender prova, dano, negativacao, cobrancas, falhas de servico e limites de reparacao antes da analise do caso."
+readingCategoryLabel: "Direitos do Consumidor"
+finalTitle: "Avaliar a falha com prova e proporcionalidade"
+finalText: "A leitura tecnica ajuda a separar expectativa, falha comprovavel e medida proporcional. Se o caso exige analise individualizada, envie as informacoes iniciais."
+finalCtaLabel: "Solicitar analise inicial"
+ctaType: "contact"
+ctaTarget: "/#contato"
+seoTitle: "Direito do Consumidor e Responsabilidade Civil | PAVIE Advocacia"
+description: "Direito do consumidor, responsabilidade civil, falhas de servico, negativacao indevida, cobrancas abusivas e reparacao com leitura tecnica da prova."
+order: 8
+isActive: true
+reviewStatus: "pending"
+---
+
+Registro S2 canonico de area para uso estrutural. Revisao humana obrigatoria antes de publicacao derivada.

@@ -1,16 +1,62 @@
 ---
 title: "Planejamento Patrimonial, Sucessorio e Arranjos Preventivos"
+canonicalTitle: "Planejamento Patrimonial, Sucessorio e Arranjos Preventivos"
+displayTitle: "Planejamento Patrimonial"
 slug: "planejamento-patrimonial-sucessorio-arranjos-preventivos"
 categoryCode: "CAT-02"
-shortDescription: "Organizacao patrimonial, sucessoria e familiar em chave preventiva, com metodo documental e definicao antecipada de arranjos relevantes."
-headline: "Planejar patrimonio e sucessao e organizar juridicamente o futuro com antecedencia e coerencia."
+shortDescription: "Organizacao patrimonial e sucessoria preventiva exige leitura documental, desenho de riscos e escolha de instrumentos proporcionais."
+headline: "Planejar o patrimonio e a sucessao exige metodo, documentacao organizada e clareza sobre os efeitos futuros das escolhas feitas hoje."
+heroTitle: "Planejamento Patrimonial, Sucessorio e Arranjos Preventivos"
+heroDescription: "Planejar o patrimonio e a sucessao exige metodo, documentacao organizada e clareza sobre os efeitos futuros das escolhas feitas hoje."
+framingTitle: "Enquadramento da area"
+framingText:
+  - "Esta frente trata da organizacao juridica preventiva de patrimonio, sucessao, arranjos familiares e estruturas documentais voltadas a reduzir incertezas futuras."
+  - "A atuacao nao parte de modelos prontos. Ela exige compreender a composicao patrimonial, as relacoes familiares, os objetivos legitimos e os limites juridicos de cada instrumento."
+criteria:
+  - "Mapeamento de bens, direitos, participacoes societarias, dividas e responsabilidades."
+  - "Identificacao dos efeitos sucessorios, familiares, registrais, tributarios e societarios envolvidos."
+  - "Avaliacao de instrumentos como testamento, doacoes, pactos, acordos familiares e reorganizacoes documentais."
+  - "Leitura de riscos de conflito, nulidade, excesso, simulacao ou desequilibrio entre herdeiros."
+  - "Definicao de prioridades reais, distinguindo o que precisa ser feito agora do que pode ser amadurecido."
+  - "Organizacao de um plano proporcional, tecnicamente defensavel e compreensivel para os envolvidos."
+documentsTitle: "Documentacao tipica"
+documentsNote: "A documentacao inicial permite avaliar objetivos, limites e instrumentos possiveis."
+documents:
+  - "Documentos pessoais e estado civil dos envolvidos."
+  - "Certidoes de casamento, uniao estavel, pacto antenupcial ou documentos familiares relevantes."
+  - "Matriculas de imoveis, contratos, documentos de veiculos e ativos relevantes."
+  - "Contratos sociais, participacoes societarias e documentos empresariais, quando houver."
+  - "Informacoes sobre filhos, herdeiros, dependentes e responsabilidades familiares."
+  - "Registros de doacoes, testamentos, acordos ou organizacoes patrimoniais ja existentes."
+  - "Objetivos declarados e preocupacoes centrais da familia ou do titular do patrimonio."
+cautionsTitle: "Limites e cautelas"
+cautionsIntro: "Planejamento juridico exige aderencia aos fatos, aos documentos e aos limites legais. Alguns cuidados sao indispensaveis."
+cautions:
+  - "Planejamento patrimonial nao deve ser confundido com blindagem absoluta de bens."
+  - "Nenhum instrumento elimina todos os riscos familiares, sucessorios, fiscais ou patrimoniais."
+  - "A validade de cada arranjo depende de forma, substancia, capacidade, finalidade e contexto."
+  - "Medidas preventivas precisam ser proporcionais e tecnicamente justificaveis, sem promessa de resultado futuro."
+faqTitle: "Duvidas frequentes sobre planejamento patrimonial"
+faqItems:
+  - question: "Planejamento patrimonial e apenas para grandes patrimonios?"
+    answer: "Nao. A utilidade depende menos do volume de bens e mais da necessidade de organizar riscos, responsabilidades e transmissao patrimonial com clareza."
+  - question: "O planejamento evita inventario?"
+    answer: "Nem sempre. Alguns instrumentos podem simplificar a sucessao ou reduzir conflitos, mas a necessidade de inventario depende da composicao patrimonial e das escolhas adotadas."
+  - question: "E possivel planejar sem envolver toda a familia desde o inicio?"
+    answer: "Em certos casos, sim. A estrategia de envolvimento dos familiares depende dos objetivos, documentos e riscos de cada situacao."
+readingTitle: "Leitura util antes do contato"
+readingDescription: "A categoria editorial correspondente ajuda a compreender instrumentos preventivos, limites e cuidados antes de estruturar qualquer medida."
+readingCategoryLabel: "Planejamento Patrimonial"
+finalTitle: "Estruturar antes do conflito"
+finalText: "A organizacao preventiva reduz incertezas e permite escolhas mais conscientes. Se o seu objetivo e planejar com seguranca, envie as informacoes iniciais para avaliacao."
+finalCtaLabel: "Solicitar analise inicial"
 ctaType: "contact"
 ctaTarget: "/#contato"
-seoTitle: "Planejamento Patrimonial, Sucessorio e Arranjos Preventivos | PAVIE | Advocacia"
-description: "Esta area trata de medidas preventivas voltadas a patrimonio, sucessao e organizacao familiar, quando a decisao depende de metodo, coerencia documental e leitura responsavel do contexto."
+seoTitle: "Planejamento Patrimonial e Sucessorio | PAVIE Advocacia"
+description: "Organizacao patrimonial e sucessoria preventiva com metodo documental, leitura de riscos e definicao antecipada de arranjos relevantes."
 order: 2
 isActive: true
 reviewStatus: "pending"
 ---
 
-Registro canonico de area para uso estrutural. Revisao humana obrigatoria antes de qualquer publicacao derivada.
+Registro S2 canonico de area para uso estrutural. Revisao humana obrigatoria antes de publicacao derivada.

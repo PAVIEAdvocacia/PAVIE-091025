@@ -1,16 +1,61 @@
 ---
 title: "Imoveis, Registro, Regularizacoes e Litigios Patrimoniais"
+canonicalTitle: "Imoveis, Registro, Regularizacoes e Litigios Patrimoniais"
+displayTitle: "Imoveis e Regularizacoes"
 slug: "imoveis-registro-regularizacoes-litigios-patrimoniais"
 categoryCode: "CAT-05"
-shortDescription: "Propriedade, posse, registro e regularizacao imobiliaria exigem leitura documental precisa e avaliacao correta do risco patrimonial."
-headline: "Questoes imobiliarias patrimoniais exigem precisao documental, leitura registral e avaliacao correta do risco."
+shortDescription: "Regularizacao imobiliaria, registro, posse e litigios patrimoniais exigem leitura documental e estrategia proporcional ao risco."
+headline: "A seguranca imobiliaria depende da leitura correta de documentos, registros, posse, contratos e riscos patrimoniais associados ao bem."
+heroTitle: "Imoveis, Registro, Regularizacoes e Litigios Patrimoniais"
+heroDescription: "A seguranca imobiliaria depende da leitura correta de documentos, registros, posse, contratos e riscos patrimoniais associados ao bem."
+framingTitle: "Enquadramento da area"
+framingText:
+  - "Esta frente envolve imoveis, registros, regularizacoes, conflitos possessorios, disputas patrimoniais e situacoes em que a documentacao do bem precisa ser organizada ou contestada."
+  - "A atuacao parte da leitura documental: matricula, cadeia registral, contratos, posse, pagamentos, certidoes e historico do imovel."
+criteria:
+  - "Analise da matricula, cadeia dominial, registro, averbacoes e eventuais pendencias."
+  - "Verificacao de contratos, promessas de compra e venda, recibos, posse e ocupacao."
+  - "Identificacao de risco registral, fiscal, condominial, sucessorio ou possessorio."
+  - "Leitura da via adequada para regularizacao, negociacao, notificacao ou litigio."
+  - "Organizacao de prova documental para demonstrar origem, uso, posse ou titularidade."
+  - "Definicao dos limites tecnicos antes de qualquer providencia sobre o bem."
+documentsTitle: "Documentacao tipica"
+documentsNote: "Os documentos abaixo ajudam a entender a situacao real do imovel e seus riscos."
+documents:
+  - "Matricula atualizada do imovel."
+  - "Escrituras, contratos, promessas, recibos e comprovantes de pagamento."
+  - "Certidoes fiscais, condominiais, municipais ou registrais disponiveis."
+  - "Documentos pessoais das partes envolvidas."
+  - "Comprovantes de posse, uso, benfeitorias ou ocupacao."
+  - "Notificacoes, mensagens, processos ou historico de conflito, quando houver."
+cautionsTitle: "Limites e cautelas"
+cautionsIntro: "A analise imobiliaria depende da prova documental e da situacao registral. Evitar atalhos e essencial."
+cautions:
+  - "Posse, contrato e propriedade registrada nao significam sempre a mesma coisa."
+  - "A regularizacao pode depender de requisitos urbanisticos, fiscais, registrais ou judiciais."
+  - "Nem todo conflito imobiliario recomenda ajuizamento imediato."
+  - "A viabilidade de cada medida depende da cadeia documental e dos riscos do caso concreto."
+faqTitle: "Duvidas frequentes sobre imoveis e regularizacoes"
+faqItems:
+  - question: "Tenho contrato, mas o imovel nao esta no meu nome. O que fazer?"
+    answer: "E necessario analisar a matricula, a cadeia de documentos, os pagamentos e a situacao das partes para definir se ha caminho registral, negocial ou judicial."
+  - question: "Posse prolongada garante propriedade?"
+    answer: "Nao automaticamente. A posse pode ter relevancia juridica, mas depende de requisitos, documentos, tempo, oposicao e natureza da ocupacao."
+  - question: "Posso comprar um imovel com pendencia?"
+    answer: "A compra pode envolver risco relevante. Antes de decidir, e importante analisar matricula, certidoes, contratos, dividas e impedimentos."
+readingTitle: "Leitura util antes do contato"
+readingDescription: "A categoria editorial correspondente ajuda a compreender matricula, posse, regularizacao, riscos documentais e conflitos patrimoniais ligados a imoveis."
+readingCategoryLabel: "Imoveis e Regularizacoes"
+finalTitle: "Ler o imovel antes de agir"
+finalText: "A organizacao documental permite separar risco real de aparente e escolher a medida adequada. Se o imovel exige avaliacao tecnica, envie as informacoes iniciais."
+finalCtaLabel: "Solicitar analise inicial"
 ctaType: "contact"
 ctaTarget: "/#contato"
-seoTitle: "Imoveis, Registro, Regularizacoes e Litigios Patrimoniais | PAVIE | Advocacia"
-description: "Esta area abrange questoes relacionadas a imoveis, registro, regularizacao e litigios patrimoniais, quando a analise depende de documentos relevantes, leitura registral e definicao tecnica da via adequada."
+seoTitle: "Imoveis, Registro e Regularizacoes | PAVIE Advocacia"
+description: "Leitura registral, regularizacao imobiliaria, posse, propriedade e litigios patrimoniais com avaliacao documental e risco objetivo."
 order: 5
 isActive: true
 reviewStatus: "pending"
 ---
 
-Registro canonico de area para uso estrutural. Revisao humana obrigatoria antes de qualquer publicacao derivada.
+Registro S2 canonico de area para uso estrutural. Revisao humana obrigatoria antes de publicacao derivada.

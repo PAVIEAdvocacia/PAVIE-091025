@@ -33,7 +33,7 @@ Se houver ajuste de copy pública sensível, ler também:
 
 ## 3. Regras de taxonomia
 
-O blog opera com 7 categorias canônicas e nenhuma outra categoria-mãe.
+O blog opera com 8 categorias canônicas, de CAT-01 a CAT-08, e nenhuma outra categoria-mãe.
 
 Todo post deve possuir, obrigatoriamente:
 

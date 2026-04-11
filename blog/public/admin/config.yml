@@ -88,6 +88,7 @@ collections:
           - { label: "CAT-05 | Imoveis, Registro, Regularizacoes e Litigios Patrimoniais", value: "CAT-05" }
           - { label: "CAT-06 | Cobranca, Execucao, Contratos e Recuperacao de Credito Seletiva", value: "CAT-06" }
           - { label: "CAT-07 | Tributacao Patrimonial e Recuperacao Tributaria Seletiva", value: "CAT-07" }
+          - { label: "CAT-08 | Direito do Consumidor e Responsabilidade Civil", value: "CAT-08" }
       - label: "Tipo de conteudo"
         name: "contentType"
         widget: "select"
@@ -251,6 +252,7 @@ collections:
           - { label: "CAT-05", value: "CAT-05" }
           - { label: "CAT-06", value: "CAT-06" }
           - { label: "CAT-07", value: "CAT-07" }
+          - { label: "CAT-08", value: "CAT-08" }
       - label: "Descricao curta"
         name: "shortDescription"
         widget: "text"

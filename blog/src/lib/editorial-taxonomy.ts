@@ -24,8 +24,8 @@ export const EDITORIAL_AREAS = [
 	},
 	{
 		key: 'consumidor-saude-previdencia',
-		label: 'Consumidor, Saude e Previdencia',
-		aliases: ['consumidor', 'consumidor-e-responsabilidade'],
+		label: 'Consumidor e Responsabilidade Civil',
+		aliases: ['consumidor', 'direito-do-consumidor', 'responsabilidade-civil', 'consumidor-e-responsabilidade'],
 	},
 	{
 		key: 'compliance-integridade-atuacao-empresarial',

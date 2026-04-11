@@ -42,6 +42,12 @@ export const CANONICAL_CATEGORY_DEFINITIONS = [
 		// Compatibilidade temporária com o runtime atual de 5 áreas.
 		runtimeAreaKey: 'familia-sucessoes-patrimonio',
 	},
+	{
+		code: 'CAT-08',
+		slug: 'direito-do-consumidor-responsabilidade-civil',
+		label: 'Direito do Consumidor e Responsabilidade Civil',
+		runtimeAreaKey: 'consumidor-saude-previdencia',
+	},
 ] as const;
 
 export const CANONICAL_CATEGORY_CODES = CANONICAL_CATEGORY_DEFINITIONS.map(
@@ -143,10 +149,10 @@ export const LEGACY_TO_CANONICAL_AREA_MATRIX = [
 	},
 	{
 		legacyAreaKey: 'consumidor-saude-previdencia',
-		legacyAreaLabel: 'Consumidor, Saúde e Previdência',
-		targetCategoryCodes: [] as const,
+		legacyAreaLabel: 'Consumidor e Responsabilidade Civil',
+		targetCategoryCodes: ['CAT-08'] as const,
 		migrationRule:
-			'Sem correspondência canônica direta no modelo de 7 categorias. Exige triagem manual, reclassificação extraordinária ou arquivamento.',
+			'Migrar para direito do consumidor e responsabilidade civil quando houver aderência a falhas de serviço, negativação, cobrança abusiva ou dano indenizável com base documental mínima.',
 	},
 	{
 		legacyAreaKey: 'compliance-integridade-atuacao-empresarial',

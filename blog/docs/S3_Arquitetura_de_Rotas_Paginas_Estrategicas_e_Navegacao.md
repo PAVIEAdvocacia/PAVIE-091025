@@ -99,7 +99,7 @@ Você **não pode**:
 ## Critérios de aceite
 
 - [ ] rotas centrais funcionando
-- [ ] `/areas/` alinhada às 7 categorias canônicas
+- [ ] `/areas/` alinhada às 8 categorias canônicas
 - [ ] `/blog/` consumindo a collection correta
 - [ ] posts, áreas e autor interligados
 - [ ] nenhum crescimento desordenado de URLs

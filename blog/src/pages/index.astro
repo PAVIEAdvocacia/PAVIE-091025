@@ -107,15 +107,6 @@ const areaCards = homeAreaOrder
 		const copy = areaCopyByCode[code];
 		if (!copy) return undefined;
 
-		if (code === 'CAT-08') {
-			return {
-				code,
-				title: copy.title,
-				description: copy.description,
-				href: '/#contato',
-			};
-		}
-
 		const area = areaByCode.get(code);
 		if (!area) return undefined;
 
