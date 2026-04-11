@@ -1,6 +1,6 @@
 ---
 interface Props {
-	variant?: 'full' | 'compact';
+	variant?: 'horizontal' | 'stacked';
 	theme?: 'dark' | 'light';
 	width?: number | string;
 	alt?: string;
@@ -8,16 +8,14 @@ interface Props {
 }
 
 const {
-	variant = 'full',
+	variant = 'horizontal',
 	theme = 'light',
-	width = variant === 'compact' ? 118 : 190,
+	width = variant === 'stacked' ? 130 : 190,
 	alt = 'PAVIE | Advocacia',
 	class: className = '',
 } = Astro.props;
 
-const src = theme === 'dark'
-	? '/brand/pavie-logo-master-light.svg'
-	: '/brand/pavie-logo-master.svg';
+const src = `/brand/pavie-logo-${variant}${theme === 'dark' ? '-light' : ''}.png`;
 const logoWidth = typeof width === 'number' ? `${width}px` : width;
 ---
 
@@ -38,7 +36,7 @@ const logoWidth = typeof width === 'number' ? `${width}px` : width;
 		block-size: auto;
 	}
 
-	.brand-logo--compact {
-		inline-size: min(var(--brand-logo-width), 132px);
+	.brand-logo--stacked {
+		inline-size: min(var(--brand-logo-width), 180px);
 	}
 </style>
