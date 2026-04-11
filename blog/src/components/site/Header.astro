@@ -8,11 +8,10 @@ interface Props {
 const { currentPath = '/' } = Astro.props;
 
 const navItems = [
-	{ href: '/', label: 'Inicio' },
-	{ href: '/areas/', label: 'Areas' },
-	{ href: '/#metodo', label: 'Metodo' },
+	{ href: '/', label: 'Início' },
+	{ href: '/areas/', label: 'Áreas' },
+	{ href: '/#metodo', label: 'Método' },
 	{ href: '/contato/', label: 'Contato' },
-	{ href: '/blog/', label: 'Conteudos' },
 ];
 
 function isActive(href: string): boolean {
@@ -23,11 +22,11 @@ function isActive(href: string): boolean {
 
 <header class="site-header" role="banner">
 	<div class="site-header__bar container">
-		<a class="site-header__brand" href="/" aria-label="PAVIE | Advocacia, inicio do site institucional">
-			<BrandLogo variant="compact" width={132} />
+		<a class="site-header__brand" href="/" aria-label="PAVIE | Advocacia, início do site institucional">
+			<BrandLogo variant="compact" width={124} />
 		</a>
 
-		<nav class="site-nav" aria-label="Navegacao principal">
+		<nav class="site-nav" aria-label="Navegação principal">
 			{navItems.map((item) => (
 				<a
 					href={item.href}
@@ -39,17 +38,19 @@ function isActive(href: string): boolean {
 		</nav>
 
 		<a class="site-header__blog-link" href="/blog/">
-			Conteudos
+			Conteúdo do Advogado
+			<span aria-hidden="true">+</span>
 		</a>
 
 		<details class="site-mobile-nav">
-			<summary aria-label="Abrir menu de navegacao">Menu</summary>
+			<summary aria-label="Abrir menu de navegação">Menu</summary>
 			<div class="site-mobile-nav__panel">
 				{navItems.map((item) => (
 					<a href={item.href}>
 						{item.label}
 					</a>
 				))}
+				<a href="/blog/">Conteúdo do Advogado</a>
 			</div>
 		</details>
 	</div>
@@ -57,16 +58,16 @@ function isActive(href: string): boolean {
 
 <style>
 	.site-header {
-		background: color-mix(in srgb, var(--surface-card) 96%, white);
-		border-bottom: 1px solid var(--color-line);
+		background: color-mix(in srgb, var(--surface-page) 92%, white);
+		border-bottom: 1px solid rgba(216, 208, 198, 0.72);
 		position: sticky;
 		top: 0;
 		z-index: 50;
-		backdrop-filter: blur(6px);
+		backdrop-filter: blur(8px);
 	}
 
 	.site-header__bar {
-		min-height: 72px;
+		min-height: 54px;
 		display: grid;
 		grid-template-columns: auto 1fr auto;
 		align-items: center;
@@ -84,23 +85,34 @@ function isActive(href: string): boolean {
 		display: flex;
 		justify-content: center;
 		align-items: center;
-		gap: var(--space-lg);
+		gap: clamp(1.1rem, 2.4vw, 2.4rem);
 	}
 
 	.site-nav__link {
+		position: relative;
+		padding: 0.25rem 0;
 		text-decoration: none;
-		font-size: var(--step-label);
+		font-size: 0.78rem;
 		font-weight: 700;
-		letter-spacing: var(--letter-label);
-		text-transform: uppercase;
-		color: color-mix(in srgb, var(--color-graphite) 82%, var(--color-mist));
-		padding: 0.35rem 0.25rem;
+		color: color-mix(in srgb, var(--color-graphite) 84%, var(--color-mist));
+	}
+
+	.site-nav__link::after {
+		content: '';
+		position: absolute;
+		left: 0;
+		right: 0;
+		bottom: -0.28rem;
+		height: 1px;
+		background: transparent;
 	}
 
 	.site-nav__link.is-active {
 		color: var(--color-petrol);
-		text-decoration: underline;
-		text-decoration-color: color-mix(in srgb, var(--color-sand) 72%, white);
+	}
+
+	.site-nav__link.is-active::after {
+		background: var(--color-accent);
 	}
 
 	.site-nav__link:hover,
@@ -111,10 +123,20 @@ function isActive(href: string): boolean {
 	}
 
 	.site-header__blog-link {
-		font-size: var(--step-small);
-		font-weight: 700;
-		color: var(--color-graphite);
+		display: inline-flex;
+		align-items: center;
+		gap: 0.35rem;
+		font-size: 0.78rem;
+		font-weight: 800;
+		color: var(--color-petrol);
 		text-decoration: none;
+		white-space: nowrap;
+	}
+
+	.site-header__blog-link span {
+		color: var(--color-accent);
+		font-size: 0.92rem;
+		line-height: 1;
 	}
 
 	.site-mobile-nav {
@@ -124,7 +146,7 @@ function isActive(href: string): boolean {
 
 	.site-mobile-nav summary {
 		list-style: none;
-		font-weight: 700;
+		font-weight: 800;
 		font-size: 0.9rem;
 		cursor: pointer;
 		color: var(--color-petrol);
@@ -144,12 +166,12 @@ function isActive(href: string): boolean {
 		min-width: 220px;
 		background: var(--surface-card);
 		border: 1px solid var(--color-line);
-		border-radius: var(--radius-sm);
+		border-radius: var(--radius-xs);
 		box-shadow: var(--shadow-soft);
 	}
 
 	.site-mobile-nav__panel a {
-		padding: 0.4rem 0.5rem;
+		padding: 0.45rem 0.5rem;
 		border-radius: var(--radius-xs);
 		text-decoration: none;
 		font-size: 0.92rem;
@@ -161,13 +183,7 @@ function isActive(href: string): boolean {
 		background: color-mix(in srgb, var(--color-soft) 78%, white);
 	}
 
-	@media (max-width: 1080px) {
-		.site-nav {
-			gap: 0.75rem;
-		}
-	}
-
-	@media (max-width: 960px) {
+	@media (max-width: 860px) {
 		.site-header__bar {
 			grid-template-columns: 1fr auto;
 		}

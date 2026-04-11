@@ -8,66 +8,91 @@ import { buildCanonicalAreaDirectory } from '../lib/canonical-directory';
 import { isPublicPost, normalizePosts, sortPostsByDate } from '../lib/posts';
 import '../styles/site-home.css';
 
-const title = 'PAVIE | Advocacia | Clareza, metodo e responsabilidade';
+const title = 'PAVIE | Advocacia | Clareza, técnica e respeito';
 const description =
-	'A PAVIE | Advocacia atua em situacoes que impactam patrimonio, familia, sucessao, imoveis, documentos relevantes e relacoes contratuais seletivas, com analise tecnica, linguagem clara e direcao juridica responsavel.';
-
-const proofItems = [
-	{
-		title: 'OAB/RJ 134.947',
-		text: 'Atuacao identificavel, contratacao formal e responsabilidade tecnica em cada etapa do atendimento.',
-	},
-	{
-		title: 'Atendimento online e presencial',
-		text: 'O primeiro formato de contato se ajusta ao contexto do caso e a necessidade pratica da situacao.',
-	},
-	{
-		title: 'Contratacao formal',
-		text: 'Escopo, etapas, honorarios e forma de acompanhamento sao apresentados com clareza quando houver aderencia.',
-	},
-	{
-		title: 'Conteudo informativo',
-		text: 'A leitura ajuda a organizar o problema, mas a orientacao depende sempre da situacao individual.',
-	},
-];
+	'Advocacia estratégica e acolhedora para questões de patrimônio, família, curatelas, sucessões, imóveis, contratos, créditos e direitos do consumidor.';
 
 const processSteps = [
 	{
-		title: 'Analise inicial',
-		text: 'O primeiro contato organiza a situacao, a urgencia pratica e o objetivo que precisa ser compreendido.',
+		title: 'Análise inicial',
+		text: 'Ouvimos você para entender a situação real. Avaliamos a viabilidade com franqueza antes de prometer qualquer resultado.',
 	},
 	{
 		title: 'Leitura documental',
-		text: 'Documentos, prazos, vinculos e registros relevantes sao identificados antes de qualquer passo mais profundo.',
+		text: 'Analisamos cuidadosamente os seus documentos, certidões e histórico para garantir que não haja surpresas no caminho.',
 	},
 	{
-		title: 'Estrategia e opcoes',
-		text: 'Caminhos possiveis, limites, riscos e custos sao apresentados de forma clara e proporcional ao caso.',
+		title: 'Estratégia e opções',
+		text: 'Apresentamos as rotas disponíveis, os riscos envolvidos e os custos de forma totalmente clara e sem jargões desnecessários.',
 	},
 	{
-		title: 'Execucao segura',
-		text: 'Com escopo definido, a conducao segue com registro, comunicacao objetiva e responsabilidade tecnica.',
+		title: 'Execução segura',
+		text: 'Atuamos na defesa dos seus direitos, mantendo você atualizado e seguro sobre cada avanço do seu caso.',
 	},
 ];
 
 const faq = [
 	{
-		q: 'O primeiro contato ja significa contratacao?',
-		a: 'Nao. O contato inicial serve para triagem, compreensao do contexto e verificacao de aderencia. A contratacao depende de escopo definido, proposta formal e aceite expresso.',
+		q: 'O primeiro contato já significa contratação?',
+		a: 'Não. O contato inicial serve para triagem, compreensão do contexto e verificação de aderência. A contratação depende de escopo definido, proposta formal e aceite expresso.',
 	},
 	{
-		q: 'Quais documentos devo separar antes de enviar a situacao?',
-		a: 'Comece pelos documentos pessoais, contratos, certidoes, mensagens, notificacoes, registros, prazos e qualquer prova que ajude a reconstruir a cronologia do caso.',
+		q: 'Quais documentos devo separar antes de enviar a situação?',
+		a: 'Comece pelos documentos pessoais, contratos, certidões, mensagens, notificações, registros, prazos e qualquer prova que ajude a reconstruir a cronologia do caso.',
 	},
 	{
 		q: 'O atendimento pode ocorrer fora do Rio de Janeiro?',
-		a: 'Sim. A analise inicial pode ocorrer online, com avaliacao do que pode ser conduzido a distancia e do que depende de providencia local ou complementar.',
+		a: 'Sim. A análise inicial pode ocorrer online, com avaliação do que pode ser conduzido a distância e do que depende de providência local ou complementar.',
 	},
 	{
-		q: 'Como os honorarios sao definidos?',
-		a: 'Os honorarios dependem do tipo de demanda, complexidade, urgencia, documentos disponiveis e extensao do acompanhamento. Quando houver aderencia, a proposta e apresentada de forma formal e clara.',
+		q: 'Como os honorários são definidos?',
+		a: 'Os honorários dependem do tipo de demanda, complexidade, urgência, documentos disponíveis e extensão do acompanhamento. Quando houver aderência, a proposta é apresentada de forma formal e clara.',
 	},
 ];
+
+const areaCopyByCode: Record<string, { title: string; description: string }> = {
+	'CAT-01': {
+		title: 'Sucessões e Inventários',
+		description: 'Organização e condução técnica de inventários, partilhas e transmissão patrimonial.',
+	},
+	'CAT-02': {
+		title: 'Planejamento Patrimonial',
+		description: 'Estruturação de bens e arranjos preventivos para decisões familiares e sucessórias.',
+	},
+	'CAT-03': {
+		title: 'Família Patrimonial',
+		description: 'Disputas, dissoluções e reorganizações familiares com impacto financeiro e documental.',
+	},
+	'CAT-04': {
+		title: 'Família Binacional',
+		description: 'Questões familiares e sucessórias com elementos internacionais, documentos e jurisdições.',
+	},
+	'CAT-05': {
+		title: 'Imóveis e Regularizações',
+		description: 'Análise documental, registro, regularização e proteção patrimonial envolvendo imóveis.',
+	},
+	'CAT-06': {
+		title: 'Cobrança e Contratos',
+		description: 'Estratégia de cobrança, execução, contratos e recuperação seletiva de créditos.',
+	},
+	'CAT-07': {
+		title: 'Tributação Patrimonial',
+		description: 'Análise de impactos fiscais, regularização e recuperação tributária seletiva.',
+	},
+	'CAT-08': {
+		title: 'Direitos do Consumidor',
+		description: 'Reparação técnica por atrasos de voo, negativação indevida e falhas objetivas de serviço.',
+	},
+};
+
+const homeAreaOrder = ['CAT-01', 'CAT-02', 'CAT-03', 'CAT-08', 'CAT-05', 'CAT-04', 'CAT-06', 'CAT-07'];
+
+type HomeAreaCard = {
+	code: string;
+	title: string;
+	description: string;
+	href: string;
+};
 
 const [areaEntries, authorEntries, blogEntries] = await Promise.all([
 	getAreaEntries(),
@@ -76,9 +101,32 @@ const [areaEntries, authorEntries, blogEntries] = await Promise.all([
 ]);
 const posts = sortPostsByDate(normalizePosts(blogEntries, authorEntries)).filter(isPublicPost);
 const areaDirectory = buildCanonicalAreaDirectory(areaEntries, posts);
-const primaryAreaCodes = new Set(['CAT-01', 'CAT-02', 'CAT-03', 'CAT-05']);
-const primaryAreas = areaDirectory.filter((area) => primaryAreaCodes.has(area.code));
-const secondaryAreas = areaDirectory.filter((area) => !primaryAreaCodes.has(area.code));
+const areaByCode = new Map(areaDirectory.map((area) => [area.code, area]));
+const areaCards = homeAreaOrder
+	.map((code): HomeAreaCard | undefined => {
+		const copy = areaCopyByCode[code];
+		if (!copy) return undefined;
+
+		if (code === 'CAT-08') {
+			return {
+				code,
+				title: copy.title,
+				description: copy.description,
+				href: '/areas/',
+			};
+		}
+
+		const area = areaByCode.get(code);
+		if (!area) return undefined;
+
+		return {
+			code,
+			title: copy.title,
+			description: copy.description,
+			href: area.href,
+		};
+	})
+	.filter((card): card is HomeAreaCard => Boolean(card));
 
 const faqSchema = buildFaqSchema(
 	faq.map((item) => ({
@@ -95,185 +143,117 @@ const localBusinessSchema = {
 ---
 
 <BaseLayout title={title} description={description} canonical={`${MAIN_SITE_URL}/`}>
-	<div class="container site-home">
+	<div class="site-home">
 		<section class="site-hero" aria-labelledby="hero-title">
-			<div class="site-hero__content">
-				<span class="badge">PAVIE | Advocacia | OAB/RJ 134.947</span>
-				<h1 id="hero-title">Advocacia para questoes que exigem clareza, metodo e responsabilidade.</h1>
+			<div class="container site-hero__inner">
+				<span class="site-eyebrow">Advocacia estratégica e acolhedora</span>
+				<h1 id="hero-title">Clareza, técnica e respeito na condução dos seus direitos.</h1>
 				<p class="site-hero__lead">
-					A PAVIE | Advocacia atua em situacoes que impactam patrimonio, familia, sucessao, imoveis,
-					documentos relevantes e relacoes contratuais seletivas, com analise tecnica, linguagem clara
-					e direcao juridica responsavel.
+					Uma advocacia focada na sua segurança. Atuamos desde o planejamento e organização do seu
+					patrimônio até questões sensíveis de família, curatelas e recuperação de créditos.
 				</p>
-				<div class="site-hero__cta">
-					<a class="btn btn-primary" href="#contato">Enviar informacoes iniciais</a>
-					<a class="btn btn-secondary" href="/areas/">Conheca as areas</a>
+				<div class="site-hero__actions">
+					<a class="btn btn-primary" href="#contato">Solicitar análise do caso</a>
+					<a class="btn btn-secondary" href="/areas/">Ver áreas de atuação</a>
 				</div>
-				<p class="site-hero__microcopy">
-					O conteudo do site e informativo; a orientacao depende da situacao individual.
-				</p>
+				<p class="site-hero__location">Sede no Rio de Janeiro <span aria-hidden="true">•</span> Atendimento em todo o Brasil</p>
 			</div>
-
-			<aside class="site-hero__panel" aria-labelledby="hero-panel-title">
-				<span class="section-kicker">Primeiro passo</span>
-				<h2 id="hero-panel-title">O que acontece na etapa inicial</h2>
-				<ul class="hero-list">
-					<li>Leitura objetiva da situacao apresentada.</li>
-					<li>Identificacao de documentos, prazos e pontos de risco.</li>
-					<li>Orientacao sobre a via adequada para avancar, quando houver aderencia.</li>
-				</ul>
-				<p>
-					O primeiro contato contextualiza o problema. Ele nao significa promessa de resultado nem
-					patrocinio automatico.
-				</p>
-			</aside>
 		</section>
 
-		<section class="proof-strip" aria-label="Barra de prova institucional">
-			{proofItems.map((item) => (
-				<article class="proof-item">
-					<strong>{item.title}</strong>
-					<p>{item.text}</p>
-				</article>
-			))}
-		</section>
-
-		<section id="advogado" class="site-section" aria-labelledby="advogado-title">
-			<div class="section-title">
-				<div>
-					<span class="section-kicker">Direcao juridica</span>
-					<h2 id="advogado-title">
-						Fabio Pavie conduz o atendimento com metodo, clareza de linguagem e responsabilidade profissional.
-					</h2>
-				</div>
-			</div>
-
-			<article class="surface-card professional-section">
+		<section id="advogado" class="site-section professional-section container" aria-labelledby="advogado-title">
+			<div class="professional-media">
 				<img
 					src="/uploads/fabio-pavie-profile.png"
 					alt="Foto profissional do advogado Fabio Mathias Pavie"
 					loading="lazy"
 				/>
-				<div class="professional-copy">
-					<p class="professional-meta">Advogado | OAB/RJ 134.947</p>
-					<h3>Fabio Mathias Pavie</h3>
-					<p>
-						Fabio Pavie conduz uma pratica orientada por organizacao, rigor documental,
-						clareza de linguagem e responsabilidade estrategica.
-					</p>
-					<p>
-						A proposta da PAVIE nao e ampliar artificialmente areas de atuacao, mas oferecer
-						leitura tecnica proporcional para problemas juridicos relevantes.
-					</p>
-					<div class="site-hero__cta">
-						<a class="btn btn-ghost" href="/sobre/">Conheca a direcao juridica</a>
-					</div>
-				</div>
-			</article>
+				<span>Advogado titular</span>
+			</div>
+
+			<div class="professional-copy">
+				<span class="site-eyebrow">Condução técnica e humana</span>
+				<h2 id="advogado-title">Fabio Mathias Pavie</h2>
+				<blockquote>
+					“Acredito que a segurança jurídica se constrói com técnica, franqueza e profundo respeito à
+					história de cada cliente. O nosso compromisso é organizar os detalhes do seu caso para que
+					você possa tomar decisões claras e proteger o que construiu.”
+				</blockquote>
+				<p>
+					Inscrito na OAB/RJ 134.947, dedica-se a soluções jurídicas que envolvem estruturação
+					patrimonial, direito de família, curatelas e recuperação de crédito. Prioriza uma advocacia
+					próxima, transparente e de alta qualidade técnica.
+				</p>
+				<a class="text-link" href="/sobre/">Conhecer a trajetória do advogado</a>
+			</div>
 		</section>
 
 		<section id="metodo" class="site-section site-method" aria-labelledby="metodo-title">
-			<div class="section-title section-title--center">
-				<div>
-					<span class="section-kicker">Como funciona</span>
-					<h2 id="metodo-title">Como conduzimos o seu caso</h2>
-					<p>
-						A tranquilidade das decisoes depende de metodo e clareza. O processo parte do
-						primeiro contato e avanca conforme a previsibilidade necessaria ao caso concreto.
-					</p>
-				</div>
+			<div class="container section-title section-title--center">
+				<span class="site-eyebrow">Método</span>
+				<h2 id="metodo-title">Como conduzimos o seu caso</h2>
+				<p>
+					A tranquilidade das suas decisões depende de método e clareza. Conduzimos o seu processo com
+					total transparência e rigor técnico, oferecendo a previsibilidade necessária desde o primeiro contato.
+				</p>
 			</div>
 
-			<ol class="process-list process-list--four">
+			<ol class="container process-list">
 				{processSteps.map((step, index) => (
-					<li class="surface-card process-step">
-						<span class="process-step__number">{index + 1}</span>
-						<h3>{step.title}</h3>
+					<li class="process-step">
+						<span class="process-step__icon" aria-hidden="true"></span>
+						<h3>{index + 1}. {step.title}</h3>
 						<p>{step.text}</p>
 					</li>
 				))}
 			</ol>
 		</section>
 
-		<section id="areas" class="site-section" aria-labelledby="areas-title">
-			<div class="section-title">
+		<section id="areas" class="site-section site-areas" aria-labelledby="areas-title">
+			<div class="container section-title section-title--areas">
 				<div>
-					<span class="section-kicker">Areas de atuacao</span>
-					<h2 id="areas-title">Areas de atuacao estrategica</h2>
+					<h2 id="areas-title">Áreas de Atuação Estratégica</h2>
 					<p>
-						A atuacao publica da PAVIE esta organizada pelas sete areas canonicas, com destaque
-						inicial para os eixos de maior aderencia institucional.
+						A complexidade exige foco. A nossa atuação concentra-se em frentes que demandam
+						organização prévia, proteção de ativos, cuidado familiar e reparação técnica de direitos.
 					</p>
 				</div>
-				<a class="btn btn-ghost" href="/areas/">Ver areas canonicas</a>
+				<span>Escopo institucional PAVIE</span>
 			</div>
 
-			<div class="service-cluster-grid service-cluster-grid--primary">
-				{primaryAreas.map((area) => (
-					<article class="surface-card service-cluster">
-						<span class="section-kicker">{area.code}</span>
+			<div class="container area-grid">
+				{areaCards.map((area) => (
+					<article class="area-card">
+						<span class="area-card__icon" aria-hidden="true"></span>
 						<h3>{area.title}</h3>
-						<p class="service-cluster__lead">{area.shortDescription}</p>
-						<p>{area.headline}</p>
-						<div class="site-hero__cta">
-							<a class="btn btn-ghost" href={area.href}>Conhecer area</a>
-						</div>
+						<p>{area.description}</p>
+						<a href={area.href}>Ver detalhes <span aria-hidden="true">→</span></a>
 					</article>
 				))}
 			</div>
-
-			{secondaryAreas.length > 0 && (
-				<div class="secondary-areas">
-					<div class="secondary-areas__intro">
-						<span class="section-kicker">Frentes complementares canonicas</span>
-						<p>
-							Estas frentes permanecem no escopo aprovado, mas aparecem com menor peso na home
-							para evitar efeito de catalogo bruto.
-						</p>
-					</div>
-					<div class="service-cluster-grid service-cluster-grid--secondary">
-						{secondaryAreas.map((area) => (
-							<article class="surface-card service-cluster service-cluster--secondary">
-								<span class="section-kicker">{area.code}</span>
-								<h3>{area.title}</h3>
-								<p>{area.shortDescription}</p>
-								<div class="site-hero__cta">
-									<a class="btn btn-ghost" href={area.href}>Conhecer area</a>
-								</div>
-							</article>
-						))}
-					</div>
-				</div>
-			)}
 		</section>
 
-		<section id="conteudos" class="site-section" aria-labelledby="conteudos-title">
-			<article class="surface-card site-bridge">
-				<div>
-					<span class="section-kicker">Conteudo educativo</span>
-					<h2 id="conteudos-title">Aprofunde a compreensao antes de tomar uma decisao.</h2>
-					<p>
-						O blog juridico funciona como ponte editorial: a leitura ajuda a organizar o tema,
-						separar duvida geral de analise individual e chegar ao contato com mais clareza.
-					</p>
-				</div>
-				<div class="site-hero__cta">
-					<a class="btn btn-secondary" href="/blog/">Acessar artigos e guias</a>
-				</div>
-			</article>
+		<section id="conteudos" class="editorial-bridge" aria-labelledby="conteudos-title">
+			<div class="container editorial-bridge__inner">
+				<span class="site-eyebrow">Conteúdo educativo</span>
+				<h2 id="conteudos-title">Aprofunde a sua compreensão antes de tomar uma decisão.</h2>
+				<p>
+					Se o seu momento ainda é de busca por informações, visite os nossos artigos e guias técnicos.
+					Eles foram elaborados para traçar um caminho claro e seguro sobre os seus direitos, preparando
+					o terreno de forma informativa para quando decidir falar com o advogado.
+				</p>
+				<a class="btn btn-secondary" href="/blog/">Acessar artigos e guias</a>
+			</div>
 		</section>
 
-		<section id="faq" class="site-section" aria-labelledby="faq-title">
-			<div class="section-title">
-				<div>
-					<span class="section-kicker">FAQ curta</span>
-					<h2 id="faq-title">Respostas iniciais para o primeiro contato</h2>
-				</div>
+		<section id="faq" class="site-section faq-section container" aria-labelledby="faq-title">
+			<div class="section-title section-title--center">
+				<span class="site-eyebrow">Primeiro contato</span>
+				<h2 id="faq-title">Respostas iniciais para o primeiro contato</h2>
 			</div>
 
 			<div class="faq-list">
 				{faq.map((item) => (
-					<details class="surface-card">
+					<details class="faq-item">
 						<summary>{item.q}</summary>
 						<p>{item.a}</p>
 					</details>
@@ -282,85 +262,82 @@ const localBusinessSchema = {
 		</section>
 
 		<section id="contato" class="site-contact" aria-labelledby="contato-title">
-			<div class="site-contact__copy">
-				<BrandLogo variant="full" theme="dark" width={240} />
-				<span class="section-kicker">Contato institucional</span>
-				<h2 id="contato-title">Enviar informacoes iniciais para uma leitura responsavel.</h2>
-				<p>
-					O formulario abaixo ajuda a organizar o ponto de partida. O primeiro retorno serve para
-					compreender contexto, documentos e aderencia; nao representa contratacao automatica.
-				</p>
-
-				<article class="site-contact__honorarios">
-					<h3>Transparencia em honorarios</h3>
+			<div class="container site-contact__grid">
+				<div class="site-contact__copy">
+					<BrandLogo variant="full" theme="dark" width={260} />
 					<p>
-						Os honorarios dependem de escopo, complexidade, urgencia e acompanhamento necessario.
-						Quando houver aderencia, a proposta e apresentada antes de qualquer inicio de trabalho.
+						Segurança jurídica, direção técnica apurada pelo respeito, colaboração e excelência na
+						defesa dos seus direitos.
 					</p>
-				</article>
 
-				<ul class="site-contact__links" aria-label="Canais de contato">
-					<li><a href="mailto:contato@pavieadvocacia.com.br">contato@pavieadvocacia.com.br</a></li>
-					<li><a href="tel:+5521964382263">+55 (21) 96438-2263</a></li>
-				</ul>
-			</div>
+					<article class="site-contact__honorarios">
+						<h3>Transparência em honorários</h3>
+						<p>
+							Adotamos critérios coerentes com clareza, previsibilidade e sigilo profissional.
+							Os honorários são apresentados antes do início de qualquer atuação, sem promessas ou
+							atalhos incompatíveis com a ética jurídica.
+						</p>
+					</article>
 
-			<form
-				id="siteContactForm"
-				class="site-contact__form"
-				action="/api/contato"
-				method="post"
-				aria-describedby="site-contact-note"
-			>
-				<h3>Solicitar analise do caso</h3>
-				<p>
-					Compartilhe apenas as informacoes iniciais. Documentos sensiveis podem ser enviados depois,
-					se forem necessarios para a continuidade da analise.
-				</p>
-
-				<input id="turnstileToken" name="turnstileToken" type="hidden" />
-
-				<label>
-					<span>Nome completo</span>
-					<input id="nome" name="nome" autocomplete="name" required type="text" />
-				</label>
-
-				<label>
-					<span>E-mail</span>
-					<input id="email" name="email" autocomplete="email" required type="email" />
-				</label>
-
-				<label>
-					<span>Telefone ou WhatsApp</span>
-					<input id="telefone_full" name="telefone_full" autocomplete="tel" inputmode="tel" type="tel" />
-				</label>
-
-				<label>
-					<span>Resumo da situacao</span>
-					<textarea id="mensagem" name="mensagem" required rows="5"></textarea>
-				</label>
-
-				<label class="site-contact__consent">
-					<input name="consent" required type="checkbox" />
-					<span>Autorizo o uso dos dados enviados apenas para retorno do contato, sob sigilo profissional.</span>
-				</label>
-
-				<div
-					class="cf-turnstile"
-					data-sitekey="0x4AAAAAAB6FBS0cTG_7KOYv"
-					data-callback="onTsDone"
-					data-expired-callback="onTsExpired"
-					data-error-callback="onTsError"
-				>
+					<ul class="site-contact__links" aria-label="Canais de contato">
+						<li><a href="mailto:contato@pavieadvocacia.com.br">contato@pavieadvocacia.com.br</a></li>
+						<li><a href="tel:+5521964382263">(21) 96438-2263</a></li>
+					</ul>
 				</div>
 
-				<p id="site-contact-status" class="site-contact__status" role="status" aria-live="polite"></p>
+				<form
+					id="siteContactForm"
+					class="site-contact__form"
+					action="/api/contato"
+					method="post"
+					aria-describedby="site-contact-note"
+				>
+					<h2 id="contato-title">Solicitar Análise do Caso</h2>
+					<p>
+						Compartilhe o contexto do seu problema para darmos o primeiro passo. Nossa equipe fará
+						uma leitura atenta da sua situação, oferecendo um retorno cuidadoso e objetivo sobre a
+						viabilidade técnica, sempre sob rigoroso sigilo profissional.
+					</p>
 
-				<button class="btn btn-primary" type="submit">Enviar informacoes iniciais</button>
-				<p id="site-contact-note" class="site-contact__note">
-					Contato inicial nao e contratacao automatica. A orientacao juridica depende da analise da situacao individual.
-				</p>
-			</form>
+					<input id="turnstileToken" name="turnstileToken" type="hidden" />
+
+					<label>
+						<span>Nome completo</span>
+						<input id="nome" name="nome" autocomplete="name" required type="text" />
+					</label>
+
+					<label>
+						<span>Telefone, WhatsApp ou E-mail</span>
+						<input id="contato_preferencial" name="contato_preferencial" autocomplete="email" required type="text" />
+					</label>
+
+					<label>
+						<span>Resumo da situação</span>
+						<textarea id="mensagem" name="mensagem" required rows="5"></textarea>
+					</label>
+
+					<label class="site-contact__consent">
+						<input name="consent" required type="checkbox" />
+						<span>Autorizo o uso dos dados enviados apenas para retorno do contato, sob sigilo profissional.</span>
+					</label>
+
+					<div
+						class="cf-turnstile"
+						data-sitekey="0x4AAAAAAB6FBS0cTG_7KOYv"
+						data-callback="onTsDone"
+						data-expired-callback="onTsExpired"
+						data-error-callback="onTsError"
+					>
+					</div>
+
+					<p id="site-contact-status" class="site-contact__status" role="status" aria-live="polite"></p>
+
+					<button class="btn btn-primary" type="submit">Enviar para o Advogado</button>
+					<p id="site-contact-note" class="site-contact__note">
+						Contato inicial não é contratação automática. A orientação jurídica depende da análise da situação individual.
+					</p>
+				</form>
+			</div>
 		</section>
 	</div>
 
@@ -372,15 +349,15 @@ const localBusinessSchema = {
 
 			window.onTsDone = function (token) {
 				if (tokenField) tokenField.value = token || '';
-				if (status) status.textContent = 'Validacao de seguranca concluida.';
+				if (status) status.textContent = 'Validação de segurança concluída.';
 			};
 			window.onTsExpired = function () {
 				if (tokenField) tokenField.value = '';
-				if (status) status.textContent = 'Validacao expirada. Aguarde recarregar e tente novamente.';
+				if (status) status.textContent = 'Validação expirada. Aguarde recarregar e tente novamente.';
 			};
 			window.onTsError = function () {
 				if (tokenField) tokenField.value = '';
-				if (status) status.textContent = 'Nao foi possivel carregar a validacao de seguranca.';
+				if (status) status.textContent = 'Não foi possível carregar a validação de segurança.';
 			};
 
 			if (!form || !status) return;
@@ -391,7 +368,7 @@ const localBusinessSchema = {
 				var originalText = button ? button.textContent : '';
 
 				if (tokenField && !tokenField.value) {
-					status.textContent = 'Aguarde a validacao de seguranca antes de enviar.';
+					status.textContent = 'Aguarde a validação de segurança antes de enviar.';
 					return;
 				}
 
@@ -399,7 +376,7 @@ const localBusinessSchema = {
 					button.disabled = true;
 					button.textContent = 'Enviando...';
 				}
-				status.textContent = 'Enviando informacoes iniciais...';
+				status.textContent = 'Enviando informações iniciais...';
 
 				try {
 					var response = await fetch(form.action, {
@@ -411,7 +388,7 @@ const localBusinessSchema = {
 					if (!response.ok || data.ok === false) {
 						throw new Error(data.error || 'Falha no envio.');
 					}
-					status.textContent = 'Solicitacao enviada. A PAVIE fara a triagem inicial do contato.';
+					status.textContent = 'Solicitação enviada. A PAVIE fará a triagem inicial do contato.';
 					form.reset();
 					if (tokenField) tokenField.value = '';
 					if (window.turnstile && typeof window.turnstile.reset === 'function') {
@@ -419,8 +396,8 @@ const localBusinessSchema = {
 					}
 				} catch (error) {
 					status.textContent = error && error.message
-						? 'Nao foi possivel enviar: ' + error.message
-						: 'Nao foi possivel enviar a solicitacao.';
+						? 'Não foi possível enviar: ' + error.message
+						: 'Não foi possível enviar a solicitação.';
 				} finally {
 					if (button) {
 						button.disabled = false;
