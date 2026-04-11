@@ -1,6 +1,6 @@
 ---
 interface Props {
-	variant?: 'horizontal' | 'stacked';
+	variant?: 'horizontal' | 'square';
 	theme?: 'dark' | 'light';
 	width?: number | string;
 	alt?: string;
@@ -10,7 +10,7 @@ interface Props {
 const {
 	variant = 'horizontal',
 	theme = 'light',
-	width = variant === 'stacked' ? 130 : 190,
+	width = variant === 'square' ? 150 : 190,
 	alt = 'PAVIE | Advocacia',
 	class: className = '',
 } = Astro.props;
@@ -36,7 +36,7 @@ const logoWidth = typeof width === 'number' ? `${width}px` : width;
 		block-size: auto;
 	}
 
-	.brand-logo--stacked {
-		inline-size: min(var(--brand-logo-width), 180px);
+	.brand-logo--square {
+		inline-size: min(var(--brand-logo-width), 190px);
 	}
 </style>

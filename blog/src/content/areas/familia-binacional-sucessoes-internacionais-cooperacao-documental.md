@@ -5,7 +5,7 @@ categoryCode: "CAT-04"
 shortDescription: "Vinculos familiares, sucessorios e documentais com elementos internacionais pedem compatibilizacao de documentos, jurisdicoes e estrategia."
 headline: "Questoes com elementos internacionais exigem compatibilizacao entre documentos, jurisdicoes e estrategia."
 ctaType: "contact"
-ctaTarget: "/contato/"
+ctaTarget: "/#contato"
 seoTitle: "Familia Binacional, Sucessoes Internacionais e Cooperacao Documental | PAVIE | Advocacia"
 description: "Esta area reune situacoes com componente internacional relevante, em que familia, sucessao, cooperacao documental ou repercussao patrimonial exigem enquadramento cuidadoso e coordenacao correta da informacao."
 order: 4

@@ -5,7 +5,7 @@ categoryCode: "CAT-06"
 shortDescription: "Contratos selecionados, cobranca, execucao e recuperacao de credito exigem leitura de escopo, documentos e estrategia."
 headline: "Nem toda inadimplencia e apenas uma divida; muitas vezes ela exige leitura contratual e estrategica."
 ctaType: "contact"
-ctaTarget: "/contato/"
+ctaTarget: "/#contato"
 seoTitle: "Cobranca, Execucao, Contratos e Recuperacao de Credito Seletiva | PAVIE | Advocacia"
 description: "Esta area concentra situacoes em que contratos, obrigacoes, cobranca ou recuperacao seletiva de credito pedem leitura cuidadosa do titulo, do inadimplemento e das alternativas juridicas disponiveis."
 order: 6

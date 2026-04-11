@@ -5,7 +5,7 @@ import BrandLogo from '../brand/BrandLogo.astro';
 <footer class="site-footer" role="contentinfo">
 	<div class="container site-footer__grid">
 		<section class="site-footer__brand">
-			<BrandLogo variant="horizontal" theme="dark" width={230} />
+			<BrandLogo variant="square" theme="dark" width={165} />
 			<p>
 				Atendimento jurídico estratégico, técnico e humano para questões que exigem clareza,
 				organização documental e direção responsável.
@@ -22,7 +22,7 @@ import BrandLogo from '../brand/BrandLogo.astro';
 				<li><a href="/">Início</a></li>
 				<li><a href="/areas/">Áreas</a></li>
 				<li><a href="/#metodo">Método</a></li>
-				<li><a href="/contato/">Contato</a></li>
+				<li><a href="/#contato">Contato</a></li>
 			</ul>
 		</nav>
 
@@ -52,15 +52,19 @@ import BrandLogo from '../brand/BrandLogo.astro';
 
 	.site-footer__grid {
 		display: grid;
-		grid-template-columns: minmax(0, 1.55fr) minmax(160px, 0.55fr) minmax(180px, 0.65fr);
-		gap: clamp(2rem, 6vw, 5.5rem);
+		grid-template-columns: minmax(260px, 1.25fr) minmax(160px, 0.55fr) minmax(190px, 0.72fr);
+		gap: clamp(2.25rem, 6vw, 5rem);
 		align-items: start;
 	}
 
 	.site-footer__brand {
 		display: grid;
-		gap: var(--space-sm);
-		max-width: 42ch;
+		gap: var(--space-md);
+		max-width: 36ch;
+	}
+
+	.site-footer__brand :global(.brand-logo) {
+		margin-bottom: 0.1rem;
 	}
 
 	.site-footer__brand p,

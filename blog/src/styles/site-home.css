@@ -82,28 +82,35 @@
 
 .site-hero {
 	position: relative;
-	min-height: 660px;
+	min-height: 680px;
 	display: grid;
 	align-items: center;
 	overflow: hidden;
 	isolation: isolate;
 	text-align: center;
-	background:
-		linear-gradient(
-			rgba(245, 241, 235, 0.76),
-			rgba(245, 241, 235, 0.9)
-		),
-		url('/uploads/foto_001-ffundddo-escritório.png') center / cover no-repeat;
+	background: var(--surface-page);
 	border-bottom: 1px solid color-mix(in srgb, var(--color-line) 60%, white);
 }
 
 .site-hero::before {
 	content: '';
 	position: absolute;
+	inset: -18px;
+	z-index: -2;
+	background: url('/images/site/hero/hero-01.png') center 48% / cover no-repeat;
+	filter: grayscale(1) saturate(0.25) contrast(0.92) blur(2.4px);
+	opacity: 0.58;
+	transform: scale(1.025);
+}
+
+.site-hero::after {
+	content: '';
+	position: absolute;
 	inset: 0;
 	z-index: -1;
-	background: rgba(255, 253, 249, 0.42);
-	backdrop-filter: blur(3px);
+	background:
+		radial-gradient(circle at 50% 42%, rgba(255, 253, 249, 0.46), rgba(245, 241, 235, 0.86) 62%),
+		linear-gradient(180deg, rgba(245, 241, 235, 0.62), rgba(245, 241, 235, 0.9));
 }
 
 .site-hero__inner {
@@ -111,6 +118,8 @@
 	justify-items: center;
 	align-content: center;
 	padding-block: 5rem;
+	position: relative;
+	z-index: 1;
 }
 
 .site-hero h1 {
@@ -262,12 +271,12 @@
 }
 
 .process-step {
-	min-height: 250px;
+	min-height: 278px;
 	display: grid;
+	grid-template-rows: auto auto 1fr;
 	justify-items: center;
-	align-content: start;
-	gap: var(--space-sm);
-	padding: 2rem 1.4rem;
+	gap: 0.95rem;
+	padding: 2.15rem 1.45rem 1.85rem;
 	background: rgba(255, 253, 249, 0.9);
 	border: 1px solid color-mix(in srgb, var(--color-line) 52%, white);
 	text-align: center;
@@ -324,7 +333,7 @@
 
 .process-step p {
 	font-size: 0.92rem;
-	line-height: 1.55;
+	line-height: 1.6;
 	color: var(--text-muted);
 }
 
@@ -356,11 +365,11 @@
 }
 
 .area-card {
-	min-height: 245px;
+	min-height: 278px;
 	display: grid;
-	align-content: start;
-	gap: var(--space-sm);
-	padding: 1.55rem;
+	grid-template-rows: auto auto 1fr auto;
+	gap: 0.95rem;
+	padding: 1.65rem 1.55rem 1.45rem;
 	background: rgba(255, 253, 249, 0.88);
 	border: 1px solid color-mix(in srgb, var(--color-line) 58%, white);
 	box-shadow: 0 10px 24px rgba(37, 40, 43, 0.035);
@@ -389,7 +398,7 @@
 
 .area-card a {
 	align-self: end;
-	margin-top: var(--space-xs);
+	margin-top: 0;
 	font-size: 0.72rem;
 	font-weight: 900;
 	text-transform: uppercase;
@@ -403,7 +412,7 @@
 }
 
 .editorial-bridge {
-	padding-block: 6.2rem;
+	padding-block: 7rem;
 	background:
 		linear-gradient(
 			rgba(255, 253, 249, 0.7),
@@ -416,19 +425,19 @@
 .editorial-bridge__inner {
 	display: grid;
 	justify-items: center;
-	gap: var(--space-md);
-	max-width: 760px;
+	gap: 1.2rem;
+	max-width: 900px;
 }
 
 .editorial-bridge h2 {
-	max-width: 12ch;
+	max-width: 760px;
 	font-size: 2.85rem;
-	line-height: 0.98;
+	line-height: 1.03;
 	color: var(--color-petrol);
 }
 
 .editorial-bridge p {
-	max-width: 50rem;
+	max-width: 720px;
 	color: var(--text-muted);
 }
 
@@ -437,7 +446,7 @@
 }
 
 .faq-list {
-	max-width: 880px;
+	max-width: 980px;
 	margin-inline: auto;
 	border-top: 1px solid color-mix(in srgb, var(--color-line) 72%, white);
 }
@@ -448,7 +457,7 @@
 
 .faq-item summary {
 	cursor: pointer;
-	padding: 1.15rem 0;
+	padding: 1.25rem 0;
 	font-weight: 800;
 	color: var(--color-petrol);
 }
@@ -460,21 +469,22 @@
 }
 
 .site-contact {
-	padding-block: clamp(4rem, 8vw, 6.5rem);
+	padding-block: clamp(4.4rem, 8vw, 7rem);
 	background: linear-gradient(145deg, #003f40, #032425);
 	color: var(--text-contrast);
 }
 
 .site-contact__grid {
 	display: grid;
-	grid-template-columns: minmax(0, 1fr) minmax(340px, 0.76fr);
-	gap: clamp(3rem, 8vw, 6rem);
-	align-items: center;
+	grid-template-columns: minmax(0, 0.96fr) minmax(400px, 0.78fr);
+	gap: clamp(3.4rem, 8vw, 6.2rem);
+	align-items: stretch;
 }
 
 .site-contact__copy {
 	display: grid;
-	gap: var(--space-lg);
+	gap: 1.55rem;
+	align-content: center;
 	max-width: 560px;
 }
 
@@ -486,7 +496,7 @@
 
 .site-contact__honorarios {
 	max-width: 520px;
-	padding: 1.15rem 1.25rem;
+	padding: 1.35rem 1.45rem;
 	background: rgba(255, 255, 255, 0.055);
 	border: 1px solid rgba(255, 255, 255, 0.1);
 }
@@ -512,7 +522,7 @@
 .site-contact__links {
 	list-style: none;
 	display: grid;
-	gap: 0.38rem;
+	gap: 0.48rem;
 }
 
 .site-contact__links a {
@@ -528,8 +538,9 @@
 
 .site-contact__form {
 	display: grid;
-	gap: var(--space-sm);
-	padding: 2rem;
+	gap: 1rem;
+	align-content: start;
+	padding: 2.35rem;
 	background: var(--surface-card);
 	color: var(--text-body);
 	box-shadow: 0 26px 58px rgba(0, 0, 0, 0.16);
@@ -601,6 +612,10 @@
 		min-height: 600px;
 	}
 
+	.site-hero::before {
+		opacity: 0.5;
+	}
+
 	.site-hero h1 {
 		font-size: 3.55rem;
 	}
@@ -613,6 +628,10 @@
 	.site-contact__grid,
 	.professional-section {
 		grid-template-columns: 1fr;
+	}
+
+	.site-contact__copy {
+		max-width: 680px;
 	}
 
 	.professional-media {
@@ -628,6 +647,12 @@
 
 	.site-hero {
 		min-height: 560px;
+	}
+
+	.site-hero::before {
+		background-position: center;
+		opacity: 0.42;
+		filter: grayscale(1) saturate(0.2) contrast(0.88) blur(2.8px);
 	}
 
 	.site-hero__inner {
@@ -680,5 +705,25 @@
 
 	.site-contact__form {
 		padding: 1.25rem;
+	}
+}
+
+@media (max-width: 390px) {
+	.site-home .btn {
+		width: 100%;
+		padding-inline: 0.9rem;
+	}
+
+	.site-hero h1 {
+		font-size: 2.35rem;
+	}
+
+	.professional-media {
+		max-width: 100%;
+	}
+
+	.area-card,
+	.process-step {
+		padding-inline: 1.15rem;
 	}
 }
