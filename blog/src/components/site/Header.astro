@@ -1,4 +1,6 @@
 ---
+import BrandLogo from '../brand/BrandLogo.astro';
+
 interface Props {
 	currentPath?: string;
 }
@@ -6,26 +8,26 @@ interface Props {
 const { currentPath = '/' } = Astro.props;
 
 const navItems = [
-	{ href: '/areas/', label: 'Áreas' },
-	{ href: '/sobre/', label: 'Sobre' },
-	{ href: '/blog/', label: 'Conteúdos' },
+	{ href: '/', label: 'Inicio' },
+	{ href: '/areas/', label: 'Areas' },
+	{ href: '/#metodo', label: 'Metodo' },
 	{ href: '/contato/', label: 'Contato' },
+	{ href: '/blog/', label: 'Conteudos' },
 ];
 
 function isActive(href: string): boolean {
-	if (href.startsWith('http')) return false;
+	if (href.includes('#')) return false;
 	return currentPath === href || currentPath.startsWith(`${href.replace(/\/$/, '')}/`);
 }
 ---
 
 <header class="site-header" role="banner">
 	<div class="site-header__bar container">
-		<a class="site-header__brand" href="/" aria-label="PAVIE | Advocacia, início do site institucional">
-			<strong>PAVIE</strong>
-			<small>| Advocacia</small>
+		<a class="site-header__brand" href="/" aria-label="PAVIE | Advocacia, inicio do site institucional">
+			<BrandLogo variant="compact" width={132} />
 		</a>
 
-		<nav class="site-nav" aria-label="Navegação principal">
+		<nav class="site-nav" aria-label="Navegacao principal">
 			{navItems.map((item) => (
 				<a
 					href={item.href}
@@ -36,21 +38,18 @@ function isActive(href: string): boolean {
 			))}
 		</nav>
 
-		<a class="btn btn-primary site-header__cta" href="/contato/">
-			Enviar informacoes iniciais
+		<a class="site-header__blog-link" href="/blog/">
+			Conteudos
 		</a>
 
 		<details class="site-mobile-nav">
-			<summary aria-label="Abrir menu de navegação">Menu</summary>
+			<summary aria-label="Abrir menu de navegacao">Menu</summary>
 			<div class="site-mobile-nav__panel">
 				{navItems.map((item) => (
 					<a href={item.href}>
 						{item.label}
 					</a>
 				))}
-				<a href="/contato/">
-					Enviar informacoes iniciais
-				</a>
 			</div>
 		</details>
 	</div>
@@ -67,7 +66,7 @@ function isActive(href: string): boolean {
 	}
 
 	.site-header__bar {
-		min-height: 76px;
+		min-height: 72px;
 		display: grid;
 		grid-template-columns: auto 1fr auto;
 		align-items: center;
@@ -76,22 +75,9 @@ function isActive(href: string): boolean {
 
 	.site-header__brand {
 		display: inline-flex;
-		align-items: baseline;
-		gap: 0.5rem;
+		align-items: center;
 		text-decoration: none;
 		color: var(--color-graphite);
-	}
-
-	.site-header__brand strong {
-		font-family: var(--font-serif);
-		font-size: 1.4rem;
-	}
-
-	.site-header__brand small {
-		font-size: 0.92rem;
-		text-transform: none;
-		letter-spacing: 0.02em;
-		color: color-mix(in srgb, var(--color-petrol) 52%, white);
 	}
 
 	.site-nav {
@@ -118,13 +104,17 @@ function isActive(href: string): boolean {
 	}
 
 	.site-nav__link:hover,
-	.site-nav__link:focus-visible {
+	.site-nav__link:focus-visible,
+	.site-header__blog-link:hover,
+	.site-header__blog-link:focus-visible {
 		color: var(--color-petrol);
 	}
 
-	.site-header__cta {
+	.site-header__blog-link {
 		font-size: var(--step-small);
-		padding-inline: 1rem;
+		font-weight: 700;
+		color: var(--color-graphite);
+		text-decoration: none;
 	}
 
 	.site-mobile-nav {
@@ -183,7 +173,7 @@ function isActive(href: string): boolean {
 		}
 
 		.site-nav,
-		.site-header__cta {
+		.site-header__blog-link {
 			display: none;
 		}
 

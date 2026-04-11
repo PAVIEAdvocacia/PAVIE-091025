@@ -1,0 +1,44 @@
+---
+interface Props {
+	variant?: 'full' | 'compact';
+	theme?: 'dark' | 'light';
+	width?: number | string;
+	alt?: string;
+	class?: string;
+}
+
+const {
+	variant = 'full',
+	theme = 'light',
+	width = variant === 'compact' ? 118 : 190,
+	alt = 'PAVIE | Advocacia',
+	class: className = '',
+} = Astro.props;
+
+const src = theme === 'dark'
+	? '/brand/pavie-logo-master-light.svg'
+	: '/brand/pavie-logo-master.svg';
+const logoWidth = typeof width === 'number' ? `${width}px` : width;
+---
+
+<img
+	class:list={['brand-logo', `brand-logo--${variant}`, `brand-logo--${theme}`, className]}
+	src={src}
+	alt={alt}
+	loading="eager"
+	decoding="async"
+	style={`--brand-logo-width: ${logoWidth};`}
+/>
+
+<style>
+	.brand-logo {
+		display: block;
+		inline-size: var(--brand-logo-width);
+		max-inline-size: 100%;
+		block-size: auto;
+	}
+
+	.brand-logo--compact {
+		inline-size: min(var(--brand-logo-width), 132px);
+	}
+</style>
