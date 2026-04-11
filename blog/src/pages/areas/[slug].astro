@@ -40,7 +40,7 @@ const siblingAreas = buildCanonicalAreaDirectory(areaEntries, posts)
 const canonicalUrl = `${MAIN_SITE_URL}${currentArea.href}`;
 const breadcrumbs = [
 	{ label: 'Inicio', href: '/' },
-	{ label: 'Areas', href: '/areas/' },
+	{ label: 'Areas', href: '/#areas' },
 	{ label: currentArea.title },
 ];
 const breadcrumbSchema = buildBreadcrumbSchema(breadcrumbs, canonicalUrl);
@@ -117,7 +117,7 @@ const breadcrumbSchema = buildBreadcrumbSchema(breadcrumbs, canonicalUrl);
 						<span class="section-kicker">Outras areas</span>
 						<h2>Se a sua situacao tocar outro eixo relevante, voce tambem pode seguir por outra area</h2>
 					</div>
-					<a class="btn btn-ghost" href="/areas/">Ver todas as areas</a>
+					<a class="btn btn-ghost" href="/#areas">Ver todas as areas</a>
 				</div>
 				<div class="cluster-directory-grid">
 					{siblingAreas.map((area) => (

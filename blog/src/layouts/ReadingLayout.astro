@@ -47,7 +47,7 @@ const areaDescription = currentArea?.data.shortDescription ??
 		? 'Esta leitura se conecta a uma area canonica aprovada do ecossistema PAVIE.'
 		: 'Este conteudo permanece acessivel no acervo, mas ainda nao integra uma categoria canonica aprovada para navegacao publica.');
 const categoryHref = post.categoryUrl ?? '/blog/categoria/';
-const areaHref = post.areaUrl ?? '/areas/';
+const areaHref = post.areaUrl ?? '/#areas';
 const articleSchema = {
 	'@context': 'https://schema.org',
 	'@type': 'BlogPosting',

@@ -195,7 +195,7 @@ function resolveCanonicalCta(
 	categoryUrl: string,
 ): { ctaKey: string; cta: CtaConfig } {
 	const safeCategoryHref = categoryUrl || '/blog/categoria/';
-	const safeAreaHref = areaUrl || '/areas/';
+	const safeAreaHref = areaUrl || '/#areas';
 
 	switch (ctaType) {
 		case 'contact':
@@ -210,7 +210,7 @@ function resolveCanonicalCta(
 			};
 		case 'area': {
 			const href = ctaTarget || safeAreaHref;
-			const institutional = href.startsWith('/areas/');
+			const institutional = href.startsWith('/areas/') || href === '/#areas';
 			return {
 				ctaKey: institutional ? 'areas_de_atuacao' : 'areas_editoriais',
 				cta: {
@@ -503,7 +503,7 @@ export function normalizePost(entry: RawPostEntry, authorEntries: AuthorEntry[] 
 		? resolveCanonicalCta(
 				canonicalCtaType,
 				canonicalCtaTarget,
-				areaUrl || '/areas/',
+				areaUrl || '/#areas',
 				categoryUrl || '/blog/categoria/',
 			)
 		: (() => {
@@ -513,7 +513,7 @@ export function normalizePost(entry: RawPostEntry, authorEntries: AuthorEntry[] 
 					legacyKey === 'areas_editoriais'
 						? { ...legacyCta, href: categoryUrl || '/blog/categoria/' }
 						: legacyKey === 'areas_de_atuacao'
-							? { ...legacyCta, href: areaUrl || '/areas/' }
+							? { ...legacyCta, href: areaUrl || '/#areas' }
 							: legacyCta;
 				return {
 					ctaKey: legacyKey,

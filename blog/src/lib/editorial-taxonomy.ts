@@ -57,8 +57,8 @@ export const PRIMARY_CTA_OPTIONS = [
 	},
 	{
 		key: 'areas_de_atuacao',
-		label: 'Conheca os Servicos',
-		href: '/areas/',
-		description: 'Veja como a PAVIE apresenta esta area de atuacao na camada institucional do site.',
+		label: 'Conheca as areas',
+		href: '/#areas',
+		description: 'Veja como a PAVIE apresenta suas areas de atuacao na camada institucional do site.',
 	},
 ] as const;
