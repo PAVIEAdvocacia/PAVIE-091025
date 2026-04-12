@@ -20,7 +20,7 @@ const [authorEntries, blogEntries] = await Promise.all([getAuthorEntries(), getB
 const currentAuthor = getAuthorEntryBySlug(authorEntries, Astro.params.slug ?? '');
 
 if (!currentAuthor) {
-	throw new Error(`Autor canonico nao encontrado: ${Astro.params.slug}`);
+	throw new Error(`Autor canônico não encontrado: ${Astro.params.slug}`);
 }
 
 const authorImage = normalizeCmsImagePath(currentAuthor.data.image) ?? currentAuthor.data.image;
@@ -29,7 +29,7 @@ const posts = sortPostsByDate(normalizePosts(blogEntries, authorEntries))
 	.filter((post) => post.authorSlug === currentAuthor.data.slug);
 const canonicalUrl = `${MAIN_SITE_URL}/autor/${currentAuthor.data.slug}/`;
 const breadcrumbs = [
-	{ label: 'Inicio', href: '/' },
+	{ label: 'Início', href: '/' },
 	{ label: 'Autor' },
 	{ label: currentAuthor.data.name },
 ];
@@ -62,7 +62,7 @@ const personSchema = {
 				<p>{currentAuthor.data.shortBio}</p>
 				<p>{currentAuthor.data.extendedBio}</p>
 				<div class="institutional-actions">
-					<a class="btn btn-primary" href="/#areas">Conheca as areas</a>
+					<a class="btn btn-primary" href="/#areas">Conheça as áreas</a>
 					<a class="btn btn-ghost" href="/blog/categoria/">Explorar categorias do blog</a>
 				</div>
 			</div>
@@ -70,30 +70,30 @@ const personSchema = {
 
 		<section class="institutional-grid" aria-label="Estrutura de autoria">
 			<article class="surface-card institutional-card">
-				<span class="section-kicker">Producao publica</span>
-				<h2>Escrita concentrada no foco atual do escritorio</h2>
+				<span class="section-kicker">Produção pública</span>
+				<h2>Escrita concentrada no foco atual do escritório</h2>
 				<p>
 					Os textos assinados por Fabio Pavie acompanham o eixo institucional da PAVIE e priorizam
-					questoes em que patrimonio, familia, sucessao, imoveis, documentos e definicao da via adequada
-					tem relevancia pratica.
+					questões em que patrimônio, família, sucessão, imóveis, documentos e definição da via adequada
+					têm relevância prática.
 				</p>
 			</article>
 			<article class="surface-card institutional-card">
 				<span class="section-kicker">Como navegar</span>
-				<h2>Conteudos reunidos em uma pagina unica de autoria</h2>
+				<h2>Conteúdos reunidos em uma página única de autoria</h2>
 				<p>
-					Esta pagina concentra os artigos publicados desta assinatura e evita dispersao entre perfis,
-					bios ou referencias publicas concorrentes.
+					Esta página concentra os artigos publicados desta assinatura e evita dispersão entre perfis,
+					bios ou referências públicas concorrentes.
 				</p>
 			</article>
 		</section>
 
 		<BlogGrid
-			title="Publicacoes do autor"
+			title="Publicações do autor"
 			kicker="Autoria"
 			posts={posts}
-			emptyTitle="Acervo em atualizacao"
-			emptyText="A pagina de autor ja esta disponivel. Novos artigos serao reunidos aqui conforme entrarem no acervo publico."
+			emptyTitle="Acervo em atualização"
+			emptyText="A página de autor já está disponível. Novos artigos serão reunidos aqui conforme entrarem no acervo público."
 			emptyHref="/blog/categoria/"
 			emptyLabel="Explorar categorias"
 		/>

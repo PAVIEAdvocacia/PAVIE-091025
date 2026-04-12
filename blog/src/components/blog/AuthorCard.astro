@@ -16,8 +16,8 @@ const matchedAuthor = authorEntries.find((entry) => {
 });
 const authorSignature =
 	(matchedAuthor?.data.slug ?? post.authorSlug) === 'fabio-pavie'
-		? 'Fabio Pavie escreve principalmente sobre questoes patrimoniais, familiares, sucessorias, imobiliarias e documentais, com rigor documental e linguagem clara.'
-		: 'Conteudo produzido no ecossistema PAVIE para orientar com clareza, sem substituir a analise individual do caso.';
+		? 'Fabio Pavie escreve principalmente sobre questões patrimoniais, familiares, sucessórias, imobiliárias e documentais, com rigor documental e linguagem clara.'
+		: 'Conteúdo produzido no ecossistema PAVIE para orientar com clareza, sem substituir a análise individual do caso.';
 const authorName = matchedAuthor?.data.name ?? post.authorName;
 const authorPhoto = normalizeCmsImagePath(matchedAuthor?.data.image) ?? post.authorImage;
 const authorPhotoAlt =
@@ -25,7 +25,7 @@ const authorPhotoAlt =
 const authorUrl = matchedAuthor ? `/autor/${matchedAuthor.data.slug}/` : post.authorUrl ?? '/sobre/';
 ---
 
-<section class="author-card" aria-label="Informacoes do autor">
+<section class="author-card" aria-label="Informações do autor">
 	{
 		authorPhoto && (
 			<img
@@ -37,10 +37,10 @@ const authorUrl = matchedAuthor ? `/autor/${matchedAuthor.data.slug}/` : post.au
 		)
 	}
 	<div class="author-card__body">
-		<span class="section-kicker">Responsavel pelo conteudo</span>
+		<span class="section-kicker">Responsável pelo conteúdo</span>
 		<h3>{authorName}</h3>
 		<p>{post.authorRole}</p>
 		<p class="author-card__note">{authorSignature}</p>
-		<a class="author-card__link" href={authorUrl}>Conheca o autor</a>
+		<a class="author-card__link" href={authorUrl}>Conheça o autor</a>
 	</div>
 </section>

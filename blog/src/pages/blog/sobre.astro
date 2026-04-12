@@ -8,11 +8,11 @@ import { buildBreadcrumbSchema } from '../../lib/seo';
 
 const title = 'Sobre o autor | Blog PAVIE | Advocacia';
 const description =
-	'Perfil profissional de Fabio Mathias Pavie, advogado responsavel pelos conteudos juridicos do blog da PAVIE | Advocacia.';
+	'Perfil profissional de Fabio Mathias Pavie, advogado responsável pelos conteúdos jurídicos do blog da PAVIE | Advocacia.';
 const canonicalUrl = `${BLOG_SITE_URL}/autor/fabio-pavie/`;
 const breadcrumbs = [
-	{ label: 'Inicio', href: '/' },
-	{ label: 'Publicacoes', href: '/blog/' },
+	{ label: 'Início', href: '/' },
+	{ label: 'Publicações', href: '/blog/' },
 	{ label: 'Sobre o autor' },
 ];
 const authorEntries = await getAuthorEntries();
@@ -36,15 +36,15 @@ const breadcrumbSchema = buildBreadcrumbSchema(breadcrumbs, canonicalUrl);
 				loading="eager"
 			/>
 			<div>
-				<span class="section-kicker">Superficie duplicada controlada</span>
+				<span class="section-kicker">Superfície duplicada controlada</span>
 				<h1>Fabio Mathias Pavie</h1>
 				<p>Advogado | OAB/RJ 134.947</p>
 				<p>
-					O destino primario de autoria do ecossistema agora e a pagina canonica de autor. Esta rota permanece
-					apenas para continuidade de navegacao e nao deve concentrar sinal de SEO.
+					O destino primário de autoria do ecossistema agora é a página canônica de autor. Esta rota permanece
+					apenas para continuidade de navegação e não deve concentrar sinal de SEO.
 				</p>
 				<div class="site-hero__cta">
-					<a class="btn btn-primary" href="/autor/fabio-pavie/">Conheca o autor</a>
+					<a class="btn btn-primary" href="/autor/fabio-pavie/">Conheça o autor</a>
 					<a class="btn btn-ghost" href="/blog/categoria/">Explorar categorias</a>
 				</div>
 			</div>

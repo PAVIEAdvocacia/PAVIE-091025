@@ -109,8 +109,23 @@
 	inset: 0;
 	z-index: -1;
 	background:
+		repeating-linear-gradient(
+			0deg,
+			rgba(47, 78, 74, 0.016) 0,
+			rgba(47, 78, 74, 0.016) 1px,
+			transparent 1px,
+			transparent 6px
+		),
+		repeating-linear-gradient(
+			90deg,
+			rgba(126, 23, 28, 0.012) 0,
+			rgba(126, 23, 28, 0.012) 1px,
+			transparent 1px,
+			transparent 8px
+		),
 		radial-gradient(circle at 50% 42%, rgba(255, 253, 249, 0.46), rgba(245, 241, 235, 0.86) 62%),
 		linear-gradient(180deg, rgba(245, 241, 235, 0.62), rgba(245, 241, 235, 0.9));
+	background-blend-mode: soft-light, soft-light, normal, normal;
 }
 
 .site-hero__inner {

@@ -27,16 +27,16 @@ const hasCanonicalTaxonomy =
 const canonicalUrl = post.canonicalUrl ?? toAbsoluteUrl(post.url);
 
 const breadcrumbs = [
-	{ label: 'Inicio', href: '/' },
-	{ label: 'Publicacoes', href: '/blog/' },
+	{ label: 'Início', href: '/' },
+	{ label: 'Publicações', href: '/blog/' },
 	...(hasCanonicalTaxonomy && post.categoryUrl ? [{ label: post.area, href: post.categoryUrl }] : []),
 	{ label: post.title },
 ];
 
 const articleFocusPoints = [
-	'Quando a decisao ja envolve documento, contrato, patrimonio ou registro relevante.',
-	'Quando existe prazo, audiencia, urgencia pratica ou risco que nao convem tratar no improviso.',
-	'Quando a leitura informa bem o tema, mas a estrategia ainda depende das particularidades do caso.',
+	'Quando a decisão já envolve documento, contrato, patrimônio ou registro relevante.',
+	'Quando existe prazo, audiência, urgência prática ou risco que não convém tratar no improviso.',
+	'Quando a leitura informa bem o tema, mas a estratégia ainda depende das particularidades do caso.',
 ];
 const introText = post.excerpt && post.excerpt !== post.description ? post.excerpt : '';
 const showIntroTags = post.temas.length > 0;
@@ -108,7 +108,7 @@ const faqSchema =
 		<div class="reading-shell">
 			<article class="reading-content" aria-labelledby="reading-hero-title">
 				{showIntroBlock && (
-					<section class="reading-intro" aria-label="Introducao do artigo">
+					<section class="reading-intro" aria-label="Introdução do artigo">
 						{introText && <p class="reading-intro__lead">{introText}</p>}
 						{showIntroTags && (
 							<div class="reading-summary__tags">
@@ -123,9 +123,9 @@ const faqSchema =
 				<div class="article-content">
 					<slot />
 				</div>
-				<section class="reading-context" aria-label="Quando este tema costuma exigir analise do caso concreto">
-					<span class="section-kicker">Quando a leitura pede um proximo passo</span>
-					<h2>Este tema costuma exigir analise individual quando a decisao ja envolve documento, prazo, risco ou impacto relevante.</h2>
+				<section class="reading-context" aria-label="Quando este tema costuma exigir análise do caso concreto">
+					<span class="section-kicker">Quando a leitura pede um próximo passo</span>
+					<h2>Este tema costuma exigir análise individual quando a decisão já envolve documento, prazo, risco ou impacto relevante.</h2>
 					<ul>
 						{articleFocusPoints.map((item) => (
 							<li>{item}</li>
@@ -154,10 +154,10 @@ const faqSchema =
 						emptyLabel="Explorar categorias"
 					/>
 					<AuthorCard post={post} />
-					<section class="reading-next-step surface-card" aria-label="Proximo passo apos a leitura">
+					<section class="reading-next-step surface-card" aria-label="Próximo passo após a leitura">
 						<div>
-							<span class="section-kicker">Proximo passo possivel</span>
-							<h2>Se a leitura nao basta sozinha, o primeiro passo e descrever a situacao concreta com clareza.</h2>
+							<span class="section-kicker">Próximo passo possível</span>
+							<h2>Se a leitura não basta sozinha, o primeiro passo é descrever a situação concreta com clareza.</h2>
 							<p>{post.cta.description}</p>
 						</div>
 						<div class="reading-bridge__actions">
@@ -170,7 +170,7 @@ const faqSchema =
 								{post.cta.label}
 							</a>
 						</div>
-						<p class="reading-ethics-note">Conteudo informativo. Cada caso exige analise tecnica individual.</p>
+						<p class="reading-ethics-note">Conteúdo informativo. Cada caso exige análise técnica individual.</p>
 					</section>
 				</div>
 			</article>
