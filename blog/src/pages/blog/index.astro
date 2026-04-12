@@ -17,6 +17,10 @@ const posts = sortPostsByDate(normalizePosts(blogEntries, authorEntries)).filter
 const featured = posts.find((post) => post.featured) ?? (posts.length > 0 ? posts[0] : undefined);
 const continuityPosts = posts.filter((post) => post.slug !== featured?.slug).slice(0, 6);
 const categoryDirectory = buildCanonicalAreaDirectory(areaEntries, posts);
+const hasPublishedPosts = posts.length > 0;
+const postCountLabel = hasPublishedPosts
+	? `${posts.length} artigo${posts.length === 1 ? '' : 's'} publicado${posts.length === 1 ? '' : 's'} no acervo atual`
+	: 'Acervo editorial em preparação';
 const blogAuthor =
 	authorEntries.find((entry) => entry.data.slug === 'fabio-pavie' || entry.data.id === 'fabio-pavie') ??
 	authorEntries[0];
@@ -68,7 +72,7 @@ const collectionSchema = {
 					criterios, documentos e proximos passos com linguagem clara e foco no caso concreto.
 				</p>
 				<div class="meta-list" aria-label="Informacoes do acervo">
-					<span><span class="meta-dot" aria-hidden="true"></span>{posts.length} artigos publicados no acervo atual</span>
+					<span><span class="meta-dot" aria-hidden="true"></span>{postCountLabel}</span>
 					<span><span class="meta-dot" aria-hidden="true"></span>{categoryDirectory.length} categorias disponiveis</span>
 					<span><span class="meta-dot" aria-hidden="true"></span>Ligacao direta com as paginas de area</span>
 				</div>
@@ -104,7 +108,7 @@ const collectionSchema = {
 			</div>
 		</section>
 
-		{posts.length === 0 ? (
+		{!hasPublishedPosts ? (
 			<section class="surface-card empty-state" aria-label="Acervo em organizacao">
 				<h2>Acervo em atualizacao</h2>
 				<p>
@@ -172,7 +176,7 @@ const collectionSchema = {
 							</div>
 						) : (
 							<p class="cluster-directory-empty">
-								Esta categoria ja esta disponivel e recebera novos conteudos conforme o acervo publicado crescer.
+								Acervo em preparacao nesta categoria. A organizacao editorial ja esta pronta para receber textos revisados.
 							</p>
 						)}
 						<div class="cluster-directory-actions">

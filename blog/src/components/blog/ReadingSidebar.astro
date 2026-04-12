@@ -1,16 +1,13 @@
 ---
-import type { BlogPost } from '../../lib/posts';
 import type { TocItem } from '../../lib/toc';
-import ReadingCTA from './ReadingCTA.astro';
 import ReadingTOC from './ReadingTOC.astro';
 
 interface Props {
-	post: BlogPost;
 	toc: TocItem[];
-	related: BlogPost[];
+	related: unknown[];
 }
 
-const { post, toc, related } = Astro.props;
+const { toc, related } = Astro.props;
 ---
 
 <aside class="reading-sidebar" aria-label="Recursos de leitura">
@@ -23,5 +20,4 @@ const { post, toc, related } = Astro.props;
 			</p>
 		</section>
 	)}
-	<ReadingCTA cta={post.cta} />
 </aside>

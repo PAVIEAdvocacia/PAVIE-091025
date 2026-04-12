@@ -31,25 +31,6 @@ function clearStateCookie() {
   ].join("; ");
 }
 
-function buildOAuthDebugHeaders(params: {
-  clientId: string;
-  redirectUri: string;
-  secretPresent: boolean;
-  tokenError?: string;
-}) {
-  const headers: Record<string, string> = {
-    "X-Decap-OAuth-Client-Id": params.clientId,
-    "X-Decap-OAuth-Redirect-Uri": params.redirectUri,
-    "X-Decap-OAuth-Secret-Present": String(params.secretPresent),
-  };
-
-  if (params.tokenError) {
-    headers["X-Decap-OAuth-Token-Error"] = params.tokenError;
-  }
-
-  return headers;
-}
-
 function renderCallbackPage(status: "success" | "error", payload: Record<string, unknown>) {
   const encodedPayload = JSON.stringify(payload).replace(/</g, "\\u003c");
 
@@ -96,11 +77,6 @@ export const onRequestGet: PagesFunction<Env> = async ({ request, env }) => {
           "Content-Type": "text/html; charset=utf-8",
           "Cache-Control": "no-store",
           "Set-Cookie": clearStateCookie(),
-          ...buildOAuthDebugHeaders({
-            clientId,
-            redirectUri,
-            secretPresent: Boolean(clientSecret),
-          }),
         },
       },
     );
@@ -153,12 +129,6 @@ export const onRequestGet: PagesFunction<Env> = async ({ request, env }) => {
           "Content-Type": "text/html; charset=utf-8",
           "Cache-Control": "no-store",
           "Set-Cookie": clearStateCookie(),
-          ...buildOAuthDebugHeaders({
-            clientId,
-            redirectUri,
-            secretPresent: true,
-            tokenError: tokenData.error || "OAuth token exchange failed",
-          }),
         },
       },
     );

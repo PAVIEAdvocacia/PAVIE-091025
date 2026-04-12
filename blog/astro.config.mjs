@@ -4,6 +4,7 @@ import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 import mdx from '@astrojs/mdx';
 
+const site = process.env.PUBLIC_SITE_ORIGIN?.replace(/\/+$/, '') || 'https://blog.pavieadvocacia.com.br';
 const sitemapExcludedPaths = ['/blog/sobre/'];
 
 /**
@@ -22,7 +23,7 @@ function shouldIncludeInSitemap(page) {
 
 // https://astro.build/config
 export default defineConfig({
-	site: 'https://blog.pavieadvocacia.com.br',
+	site,
 	integrations: [
 		mdx(),
 		sitemap({

@@ -41,11 +41,6 @@ const articleFocusPoints = [
 const introText = post.excerpt && post.excerpt !== post.description ? post.excerpt : '';
 const showIntroTags = post.temas.length > 0;
 const showIntroBlock = Boolean(introText) || showIntroTags;
-const areaTitle = currentArea?.data.title ?? (hasCanonicalTaxonomy ? post.area : 'Classificacao canonica em revisao');
-const areaDescription = currentArea?.data.shortDescription ??
-	(hasCanonicalTaxonomy
-		? 'Esta leitura se conecta a uma area canonica aprovada do ecossistema PAVIE.'
-		: 'Este conteudo permanece acessivel no acervo, mas ainda nao integra uma categoria canonica aprovada para navegacao publica.');
 const categoryHref = post.categoryUrl ?? '/blog/categoria/';
 const areaHref = post.areaUrl ?? '/#areas';
 const articleSchema = {
@@ -152,46 +147,20 @@ const faqSchema =
 					</section>
 				)}
 				<div class="reading-footer">
+					<RelatedPosts
+						posts={related}
+						title={hasCanonicalTaxonomy ? 'Continue por leituras desta categoria' : 'Continue a leitura'}
+						emptyHref={categoryHref}
+						emptyLabel="Explorar categorias"
+					/>
+					<AuthorCard post={post} />
 					<section class="reading-next-step surface-card" aria-label="Proximo passo apos a leitura">
 						<div>
 							<span class="section-kicker">Proximo passo possivel</span>
 							<h2>Se a leitura nao basta sozinha, o primeiro passo e descrever a situacao concreta com clareza.</h2>
 							<p>{post.cta.description}</p>
 						</div>
-						<div class="reading-next-step__grid">
-							<article class="reading-next-step__panel">
-								<h3>{hasCanonicalTaxonomy ? 'Area correspondente' : 'Tratamento editorial atual'}</h3>
-								<p>{areaDescription}</p>
-								<ul>
-									<li>{areaTitle}</li>
-									<li>
-										{hasCanonicalTaxonomy
-											? 'A navegacao publica desta leitura segue apenas a categoria canonica aprovada.'
-											: 'O conteudo nao aparece em indices canonicos nem em superficies de SEO enquanto a classificacao permanecer sem aprovacao.'}
-									</li>
-									<li>
-										{hasCanonicalTaxonomy
-											? 'A pagina de area e a categoria do blog funcionam como destinos centrais desta leitura.'
-											: 'A revisao humana decide entre reclassificar, migrar de forma extraordinaria ou arquivar o conteudo.'}
-									</li>
-								</ul>
-							</article>
-							<article class="reading-next-step__panel">
-								<h3>O que ajuda no primeiro contato</h3>
-								<ul>
-									<li>Descricao objetiva da situacao principal.</li>
-									<li>Documentos, contratos ou registros que ja existem.</li>
-									<li>Prazo, audiencia, urgencia pratica ou impacto patrimonial.</li>
-								</ul>
-							</article>
-						</div>
 						<div class="reading-bridge__actions">
-							<a class="btn btn-secondary" href={categoryHref}>
-								{hasCanonicalTaxonomy ? 'Explorar categoria' : 'Explorar categorias'}
-							</a>
-							<a class="btn btn-ghost" href={areaHref}>
-								{hasCanonicalTaxonomy ? 'Conheca a area' : 'Conheca as areas'}
-							</a>
 							<a
 								class="btn btn-primary"
 								href={post.cta.href}
@@ -203,29 +172,10 @@ const faqSchema =
 						</div>
 						<p class="reading-ethics-note">Conteudo informativo. Cada caso exige analise tecnica individual.</p>
 					</section>
-					<AuthorCard post={post} />
-					<RelatedPosts
-						posts={related}
-						title={hasCanonicalTaxonomy ? 'Continue por leituras desta categoria' : 'Continue a leitura'}
-						emptyHref={categoryHref}
-						emptyLabel="Explorar categorias"
-					/>
-					<section class="reading-panel" aria-label="Chamada final resumida">
-						<h3>Prefere seguir direto para o contato?</h3>
-						<p class="text-muted">{post.cta.description}</p>
-						<a
-							class="btn btn-secondary"
-							href={post.cta.href}
-							data-contact-origin="article-summary"
-							data-contact-intent="orientacao-inicial"
-						>
-							{post.cta.label}
-						</a>
-					</section>
 				</div>
 			</article>
 
-			<ReadingSidebar post={post} toc={toc} related={related} />
+			<ReadingSidebar toc={toc} related={related} />
 		</div>
 	</div>
 

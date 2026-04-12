@@ -1,4 +1,5 @@
 ---
+import { BLOG_SITE_URL, MAIN_SITE_URL } from '../../consts';
 import BrandLogo from '../brand/BrandLogo.astro';
 ---
 
@@ -19,20 +20,21 @@ import BrandLogo from '../brand/BrandLogo.astro';
 		<nav aria-label="Navegação institucional">
 			<h2>Institucional</h2>
 			<ul>
-				<li><a href="/">Início</a></li>
-				<li><a href="/#areas">Áreas</a></li>
-				<li><a href="/#metodo">Método</a></li>
-				<li><a href="/#contato">Contato</a></li>
+				<li><a href={`${MAIN_SITE_URL}/`}>Início</a></li>
+				<li><a href={`${MAIN_SITE_URL}/#areas`}>Áreas</a></li>
+				<li><a href={`${MAIN_SITE_URL}/#metodo`}>Método</a></li>
+				<li><a href={`${MAIN_SITE_URL}/#contato`}>Contato</a></li>
 			</ul>
 		</nav>
 
 		<nav aria-label="Navegação editorial">
 			<h2>Camada editorial</h2>
 			<ul>
-				<li><a href="/blog/">Conteúdo do Advogado</a></li>
-				<li><a href="/blog/categoria/">Categorias do blog</a></li>
-				<li><a href="/autor/fabio-pavie/">Autor</a></li>
-				<li><span>Política de privacidade em revisão</span></li>
+				<li><a href={`${BLOG_SITE_URL}/blog/`}>Conteúdo do Advogado</a></li>
+				<li><a href={`${BLOG_SITE_URL}/blog/categoria/`}>Categorias do blog</a></li>
+				<li><a href={`${BLOG_SITE_URL}/autor/fabio-pavie/`}>Autor</a></li>
+				<li><a href="/legal/politica-de-privacidade-pavie-advocacia.pdf">Política de privacidade</a></li>
+				<li><a href="/legal/termos-de-servico-pavie-advocacia.pdf">Termos de serviço</a></li>
 			</ul>
 		</nav>
 	</div>

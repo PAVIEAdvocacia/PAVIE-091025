@@ -4,9 +4,12 @@
   "version": "0.0.1",
   "scripts": {
     "dev": "astro dev",
+    "prebuild": "npm run validate:content",
     "build": "astro build",
+    "precheck": "npm run validate:content",
     "check": "astro check",
     "audit:pre-sprint-2": "node scripts/pre-sprint-2-audit.mjs",
+    "validate:content": "node scripts/validate-content-model.mjs",
     "preview": "astro preview",
     "astro": "astro"
   },

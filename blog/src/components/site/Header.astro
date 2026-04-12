@@ -1,4 +1,5 @@
 ---
+import { BLOG_SITE_URL, MAIN_SITE_URL } from '../../consts';
 import BrandLogo from '../brand/BrandLogo.astro';
 
 interface Props {
@@ -8,13 +9,15 @@ interface Props {
 const { currentPath = '/' } = Astro.props;
 
 const navItems = [
-	{ href: '/', label: 'Início' },
-	{ href: '/#areas', label: 'Áreas' },
-	{ href: '/#metodo', label: 'Método' },
-	{ href: '/#contato', label: 'Contato' },
+	{ href: `${MAIN_SITE_URL}/`, label: 'Início', activePath: '/' },
+	{ href: `${MAIN_SITE_URL}/#areas`, label: 'Áreas' },
+	{ href: `${MAIN_SITE_URL}/#metodo`, label: 'Método' },
+	{ href: `${MAIN_SITE_URL}/#contato`, label: 'Contato' },
 ];
 
-function isActive(href: string): boolean {
+function isActive(item: (typeof navItems)[number]): boolean {
+	const href = item.activePath ?? item.href;
+	if (href.startsWith('http')) return false;
 	if (href.includes('#')) return false;
 	return currentPath === href || currentPath.startsWith(`${href.replace(/\/$/, '')}/`);
 }
@@ -22,7 +25,7 @@ function isActive(href: string): boolean {
 
 <header class="site-header" role="banner">
 	<div class="site-header__bar container">
-		<a class="site-header__brand" href="/" aria-label="PAVIE | Advocacia, início do site institucional">
+		<a class="site-header__brand" href={`${MAIN_SITE_URL}/`} aria-label="PAVIE | Advocacia, início do site institucional">
 			<BrandLogo variant="horizontal" width={160} />
 		</a>
 
@@ -30,14 +33,14 @@ function isActive(href: string): boolean {
 			{navItems.map((item) => (
 				<a
 					href={item.href}
-					class:list={['site-nav__link', { 'is-active': isActive(item.href) }]}
+					class:list={['site-nav__link', { 'is-active': isActive(item) }]}
 				>
 					{item.label}
 				</a>
 			))}
 		</nav>
 
-		<a class="site-header__blog-link" href="/blog/">
+		<a class="site-header__blog-link" href={`${BLOG_SITE_URL}/blog/`}>
 			Conteúdo do Advogado
 			<span aria-hidden="true">+</span>
 		</a>
@@ -50,7 +53,7 @@ function isActive(href: string): boolean {
 						{item.label}
 					</a>
 				))}
-				<a href="/blog/">Conteúdo do Advogado</a>
+				<a href={`${BLOG_SITE_URL}/blog/`}>Conteúdo do Advogado</a>
 			</div>
 		</details>
 	</div>

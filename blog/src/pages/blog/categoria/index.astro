@@ -14,6 +14,10 @@ const [areaEntries, authorEntries, blogEntries] = await Promise.all([
 ]);
 const posts = sortPostsByDate(normalizePosts(blogEntries, authorEntries)).filter(isPublicPost);
 const categoryDirectory = buildCanonicalAreaDirectory(areaEntries, posts);
+const hasPublishedPosts = posts.length > 0;
+const postCountLabel = hasPublishedPosts
+	? `${posts.length} artigo${posts.length === 1 ? '' : 's'} publicado${posts.length === 1 ? '' : 's'}`
+	: 'Acervo editorial em preparacao';
 const canonicalUrl = `${BLOG_SITE_URL}/blog/categoria/`;
 const breadcrumbs = [
 	{ label: 'Inicio', href: '/' },
@@ -39,7 +43,7 @@ const breadcrumbSchema = buildBreadcrumbSchema(breadcrumbs, canonicalUrl);
 			</p>
 			<div class="meta-list">
 				<span><span class="meta-dot" aria-hidden="true"></span>{categoryDirectory.length} categorias ativas</span>
-				<span><span class="meta-dot" aria-hidden="true"></span>{posts.length} artigos publicados</span>
+				<span><span class="meta-dot" aria-hidden="true"></span>{postCountLabel}</span>
 				<span><span class="meta-dot" aria-hidden="true"></span>Ligacao direta com as paginas de area</span>
 			</div>
 			<div class="blog-actions">
@@ -64,9 +68,9 @@ const breadcrumbSchema = buildBreadcrumbSchema(breadcrumbs, canonicalUrl);
 						<ul class="cluster-directory-list">
 							<li>{category.headline}</li>
 							<li>
-								{category.postCount > 0
-									? `${category.postCount} artigo${category.postCount > 1 ? 's' : ''} publicado${category.postCount > 1 ? 's' : ''}.`
-									: 'Esta categoria ja esta disponivel e recebera novos textos conforme o acervo publicado crescer.'}
+									{category.postCount > 0
+										? `${category.postCount} artigo${category.postCount > 1 ? 's' : ''} publicado${category.postCount > 1 ? 's' : ''}.`
+										: 'Acervo em preparacao nesta categoria. Textos revisados serao incorporados conforme o plano editorial.'}
 							</li>
 						</ul>
 						{category.latestPosts.length > 0 && (

@@ -53,7 +53,7 @@ A página `/sobre` pode ser mais densa, mas:
 
 ## 3.3 `/areas/` e páginas de área
 
-Devem usar apenas os 7 rótulos canônicos.
+Devem usar apenas os 8 rótulos canônicos.
 
 É vedado:
 

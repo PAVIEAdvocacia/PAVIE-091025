@@ -159,7 +159,7 @@ export const LEGACY_TO_CANONICAL_AREA_MATRIX = [
 		legacyAreaLabel: 'Compliance, Integridade e Atuação Empresarial',
 		targetCategoryCodes: [] as const,
 		migrationRule:
-			'Sem correspondência canônica direta no modelo de 7 categorias. Exige triagem manual, reclassificação extraordinária ou arquivamento.',
+			'Sem correspondência canônica direta no modelo vigente de 8 categorias. Exige triagem manual, reclassificação extraordinária ou arquivamento.',
 	},
 ] as const;
 
