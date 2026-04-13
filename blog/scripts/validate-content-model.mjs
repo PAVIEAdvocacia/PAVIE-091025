@@ -13,6 +13,7 @@ const CTA_TYPES = new Set(['area', 'contact', 'article-series', 'document-review
 const READER_STAGES = new Set(['discover', 'clarify', 'compare', 'decide']);
 const REVIEW_STATUSES = new Set(['pending', 'reviewed', 'needs-adjustment']);
 const MIGRATION_STATUSES = new Set(['native', 'migrated', 'revised', 'archived', 'redirected']);
+const EXPECTED_CATEGORY_CODES = ['CAT-01', 'CAT-02', 'CAT-03', 'CAT-04', 'CAT-05', 'CAT-06', 'CAT-07', 'CAT-08'];
 
 const errors = [];
 const warnings = [];
@@ -63,6 +64,24 @@ function parseCanonicalDefinitions() {
 	}
 	if (!definitions.length) errors.push('src/lib/canonical-content.ts: nenhuma categoria canonica encontrada.');
 	return definitions;
+}
+
+function validateCanonicalDefinitions(definitions) {
+	const codes = definitions.map((definition) => definition.code);
+	const missing = EXPECTED_CATEGORY_CODES.filter((code) => !codes.includes(code));
+	const unexpected = codes.filter((code) => !EXPECTED_CATEGORY_CODES.includes(code));
+
+	for (const code of missing) {
+		errors.push(`src/lib/canonical-content.ts: categoria canonica obrigatoria ausente: ${code}.`);
+	}
+	for (const code of unexpected) {
+		errors.push(`src/lib/canonical-content.ts: categoria canonica nao homologada: ${code}.`);
+	}
+	if (codes.length !== EXPECTED_CATEGORY_CODES.length) {
+		errors.push(
+			`src/lib/canonical-content.ts: quantidade de categorias canonicas invalida: ${codes.length}; esperado ${EXPECTED_CATEGORY_CODES.length}.`,
+		);
+	}
 }
 
 function requireField(data, field, filePath) {
@@ -204,6 +223,7 @@ function validateDecap(definitions) {
 }
 
 const definitions = parseCanonicalDefinitions();
+validateCanonicalDefinitions(definitions);
 validateAreas(definitions);
 const authors = validateAuthors();
 validatePosts(definitions, authors);
