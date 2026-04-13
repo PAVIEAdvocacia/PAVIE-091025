@@ -97,10 +97,10 @@
 	position: absolute;
 	inset: -22px;
 	z-index: -2;
-	background: url('/images/site/hero/hero-01.png') center 51% / cover no-repeat;
-	filter: grayscale(1) saturate(0.22) contrast(0.96) blur(2px);
-	opacity: 0.64;
-	transform: scale(1.028);
+	background: url('/images/site/hero/hero-01.png') center 46% / cover no-repeat;
+	filter: grayscale(1) saturate(0.18) contrast(1.03) blur(1.15px);
+	opacity: 0.76;
+	transform: scale(1.018);
 }
 
 .site-hero::after {
@@ -111,20 +111,20 @@
 	background:
 		repeating-linear-gradient(
 			0deg,
-			rgba(47, 78, 74, 0.016) 0,
-			rgba(47, 78, 74, 0.016) 1px,
+			rgba(47, 78, 74, 0.012) 0,
+			rgba(47, 78, 74, 0.012) 1px,
 			transparent 1px,
 			transparent 6px
 		),
 		repeating-linear-gradient(
 			90deg,
-			rgba(126, 23, 28, 0.012) 0,
-			rgba(126, 23, 28, 0.012) 1px,
+			rgba(126, 23, 28, 0.008) 0,
+			rgba(126, 23, 28, 0.008) 1px,
 			transparent 1px,
 			transparent 8px
 		),
-		linear-gradient(90deg, rgba(245, 241, 235, 0.72), rgba(255, 253, 249, 0.42) 48%, rgba(245, 241, 235, 0.74)),
-		linear-gradient(180deg, rgba(245, 241, 235, 0.58), rgba(245, 241, 235, 0.92));
+		linear-gradient(90deg, rgba(245, 241, 235, 0.56), rgba(255, 253, 249, 0.24) 48%, rgba(245, 241, 235, 0.58)),
+		linear-gradient(180deg, rgba(245, 241, 235, 0.38), rgba(245, 241, 235, 0.78));
 	background-blend-mode: soft-light, soft-light, normal, normal;
 }
 
@@ -629,7 +629,7 @@
 	}
 
 	.site-hero::before {
-		opacity: 0.56;
+		opacity: 0.68;
 	}
 
 	.site-hero h1 {
@@ -667,8 +667,8 @@
 
 	.site-hero::before {
 		background-position: center;
-		opacity: 0.46;
-		filter: grayscale(1) saturate(0.18) contrast(0.9) blur(2.8px);
+		opacity: 0.54;
+		filter: grayscale(1) saturate(0.16) contrast(0.92) blur(1.9px);
 	}
 
 	.site-hero__inner {
