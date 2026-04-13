@@ -24,34 +24,34 @@ const posts = sortPostsByDate(normalizePosts(blogEntries, authorEntries)).filter
 const currentArea = getCanonicalAreaDirectoryItem(areaEntries, posts, Astro.params.slug ?? '');
 
 if (!currentArea) {
-	throw new Error(`Area canonica nao encontrada: ${Astro.params.slug}`);
+	throw new Error(`Área canônica não encontrada: ${Astro.params.slug}`);
 }
 
 const area = currentArea.entry.data;
 const canonicalUrl = `${MAIN_SITE_URL}${currentArea.href}`;
 const breadcrumbs = [
-	{ label: 'Inicio', href: '/' },
-	{ label: 'Areas', href: '/#areas' },
+	{ label: 'Início', href: '/' },
+	{ label: 'Áreas', href: '/#areas' },
 	{ label: area.displayTitle ?? currentArea.displayTitle },
 ];
 const heroTitle = area.heroTitle ?? area.title;
 const heroDescription = area.heroDescription ?? area.headline;
 const framingText = area.framingText.length > 0 ? area.framingText : [area.description];
-const documentsTitle = area.documentsTitle ?? 'Documentacao tipica';
-const documentsNote = area.documentsNote ?? 'Orientacao inicial para triagem, nao exaustiva.';
+const documentsTitle = area.documentsTitle ?? 'Documentação típica';
+const documentsNote = area.documentsNote ?? 'Orientação inicial para triagem, não exaustiva.';
 const cautionsTitle = area.cautionsTitle ?? 'Limites e cautelas';
 const cautionsIntro =
-	area.cautionsIntro ?? 'A transparencia e a base do nosso metodo. Veja o que precisa ser delimitado antes de qualquer providencia.';
-const faqTitle = area.faqTitle ?? 'Duvidas comuns da area';
-const readingTitle = area.readingTitle ?? 'Leitura util antes do contato';
+	area.cautionsIntro ?? 'A transparência é a base do nosso método. Veja o que precisa ser delimitado antes de qualquer providência.';
+const faqTitle = area.faqTitle ?? 'Dúvidas comuns da área';
+const readingTitle = area.readingTitle ?? 'Leitura útil antes do contato';
 const readingDescription =
 	area.readingDescription ??
-	'Se a sua situacao ainda esta em fase de reconhecimento, recomendamos as analises tecnicas da categoria correspondente.';
-const finalTitle = area.finalTitle ?? 'Avancar com seguranca';
+	'Se a sua situação ainda está em fase de reconhecimento, recomendamos as análises técnicas da categoria correspondente.';
+const finalTitle = area.finalTitle ?? 'Avançar com segurança';
 const finalText =
 	area.finalText ??
-	'O enquadramento correto evita decisoes precipitadas. Se o seu contexto ja esta maduro para avaliacao, inicie a analise tecnica.';
-const finalCtaLabel = area.finalCtaLabel ?? 'Solicitar analise inicial';
+	'O enquadramento correto evita decisões precipitadas. Se o seu contexto já está maduro para avaliação, inicie a análise técnica.';
+const finalCtaLabel = area.finalCtaLabel ?? 'Solicitar análise inicial';
 const breadcrumbSchema = buildBreadcrumbSchema(breadcrumbs, canonicalUrl);
 const faqSchema = area.faqItems.length > 0 ? buildFaqSchema(area.faqItems) : undefined;
 const legalServiceSchema = {
@@ -74,31 +74,31 @@ const legalServiceSchema = {
 
 		<section class="s2-hero" aria-labelledby="area-title">
 			<div>
-				<span class="badge">Area de atuacao</span>
+				<span class="badge">Área de atuação</span>
 				<h1 id="area-title">{heroTitle}</h1>
 				<p>{heroDescription}</p>
 				<div class="institutional-actions">
-					<a class="btn btn-primary" href="/#contato">Solicitar analise inicial</a>
-					<a class="btn btn-ghost" href="#leitura-util">Ler conteudo relacionado</a>
+					<a class="btn btn-primary" href="/#contato">Solicitar análise inicial</a>
+					<a class="btn btn-ghost" href="#leitura-util">Ler conteúdo relacionado</a>
 				</div>
 			</div>
-			<div class="s2-hero__panel" aria-label="Eixo da area">
+			<div class="s2-hero__panel" aria-label="Eixo da área">
 				<span>{area.categoryCode}</span>
 				<strong>{area.displayTitle ?? currentArea.displayTitle}</strong>
-				<p>Pagina institucional de area, conectada a categoria editorial correspondente.</p>
+				<p>Página institucional de área, conectada à categoria editorial correspondente.</p>
 			</div>
 		</section>
 
 		<section class="s2-section s2-framing" aria-labelledby="area-framing-title">
-			<span class="section-kicker">Enquadramento da area</span>
-			<h2 id="area-framing-title">{area.framingTitle ?? 'Enquadramento da area'}</h2>
+			<span class="section-kicker">Enquadramento da área</span>
+			<h2 id="area-framing-title">{area.framingTitle ?? 'Enquadramento da área'}</h2>
 			{framingText.map((paragraph) => <p>{paragraph}</p>)}
 		</section>
 
 		<section class="s2-section" aria-labelledby="area-criteria-title">
 			<div class="s2-section__title">
-				<span class="section-kicker">Criterios de atuacao tecnica</span>
-				<h2 id="area-criteria-title">Como esta frente e analisada</h2>
+				<span class="section-kicker">Critérios de atuação técnica</span>
+				<h2 id="area-criteria-title">Como esta frente é analisada</h2>
 			</div>
 			<div class="s2-card-grid">
 				{area.criteria.map((item, index) => (
@@ -112,7 +112,7 @@ const legalServiceSchema = {
 
 		<section class="s2-section s2-split" aria-labelledby="area-documents-title">
 			<div>
-				<span class="section-kicker">Prova minima</span>
+				<span class="section-kicker">Prova mínima</span>
 				<h2 id="area-documents-title">{documentsTitle}</h2>
 				<p>{documentsNote}</p>
 			</div>
@@ -122,7 +122,7 @@ const legalServiceSchema = {
 		</section>
 
 		<section class="s2-section s2-cautions" aria-labelledby="area-cautions-title">
-			<span class="section-kicker">Contencao de expectativa</span>
+			<span class="section-kicker">Contenção de expectativa</span>
 			<h2 id="area-cautions-title">{cautionsTitle}</h2>
 			<p>{cautionsIntro}</p>
 			<ul>
@@ -132,7 +132,7 @@ const legalServiceSchema = {
 
 		<section class="s2-section s2-faq" aria-labelledby="area-faq-title">
 			<div class="s2-section__title">
-				<span class="section-kicker">FAQ especifica</span>
+				<span class="section-kicker">FAQ específica</span>
 				<h2 id="area-faq-title">{faqTitle}</h2>
 			</div>
 			<div class="faq-list">
@@ -147,7 +147,7 @@ const legalServiceSchema = {
 
 		<section id="leitura-util" class="s2-section s2-reading" aria-labelledby="area-reading-title">
 			<div>
-				<span class="section-kicker">Leitura util antes do contato</span>
+				<span class="section-kicker">Leitura útil antes do contato</span>
 				<h2 id="area-reading-title">{readingTitle}</h2>
 				<p>{readingDescription}</p>
 			</div>
@@ -159,13 +159,13 @@ const legalServiceSchema = {
 						? `${currentArea.postCount} artigo${currentArea.postCount === 1 ? '' : 's'} publicado${currentArea.postCount === 1 ? '' : 's'} nesta categoria.`
 						: 'Categoria editorial estruturada para receber artigos, guias e checklists desta frente.'}
 				</p>
-				<a class="btn btn-secondary" href={currentArea.categoryHref}>Ler conteudo relacionado</a>
+				<a class="btn btn-secondary" href={currentArea.categoryHref}>Ler conteúdo relacionado</a>
 			</article>
 		</section>
 
 		<section class="s2-final-cta" aria-labelledby="area-final-title">
 			<div>
-				<span class="section-kicker">Proximo passo</span>
+				<span class="section-kicker">Próximo passo</span>
 				<h2 id="area-final-title">{finalTitle}</h2>
 				<p>{finalText}</p>
 			</div>
