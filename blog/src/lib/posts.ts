@@ -214,7 +214,7 @@ function resolveCanonicalCta(
 			return {
 				ctaKey: institutional ? 'areas_de_atuacao' : 'areas_editoriais',
 				cta: {
-					label: institutional ? 'Conheca os servicos' : 'Explorar temas',
+					label: institutional ? 'Conheça a área correspondente' : 'Explorar temas',
 					href,
 					description: institutional
 						? 'Veja como a PAVIE apresenta esta area de atuacao na camada institucional do site.'
@@ -236,7 +236,7 @@ function resolveCanonicalCta(
 			return {
 				ctaKey: 'diagnostico_juridico',
 				cta: {
-					label: 'Organizar documentos',
+					label: 'Solicitar análise inicial',
 					href: ctaTarget || '/#contato',
 					description:
 						'Comece reunindo os documentos principais para avaliar a via mais adequada para a situacao.',

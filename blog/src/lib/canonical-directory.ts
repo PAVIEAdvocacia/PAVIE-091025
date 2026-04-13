@@ -54,7 +54,7 @@ export function buildCanonicalAreaDirectory(
 				categoryHref: canonicalCategoryHref(entry.data.categoryCode),
 				postCount: areaPosts.length,
 				posts: areaPosts,
-				featuredPost: areaPosts[0],
+				featuredPost: areaPosts.find((post) => post.featured) ?? areaPosts[0],
 				latestPosts: areaPosts.slice(0, 3),
 			};
 		});
