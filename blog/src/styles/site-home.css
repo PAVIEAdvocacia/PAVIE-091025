@@ -97,9 +97,9 @@
 	position: absolute;
 	inset: -22px;
 	z-index: -2;
-	background: url('/images/site/hero/hero-01.png') center 51% / cover no-repeat;
-	filter: grayscale(1) saturate(0.22) contrast(0.96) blur(2px);
-	opacity: 0.64;
+	background: url('/images/site/hero/hero-01.png') center 49% / cover no-repeat;
+	filter: grayscale(1) saturate(0.24) contrast(1) blur(1.55px);
+	opacity: 0.71;
 	transform: scale(1.028);
 }
 
@@ -123,8 +123,8 @@
 			transparent 1px,
 			transparent 8px
 		),
-		linear-gradient(90deg, rgba(245, 241, 235, 0.72), rgba(255, 253, 249, 0.42) 48%, rgba(245, 241, 235, 0.74)),
-		linear-gradient(180deg, rgba(245, 241, 235, 0.58), rgba(245, 241, 235, 0.92));
+		linear-gradient(90deg, rgba(245, 241, 235, 0.66), rgba(255, 253, 249, 0.35) 48%, rgba(245, 241, 235, 0.68)),
+		linear-gradient(180deg, rgba(245, 241, 235, 0.52), rgba(245, 241, 235, 0.86));
 	background-blend-mode: soft-light, soft-light, normal, normal;
 }
 
@@ -629,7 +629,7 @@
 	}
 
 	.site-hero::before {
-		opacity: 0.56;
+		opacity: 0.63;
 	}
 
 	.site-hero h1 {
@@ -667,8 +667,8 @@
 
 	.site-hero::before {
 		background-position: center;
-		opacity: 0.46;
-		filter: grayscale(1) saturate(0.18) contrast(0.9) blur(2.8px);
+		opacity: 0.52;
+		filter: grayscale(1) saturate(0.18) contrast(0.9) blur(2.4px);
 	}
 
 	.site-hero__inner {
