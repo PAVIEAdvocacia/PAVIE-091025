@@ -155,6 +155,8 @@ As categorias públicas autorizadas da PAVIE são as seguintes:
 
 Esses nomes devem ser tratados como **rótulos canônicos**, especialmente em /areas/, páginas de área, breadcrumbs, taxonomia editorial, metadados, sitemap interno, frontmatter e instruções para CMS ou agentes.
 
+Para interfaces compactas, a CAT-08 pode usar o título curto **Consumidor e Responsabilidade Civil**, preservando o título canônico acima em metadados, registro mestre e páginas estratégicas. O recorte público autorizado da frente é independente da CAT-06 e se limita a consumo e responsabilidade civil com prova documental suficiente.
+
 ## 6. Matriz final por superfície pública
 
 ## 6.1 Home do site

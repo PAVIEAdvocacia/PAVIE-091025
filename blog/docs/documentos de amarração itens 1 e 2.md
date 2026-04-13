@@ -347,7 +347,7 @@ Nelas:
 2. não se admitem sinônimos concorrentes que recriem novas categorias;
 3. não se admitem áreas amplas sem categoria correspondente;
 4. satélites não podem figurar como categoria principal;
-5. a estrutura deve refletir as 7 categorias canônicas aprovadas.
+5. a estrutura deve refletir as 8 categorias canônicas aprovadas, de CAT-01 a CAT-08.
 
 ## 9.4 Assinatura de autor do blog
 
@@ -361,7 +361,7 @@ Ela pode:
 Ela não deve:
 1. reproduzir lista ampla de áreas biográficas;
 2. dar a impressão de blog generalista;
-3. equiparar consumidor, compliance e responsabilidade civil ao núcleo editorial canônico;
+3. equiparar compliance a categoria-mãe ou ampliar consumidor e responsabilidade civil além do recorte canônico da CAT-08;
 4. inflar amplitude temática além daquilo que o blog efetivamente sustenta.
 
 ## 9.5 Bio estendida do autor
@@ -526,7 +526,7 @@ A aprovação desta norma impõe, como efeitos imediatos, as seguintes providên
 1. revisão da bio da home para reduzir enumeração ampla e aproximá-la do foco canônico;
 2. revisão da assinatura de autor do blog para fórmula concentrada e não-catalogal;
 3. manutenção da página /sobre como peça biográfica mais ampla, com fechamento reconduzido ao foco estratégico;
-4. alinhamento da página /areas/ exclusivamente à taxonomia canônica de 7 categorias;
+4. alinhamento da página /areas/ exclusivamente à taxonomia canônica de 8 categorias;
 5. criação de matriz mestra de correspondência pública entre:
    - expressão institucional ampla;
    - categoria canônica;

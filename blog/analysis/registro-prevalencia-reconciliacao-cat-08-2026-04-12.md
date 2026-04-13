@@ -19,6 +19,17 @@ Fica registrado, para fins operacionais, que o estado vigente de implementacao p
 7. CAT-07 - Tributacao Patrimonial e Recuperacao Tributaria Seletiva
 8. CAT-08 - Direito do Consumidor e Responsabilidade Civil
 
+## 2.1 Registro mestre da CAT-08
+
+- `categoryCode`: `CAT-08`
+- titulo canonico: Direito do Consumidor e Responsabilidade Civil
+- titulo curto de interface: Consumidor e Responsabilidade Civil
+- `areaSlug` e `categorySlug`: `direito-do-consumidor-responsabilidade-civil`
+- CTA institucional principal: Solicitar analise inicial
+- ponte editorial: Explorar categoria
+- recortes prioritarios: passagens aereas com atraso, cancelamento, perda de conexao, reembolso e bagagem; negativacao indevida; cobrancas indevidas, em duplicidade ou posteriores a cancelamento; compras online com nao-entrega, atraso excessivo, recusa de devolucao ou oferta nao cumprida; falhas de servico documentaveis com impacto patrimonial ou pessoal relevante.
+- documentacao tipica: documentos pessoais basicos; contrato, bilhete, reserva, fatura, boleto ou comprovante do vinculo de consumo; comprovantes de pagamento, extratos e recibos; e-mails, prints, mensagens, protocolos, notificacoes e respostas do fornecedor; registros de negativacao, reembolso negado, gastos adicionais ou prejuizo material, quando existentes; cronologia simples do ocorrido.
+
 ## 3. Alcance da prevalencia
 
 A prevalencia aqui registrada se aplica a:

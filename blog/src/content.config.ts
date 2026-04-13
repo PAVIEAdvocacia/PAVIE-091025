@@ -148,8 +148,8 @@ const areas = defineCollection({
 	loader: glob({ base: './src/content/areas', pattern: '**/*.md' }),
 	schema: z.object({
 		title: z.string().min(12),
-		canonicalTitle: z.string().min(12).optional(),
-		displayTitle: z.string().min(3).optional(),
+		canonicalTitle: z.string().min(12),
+		displayTitle: z.string().min(3),
 		slug: z.string().min(3),
 		categoryCode: z.enum(categoryCodeOptions),
 		shortDescription: z.string().min(30),

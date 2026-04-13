@@ -55,10 +55,11 @@ function parseFrontmatter(filePath) {
 function parseCanonicalDefinitions() {
 	const source = readText(canonicalPath);
 	const definitions = [];
-	const pattern = /\{\s*code:\s*'([^']+)'[\s\S]*?slug:\s*'([^']+)'[\s\S]*?label:\s*'([^']+)'/g;
+	const pattern =
+		/\{\s*code:\s*'([^']+)'[\s\S]*?slug:\s*'([^']+)'[\s\S]*?label:\s*'([^']+)'[\s\S]*?displayTitle:\s*'([^']+)'/g;
 	let match;
 	while ((match = pattern.exec(source))) {
-		definitions.push({ code: match[1], slug: match[2], label: match[3] });
+		definitions.push({ code: match[1], slug: match[2], label: match[3], displayTitle: match[4] });
 	}
 	if (!definitions.length) errors.push('src/lib/canonical-content.ts: nenhuma categoria canonica encontrada.');
 	return definitions;
@@ -110,6 +111,12 @@ function validateAreas(definitions) {
 		const data = parseFrontmatter(areaFile);
 		if (data.slug !== definition.slug) {
 			errors.push(`${path.relative(root, areaFile)}: slug '${data.slug}' diverge do registry '${definition.slug}'.`);
+		}
+		if (data.canonicalTitle !== definition.label) {
+			errors.push(`${path.relative(root, areaFile)}: canonicalTitle '${data.canonicalTitle}' diverge do registry '${definition.label}'.`);
+		}
+		if (data.displayTitle !== definition.displayTitle) {
+			errors.push(`${path.relative(root, areaFile)}: displayTitle '${data.displayTitle}' diverge do registry '${definition.displayTitle}'.`);
 		}
 	}
 }

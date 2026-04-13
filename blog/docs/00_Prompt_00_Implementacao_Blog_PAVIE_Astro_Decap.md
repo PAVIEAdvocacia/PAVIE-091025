@@ -12,7 +12,7 @@ Este prompt **não autoriza recomeçar o projeto do zero** sem prova objetiva de
 
 Considere como premissas superiores já definidas fora do código:
 
-1. a PAVIE possui **taxonomia pública canônica de 7 categorias**;
+1. a PAVIE possui **taxonomia pública canônica de 8 categorias, de CAT-01 a CAT-08**;
 2. portfólio institucional amplo e taxonomia editorial **não são equivalentes**;
 3. home, `/sobre`, `/areas/`, blog, assinatura de autor, bios e CTAs **devem obedecer à matriz canônica de superfícies públicas**;
 4. o projeto está **apto para implantação**, mas com necessidade de **saneamento final do legado e fechamento operacional**;

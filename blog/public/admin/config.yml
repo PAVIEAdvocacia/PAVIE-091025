@@ -236,6 +236,14 @@ collections:
         name: "title"
         widget: "string"
         required: true
+      - label: "Titulo canonico"
+        name: "canonicalTitle"
+        widget: "string"
+        required: true
+      - label: "Titulo curto de interface"
+        name: "displayTitle"
+        widget: "string"
+        required: true
       - label: "Slug"
         name: "slug"
         widget: "string"
