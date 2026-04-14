@@ -3,9 +3,10 @@ import type { BlogPost } from '../../lib/posts';
 
 interface Props {
 	post: BlogPost;
+	kicker?: string;
 }
 
-const { post } = Astro.props;
+const { post, kicker = 'Leitura em destaque' } = Astro.props;
 const dateLabel = post.publishedAt
 	? post.publishedAt.toLocaleDateString('pt-BR', { dateStyle: 'long' })
 	: 'Publicação recente';
@@ -22,7 +23,7 @@ const dateLabel = post.publishedAt
 		)}
 	</div>
 	<div class="featured-post__copy">
-		<span class="section-kicker">Leitura em destaque</span>
+		<span class="section-kicker">{kicker}</span>
 		<span class="badge">{post.area}</span>
 		<h2 id="featured-post-title" class="featured-post__title">
 			{post.title}
