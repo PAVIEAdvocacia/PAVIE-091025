@@ -73,66 +73,61 @@ const collectionSchema = {
 					<a class="btn btn-primary" href="/blog/categoria/">Explorar categorias</a>
 					<a class="btn btn-ghost" href="/">Voltar ao site institucional</a>
 				</div>
-				<div class="blog-hero__chips">
-					{categoryDirectory.map((category) => (
-						<a class="blog-chip" href={category.categoryHref}>{category.displayTitle}</a>
-					))}
-				</div>
 			</div>
 		</section>
 
-		<section class="blog-grid" aria-label="Mapa de categorias">
-			<div class="section-title">
-				<div>
-					<span class="section-kicker">Mapa de categorias</span>
-					<h2>Escolha a frente editorial que melhor organiza a sua leitura.</h2>
-				</div>
-				<a class="btn btn-ghost" href="/blog/categoria/">Ver todas as categorias</a>
-			</div>
-			<div class="cluster-directory-grid">
-				{categoryDirectory.map((category) => (
-					<article class="surface-card cluster-directory-card">
-						<span class="section-kicker">Categoria</span>
-						<h3>{category.displayTitle}</h3>
-						<p>{category.shortDescription}</p>
-						{category.latestPosts.length > 0 ? (
-							<div class="cluster-directory-posts">
-								<p class="cluster-directory-meta">
-									{category.postCount} leitura{category.postCount === 1 ? '' : 's'} nesta categoria.
-								</p>
-							</div>
-						) : (
-							<p class="cluster-directory-empty">
-								Conteúdo em preparação.
-							</p>
-						)}
-						<div class="cluster-directory-actions">
-							<a class="btn btn-primary" href={category.categoryHref}>Explorar categoria</a>
-							<a class="btn btn-ghost" href={category.href}>Conhecer área correspondente</a>
-						</div>
-					</article>
-				))}
-			</div>
-		</section>
-
-		{!hasPublishedPosts ? (
-			<section class="surface-card empty-state" aria-label="Acervo em organização">
-				<h2>Acervo em atualização</h2>
+		<section class="taxonomy-index" aria-labelledby="taxonomy-index-title">
+			<div class="taxonomy-index__intro">
+				<span class="section-kicker">Índice taxonômico</span>
+				<h2 id="taxonomy-index-title">Escolha o tema de interesse e avance para a leitura.</h2>
 				<p>
-					As categorias já organizam a navegação do blog. Novos textos entram conforme avançam a
-					revisão editorial e jurídica do acervo público.
+					As categorias organizam o acervo por assunto, preservando a ligação entre conteúdo editorial
+					e áreas públicas correspondentes.
 				</p>
 				<div class="blog-actions">
 					<a class="btn btn-primary" href="/blog/categoria/">Explorar categorias</a>
 					<a class="btn btn-ghost" href="/">Voltar ao site institucional</a>
 				</div>
-			</section>
-		) : (
-			featured && <FeaturedPost post={featured} kicker="Guia em destaque" />
-		)}
+			</div>
+			<nav class="taxonomy-index__nav" aria-label="Categorias do blog">
+				<ol>
+					{categoryDirectory.map((category, index) => (
+						<li>
+							<a href={category.categoryHref}>
+								<span class="taxonomy-index__number">{String(index + 1).padStart(2, '0')}</span>
+								<span class="taxonomy-index__label">{category.displayTitle}</span>
+								<span class="taxonomy-index__count">
+									{category.postCount > 0
+										? `${category.postCount} leitura${category.postCount === 1 ? '' : 's'}`
+										: 'em preparação'}
+								</span>
+							</a>
+						</li>
+					))}
+				</ol>
+			</nav>
+		</section>
+
+		<section class="featured-reading" aria-label="Leitura em destaque">
+			{!hasPublishedPosts ? (
+				<article class="surface-card empty-state" aria-label="Acervo em organização">
+					<h2>Acervo em atualização</h2>
+					<p>
+						As categorias já organizam a navegação do blog. Novos textos entram conforme avançam a
+						revisão editorial e jurídica do acervo público.
+					</p>
+					<div class="blog-actions">
+						<a class="btn btn-primary" href="/blog/categoria/">Explorar categorias</a>
+						<a class="btn btn-ghost" href="/">Voltar ao site institucional</a>
+					</div>
+				</article>
+			) : (
+				featured && <FeaturedPost post={featured} kicker="Guia em destaque" />
+			)}
+		</section>
 
 		{continuityPosts.length > 0 && (
-			<BlogGrid title="Últimas publicações" kicker="Leituras recentes" posts={continuityPosts} />
+			<BlogGrid title="Leituras recentes" kicker="Publicações recentes" posts={continuityPosts} />
 		)}
 
 		<section class="surface-card blog-author-spotlight" aria-label="Autor do blog">
