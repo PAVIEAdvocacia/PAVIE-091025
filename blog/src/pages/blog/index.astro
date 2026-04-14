@@ -78,7 +78,7 @@ const collectionSchema = {
 				</div>
 				<div class="blog-hero__actions">
 					<a class="btn btn-primary" href="/blog/categoria/">Explorar categorias</a>
-					<a class="btn btn-ghost" href="/#areas">Ver áreas no site</a>
+					<a class="btn btn-ghost" href="/">Voltar ao site institucional</a>
 				</div>
 				<div class="blog-hero__chips">
 					{categoryDirectory.map((category) => (
@@ -88,74 +88,11 @@ const collectionSchema = {
 			</div>
 		</section>
 
-		<section class="blog-grid" aria-labelledby="quick-start-title">
+		<section class="blog-grid" aria-label="Mapa de categorias">
 			<div class="section-title">
 				<div>
-					<span class="section-kicker">Mapa editorial</span>
-					<h2 id="quick-start-title">Cada categoria do blog aponta para um eixo público estável e fácil de localizar.</h2>
-				</div>
-				<a class="btn btn-ghost" href="/#areas">Conheça as áreas</a>
-			</div>
-			<div class="entry-point-grid">
-				{categoryDirectory.map((category) => (
-					<article class="surface-card entry-point-card">
-						<span class="section-kicker">Categoria do blog</span>
-						<h3>{category.title}</h3>
-						<p>{category.shortDescription}</p>
-						<a class="entry-point-card__link" href={category.categoryHref}>Explorar esta categoria</a>
-					</article>
-				))}
-			</div>
-		</section>
-
-		{!hasPublishedPosts ? (
-			<section class="surface-card empty-state" aria-label="Acervo em organização">
-				<h2>Acervo em atualização</h2>
-				<p>
-					As categorias já organizam a navegação do blog. Novos textos entram conforme avançam a
-					revisão editorial e jurídica do acervo público.
-				</p>
-				<div class="blog-actions">
-					<a class="btn btn-primary" href="/blog/categoria/">Explorar categorias</a>
-					<a class="btn btn-ghost" href="/#areas">Conheça as áreas</a>
-				</div>
-			</section>
-		) : (
-			<>
-				<section class="surface-card blog-search" aria-label="Busca interna do blog">
-					<div>
-						<span class="section-kicker">Busca rapida</span>
-						<h2>Encontre conteúdo por categoria, situação ou título</h2>
-					</div>
-					<label class="sr-only" for="blog-search-input">Buscar no blog</label>
-					<input
-						id="blog-search-input"
-						type="search"
-						placeholder="Ex.: inventário, partilha, matrícula do imóvel"
-						data-blog-search-input
-					/>
-					<ul class="blog-search__list" data-blog-search-list>
-						{posts.slice(0, 8).map((post) => (
-							<li>
-								<a href={post.url}>
-									<strong>{post.title}</strong>
-									<span>{post.area}</span>
-								</a>
-							</li>
-						))}
-					</ul>
-					<p class="text-muted" data-blog-search-empty hidden>Nenhum resultado para esse termo.</p>
-				</section>
-
-				{featured && <FeaturedPost post={featured} />}
-			</>
-		)}
-
-		<section class="blog-grid" aria-label="Categorias do blog">
-			<div class="section-title">
-				<div>
-					<span class="section-kicker">Categorias do blog</span>
-					<h2>Se a situação já está localizada, siga pela categoria correspondente</h2>
+					<span class="section-kicker">Mapa de categorias</span>
+					<h2>Escolha a frente editorial que melhor organiza a sua leitura.</h2>
 				</div>
 				<a class="btn btn-ghost" href="/blog/categoria/">Ver todas as categorias</a>
 			</div>
@@ -181,29 +118,59 @@ const collectionSchema = {
 						)}
 						<div class="cluster-directory-actions">
 							<a class="btn btn-primary" href={category.categoryHref}>Explorar categoria</a>
-							<a class="btn btn-ghost" href={category.href}>Conhecer área</a>
+							<a class="btn btn-ghost" href={category.href}>Conhecer área correspondente</a>
 						</div>
 					</article>
 				))}
 			</div>
 		</section>
 
-		{continuityPosts.length > 0 && (
-			<BlogGrid title="Continue a leitura" kicker="Aprofundamento" posts={continuityPosts} />
+		{!hasPublishedPosts ? (
+			<section class="surface-card empty-state" aria-label="Acervo em organização">
+				<h2>Acervo em atualização</h2>
+				<p>
+					As categorias já organizam a navegação do blog. Novos textos entram conforme avançam a
+					revisão editorial e jurídica do acervo público.
+				</p>
+				<div class="blog-actions">
+					<a class="btn btn-primary" href="/blog/categoria/">Explorar categorias</a>
+					<a class="btn btn-ghost" href="/">Voltar ao site institucional</a>
+				</div>
+			</section>
+		) : (
+			<>
+				<section class="surface-card blog-search" aria-label="Busca interna do blog">
+					<div>
+						<span class="section-kicker">Busca no acervo</span>
+						<h2>Busque por tema, categoria ou situação</h2>
+					</div>
+					<label class="sr-only" for="blog-search-input">Buscar no blog</label>
+					<input
+						id="blog-search-input"
+						type="search"
+						placeholder="Ex.: negativação, cobrança indevida, inventário"
+						data-blog-search-input
+					/>
+					<ul class="blog-search__list" data-blog-search-list>
+						{posts.slice(0, 8).map((post) => (
+							<li>
+								<a href={post.url}>
+									<strong>{post.title}</strong>
+									<span>{post.area}</span>
+								</a>
+							</li>
+						))}
+					</ul>
+					<p class="text-muted" data-blog-search-empty hidden>Nenhuma leitura encontrada para esse termo.</p>
+				</section>
+
+				{featured && <FeaturedPost post={featured} />}
+			</>
 		)}
 
-		<section class="editorial-cta" aria-label="Retorno ao site institucional">
-			<span class="section-kicker">Quando a leitura ajuda a decidir</span>
-			<h2>Se o tema deixar de ser apenas dúvida, retorne ao site institucional para entender o recorte de atuação.</h2>
-			<p>
-				O blog organiza a leitura. A sede institucional concentra áreas, método, limites do primeiro contato e
-				informações necessárias para uma eventual solicitação.
-			</p>
-			<div class="blog-actions">
-				<a class="btn btn-primary" href="/#areas">Ver áreas no site institucional</a>
-				<a class="btn btn-ghost" href="/blog/categoria/">Continuar por categorias</a>
-			</div>
-		</section>
+		{continuityPosts.length > 0 && (
+			<BlogGrid title="Últimas publicações" kicker="Leituras recentes" posts={continuityPosts} />
+		)}
 
 		<section class="surface-card blog-author-spotlight" aria-label="Autor do blog">
 			<img
@@ -216,13 +183,26 @@ const collectionSchema = {
 				<h2>{blogAuthor?.data.name ?? 'Fabio Mathias Pavie'}</h2>
 				<p>{blogAuthor?.data.oab ?? 'Advogado | OAB/RJ 134.947'}</p>
 				<p>
-					Fabio Pavie escreve principalmente sobre questões patrimoniais, familiares, sucessórias,
-					imobiliárias e documentais, com rigor documental e linguagem clara.
+					Fabio Pavie organiza leituras do blog a partir das categorias canônicas da PAVIE, com foco em
+					critérios, documentos, limites e recondução responsável ao site institucional.
 				</p>
 				<div class="blog-actions">
 					<a class="btn btn-primary" href="/autor/fabio-pavie/">Conheça o autor</a>
 					<a class="btn btn-ghost" href="/blog/categoria/">Explorar categorias</a>
 				</div>
+			</div>
+		</section>
+
+		<section class="editorial-cta" aria-label="Retorno ao site institucional">
+			<span class="section-kicker">Retorno ao site institucional</span>
+			<h2>Quando a leitura já ajudou a organizar o tema, volte ao site para conhecer a área correspondente.</h2>
+			<p>
+				O blog prepara a compreensão. A sede institucional concentra áreas, método, limites do primeiro contato e
+				informações necessárias para uma eventual solicitação.
+			</p>
+			<div class="blog-actions">
+				<a class="btn btn-secondary" href="/#areas">Conheça a área correspondente</a>
+				<a class="btn btn-ghost" href="/">Voltar ao site institucional</a>
 			</div>
 		</section>
 	</div>

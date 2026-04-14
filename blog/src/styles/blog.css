@@ -615,6 +615,18 @@
 	color: color-mix(in srgb, var(--text-contrast) 86%, var(--color-soft));
 }
 
+.editorial-cta .btn-ghost {
+	border-color: color-mix(in srgb, var(--text-contrast) 42%, transparent);
+	color: var(--text-contrast);
+}
+
+.editorial-cta .btn-ghost:hover,
+.editorial-cta .btn-ghost:focus-visible {
+	border-color: var(--text-contrast);
+	background: color-mix(in srgb, var(--text-contrast) 10%, transparent);
+	color: var(--text-contrast);
+}
+
 @media (max-width: 1080px) {
 	.featured-post {
 		grid-template-columns: 1fr;
