@@ -21,10 +21,7 @@ body {
 	font-family: var(--font-sans);
 	line-height: 1.65;
 	color: var(--text-body);
-	background:
-		radial-gradient(circle at 10% 5%, rgba(143, 164, 167, 0.09), transparent 35%),
-		radial-gradient(circle at 90% -10%, rgba(204, 176, 147, 0.12), transparent 33%),
-		var(--surface-page);
+	background: var(--surface-page);
 	min-height: 100vh;
 }
 
@@ -143,6 +140,7 @@ main {
 	border: 1px solid color-mix(in srgb, var(--color-sand) 58%, white);
 	background: color-mix(in srgb, var(--color-sand) 15%, var(--surface-card));
 	color: var(--color-graphite);
+	line-height: 1.2;
 }
 
 .meta-list {
@@ -157,7 +155,7 @@ main {
 	width: 0.25rem;
 	height: 0.25rem;
 	border-radius: 50%;
-	background: color-mix(in srgb, var(--color-petrol) 50%, white);
+	background: color-mix(in srgb, var(--color-accent) 72%, white);
 	display: inline-block;
 	margin-inline-end: 0.45rem;
 }
@@ -206,7 +204,7 @@ main {
 .btn-primary {
 	background: var(--action-primary);
 	color: var(--text-contrast);
-	box-shadow: 0 8px 18px rgba(47, 78, 74, 0.22);
+	box-shadow: 0 8px 18px rgba(151, 29, 37, 0.14);
 }
 
 .btn-primary:hover,
@@ -218,29 +216,29 @@ main {
 
 .btn-secondary {
 	background: var(--action-secondary);
-	border: 1.5px solid var(--color-petrol);
-	color: var(--color-petrol);
-	box-shadow: 0 6px 16px rgba(37, 40, 43, 0.05);
+	border: 1px solid var(--color-accent);
+	color: var(--color-accent);
+	box-shadow: none;
 }
 
 .btn-secondary:hover,
 .btn-secondary:focus-visible {
 	background: var(--action-secondary-strong);
-	border-color: var(--color-petrol);
-	color: var(--color-petrol);
+	border-color: var(--color-accent-strong);
+	color: var(--color-accent-strong);
 	transform: translateY(-1px);
 }
 
 .btn-ghost {
 	background: transparent;
-	border-color: color-mix(in srgb, var(--color-petrol) 28%, var(--color-line));
-	color: var(--color-petrol);
+	border-color: color-mix(in srgb, var(--color-graphite) 22%, var(--color-line));
+	color: var(--color-graphite);
 }
 
 .btn-ghost:hover,
 .btn-ghost:focus-visible {
-	border-color: var(--color-petrol);
-	background: color-mix(in srgb, var(--color-petrol) 8%, white);
+	border-color: color-mix(in srgb, var(--color-accent) 56%, var(--color-line));
+	background: color-mix(in srgb, var(--color-accent) 5%, white);
 }
 
 .skip-link {
@@ -287,7 +285,7 @@ main {
 	font-weight: 700;
 	letter-spacing: var(--letter-label);
 	text-transform: uppercase;
-	color: color-mix(in srgb, var(--color-petrol) 70%, white);
+	color: color-mix(in srgb, var(--color-accent) 82%, var(--color-graphite));
 }
 
 .hub-grid {
