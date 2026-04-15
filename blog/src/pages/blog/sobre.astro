@@ -51,5 +51,5 @@ const breadcrumbSchema = buildBreadcrumbSchema(breadcrumbs, canonicalUrl);
 		</section>
 	</div>
 
-	<script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+	<script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
 </BlogLayout>

@@ -1,4 +1,4 @@
----
+﻿---
 import BlogGrid from '../../components/blog/BlogGrid.astro';
 import FeaturedPost from '../../components/blog/FeaturedPost.astro';
 import { BLOG_SITE_URL } from '../../consts';
@@ -20,7 +20,7 @@ const categoryDirectory = buildCanonicalAreaDirectory(areaEntries, posts);
 const hasPublishedPosts = posts.length > 0;
 const postCountLabel = hasPublishedPosts
 	? `${posts.length} artigo${posts.length === 1 ? '' : 's'} publicado${posts.length === 1 ? '' : 's'} no acervo atual`
-	: 'Acervo editorial em preparação';
+	: 'Acervo editorial em preparaÃ§Ã£o';
 const blogAuthor =
 	authorEntries.find((entry) => entry.data.slug === 'fabio-pavie' || entry.data.id === 'fabio-pavie') ??
 	authorEntries[0];
@@ -31,10 +31,10 @@ const blogAuthorAlt =
 const collectionSchema = {
 	'@context': 'https://schema.org',
 	'@type': 'CollectionPage',
-	name: 'Blog Jurídico PAVIE',
+	name: 'Blog JurÃ­dico PAVIE',
 	url: `${BLOG_SITE_URL}/blog/`,
 	description:
-		'Leituras jurídicas da PAVIE organizadas por categorias do blog e conectadas às áreas públicas correspondentes.',
+		'Leituras jurÃ­dicas da PAVIE organizadas por categorias do blog e conectadas Ã s Ã¡reas pÃºblicas correspondentes.',
 	mainEntity:
 		posts.length > 0
 			? {
@@ -51,43 +51,44 @@ const collectionSchema = {
 ---
 
 <BlogLayout
-	title="Blog jurídico da PAVIE | Advocacia"
-	description="Leitura jurídica organizada por categorias do blog, com conexão direta entre conteúdo, áreas e orientação inicial."
+	title="Blog jurÃ­dico da PAVIE | Advocacia"
+	description="Leitura jurÃ­dica organizada por categorias do blog, com conexÃ£o direta entre conteÃºdo, Ã¡reas e orientaÃ§Ã£o inicial."
 	canonical={`${BLOG_SITE_URL}/blog/`}
 >
 	<div class="container blog-home">
-		<section class="blog-hero" aria-labelledby="blog-hero-title">
+		<section class:list={['blog-hero', featured && 'blog-hero--with-featured']} aria-labelledby="blog-hero-title">
 			<div class="blog-hero__content">
-				<span class="badge">Blog jurídico PAVIE | Advocacia</span>
-				<h1 id="blog-hero-title">Comece pela categoria que melhor enquadra a sua situação.</h1>
+				<span class="badge">Blog jurÃ­dico PAVIE | Advocacia</span>
+				<h1 id="blog-hero-title">Comece pela categoria que melhor enquadra a sua situaÃ§Ã£o.</h1>
 				<p>
-					O blog organiza as leituras por categorias ligadas às áreas do site. Cada texto aprofunda
-					critérios, documentos e próximos passos com linguagem clara e foco no caso concreto.
+					O blog organiza as leituras por categorias ligadas Ã s Ã¡reas do site. Cada texto aprofunda
+					critÃ©rios, documentos e prÃ³ximos passos com linguagem clara e foco no caso concreto.
 				</p>
-				<div class="meta-list" aria-label="Informações do acervo">
+				<div class="meta-list" aria-label="InformaÃ§Ãµes do acervo">
 					<span><span class="meta-dot" aria-hidden="true"></span>{postCountLabel}</span>
-					<span><span class="meta-dot" aria-hidden="true"></span>{categoryDirectory.length} categorias disponíveis</span>
-					<span><span class="meta-dot" aria-hidden="true"></span>Ligação direta com as páginas de área</span>
+					<span><span class="meta-dot" aria-hidden="true"></span>{categoryDirectory.length} categorias disponÃ­veis</span>
+					<span><span class="meta-dot" aria-hidden="true"></span>LigaÃ§Ã£o direta com as pÃ¡ginas de Ã¡rea</span>
 				</div>
 				<div class="blog-hero__actions">
 					<a class="btn btn-primary" href="/blog/categoria/">Explorar categorias</a>
 					<a class="btn btn-ghost" href="/">Voltar ao site institucional</a>
 				</div>
 			</div>
+			{featured && (
+				<aside class="blog-hero__featured" aria-label="Leitura em destaque">
+					<FeaturedPost post={featured} kicker="Leitura em destaque" />
+				</aside>
+			)}
 		</section>
 
 		<section class="taxonomy-index" aria-labelledby="taxonomy-index-title">
 			<div class="taxonomy-index__intro">
-				<span class="section-kicker">Índice taxonômico</span>
+				<span class="section-kicker">Ãndice taxonÃ´mico</span>
 				<h2 id="taxonomy-index-title">Escolha o tema de interesse e avance para a leitura.</h2>
 				<p>
-					As categorias organizam o acervo por assunto, preservando a ligação entre conteúdo editorial
-					e áreas públicas correspondentes.
+					As categorias organizam o acervo por assunto, preservando a ligaÃ§Ã£o entre conteÃºdo editorial
+					e Ã¡reas pÃºblicas correspondentes.
 				</p>
-				<div class="blog-actions">
-					<a class="btn btn-primary" href="/blog/categoria/">Explorar categorias</a>
-					<a class="btn btn-ghost" href="/">Voltar ao site institucional</a>
-				</div>
 			</div>
 			<nav class="taxonomy-index__nav" aria-label="Categorias do blog">
 				<ol>
@@ -99,7 +100,7 @@ const collectionSchema = {
 								<span class="taxonomy-index__count">
 									{category.postCount > 0
 										? `${category.postCount} leitura${category.postCount === 1 ? '' : 's'}`
-										: 'em preparação'}
+										: 'em preparaÃ§Ã£o'}
 								</span>
 							</a>
 						</li>
@@ -108,26 +109,24 @@ const collectionSchema = {
 			</nav>
 		</section>
 
-		<section class="featured-reading" aria-label="Leitura em destaque">
+		<section class="featured-reading" aria-label="Leitura em destaque" hidden={hasPublishedPosts}>
 			{!hasPublishedPosts ? (
-				<article class="surface-card empty-state" aria-label="Acervo em organização">
-					<h2>Acervo em atualização</h2>
+				<article class="surface-card empty-state" aria-label="Acervo em organizaÃ§Ã£o">
+					<h2>Acervo em atualizaÃ§Ã£o</h2>
 					<p>
-						As categorias já organizam a navegação do blog. Novos textos entram conforme avançam a
-						revisão editorial e jurídica do acervo público.
+						As categorias jÃ¡ organizam a navegaÃ§Ã£o do blog. Novos textos entram conforme avanÃ§am a
+						revisÃ£o editorial e jurÃ­dica do acervo pÃºblico.
 					</p>
 					<div class="blog-actions">
-						<a class="btn btn-primary" href="/blog/categoria/">Explorar categorias</a>
+						<a class="btn btn-ghost" href="/blog/categoria/">Explorar categorias</a>
 						<a class="btn btn-ghost" href="/">Voltar ao site institucional</a>
 					</div>
 				</article>
-			) : (
-				featured && <FeaturedPost post={featured} kicker="Guia em destaque" />
-			)}
+			) : null}
 		</section>
 
 		{continuityPosts.length > 0 && (
-			<BlogGrid title="Leituras recentes" kicker="Publicações recentes" posts={continuityPosts} />
+			<BlogGrid title="Leituras recentes" kicker="PublicaÃ§Ãµes recentes" posts={continuityPosts} />
 		)}
 
 		<section class="surface-card blog-author-spotlight" aria-label="Autor do blog">
@@ -142,11 +141,11 @@ const collectionSchema = {
 				<h2>{blogAuthor?.data.name ?? 'Fabio Mathias Pavie'}</h2>
 				<p>{blogAuthor?.data.oab ?? 'Advogado | OAB/RJ 134.947'}</p>
 				<p>
-					Fabio Pavie organiza leituras do blog a partir das categorias canônicas da PAVIE, com foco em
-					critérios, documentos, limites e recondução responsável ao site institucional.
+					Fabio Pavie organiza leituras do blog a partir das categorias canÃ´nicas da PAVIE, com foco em
+					critÃ©rios, documentos, limites e reconduÃ§Ã£o responsÃ¡vel ao site institucional.
 				</p>
 				<div class="blog-actions">
-					<a class="btn btn-primary" href="/autor/fabio-pavie/">Conheça o autor</a>
+					<a class="btn btn-ghost" href="/autor/fabio-pavie/">ConheÃ§a o autor</a>
 					<a class="btn btn-ghost" href="/blog/categoria/">Explorar categorias</a>
 				</div>
 			</div>
@@ -154,17 +153,17 @@ const collectionSchema = {
 
 		<section class="editorial-cta" aria-label="Retorno ao site institucional">
 			<span class="section-kicker">Retorno ao site institucional</span>
-			<h2>Quando a leitura já ajudou a organizar o tema, volte ao site para conhecer a área correspondente.</h2>
+			<h2>Quando a leitura jÃ¡ ajudou a organizar o tema, volte ao site para conhecer a Ã¡rea correspondente.</h2>
 			<p>
-				O blog prepara a compreensão. A sede institucional concentra áreas, método, limites do primeiro contato e
-				informações necessárias para uma eventual solicitação.
+				O blog prepara a compreensÃ£o. A sede institucional concentra Ã¡reas, mÃ©todo, limites do primeiro contato e
+				informaÃ§Ãµes necessÃ¡rias para uma eventual solicitaÃ§Ã£o.
 			</p>
 			<div class="blog-actions">
-				<a class="btn btn-secondary" href="/#areas">Conheça a área correspondente</a>
+				<a class="btn btn-secondary" href="/#areas">ConheÃ§a a Ã¡rea correspondente</a>
 				<a class="btn btn-ghost" href="/">Voltar ao site institucional</a>
 			</div>
 		</section>
 	</div>
 
-	<script type="application/ld+json" set:html={JSON.stringify(collectionSchema)} />
+	<script is:inline type="application/ld+json" set:html={JSON.stringify(collectionSchema)} />
 </BlogLayout>

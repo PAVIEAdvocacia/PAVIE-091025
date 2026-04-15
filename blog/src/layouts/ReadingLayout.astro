@@ -21,9 +21,10 @@ interface Props {
 
 const { post, toc, related, noIndex = false } = Astro.props;
 const areaEntries = await getAreaEntries();
-const currentArea = getAreaEntryByCategoryCode(areaEntries, post.categoryCode);
+const canonicalCategoryCode = post.canonicalCategory ?? post.categoryCode;
+const currentArea = getAreaEntryByCategoryCode(areaEntries, canonicalCategoryCode);
 const hasCanonicalTaxonomy =
-	post.publicSurfaceStatus === 'allowed' && Boolean(post.categoryCode) && Boolean(post.categoryUrl);
+	post.publicSurfaceStatus === 'allowed' && Boolean(canonicalCategoryCode) && Boolean(post.categoryUrl);
 const canonicalUrl = post.canonicalUrl ?? toAbsoluteUrl(post.url);
 
 const breadcrumbs = [
@@ -33,16 +34,32 @@ const breadcrumbs = [
 	{ label: post.title },
 ];
 
-const articleFocusPoints = [
-	'Quando a decisão já envolve documento, contrato, patrimônio ou registro relevante.',
-	'Quando existe prazo, audiência, urgência prática ou risco que não convém tratar no improviso.',
-	'Quando a leitura informa bem o tema, mas a estratégia ainda depende das particularidades do caso.',
-];
-const introText = post.excerpt && post.excerpt !== post.description ? post.excerpt : '';
-const showIntroTags = post.temas.length > 0;
+const introText = post.excerpt || post.description;
+const introTags = post.temas.slice(0, 3);
+const showIntroTags = introTags.length > 0;
 const showIntroBlock = Boolean(introText) || showIntroTags;
+const hasReadingSidebar = toc.length > 1;
 const categoryHref = post.categoryUrl ?? '/blog/categoria/';
 const areaHref = post.areaUrl ?? '/#areas';
+const finalCtaCopyByType: Record<string, string> = {
+	area:
+		'A leitura situa o tema. A página da área mostra como esse recorte se conecta ao atendimento institucional da PAVIE.',
+	contact:
+		'A área correspondente ajuda a separar informação editorial, limites do texto e caminhos institucionais para o caso concreto.',
+	'article-series':
+		'Depois da leitura, a área correspondente organiza o lugar deste tema no ecossistema institucional da PAVIE.',
+	'document-review':
+		'Antes de solicitar qualquer análise, veja como a área correspondente organiza documentos, limites e próximos passos.',
+};
+const finalCta =
+	hasCanonicalTaxonomy && post.areaUrl
+		? {
+				label: 'Conheça a área',
+				href: areaHref,
+				description: finalCtaCopyByType[post.ctaType ?? 'area'] ?? finalCtaCopyByType.area,
+			}
+		: post.cta;
+
 const articleSchema = {
 	'@context': 'https://schema.org',
 	'@type': 'BlogPosting',
@@ -105,14 +122,14 @@ const faqSchema =
 		<ReadingHero post={post} />
 		<div class="reading-progress" aria-hidden="true"><span data-reading-progress></span></div>
 
-		<div class="reading-shell">
+		<div class:list={['reading-shell', { 'reading-shell--single': !hasReadingSidebar }]}>
 			<article class="reading-content" aria-labelledby="reading-hero-title">
 				{showIntroBlock && (
 					<section class="reading-intro" aria-label="Introdução do artigo">
 						{introText && <p class="reading-intro__lead">{introText}</p>}
 						{showIntroTags && (
 							<div class="reading-summary__tags">
-								{post.temas.slice(0, 5).map((tema) => (
+								{introTags.map((tema) => (
 									<span class="reading-tag">{tema}</span>
 								))}
 							</div>
@@ -123,15 +140,6 @@ const faqSchema =
 				<div class="article-content">
 					<slot />
 				</div>
-				<section class="reading-context" aria-label="Quando este tema costuma exigir análise do caso concreto">
-					<span class="section-kicker">Quando a leitura pede um próximo passo</span>
-					<h2>Este tema costuma exigir análise individual quando a decisão já envolve documento, prazo, risco ou impacto relevante.</h2>
-					<ul>
-						{articleFocusPoints.map((item) => (
-							<li>{item}</li>
-						))}
-					</ul>
-				</section>
 
 				{post.faqItems.length > 0 && (
 					<section class="reading-summary" aria-label="Perguntas frequentes do artigo">
@@ -146,42 +154,45 @@ const faqSchema =
 						</div>
 					</section>
 				)}
+
 				<div class="reading-footer">
-					<RelatedPosts
-						posts={related}
-						title={hasCanonicalTaxonomy ? 'Continue por leituras desta categoria' : 'Continue a leitura'}
-						emptyHref={categoryHref}
-						emptyLabel="Explorar categorias"
-					/>
-					<AuthorCard post={post} />
 					<section class="reading-next-step surface-card" aria-label="Próximo passo após a leitura">
 						<div>
-							<span class="section-kicker">Próximo passo possível</span>
-							<h2>Se a leitura não basta sozinha, o primeiro passo é descrever a situação concreta com clareza.</h2>
-							<p>{post.cta.description}</p>
+							<span class="section-kicker">Transição para o site</span>
+							<h2>Quando a leitura já localiza o tema, o próximo passo é consultar a área correspondente.</h2>
+							<p>{finalCta.description}</p>
 						</div>
 						<div class="reading-bridge__actions">
 							<a
 								class="btn btn-primary"
-								href={post.cta.href}
-								data-contact-origin="article-final"
-								data-contact-intent="orientacao-inicial"
+								href={finalCta.href}
+								data-cta-origin="article-final"
+								data-cta-intent={post.ctaType ?? 'area'}
 							>
-								{post.cta.label}
+								{finalCta.label}
 							</a>
 						</div>
 						<p class="reading-ethics-note">Conteúdo informativo. Cada caso exige análise técnica individual.</p>
 					</section>
+
+					<AuthorCard post={post} />
+
+					<RelatedPosts
+						posts={related}
+						title={hasCanonicalTaxonomy ? 'Leituras relacionadas da categoria' : 'Leituras relacionadas'}
+						emptyHref={categoryHref}
+						emptyLabel="Explorar categoria"
+					/>
 				</div>
 			</article>
 
-			<ReadingSidebar toc={toc} related={related} />
+			{hasReadingSidebar && <ReadingSidebar toc={toc} />}
 		</div>
 	</div>
 
-	<script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
-	<script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
-	{faqSchema && <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />}
+	<script is:inline type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
+	<script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+	{faqSchema && <script is:inline type="application/ld+json" set:html={JSON.stringify(faqSchema)} />}
 	<script>
 		const progress = document.querySelector('[data-reading-progress]');
 		if (progress) {

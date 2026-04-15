@@ -1,6 +1,5 @@
 ---
 import Breadcrumbs from '../../../components/blog/Breadcrumbs.astro';
-import BlogGrid from '../../../components/blog/BlogGrid.astro';
 import FeaturedPost from '../../../components/blog/FeaturedPost.astro';
 import { BLOG_SITE_URL } from '../../../consts';
 import BlogLayout from '../../../layouts/BlogLayout.astro';
@@ -25,21 +24,24 @@ const posts = sortPostsByDate(normalizePosts(blogEntries, authorEntries)).filter
 const currentCategory = getCanonicalAreaDirectoryItem(areaEntries, posts, Astro.params.category ?? '');
 
 if (!currentCategory) {
-  throw new Error(`Categoria canônica não encontrada: ${Astro.params.category}`);
+	throw new Error(`Categoria canonica nao encontrada: ${Astro.params.category}`);
 }
 
-const remainingPosts = currentCategory.posts.filter((post) => post.slug !== currentCategory.featuredPost?.slug);
+const featuredPost = currentCategory.featuredPost;
+const listPosts = featuredPost
+	? currentCategory.posts.filter((post) => post.slug !== featuredPost.slug)
+	: currentCategory.posts;
 const hasCategoryPosts = currentCategory.postCount > 0;
 const categoryAuthor =
-  authorEntries.find((entry) => entry.data.slug === 'fabio-pavie' || entry.id === 'fabio-pavie') ??
-  authorEntries[0];
+	authorEntries.find((entry) => entry.data.slug === 'fabio-pavie' || entry.data.id === 'fabio-pavie') ??
+	authorEntries[0];
 const categoryCountLabel = hasCategoryPosts
-  ? `${currentCategory.postCount} artigo${currentCategory.postCount === 1 ? '' : 's'} publicado${currentCategory.postCount === 1 ? '' : 's'}`
-  : 'Acervo em preparação nesta categoria';
+	? `${currentCategory.postCount} artigo${currentCategory.postCount === 1 ? '' : 's'} publicado${currentCategory.postCount === 1 ? '' : 's'}`
+	: 'Acervo em preparacao nesta categoria';
 const canonicalUrl = `${BLOG_SITE_URL}${currentCategory.categoryHref}`;
 const breadcrumbs = [
-  { label: 'Início', href: '/' },
-  { label: 'Publicações', href: '/blog/' },
+	{ label: 'Inicio', href: '/' },
+	{ label: 'Publicacoes', href: '/blog/' },
 	{ label: 'Categorias', href: '/blog/categoria/' },
 	{ label: currentCategory.title },
 ];
@@ -48,119 +50,144 @@ const breadcrumbSchema = buildBreadcrumbSchema(breadcrumbs, canonicalUrl);
 
 <BlogLayout
 	title={`${currentCategory.title} | Categoria do blog`}
-  description={currentCategory.shortDescription}
-  canonical={canonicalUrl}
+	description={currentCategory.shortDescription}
+	canonical={canonicalUrl}
 >
-  <div class="container blog-home blog-category-page">
-    <Breadcrumbs items={breadcrumbs} />
+	<div class="container blog-home blog-category-page">
+		<Breadcrumbs items={breadcrumbs} />
 
-    <section class="category-hero" aria-labelledby="blog-category-title">
-      <div>
-        <span class="badge">Categoria do blog</span>
-        <h1 id="blog-category-title">{currentCategory.title}</h1>
-        <p>{currentCategory.shortDescription}</p>
-      </div>
-      <div class="blog-actions">
-        <a class="btn btn-primary" href="#leituras-categoria">{hasCategoryPosts ? 'Ler artigos' : 'Explorar categoria'}</a>
-        <a class="btn btn-ghost" href={currentCategory.href}>Conheça a área correspondente</a>
-      </div>
-    </section>
+		<section class="category-hero" aria-labelledby="blog-category-title">
+			<div>
+				<span class="badge">Categoria do blog</span>
+				<h1 id="blog-category-title">{currentCategory.title}</h1>
+				<p>{currentCategory.shortDescription}</p>
+			</div>
+			<div class="blog-actions">
+				<a class="btn btn-secondary" href={currentCategory.href}>Conhecer area correspondente</a>
+			</div>
+		</section>
 
-    <section class="category-area-link" aria-labelledby="category-area-title">
-      <div class="category-area-link__copy">
-        <span class="section-kicker">Área correspondente</span>
-        <h2 id="category-area-title">Como esta categoria se conecta ao site institucional</h2>
-        <p>{currentCategory.headline}</p>
-        <div class="blog-actions">
-          <a class="btn btn-ghost" href={currentCategory.href}>Conheça a área correspondente</a>
-        </div>
-      </div>
-      <ul class="category-area-link__facts" aria-label="Vínculo editorial da categoria">
-        <li>
-          <span>Categoria editorial</span>
-          <strong>{currentCategory.displayTitle}</strong>
-        </li>
-        <li>
-          <span>Área correspondente</span>
-          <strong>{currentCategory.canonicalTitle}</strong>
-        </li>
-        <li>
-          <span>Acervo</span>
-          <strong>{categoryCountLabel}</strong>
-        </li>
-        <li>
-          <span>Função</span>
-          <strong>Organizar leituras do mesmo tema</strong>
-        </li>
-      </ul>
-    </section>
+		<section class="category-area-link" aria-labelledby="category-area-title">
+			<div class="category-area-link__copy">
+				<span class="section-kicker">Relacao area-categoria</span>
+				<h2 id="category-area-title">Esta categoria amadurece a leitura antes do retorno ao site.</h2>
+				<p>{currentCategory.headline}</p>
+			</div>
+			<ul class="category-area-link__facts" aria-label="Vinculo editorial da categoria">
+				<li>
+					<span>Categoria editorial</span>
+					<strong>{currentCategory.displayTitle}</strong>
+				</li>
+				<li>
+					<span>Area correspondente</span>
+					<strong>{currentCategory.canonicalTitle}</strong>
+				</li>
+				<li>
+					<span>Acervo publicado</span>
+					<strong>{categoryCountLabel}</strong>
+				</li>
+				<li>
+					<span>Destino institucional</span>
+					<strong>{currentCategory.href}</strong>
+				</li>
+			</ul>
+		</section>
 
-    <section class="category-featured" aria-labelledby="category-featured-title">
-      <div class="section-title">
-        <div>
-          <span class="section-kicker">Guia em destaque</span>
-          <h2 id="category-featured-title">Comece por uma leitura central da categoria</h2>
-        </div>
-      </div>
-      {currentCategory.featuredPost ? (
-        <FeaturedPost post={currentCategory.featuredPost} />
-      ) : (
-        <div class="surface-card empty-state" aria-label="Acervo em atualização">
-          <h3>Acervo em atualização</h3>
-          <p>
-            Esta categoria já está estruturada no mapa editorial. Os textos serão exibidos aqui
-            conforme avançarem por revisão editorial e jurídica.
-          </p>
-          <div class="blog-actions">
-            <a class="btn btn-primary" href="/blog/categoria/">Explorar categorias</a>
-            <a class="btn btn-ghost" href={currentCategory.href}>Conheça a área correspondente</a>
-          </div>
-        </div>
-      )}
-    </section>
+		<section class="category-archive-summary" aria-labelledby="category-archive-title">
+			<div>
+				<span class="section-kicker">Acervo da categoria</span>
+				<h2 id="category-archive-title">{categoryCountLabel}</h2>
+			</div>
+			<p>
+				A contagem usa apenas textos publicados, revisados e liberados para superficie publica nesta categoria.
+			</p>
+		</section>
 
-    <BlogGrid
-      id="leituras-categoria"
-      title="Leituras úteis desta categoria"
-      kicker="Artigos"
-      posts={remainingPosts}
-      emptyTitle={hasCategoryPosts ? 'Sem outras publicações nesta categoria' : 'Acervo em preparação'}
-      emptyText={
-        hasCategoryPosts
-          ? 'A categoria receberá novos textos conforme o acervo publicado crescer.'
-          : 'A categoria já está estruturada e os textos serão exibidos aqui conforme avançarem por revisão editorial e jurídica.'
-      }
-      emptyHref="/blog/categoria/"
-      emptyLabel="Explorar categorias"
-    />
+		<section class="category-featured" aria-labelledby="category-featured-title">
+			<div class="section-title">
+				<div>
+					<span class="section-kicker">Leitura em destaque</span>
+					<h2 id="category-featured-title">Comece por uma leitura central da categoria</h2>
+				</div>
+			</div>
+			{featuredPost ? (
+				<FeaturedPost post={featuredPost} />
+			) : (
+				<div class="surface-card empty-state" aria-label="Acervo em preparacao">
+					<h3>Acervo em preparacao</h3>
+					<p>
+						Esta categoria ja esta estruturada no registry e recebera textos conforme avancarem por revisao editorial e juridica.
+					</p>
+				</div>
+			)}
+		</section>
 
-    {categoryAuthor && (
-      <section class="category-author-strip" aria-labelledby="category-author-title">
-        <span class="section-kicker">Autoria editorial</span>
-        <div>
-          <h2 id="category-author-title">{categoryAuthor.data.name}</h2>
-          <p>
-            A curadoria da categoria privilegia contexto, critérios documentais e limites da
-            leitura editorial, sem substituir análise jurídica individual.
-          </p>
-        </div>
-        <a class="btn btn-ghost" href={`/autor/${categoryAuthor.data.slug}/`}>Ver perfil do autor</a>
-      </section>
-    )}
+		<section id="leituras-categoria" class="category-reading-list" aria-labelledby="category-reading-list-title">
+			<div class="section-title">
+				<div>
+					<span class="section-kicker">Artigos da categoria</span>
+					<h2 id="category-reading-list-title">Leituras uteis para maturar o tema</h2>
+				</div>
+			</div>
 
-    <section class="category-final-cta" aria-labelledby="category-final-title">
-      <span class="section-kicker">Próximo passo</span>
-      <h2 id="category-final-title">Aprofunde o tema ou volte à área correspondente</h2>
-      <p>
-        A categoria organiza a leitura por interesse. A página institucional correspondente
-        concentra o enquadramento da área e os caminhos de contato do site.
-      </p>
-      <div class="blog-actions">
-        <a class="btn btn-primary" href="#leituras-categoria">{hasCategoryPosts ? 'Ler artigos' : 'Explorar categoria'}</a>
-        <a class="btn btn-ghost" href={currentCategory.href}>Conheça a área correspondente</a>
-      </div>
-    </section>
-  </div>
+			{listPosts.length > 0 ? (
+				<ol class="category-reading-list__items">
+					{listPosts.map((post, index) => (
+						<li>
+							<article class="category-reading-item">
+								<span class="category-reading-item__number">{String(index + 1).padStart(2, '0')}</span>
+								<div>
+									<p class="category-reading-item__meta">
+										{post.readingTime} min de leitura
+										{post.publishedAt && ` - ${post.publishedAt.toLocaleDateString('pt-BR', { dateStyle: 'medium' })}`}
+									</p>
+									<h3>
+										<a href={post.url}>{post.title}</a>
+									</h3>
+									<p>{post.excerpt}</p>
+								</div>
+							</article>
+						</li>
+					))}
+				</ol>
+			) : (
+				<div class="surface-card empty-state" aria-label="Sem leituras complementares nesta categoria">
+					<h3>{hasCategoryPosts ? 'Leitura central ja disponivel' : 'Acervo em preparacao'}</h3>
+					<p>
+						{hasCategoryPosts
+							? 'A categoria ja possui uma leitura central em destaque. Novos textos complementares entram conforme forem revisados.'
+							: 'A categoria ja esta estruturada no registry e recebera artigos conforme o acervo for aprovado.'}
+					</p>
+				</div>
+			)}
+		</section>
 
-  <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+		<section class="category-final-cta" aria-labelledby="category-final-title">
+			<span class="section-kicker">Transicao para o site</span>
+			<h2 id="category-final-title">Quando o tema ja estiver mais claro, volte a area correspondente.</h2>
+			<p>
+				A categoria organiza a leitura por interesse. A pagina institucional concentra o enquadramento da area,
+				os limites do primeiro contato e o caminho adequado para uma analise responsavel.
+			</p>
+			<div class="blog-actions">
+				<a class="btn btn-primary" href={currentCategory.href}>Conhecer area correspondente</a>
+			</div>
+		</section>
+
+		{categoryAuthor && (
+			<section class="category-author-strip" aria-labelledby="category-author-title">
+				<span class="section-kicker">Autoria editorial</span>
+				<div>
+					<h2 id="category-author-title">{categoryAuthor.data.name}</h2>
+					<p>
+						A curadoria da categoria privilegia contexto, criterios documentais e limites da leitura editorial,
+						sem substituir analise juridica individual.
+					</p>
+				</div>
+				<a class="btn btn-ghost" href={`/autor/${categoryAuthor.data.slug}/`}>Ver perfil do autor</a>
+			</section>
+		)}
+	</div>
+
+	<script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
 </BlogLayout>

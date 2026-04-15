@@ -58,7 +58,7 @@ const canonicalUrl = canonical || new URL(Astro.url.pathname, Astro.site ?? MAIN
 			<main id="main-content" class="site-main">
 				<slot />
 			</main>
-			{!hideFooter && <SiteFooter />}
+			{!hideFooter && <SiteFooter currentPath={Astro.url.pathname} />}
 		</div>
 	</body>
 </html>

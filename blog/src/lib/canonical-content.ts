@@ -4,6 +4,9 @@ export const CANONICAL_CATEGORY_DEFINITIONS = [
 		slug: 'sucessoes-inventarios-partilha-patrimonial',
 		label: 'Sucessões, Inventários e Partilha Patrimonial',
 		displayTitle: 'Sucessões e Inventários',
+		homeTitle: 'SucessÃµes e InventÃ¡rios',
+		homeDescription: 'OrganizaÃ§Ã£o e conduÃ§Ã£o tÃ©cnica de inventÃ¡rios, partilhas e transmissÃ£o patrimonial.',
+		homeOrder: 1,
 		runtimeAreaKey: 'familia-sucessoes-patrimonio',
 	},
 	{
@@ -11,6 +14,9 @@ export const CANONICAL_CATEGORY_DEFINITIONS = [
 		slug: 'planejamento-patrimonial-sucessorio-arranjos-preventivos',
 		label: 'Planejamento Patrimonial, Sucessório e Arranjos Preventivos',
 		displayTitle: 'Planejamento Patrimonial',
+		homeTitle: 'Planejamento Patrimonial',
+		homeDescription: 'EstruturaÃ§Ã£o de bens e arranjos preventivos para decisÃµes familiares e sucessÃ³rias.',
+		homeOrder: 2,
 		runtimeAreaKey: 'familia-sucessoes-patrimonio',
 	},
 	{
@@ -18,6 +24,9 @@ export const CANONICAL_CATEGORY_DEFINITIONS = [
 		slug: 'familia-patrimonial-dissolucoes',
 		label: 'Família Patrimonial e Dissoluções',
 		displayTitle: 'Família Patrimonial',
+		homeTitle: 'FamÃ­lia Patrimonial',
+		homeDescription: 'Disputas, dissoluÃ§Ãµes e reorganizaÃ§Ãµes familiares com impacto financeiro e documental.',
+		homeOrder: 3,
 		runtimeAreaKey: 'familia-sucessoes-patrimonio',
 	},
 	{
@@ -25,6 +34,9 @@ export const CANONICAL_CATEGORY_DEFINITIONS = [
 		slug: 'familia-binacional-sucessoes-internacionais-cooperacao-documental',
 		label: 'Família Binacional, Sucessões Internacionais e Cooperação Documental',
 		displayTitle: 'Família Binacional',
+		homeTitle: 'FamÃ­lia Binacional',
+		homeDescription: 'QuestÃµes familiares e sucessÃ³rias com elementos internacionais, documentos e jurisdiÃ§Ãµes.',
+		homeOrder: 6,
 		runtimeAreaKey: 'familia-sucessoes-patrimonio',
 	},
 	{
@@ -32,6 +44,9 @@ export const CANONICAL_CATEGORY_DEFINITIONS = [
 		slug: 'imoveis-registro-regularizacoes-litigios-patrimoniais',
 		label: 'Imóveis, Registro, Regularizações e Litígios Patrimoniais',
 		displayTitle: 'Imóveis e Regularizações',
+		homeTitle: 'ImÃ³veis e RegularizaÃ§Ãµes',
+		homeDescription: 'AnÃ¡lise documental, registro, regularizaÃ§Ã£o e proteÃ§Ã£o patrimonial envolvendo imÃ³veis.',
+		homeOrder: 5,
 		runtimeAreaKey: 'imobiliario-regularizacao-condominios',
 	},
 	{
@@ -39,6 +54,9 @@ export const CANONICAL_CATEGORY_DEFINITIONS = [
 		slug: 'cobranca-execucao-contratos-recuperacao-credito-seletiva',
 		label: 'Cobrança, Execução, Contratos e Recuperação de Crédito Seletiva',
 		displayTitle: 'Cobrança e Contratos',
+		homeTitle: 'CobranÃ§a e Contratos',
+		homeDescription: 'EstratÃ©gia de cobranÃ§a, execuÃ§Ã£o, contratos e recuperaÃ§Ã£o seletiva de crÃ©ditos.',
+		homeOrder: 7,
 		runtimeAreaKey: 'contratos-obrigacoes-responsabilidade-civil',
 	},
 	{
@@ -47,6 +65,9 @@ export const CANONICAL_CATEGORY_DEFINITIONS = [
 		label: 'Tributação Patrimonial e Recuperação Tributária Seletiva',
 		displayTitle: 'Tributação Patrimonial',
 		// Compatibilidade temporária com o runtime atual de 5 áreas.
+		homeTitle: 'TributaÃ§Ã£o Patrimonial',
+		homeDescription: 'AnÃ¡lise de impactos fiscais, regularizaÃ§Ã£o e recuperaÃ§Ã£o tributÃ¡ria seletiva.',
+		homeOrder: 8,
 		runtimeAreaKey: 'familia-sucessoes-patrimonio',
 	},
 	{
@@ -54,6 +75,9 @@ export const CANONICAL_CATEGORY_DEFINITIONS = [
 		slug: 'direito-do-consumidor-responsabilidade-civil',
 		label: 'Direito do Consumidor e Responsabilidade Civil',
 		displayTitle: 'Consumidor e Responsabilidade Civil',
+		homeTitle: 'Consumidor e Responsabilidade Civil',
+		homeDescription: 'Passagens aÃ©reas, cobranÃ§as indevidas e negativaÃ§Ã£o indevida com base em documentos.',
+		homeOrder: 4,
 		runtimeAreaKey: 'consumidor-saude-previdencia',
 	},
 ] as const;

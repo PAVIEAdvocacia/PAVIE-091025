@@ -63,6 +63,7 @@ const posts = defineCollection({
 				authorId: z.enum(authorIdOptions),
 				author: z.string().optional(),
 				categoryCode: z.enum(categoryCodeOptions),
+				canonicalCategory: z.enum(categoryCodeOptions).optional(),
 				legacyAreaKey: legacyAreaSchema.optional(),
 				area: legacyAreaSchema.optional(),
 				contentType: z.enum(contentTypeOptions),
@@ -123,6 +124,14 @@ const posts = defineCollection({
 						code: z.ZodIssueCode.custom,
 						path: ['noindex'],
 						message: 'Rascunhos devem permanecer com noindex ativado.',
+					});
+				}
+
+				if (data.canonicalCategory && data.canonicalCategory !== data.categoryCode) {
+					ctx.addIssue({
+						code: z.ZodIssueCode.custom,
+						path: ['canonicalCategory'],
+						message: 'canonicalCategory deve coincidir com categoryCode.',
 					});
 				}
 

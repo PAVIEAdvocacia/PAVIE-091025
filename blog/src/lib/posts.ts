@@ -41,6 +41,7 @@ export interface BlogPost {
 	area: string;
 	areaKey: string;
 	categoryCode?: string;
+	canonicalCategory?: string;
 	categorySlug?: string;
 	categoryUrl?: string;
 	areaUrl?: string;
@@ -62,6 +63,10 @@ export interface BlogPost {
 	image?: string;
 	imageAlt: string;
 	readingTime: number;
+	contentType?: string;
+	readerStage?: string;
+	ctaType?: string;
+	ctaTarget?: string;
 	ctaKey: string;
 	cta: CtaConfig;
 	relatedArticles: string[];
@@ -284,7 +289,8 @@ function resolveAreaContext(data: RawPostEntry['data']): {
 	categoryUrl?: string;
 	areaUrl?: string;
 } {
-	const explicitCategoryCode = cleanString(data.categoryCode) || undefined;
+	const explicitCategoryCode =
+		cleanString(data.canonicalCategory) || cleanString(data.categoryCode) || undefined;
 	const legacyAreaValue = cleanString(data.area) || cleanString(data.legacyAreaKey) || '';
 	const mappedCategoryCode = legacyAreaValue
 		? resolveApprovedCategoryCodeFromLegacyArea(normalizeAreaKey(legacyAreaValue))
@@ -497,6 +503,8 @@ export function normalizePost(entry: RawPostEntry, authorEntries: AuthorEntry[] 
 		cleanString(data.coverAlt) ||
 		`Imagem de capa do artigo ${title}`;
 	const funnelStage = resolveFunnelStage(data);
+	const contentType = cleanString(data.contentType) || undefined;
+	const readerStage = cleanString(data.readerStage) || undefined;
 	const canonicalCtaType = cleanString(data.ctaType);
 	const canonicalCtaTarget = cleanString(data.ctaTarget);
 	const { ctaKey, cta } = canonicalCtaType
@@ -550,6 +558,7 @@ export function normalizePost(entry: RawPostEntry, authorEntries: AuthorEntry[] 
 		area,
 		areaKey,
 		categoryCode,
+		canonicalCategory: categoryCode,
 		categorySlug,
 		categoryUrl,
 		areaUrl,
@@ -571,6 +580,10 @@ export function normalizePost(entry: RawPostEntry, authorEntries: AuthorEntry[] 
 		image,
 		imageAlt,
 		readingTime,
+		contentType,
+		readerStage,
+		ctaType: canonicalCtaType || undefined,
+		ctaTarget: canonicalCtaTarget || undefined,
 		ctaKey,
 		cta,
 		relatedArticles,

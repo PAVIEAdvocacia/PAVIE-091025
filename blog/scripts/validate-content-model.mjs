@@ -42,15 +42,47 @@ function parseFrontmatter(filePath) {
 	}
 
 	const data = {};
+	let currentListKey = '';
 	for (const line of match[1].split(/\r?\n/)) {
+		const listItem = line.match(/^\s+-\s*(.*)$/);
+		if (listItem && currentListKey) {
+			data[currentListKey].push(listItem[1].trim().replace(/^['"]|['"]$/g, ''));
+			continue;
+		}
+
 		const scalar = line.match(/^([A-Za-z0-9_-]+):\s*(.*)$/);
 		if (!scalar) continue;
 		const [, key, rawValue] = scalar;
 		const value = rawValue.trim();
-		if (!value || value === '|' || value === '>') continue;
+		currentListKey = '';
+		if (!value) {
+			data[key] = [];
+			currentListKey = key;
+			continue;
+		}
+		if (value === '|' || value === '>') continue;
 		data[key] = value.replace(/^['"]|['"]$/g, '');
 	}
 	return data;
+}
+
+function normalizeInternalHref(value) {
+	return String(value || '').trim().replace(/^\/+|\/+$/g, '');
+}
+
+function stripSourceComments(source) {
+	return source.replace(/\/\*[\s\S]*?\*\//g, '').replace(/(^|[^:])\/\/.*$/gm, '$1');
+}
+
+function listSourceFiles(dir) {
+	if (!fs.existsSync(dir)) return [];
+	const output = [];
+	for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+		const fullPath = path.join(dir, entry.name);
+		if (entry.isDirectory()) output.push(...listSourceFiles(fullPath));
+		if (entry.isFile() && /\.(astro|ts|tsx|js|jsx|css)$/i.test(entry.name)) output.push(fullPath);
+	}
+	return output;
 }
 
 function parseCanonicalDefinitions() {
@@ -68,6 +100,7 @@ function parseCanonicalDefinitions() {
 
 function validateCanonicalDefinitions(definitions) {
 	const codes = definitions.map((definition) => definition.code);
+	const slugs = definitions.map((definition) => definition.slug);
 	const missing = EXPECTED_CATEGORY_CODES.filter((code) => !codes.includes(code));
 	const unexpected = codes.filter((code) => !EXPECTED_CATEGORY_CODES.includes(code));
 
@@ -81,6 +114,28 @@ function validateCanonicalDefinitions(definitions) {
 		errors.push(
 			`src/lib/canonical-content.ts: quantidade de categorias canonicas invalida: ${codes.length}; esperado ${EXPECTED_CATEGORY_CODES.length}.`,
 		);
+	}
+
+	if (new Set(codes).size !== codes.length) {
+		errors.push('src/lib/canonical-content.ts: categoryCode duplicado no registry canonico.');
+	}
+	if (new Set(slugs).size !== slugs.length) {
+		errors.push('src/lib/canonical-content.ts: slug duplicado no registry canonico.');
+	}
+
+	const cat08 = definitions.find((definition) => definition.code === 'CAT-08');
+	if (!cat08) {
+		errors.push('src/lib/canonical-content.ts: CAT-08 ausente no registry canonico.');
+	} else {
+		if (cat08.slug !== 'direito-do-consumidor-responsabilidade-civil') {
+			errors.push(`src/lib/canonical-content.ts: slug da CAT-08 divergente: ${cat08.slug}.`);
+		}
+		if (cat08.label !== 'Direito do Consumidor e Responsabilidade Civil') {
+			errors.push(`src/lib/canonical-content.ts: label da CAT-08 divergente: ${cat08.label}.`);
+		}
+		if (cat08.displayTitle !== 'Consumidor e Responsabilidade Civil') {
+			errors.push(`src/lib/canonical-content.ts: displayTitle da CAT-08 divergente: ${cat08.displayTitle}.`);
+		}
 	}
 }
 
@@ -98,36 +153,38 @@ function validateAreas(definitions) {
 	const files = listContentFiles(areasDir);
 	const byCode = new Map();
 	const bySlug = new Map();
+	const categoryCodes = new Set(definitions.map((item) => item.code));
 
 	for (const file of files) {
 		const data = parseFrontmatter(file);
-		for (const field of ['title', 'canonicalTitle', 'displayTitle', 'slug', 'categoryCode', 'seoTitle', 'description', 'ctaType']) {
+		for (const field of ['title', 'canonicalTitle', 'displayTitle', 'slug', 'categoryCode', 'seoTitle', 'description', 'ctaType', 'ctaTarget']) {
 			requireField(data, field, file);
 		}
+		assertAllowed(data, 'categoryCode', categoryCodes, file);
 		assertAllowed(data, 'ctaType', CTA_TYPES, file);
 
 		if (data.categoryCode) {
 			if (byCode.has(data.categoryCode)) {
-				errors.push(`${path.relative(root, file)}: categoryCode duplicado com ${path.relative(root, byCode.get(data.categoryCode))}.`);
+				errors.push(`${path.relative(root, file)}: categoryCode duplicado com ${path.relative(root, byCode.get(data.categoryCode).file)}.`);
 			}
-			byCode.set(data.categoryCode, file);
+			byCode.set(data.categoryCode, { file, data });
 		}
 
 		if (data.slug) {
 			if (bySlug.has(data.slug)) {
-				errors.push(`${path.relative(root, file)}: slug duplicado com ${path.relative(root, bySlug.get(data.slug))}.`);
+				errors.push(`${path.relative(root, file)}: slug duplicado com ${path.relative(root, bySlug.get(data.slug).file)}.`);
 			}
-			bySlug.set(data.slug, file);
+			bySlug.set(data.slug, { file, data });
 		}
 	}
 
 	for (const definition of definitions) {
-		const areaFile = byCode.get(definition.code);
-		if (!areaFile) {
+		const areaRecord = byCode.get(definition.code);
+		if (!areaRecord) {
 			errors.push(`Area institucional ausente para ${definition.code} (${definition.slug}).`);
 			continue;
 		}
-		const data = parseFrontmatter(areaFile);
+		const { file: areaFile, data } = areaRecord;
 		if (data.slug !== definition.slug) {
 			errors.push(`${path.relative(root, areaFile)}: slug '${data.slug}' diverge do registry '${definition.slug}'.`);
 		}
@@ -138,6 +195,8 @@ function validateAreas(definitions) {
 			errors.push(`${path.relative(root, areaFile)}: displayTitle '${data.displayTitle}' diverge do registry '${definition.displayTitle}'.`);
 		}
 	}
+
+	return { byCode, bySlug };
 }
 
 function validateAuthors() {
@@ -158,10 +217,12 @@ function validateAuthors() {
 	return { ids, slugs };
 }
 
-function validatePosts(definitions, authors) {
+function validatePosts(definitions, authors, areas) {
 	const categoryCodes = new Set(definitions.map((item) => item.code));
+	const definitionByCode = new Map(definitions.map((item) => [item.code, item]));
 	const files = listContentFiles(postsDir);
 	const slugs = new Map();
+	const publishedCountByCategory = new Map();
 
 	for (const file of files) {
 		const data = parseFrontmatter(file);
@@ -185,6 +246,7 @@ function validatePosts(definitions, authors) {
 			requireField(data, field, file);
 		}
 		assertAllowed(data, 'categoryCode', categoryCodes, file);
+		assertAllowed(data, 'canonicalCategory', categoryCodes, file);
 		assertAllowed(data, 'contentType', CONTENT_TYPES, file);
 		assertAllowed(data, 'readerStage', READER_STAGES, file);
 		assertAllowed(data, 'ctaType', CTA_TYPES, file);
@@ -195,6 +257,17 @@ function validatePosts(definitions, authors) {
 		if (data.authorId && !authors.ids.has(data.authorId)) {
 			errors.push(`${path.relative(root, file)}: authorId sem autor correspondente: ${data.authorId}.`);
 		}
+		if (data.categoryCode && !areas.byCode.has(data.categoryCode)) {
+			errors.push(`${path.relative(root, file)}: categoryCode sem AreaRecord correspondente: ${data.categoryCode}.`);
+		}
+		if (data.canonicalCategory && data.categoryCode && data.canonicalCategory !== data.categoryCode) {
+			errors.push(
+				`${path.relative(root, file)}: canonicalCategory '${data.canonicalCategory}' diverge de categoryCode '${data.categoryCode}'.`,
+			);
+		}
+		if (data.canonicalCategory && !areas.byCode.has(data.canonicalCategory)) {
+			errors.push(`${path.relative(root, file)}: canonicalCategory sem AreaRecord correspondente: ${data.canonicalCategory}.`);
+		}
 		if (data.slug) {
 			if (slugs.has(data.slug)) {
 				errors.push(`${path.relative(root, file)}: slug de post duplicado com ${path.relative(root, slugs.get(data.slug))}.`);
@@ -204,9 +277,30 @@ function validatePosts(definitions, authors) {
 		if (data.coverImage && !data.coverImageAlt && !data.coverAlt) {
 			errors.push(`${path.relative(root, file)}: coverImage exige coverImageAlt ou coverAlt.`);
 		}
+
+		const effectiveCategoryCode = data.canonicalCategory || data.categoryCode;
+		const definition = definitionByCode.get(effectiveCategoryCode);
+		if (definition) {
+			const canonicalAreaHref = `areas/${definition.slug}`;
+			if (data.ctaType === 'area' && normalizeInternalHref(data.ctaTarget) !== canonicalAreaHref) {
+				errors.push(
+					`${path.relative(root, file)}: ctaTarget '${data.ctaTarget}' diverge da area canonica '/${canonicalAreaHref}/'.`,
+				);
+			}
+			if (Array.isArray(data.relatedAreas) && !data.relatedAreas.includes(definition.slug)) {
+				errors.push(`${path.relative(root, file)}: relatedAreas deve incluir o slug canonico '${definition.slug}'.`);
+			}
+		}
+
+		if (data.draft === 'false' && data.noindex === 'false' && effectiveCategoryCode) {
+			publishedCountByCategory.set(effectiveCategoryCode, (publishedCountByCategory.get(effectiveCategoryCode) ?? 0) + 1);
+		}
 	}
 
 	if (!files.length) warnings.push('src/content/blog: nenhum post encontrado. Estado permitido como transitorio controlado.');
+	if ((publishedCountByCategory.get('CAT-08') ?? 0) < 5) {
+		errors.push('src/content/blog: CAT-08 exige acervo minimo de 5 artigos publicados.');
+	}
 }
 
 function validateDecap(definitions) {
@@ -222,12 +316,38 @@ function validateDecap(definitions) {
 	}
 }
 
+function validateNoFrontendCat08Hardcode() {
+	const frontendDirs = [
+		path.join(root, 'src', 'components'),
+		path.join(root, 'src', 'layouts'),
+		path.join(root, 'src', 'pages'),
+	];
+	const forbidden = [
+		'CAT-08',
+		'direito-do-consumidor-responsabilidade-civil',
+		'Direito do Consumidor e Responsabilidade Civil',
+		'Consumidor e Responsabilidade Civil',
+	];
+
+	for (const file of frontendDirs.flatMap((dir) => listSourceFiles(dir))) {
+		const source = stripSourceComments(readText(file));
+		for (const literal of forbidden) {
+			if (source.includes(literal)) {
+				errors.push(
+					`${path.relative(root, file)}: literal estrutural da CAT-08 encontrado no front-end; resolva pelo registry canonico.`,
+				);
+			}
+		}
+	}
+}
+
 const definitions = parseCanonicalDefinitions();
 validateCanonicalDefinitions(definitions);
-validateAreas(definitions);
+const areas = validateAreas(definitions);
 const authors = validateAuthors();
-validatePosts(definitions, authors);
+validatePosts(definitions, authors, areas);
 validateDecap(definitions);
+validateNoFrontendCat08Hardcode();
 
 for (const warning of warnings) console.warn(`[content-model] WARN ${warning}`);
 

@@ -1,15 +1,13 @@
 ---
 import Breadcrumbs from '../../components/blog/Breadcrumbs.astro';
 import BlogGrid from '../../components/blog/BlogGrid.astro';
-import { MAIN_SITE_URL } from '../../consts';
-import BaseLayout from '../../layouts/BaseLayout.astro';
+import { BLOG_SITE_URL, MAIN_SITE_URL } from '../../consts';
+import BlogLayout from '../../layouts/BlogLayout.astro';
 import { getAuthorEntries, getBlogEntries } from '../../lib/blog-content';
 import { getAuthorEntryBySlug } from '../../lib/canonical-directory';
 import { normalizeCmsImagePath } from '../../lib/content-media';
 import { isPublicPost, normalizePosts, sortPostsByDate } from '../../lib/posts';
 import { buildBreadcrumbSchema, toAbsoluteUrl } from '../../lib/seo';
-import '../../styles/blog.css';
-import '../../styles/institutional-pages.css';
 
 export async function getStaticPaths() {
 	const authorEntries = await getAuthorEntries();
@@ -20,16 +18,17 @@ const [authorEntries, blogEntries] = await Promise.all([getAuthorEntries(), getB
 const currentAuthor = getAuthorEntryBySlug(authorEntries, Astro.params.slug ?? '');
 
 if (!currentAuthor) {
-	throw new Error(`Autor canônico não encontrado: ${Astro.params.slug}`);
+	throw new Error(`Autor canonico nao encontrado: ${Astro.params.slug}`);
 }
 
 const authorImage = normalizeCmsImagePath(currentAuthor.data.image) ?? currentAuthor.data.image;
 const posts = sortPostsByDate(normalizePosts(blogEntries, authorEntries))
 	.filter(isPublicPost)
 	.filter((post) => post.authorSlug === currentAuthor.data.slug);
-const canonicalUrl = `${MAIN_SITE_URL}/autor/${currentAuthor.data.slug}/`;
+const canonicalUrl = `${BLOG_SITE_URL}/autor/${currentAuthor.data.slug}/`;
 const breadcrumbs = [
-	{ label: 'Início', href: '/' },
+	{ label: 'Inicio', href: '/' },
+	{ label: 'Publicacoes', href: '/blog/' },
 	{ label: 'Autor' },
 	{ label: currentAuthor.data.name },
 ];
@@ -45,60 +44,76 @@ const personSchema = {
 };
 ---
 
-<BaseLayout
+<BlogLayout
 	title={`${currentAuthor.data.name} | Autor | PAVIE | Advocacia`}
 	description={currentAuthor.data.shortBio}
 	canonical={canonicalUrl}
-	image={authorImage}
+	author={currentAuthor.data.name}
 >
-	<div class="container institutional-page">
+	<div class="container blog-home author-page">
 		<Breadcrumbs items={breadcrumbs} />
-		<section class="surface-card institutional-profile" aria-labelledby="author-title">
-			<img src={authorImage} alt={currentAuthor.data.imageAlt} loading="eager" />
-			<div>
+
+		<section class="author-hero" aria-labelledby="author-title">
+			<div class="author-hero__media">
+				<img src={authorImage} alt={currentAuthor.data.imageAlt} loading="eager" decoding="async" />
+			</div>
+			<div class="author-hero__copy">
 				<span class="badge">Autor</span>
 				<h1 id="author-title">{currentAuthor.data.name}</h1>
-				<p>{currentAuthor.data.oab}</p>
+				<p class="author-hero__oab">{currentAuthor.data.oab}</p>
 				<p>{currentAuthor.data.shortBio}</p>
-				<p>{currentAuthor.data.extendedBio}</p>
-				<div class="institutional-actions">
-					<a class="btn btn-primary" href="/#areas">Conheça as áreas</a>
-					<a class="btn btn-ghost" href="/blog/categoria/">Explorar categorias do blog</a>
+				<div class="blog-hero__actions">
+					<a class="btn btn-primary" href="#textos-do-autor">Ver textos</a>
+					<a class="btn btn-ghost" href={MAIN_SITE_URL}>Ir ao site</a>
 				</div>
 			</div>
 		</section>
 
-		<section class="institutional-grid" aria-label="Estrutura de autoria">
-			<article class="surface-card institutional-card">
-				<span class="section-kicker">Produção pública</span>
-				<h2>Escrita concentrada no foco atual do escritório</h2>
-				<p>
-					Os textos assinados por Fabio Pavie acompanham o eixo institucional da PAVIE e priorizam
-					questões em que patrimônio, família, sucessão, imóveis, documentos e definição da via adequada
-					têm relevância prática.
-				</p>
-			</article>
-			<article class="surface-card institutional-card">
-				<span class="section-kicker">Como navegar</span>
-				<h2>Conteúdos reunidos em uma página única de autoria</h2>
-				<p>
-					Esta página concentra os artigos publicados desta assinatura e evita dispersão entre perfis,
-					bios ou referências públicas concorrentes.
-				</p>
-			</article>
+		<section class="author-focus" aria-labelledby="author-focus-title">
+			<div class="section-title">
+				<div>
+					<span class="section-kicker">Foco editorial</span>
+					<h2 id="author-focus-title">A assinatura organiza leitura, contexto e limites.</h2>
+				</div>
+			</div>
+			<div class="author-focus__grid">
+				<article class="surface-card author-focus__card">
+					<span>01</span>
+					<h3>Critérios e documentos</h3>
+					<p>Os textos priorizam enquadramento, prova, cronologia e riscos práticos antes de qualquer conclusão.</p>
+				</article>
+				<article class="surface-card author-focus__card">
+					<span>02</span>
+					<h3>Recondução responsável</h3>
+					<p>A leitura editorial ajuda a nomear o problema e, quando necessário, remete ao site institucional.</p>
+				</article>
+			</div>
 		</section>
 
 		<BlogGrid
-			title="Publicações do autor"
-			kicker="Autoria"
+			id="textos-do-autor"
+			title="Textos recentes"
+			kicker="Publicacoes do autor"
 			posts={posts}
-			emptyTitle="Acervo em atualização"
-			emptyText="A página de autor já está disponível. Novos artigos serão reunidos aqui conforme entrarem no acervo público."
+			emptyTitle="Acervo em atualizacao"
+			emptyText="A pagina de autor ja esta estruturada. Novos artigos entram aqui conforme passam por revisao editorial e juridica."
 			emptyHref="/blog/categoria/"
 			emptyLabel="Explorar categorias"
 		/>
+
+		<section class="author-institutional-link" aria-labelledby="author-institutional-title">
+			<span class="section-kicker">Vinculo institucional</span>
+			<div>
+				<h2 id="author-institutional-title">A pagina do autor sustenta a autoria; o site concentra a relacao institucional.</h2>
+				<p>
+					Para conhecer areas, metodo e caminhos de contato, siga pela sede institucional da PAVIE.
+					Esta pagina permanece como referencia editorial dos textos assinados.
+				</p>
+			</div>
+			<a class="btn btn-ghost" href={MAIN_SITE_URL}>Ir ao site</a>
+		</section>
 	</div>
 
-	<script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
-	<script type="application/ld+json" set:html={JSON.stringify(personSchema)} />
-</BaseLayout>
+	<script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+	<script is:inline type="application/ld+json" set:html={JSON.stringify(personSchema)} />
+</BlogLayout>

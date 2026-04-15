@@ -6,30 +6,54 @@ interface Props {
 	currentPath?: string;
 }
 
-const { currentPath = '/' } = Astro.props;
+type NavItem = {
+	href: string;
+	label: string;
+	activePath?: string;
+	activeMatch?: 'exact' | 'prefix';
+};
 
-const navItems = [
-	{ href: `${MAIN_SITE_URL}/`, label: 'Início', activePath: '/' },
-	{ href: `${MAIN_SITE_URL}/#areas`, label: 'Áreas' },
-	{ href: `${MAIN_SITE_URL}/#metodo`, label: 'Método' },
+const { currentPath = '/' } = Astro.props;
+const isBlogSurface = currentPath.startsWith('/blog') || currentPath.startsWith('/autor');
+
+const siteNavItems: NavItem[] = [
+	{ href: `${MAIN_SITE_URL}/`, label: 'Inicio', activePath: '/' },
+	{ href: `${MAIN_SITE_URL}/#areas`, label: 'Areas' },
+	{ href: `${MAIN_SITE_URL}/#metodo`, label: 'Metodo' },
 	{ href: `${MAIN_SITE_URL}/#contato`, label: 'Contato' },
 ];
 
-function isActive(item: (typeof navItems)[number]): boolean {
+const blogNavItems: NavItem[] = [
+	{ href: `${BLOG_SITE_URL}/blog/`, label: 'Conteudos', activePath: '/blog/', activeMatch: 'exact' },
+	{ href: `${BLOG_SITE_URL}/blog/categoria/`, label: 'Categorias', activePath: '/blog/categoria/', activeMatch: 'prefix' },
+	{ href: `${BLOG_SITE_URL}/autor/fabio-pavie/`, label: 'Autor', activePath: '/autor/', activeMatch: 'prefix' },
+];
+
+const navItems = isBlogSurface ? blogNavItems : siteNavItems;
+const brandHref = isBlogSurface ? `${BLOG_SITE_URL}/blog/` : `${MAIN_SITE_URL}/`;
+const brandLabel = isBlogSurface
+	? 'PAVIE | Advocacia, inicio do blog'
+	: 'PAVIE | Advocacia, inicio do site institucional';
+const utilityLink = isBlogSurface
+	? { href: `${MAIN_SITE_URL}/`, label: 'Ir ao site', mark: '' }
+	: { href: `${BLOG_SITE_URL}/blog/`, label: 'Conteudo do Advogado', mark: '+' };
+
+function isActive(item: NavItem): boolean {
 	const href = item.activePath ?? item.href;
 	if (href.startsWith('http')) return false;
 	if (href.includes('#')) return false;
+	if (item.activeMatch === 'exact') return currentPath === href;
 	return currentPath === href || currentPath.startsWith(`${href.replace(/\/$/, '')}/`);
 }
 ---
 
-<header class="site-header" role="banner">
+<header class:list={['site-header', isBlogSurface && 'site-header--blog']} role="banner">
 	<div class="site-header__bar container">
-		<a class="site-header__brand" href={`${MAIN_SITE_URL}/`} aria-label="PAVIE | Advocacia, início do site institucional">
+		<a class="site-header__brand" href={brandHref} aria-label={brandLabel}>
 			<BrandLogo variant="horizontal" width={160} />
 		</a>
 
-		<nav class="site-nav" aria-label="Navegação principal">
+		<nav class="site-nav" aria-label={isBlogSurface ? 'Navegacao editorial' : 'Navegacao principal'}>
 			{navItems.map((item) => (
 				<a
 					href={item.href}
@@ -40,20 +64,20 @@ function isActive(item: (typeof navItems)[number]): boolean {
 			))}
 		</nav>
 
-		<a class="site-header__blog-link" href={`${BLOG_SITE_URL}/blog/`}>
-			Conteúdo do Advogado
-			<span aria-hidden="true">+</span>
+		<a class="site-header__blog-link" href={utilityLink.href}>
+			{utilityLink.label}
+			{utilityLink.mark && <span aria-hidden="true">{utilityLink.mark}</span>}
 		</a>
 
 		<details class="site-mobile-nav">
-			<summary aria-label="Abrir menu de navegação">Menu</summary>
+			<summary aria-label="Abrir menu de navegacao">Menu</summary>
 			<div class="site-mobile-nav__panel">
 				{navItems.map((item) => (
 					<a href={item.href}>
 						{item.label}
 					</a>
 				))}
-				<a href={`${BLOG_SITE_URL}/blog/`}>Conteúdo do Advogado</a>
+				<a href={utilityLink.href}>{utilityLink.label}</a>
 			</div>
 		</details>
 	</div>
@@ -69,6 +93,11 @@ function isActive(item: (typeof navItems)[number]): boolean {
 		backdrop-filter: blur(8px);
 	}
 
+	.site-header--blog {
+		background: color-mix(in srgb, var(--surface-page) 96%, white);
+		border-bottom-color: color-mix(in srgb, var(--color-line) 86%, white);
+	}
+
 	.site-header__bar {
 		min-height: 54px;
 		display: grid;
@@ -78,10 +107,24 @@ function isActive(item: (typeof navItems)[number]): boolean {
 	}
 
 	.site-header__brand {
+		position: relative;
 		display: inline-flex;
 		align-items: center;
 		text-decoration: none;
 		color: var(--color-graphite);
+	}
+
+	.site-header__brand::before {
+		content: '';
+		position: absolute;
+		inset: -0.42rem -0.56rem;
+		z-index: -1;
+		border-radius: var(--radius-sm);
+		background-image:
+			linear-gradient(135deg, color-mix(in srgb, var(--color-petrol) 10%, transparent) 1px, transparent 1px),
+			linear-gradient(45deg, color-mix(in srgb, var(--color-accent) 6%, transparent) 1px, transparent 1px);
+		background-size: 12px 12px;
+		opacity: 0.18;
 	}
 
 	.site-nav {
