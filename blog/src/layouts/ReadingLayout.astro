@@ -2,27 +2,31 @@
 import type { BlogPost } from '../lib/posts';
 import type { TocItem } from '../lib/toc';
 import '../styles/reading.css';
-import AuthorCard from '../components/blog/AuthorCard.astro';
+import ArticleFooterCTA from '../components/blog/ArticleFooterCTA.astro';
+import ArticleHero from '../components/blog/ArticleHero.astro';
+import AuthorBox from '../components/blog/AuthorBox.astro';
 import Breadcrumbs from '../components/blog/Breadcrumbs.astro';
-import ReadingHero from '../components/blog/ReadingHero.astro';
 import ReadingSidebar from '../components/blog/ReadingSidebar.astro';
-import RelatedPosts from '../components/blog/RelatedPosts.astro';
+import RelatedReads from '../components/blog/RelatedReads.astro';
 import BaseLayout from './BaseLayout.astro';
 import { getAreaEntries } from '../lib/blog-content';
-import { getAreaEntryByCategoryCode } from '../lib/canonical-directory';
+import { buildCanonicalAreaDirectory, getAreaEntryByCategoryCode } from '../lib/canonical-directory';
 import { buildBreadcrumbSchema, PUBLISHER_SCHEMA, toAbsoluteUrl } from '../lib/seo';
 
 interface Props {
 	post: BlogPost;
 	toc: TocItem[];
 	related: BlogPost[];
+	allPosts?: BlogPost[];
 	noIndex?: boolean;
 }
 
-const { post, toc, related, noIndex = false } = Astro.props;
+const { post, toc, related, allPosts = [], noIndex = false } = Astro.props;
 const areaEntries = await getAreaEntries();
 const canonicalCategoryCode = post.canonicalCategory ?? post.categoryCode;
 const currentArea = getAreaEntryByCategoryCode(areaEntries, canonicalCategoryCode);
+const sidebarPosts = allPosts.filter((item) => item.slug !== post.slug).slice(0, 5);
+const categoryDirectory = buildCanonicalAreaDirectory(areaEntries, allPosts);
 const hasCanonicalTaxonomy =
 	post.publicSurfaceStatus === 'allowed' && Boolean(canonicalCategoryCode) && Boolean(post.categoryUrl);
 const canonicalUrl = post.canonicalUrl ?? toAbsoluteUrl(post.url);
@@ -38,7 +42,7 @@ const introText = post.excerpt || post.description;
 const introTags = post.temas.slice(0, 3);
 const showIntroTags = introTags.length > 0;
 const showIntroBlock = Boolean(introText) || showIntroTags;
-const hasReadingSidebar = toc.length > 1;
+const hasReadingSidebar = toc.length > 1 || sidebarPosts.length > 0 || categoryDirectory.length > 0;
 const categoryHref = post.categoryUrl ?? '/blog/categoria/';
 const areaHref = post.areaUrl ?? '/#areas';
 const finalCtaCopyByType: Record<string, string> = {
@@ -54,7 +58,7 @@ const finalCtaCopyByType: Record<string, string> = {
 const finalCta =
 	hasCanonicalTaxonomy && post.areaUrl
 		? {
-				label: 'Conheça a área',
+				label: 'Conheça a área correspondente',
 				href: areaHref,
 				description: finalCtaCopyByType[post.ctaType ?? 'area'] ?? finalCtaCopyByType.area,
 			}
@@ -119,7 +123,7 @@ const faqSchema =
 >
 	<div class="container reading-page">
 		<Breadcrumbs items={breadcrumbs} />
-		<ReadingHero post={post} />
+		<ArticleHero post={post} />
 		<div class="reading-progress" aria-hidden="true"><span data-reading-progress></span></div>
 
 		<div class:list={['reading-shell', { 'reading-shell--single': !hasReadingSidebar }]}>
@@ -156,28 +160,16 @@ const faqSchema =
 				)}
 
 				<div class="reading-footer">
-					<section class="reading-next-step surface-card" aria-label="Próximo passo após a leitura">
-						<div>
-							<span class="section-kicker">Transição para o site</span>
-							<h2>Quando a leitura já localiza o tema, o próximo passo é consultar a área correspondente.</h2>
-							<p>{finalCta.description}</p>
-						</div>
-						<div class="reading-bridge__actions">
-							<a
-								class="btn btn-primary"
-								href={finalCta.href}
-								data-cta-origin="article-final"
-								data-cta-intent={post.ctaType ?? 'area'}
-							>
-								{finalCta.label}
-							</a>
-						</div>
-						<p class="reading-ethics-note">Conteúdo informativo. Cada caso exige análise técnica individual.</p>
-					</section>
+					<ArticleFooterCTA
+						href={finalCta.href}
+						label={finalCta.label}
+						description={finalCta.description}
+						intent={post.ctaType ?? 'area'}
+					/>
 
-					<AuthorCard post={post} />
+					<AuthorBox post={post} />
 
-					<RelatedPosts
+					<RelatedReads
 						posts={related}
 						title={hasCanonicalTaxonomy ? 'Leituras relacionadas da categoria' : 'Leituras relacionadas'}
 						emptyHref={categoryHref}
@@ -186,7 +178,14 @@ const faqSchema =
 				</div>
 			</article>
 
-			{hasReadingSidebar && <ReadingSidebar toc={toc} />}
+			{hasReadingSidebar && (
+				<ReadingSidebar
+					toc={toc}
+					popularPosts={sidebarPosts}
+					categories={categoryDirectory}
+					currentCategoryCode={canonicalCategoryCode}
+				/>
+			)}
 		</div>
 	</div>
 

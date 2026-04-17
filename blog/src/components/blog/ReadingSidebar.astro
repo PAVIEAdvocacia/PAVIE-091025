@@ -1,16 +1,59 @@
 ---
 import type { TocItem } from '../../lib/toc';
+import type { CanonicalAreaDirectoryItem } from '../../lib/canonical-directory';
+import type { BlogPost } from '../../lib/posts';
 import ReadingTOC from './ReadingTOC.astro';
 
 interface Props {
 	toc: TocItem[];
+	popularPosts?: BlogPost[];
+	categories?: CanonicalAreaDirectoryItem[];
+	currentCategoryCode?: string;
 }
 
-const { toc } = Astro.props;
+const {
+	toc,
+	popularPosts = [],
+	categories = [],
+	currentCategoryCode,
+} = Astro.props;
 ---
 
-{toc.length > 1 && (
-	<aside class="reading-sidebar" aria-label="Sumário do artigo">
-		<ReadingTOC items={toc} />
-	</aside>
-)}
+<aside class="reading-sidebar" aria-label="Apoio de leitura">
+	{popularPosts.length > 0 && (
+		<section class="reading-panel reading-sidebar-block" aria-labelledby="popular-posts-title">
+			<h2 id="popular-posts-title">Artigos mais lidos</h2>
+			<ol class="reading-sidebar-list">
+				{popularPosts.map((post) => (
+					<li>
+						<a href={post.url}>
+							<span>{post.area}</span>
+							<strong>{post.title}</strong>
+						</a>
+					</li>
+				))}
+			</ol>
+		</section>
+	)}
+
+	{categories.length > 0 && (
+		<section class="reading-panel reading-sidebar-block" aria-labelledby="sidebar-categories-title">
+			<h2 id="sidebar-categories-title">Categorias</h2>
+			<ul class="reading-sidebar-list">
+				{categories.map((category) => (
+					<li>
+						<a
+							href={category.categoryHref}
+							aria-current={category.code === currentCategoryCode ? 'page' : undefined}
+						>
+							<span>{category.code}</span>
+							<strong>{category.displayTitle}</strong>
+						</a>
+					</li>
+				))}
+			</ul>
+		</section>
+	)}
+
+	{toc.length > 1 && <ReadingTOC items={toc} />}
+</aside>

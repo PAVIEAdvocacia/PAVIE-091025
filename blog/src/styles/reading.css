@@ -20,7 +20,7 @@
 	height: 100%;
 	width: 0;
 	border-radius: inherit;
-	background: linear-gradient(90deg, var(--color-petrol), color-mix(in srgb, var(--color-sand) 70%, white));
+	background: var(--color-accent);
 }
 
 .reading-hero {
@@ -40,6 +40,7 @@
 	width: 100%;
 	height: 100%;
 	object-fit: cover;
+	filter: grayscale(0.95) saturate(0.16) contrast(0.98);
 	mix-blend-mode: multiply;
 	opacity: 0.8;
 }
@@ -110,6 +111,55 @@
 .reading-panel h3 {
 	font-size: 1.22rem;
 	margin-bottom: 0.75rem;
+}
+
+.reading-sidebar-block {
+	display: grid;
+	gap: 0.78rem;
+}
+
+.reading-sidebar-block h2 {
+	margin-bottom: 0;
+	font-family: var(--font-sans);
+	font-size: 0.84rem;
+	letter-spacing: 0;
+	text-transform: uppercase;
+	color: var(--color-accent);
+}
+
+.reading-sidebar-list {
+	list-style: none;
+	display: grid;
+	gap: 0;
+}
+
+.reading-sidebar-list li + li {
+	border-top: 1px solid color-mix(in srgb, var(--color-line) 82%, white);
+}
+
+.reading-sidebar-list a {
+	display: grid;
+	gap: 0.22rem;
+	padding-block: 0.62rem;
+	color: var(--color-graphite);
+	text-decoration: none;
+}
+
+.reading-sidebar-list a:hover,
+.reading-sidebar-list a:focus-visible,
+.reading-sidebar-list a[aria-current='page'] {
+	color: var(--color-accent);
+}
+
+.reading-sidebar-list span {
+	font-size: 0.76rem;
+	font-weight: 800;
+	color: color-mix(in srgb, var(--color-accent) 76%, var(--text-muted));
+}
+
+.reading-sidebar-list strong {
+	font-size: 0.92rem;
+	line-height: 1.38;
 }
 
 .reading-sidebar-note p {

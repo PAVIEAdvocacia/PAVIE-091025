@@ -145,7 +145,7 @@ const addressLine = `${BUSINESS_ADDRESS.streetAddress}, ${BUSINESS_ADDRESS.addre
 		position: relative;
 		overflow: hidden;
 		padding: clamp(3rem, 7vw, 5rem) 0 var(--space-lg);
-		background: linear-gradient(150deg, #062c2c, #032425);
+		background: #2c2c2c;
 		color: var(--text-contrast);
 	}
 
@@ -155,8 +155,8 @@ const addressLine = `${BUSINESS_ADDRESS.streetAddress}, ${BUSINESS_ADDRESS.addre
 		inset: 0;
 		pointer-events: none;
 		background-image:
-			linear-gradient(135deg, rgba(255, 255, 255, 0.044) 1px, transparent 1px),
-			linear-gradient(45deg, rgba(151, 29, 37, 0.03) 1px, transparent 1px);
+			linear-gradient(135deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+			linear-gradient(45deg, rgba(151, 29, 37, 0.045) 1px, transparent 1px);
 		background-size: 16px 16px;
 		opacity: 0.18;
 	}
@@ -212,7 +212,7 @@ const addressLine = `${BUSINESS_ADDRESS.streetAddress}, ${BUSINESS_ADDRESS.addre
 		font-size: 0.78rem;
 		letter-spacing: 0;
 		text-transform: uppercase;
-		color: color-mix(in srgb, var(--color-sand) 78%, white);
+		color: color-mix(in srgb, white 82%, var(--color-mist));
 	}
 
 	.site-footer ul {

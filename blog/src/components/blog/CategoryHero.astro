@@ -1,0 +1,26 @@
+---
+import type { CanonicalAreaDirectoryItem } from '../../lib/canonical-directory';
+
+interface Props {
+	category: CanonicalAreaDirectoryItem;
+	countLabel: string;
+}
+
+const { category, countLabel } = Astro.props;
+---
+
+<section class="category-hero" aria-labelledby="blog-category-title">
+	<div>
+		<span class="badge">Categoria do blog</span>
+		<h1 id="blog-category-title">{category.title}</h1>
+		<p>{category.shortDescription}</p>
+		<div class="meta-list" aria-label="Dados editoriais da categoria">
+			<span><span class="meta-dot" aria-hidden="true"></span>{countLabel}</span>
+			<span><span class="meta-dot" aria-hidden="true"></span>Vínculo com {category.displayTitle}</span>
+		</div>
+	</div>
+	<div class="blog-actions">
+		<a class="btn btn-primary" href="#leituras-categoria">Ler artigos</a>
+		<a class="btn btn-ghost" href={category.href}>Conhecer área correspondente</a>
+	</div>
+</section>

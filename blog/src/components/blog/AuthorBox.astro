@@ -1,0 +1,46 @@
+---
+import { getAuthorEntries } from '../../lib/blog-content';
+import { normalizeCmsImagePath } from '../../lib/content-media';
+import type { BlogPost } from '../../lib/posts';
+
+interface Props {
+	post: BlogPost;
+}
+
+const { post } = Astro.props;
+const authorEntries = await getAuthorEntries();
+const matchedAuthor = authorEntries.find((entry) => {
+	if (post.authorId && entry.data.id === post.authorId) return true;
+	if (post.authorSlug && entry.data.slug === post.authorSlug) return true;
+	return entry.data.name === post.authorName;
+});
+const authorSignature =
+	(matchedAuthor?.data.slug ?? post.authorSlug) === 'fabio-pavie'
+		? 'Fabio Pavie escreve principalmente sobre questões patrimoniais, familiares, sucessórias, imobiliárias e documentais, com rigor documental e linguagem clara.'
+		: 'Conteúdo produzido no ecossistema PAVIE para orientar com clareza, sem substituir a análise individual do caso.';
+const authorName = matchedAuthor?.data.name ?? post.authorName;
+const authorPhoto = normalizeCmsImagePath(matchedAuthor?.data.image) ?? post.authorImage;
+const authorPhotoAlt =
+	matchedAuthor?.data.imageAlt ?? post.authorImageAlt ?? `Foto do advogado ${authorName}`;
+const authorUrl = matchedAuthor ? `/autor/${matchedAuthor.data.slug}/` : post.authorUrl ?? '/sobre/';
+---
+
+<section class="author-card" aria-label="Informações do autor">
+	{
+		authorPhoto && (
+			<img
+				class="author-card__photo"
+				src={authorPhoto}
+				alt={authorPhotoAlt}
+				loading="lazy"
+			/>
+		)
+	}
+	<div class="author-card__body">
+		<span class="section-kicker">Responsável pelo conteúdo</span>
+		<h3>{authorName}</h3>
+		<p>{post.authorRole}</p>
+		<p class="author-card__note">{authorSignature}</p>
+		<a class="author-card__link" href={authorUrl}>Ver página do autor</a>
+	</div>
+</section>

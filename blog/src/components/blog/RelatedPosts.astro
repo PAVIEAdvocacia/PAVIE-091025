@@ -1,5 +1,6 @@
 ---
 import type { BlogPost } from '../../lib/posts';
+import RelatedReads from './RelatedReads.astro';
 
 interface Props {
 	posts: BlogPost[];
@@ -8,25 +9,7 @@ interface Props {
 	emptyLabel?: string;
 }
 
-const { posts, title = 'Leituras relacionadas', emptyHref = '/blog/categoria/', emptyLabel = 'Explorar temas' } = Astro.props;
+const { posts, title, emptyHref, emptyLabel } = Astro.props;
 ---
 
-<section class="related-posts" aria-labelledby="related-posts-title">
-	<h3 id="related-posts-title">{title}</h3>
-	{posts.length > 0 ? (
-		posts.map((post) => (
-			<article>
-				<p class="related-posts__meta">{post.area} · Leitura de {post.readingTime} min</p>
-				<h4>
-					<a href={post.url}>{post.title}</a>
-				</h4>
-				<p>{post.excerpt}</p>
-			</article>
-		))
-	) : (
-		<div class="related-posts__empty">
-			<p class="text-muted">Novos artigos desta área entram aos poucos. Enquanto isso, você pode seguir pela navegação por assunto.</p>
-			<a class="btn btn-ghost" href={emptyHref}>{emptyLabel}</a>
-		</div>
-	)}
-</section>
+<RelatedReads posts={posts} title={title} emptyHref={emptyHref} emptyLabel={emptyLabel} />

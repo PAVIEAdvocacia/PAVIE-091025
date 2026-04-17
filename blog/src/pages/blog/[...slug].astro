@@ -42,6 +42,6 @@ const toc = buildToc(headings);
 const noIndex = !isPublicPost(currentPost);
 ---
 
-<ReadingLayout post={currentPost} toc={toc} related={related} noIndex={noIndex}>
+<ReadingLayout post={currentPost} toc={toc} related={related} allPosts={publicPosts} noIndex={noIndex}>
 	<Content />
 </ReadingLayout>

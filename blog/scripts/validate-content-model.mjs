@@ -2,7 +2,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 
 const root = process.cwd();
-const canonicalPath = path.join(root, 'src/lib/canonical-content.ts');
+const canonicalPath = path.join(root, 'src/data/categories.registry.ts');
 const decapPath = path.join(root, 'public/admin/config.yml');
 const areasDir = path.join(root, 'src/content/areas');
 const authorsDir = path.join(root, 'src/content/authors');
@@ -89,12 +89,18 @@ function parseCanonicalDefinitions() {
 	const source = readText(canonicalPath);
 	const definitions = [];
 	const pattern =
-		/\{\s*code:\s*'([^']+)'[\s\S]*?slug:\s*'([^']+)'[\s\S]*?label:\s*'([^']+)'[\s\S]*?displayTitle:\s*'([^']+)'/g;
+		/\{\s*code:\s*'([^']+)'[\s\S]*?canonicalTitle:\s*'([^']+)'[\s\S]*?displayTitle:\s*'([^']+)'[\s\S]*?categorySlug:\s*'([^']+)'[\s\S]*?areaSlug:\s*'([^']+)'/g;
 	let match;
 	while ((match = pattern.exec(source))) {
-		definitions.push({ code: match[1], slug: match[2], label: match[3], displayTitle: match[4] });
+		definitions.push({
+			code: match[1],
+			label: match[2],
+			displayTitle: match[3],
+			slug: match[4],
+			areaSlug: match[5],
+		});
 	}
-	if (!definitions.length) errors.push('src/lib/canonical-content.ts: nenhuma categoria canonica encontrada.');
+	if (!definitions.length) errors.push('src/data/categories.registry.ts: nenhuma categoria canonica encontrada.');
 	return definitions;
 }
 
@@ -105,36 +111,39 @@ function validateCanonicalDefinitions(definitions) {
 	const unexpected = codes.filter((code) => !EXPECTED_CATEGORY_CODES.includes(code));
 
 	for (const code of missing) {
-		errors.push(`src/lib/canonical-content.ts: categoria canonica obrigatoria ausente: ${code}.`);
+		errors.push(`src/data/categories.registry.ts: categoria canonica obrigatoria ausente: ${code}.`);
 	}
 	for (const code of unexpected) {
-		errors.push(`src/lib/canonical-content.ts: categoria canonica nao homologada: ${code}.`);
+		errors.push(`src/data/categories.registry.ts: categoria canonica nao homologada: ${code}.`);
 	}
 	if (codes.length !== EXPECTED_CATEGORY_CODES.length) {
 		errors.push(
-			`src/lib/canonical-content.ts: quantidade de categorias canonicas invalida: ${codes.length}; esperado ${EXPECTED_CATEGORY_CODES.length}.`,
+			`src/data/categories.registry.ts: quantidade de categorias canonicas invalida: ${codes.length}; esperado ${EXPECTED_CATEGORY_CODES.length}.`,
 		);
 	}
 
 	if (new Set(codes).size !== codes.length) {
-		errors.push('src/lib/canonical-content.ts: categoryCode duplicado no registry canonico.');
+		errors.push('src/data/categories.registry.ts: categoryCode duplicado no registry canonico.');
 	}
 	if (new Set(slugs).size !== slugs.length) {
-		errors.push('src/lib/canonical-content.ts: slug duplicado no registry canonico.');
+		errors.push('src/data/categories.registry.ts: slug duplicado no registry canonico.');
+	}
+	if (definitions.some((definition) => definition.slug !== definition.areaSlug)) {
+		errors.push('src/data/categories.registry.ts: categorySlug e areaSlug devem preservar vinculo 1:1.');
 	}
 
 	const cat08 = definitions.find((definition) => definition.code === 'CAT-08');
 	if (!cat08) {
-		errors.push('src/lib/canonical-content.ts: CAT-08 ausente no registry canonico.');
+		errors.push('src/data/categories.registry.ts: CAT-08 ausente no registry canonico.');
 	} else {
 		if (cat08.slug !== 'direito-do-consumidor-responsabilidade-civil') {
-			errors.push(`src/lib/canonical-content.ts: slug da CAT-08 divergente: ${cat08.slug}.`);
+			errors.push(`src/data/categories.registry.ts: slug da CAT-08 divergente: ${cat08.slug}.`);
 		}
 		if (cat08.label !== 'Direito do Consumidor e Responsabilidade Civil') {
-			errors.push(`src/lib/canonical-content.ts: label da CAT-08 divergente: ${cat08.label}.`);
+			errors.push(`src/data/categories.registry.ts: label da CAT-08 divergente: ${cat08.label}.`);
 		}
 		if (cat08.displayTitle !== 'Consumidor e Responsabilidade Civil') {
-			errors.push(`src/lib/canonical-content.ts: displayTitle da CAT-08 divergente: ${cat08.displayTitle}.`);
+			errors.push(`src/data/categories.registry.ts: displayTitle da CAT-08 divergente: ${cat08.displayTitle}.`);
 		}
 	}
 }
@@ -188,6 +197,9 @@ function validateAreas(definitions) {
 		if (data.slug !== definition.slug) {
 			errors.push(`${path.relative(root, areaFile)}: slug '${data.slug}' diverge do registry '${definition.slug}'.`);
 		}
+		if (data.title !== definition.label) {
+			errors.push(`${path.relative(root, areaFile)}: title '${data.title}' diverge do registry '${definition.label}'.`);
+		}
 		if (data.canonicalTitle !== definition.label) {
 			errors.push(`${path.relative(root, areaFile)}: canonicalTitle '${data.canonicalTitle}' diverge do registry '${definition.label}'.`);
 		}
@@ -197,6 +209,40 @@ function validateAreas(definitions) {
 	}
 
 	return { byCode, bySlug };
+}
+
+function validateBreadcrumbTerms(definitions) {
+	const allowedCategoryLabels = new Set(
+		definitions.flatMap((definition) => [definition.label, definition.displayTitle]),
+	);
+	const categoryTermPattern =
+		/(Invent[aá]rios?|Sucess[oõ]es?|Planejamento Patrimonial|Fam[ií]lia|Im[oó]veis?|Cobran[cç]a|Contratos|Tributa[cç][aã]o|Consumidor|Responsabilidade Civil)/i;
+
+	for (const file of listSourceFiles(path.join(root, 'src', 'pages'))) {
+		const source = stripSourceComments(readText(file));
+		if (!source.includes('breadcrumbs')) continue;
+
+		const labelPattern = /label:\s*['"]([^'"]+)['"]/g;
+		let match;
+		while ((match = labelPattern.exec(source))) {
+			const label = match[1];
+			if (categoryTermPattern.test(label) && !allowedCategoryLabels.has(label)) {
+				errors.push(
+					`${path.relative(root, file)}: breadcrumb usa termo tematico fora do registry canonico: '${label}'.`,
+				);
+			}
+		}
+	}
+}
+
+function validateHomeCategoryRoutes(definitions, areas) {
+	for (const definition of definitions) {
+		if (!areas.bySlug.has(definition.slug)) {
+			errors.push(
+				`src/pages/blog/index.astro: card de categoria geraria rota quebrada para /blog/categoria/${definition.slug}/ porque a area correspondente nao existe.`,
+			);
+		}
+	}
 }
 
 function validateAuthors() {
@@ -347,6 +393,8 @@ const areas = validateAreas(definitions);
 const authors = validateAuthors();
 validatePosts(definitions, authors, areas);
 validateDecap(definitions);
+validateBreadcrumbTerms(definitions);
+validateHomeCategoryRoutes(definitions, areas);
 validateNoFrontendCat08Hardcode();
 
 for (const warning of warnings) console.warn(`[content-model] WARN ${warning}`);

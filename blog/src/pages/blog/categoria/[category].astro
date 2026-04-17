@@ -1,5 +1,6 @@
 ---
 import Breadcrumbs from '../../../components/blog/Breadcrumbs.astro';
+import CategoryHero from '../../../components/blog/CategoryHero.astro';
 import FeaturedPost from '../../../components/blog/FeaturedPost.astro';
 import { BLOG_SITE_URL } from '../../../consts';
 import BlogLayout from '../../../layouts/BlogLayout.astro';
@@ -56,16 +57,7 @@ const breadcrumbSchema = buildBreadcrumbSchema(breadcrumbs, canonicalUrl);
 	<div class="container blog-home blog-category-page">
 		<Breadcrumbs items={breadcrumbs} />
 
-		<section class="category-hero" aria-labelledby="blog-category-title">
-			<div>
-				<span class="badge">Categoria do blog</span>
-				<h1 id="blog-category-title">{currentCategory.title}</h1>
-				<p>{currentCategory.shortDescription}</p>
-			</div>
-			<div class="blog-actions">
-				<a class="btn btn-secondary" href={currentCategory.href}>Conhecer area correspondente</a>
-			</div>
-		</section>
+		<CategoryHero category={currentCategory} countLabel={categoryCountLabel} />
 
 		<section class="category-area-link" aria-labelledby="category-area-title">
 			<div class="category-area-link__copy">
