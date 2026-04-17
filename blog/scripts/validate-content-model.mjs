@@ -7,6 +7,7 @@ const decapPath = path.join(root, 'public/admin/config.yml');
 const areasDir = path.join(root, 'src/content/areas');
 const authorsDir = path.join(root, 'src/content/authors');
 const postsDir = path.join(root, 'src/content/blog');
+const institutionalHomePath = path.join(root, 'src/pages/index.astro');
 
 const CONTENT_TYPES = new Set(['cornerstone', 'guide', 'spoke', 'faq', 'checklist', 'case-note', 'institutional']);
 const CTA_TYPES = new Set(['area', 'contact', 'article-series', 'document-review']);
@@ -245,6 +246,24 @@ function validateHomeCategoryRoutes(definitions, areas) {
 	}
 }
 
+function validateInstitutionalHomeEncoding() {
+	if (!fs.existsSync(institutionalHomePath)) return;
+	const source = readText(institutionalHomePath);
+	const mojibakePatterns = [
+		{ label: 'U+00C3', value: '\u00c3' },
+		{ label: 'U+00C2', value: '\u00c2' },
+		{ label: 'U+FFFD', value: '\ufffd' },
+		{ label: 'latin-1 smart quote prefix', value: '\u00e2\u20ac' },
+		{ label: 'latin-1 arrow prefix', value: '\u00e2\u2020' },
+	];
+
+	for (const pattern of mojibakePatterns) {
+		if (source.includes(pattern.value)) {
+			errors.push(`src/pages/index.astro: mojibake detectado na S1 (${pattern.label}). Corrija o arquivo fonte em UTF-8.`);
+		}
+	}
+}
+
 function validateAuthors() {
 	const files = listContentFiles(authorsDir);
 	const ids = new Set();
@@ -395,6 +414,7 @@ validatePosts(definitions, authors, areas);
 validateDecap(definitions);
 validateBreadcrumbTerms(definitions);
 validateHomeCategoryRoutes(definitions, areas);
+validateInstitutionalHomeEncoding();
 validateNoFrontendCat08Hardcode();
 
 for (const warning of warnings) console.warn(`[content-model] WARN ${warning}`);
