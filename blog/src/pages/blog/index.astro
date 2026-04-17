@@ -1,14 +1,11 @@
 ---
 import BlogGrid from '../../components/blog/BlogGrid.astro';
-import CategoryGrid from '../../components/blog/CategoryGrid.astro';
-import { BLOG_SITE_URL, MAIN_SITE_URL } from '../../consts';
+import { BLOG_SITE_URL } from '../../consts';
 import BlogLayout from '../../layouts/BlogLayout.astro';
-import { getAreaEntries, getAuthorEntries, getBlogEntries } from '../../lib/blog-content';
-import { buildCanonicalAreaDirectory } from '../../lib/canonical-directory';
+import { getAuthorEntries, getBlogEntries } from '../../lib/blog-content';
 import { isPublicPost, normalizePosts, sortPostsByDate } from '../../lib/posts';
 
-const [areaEntries, authorEntries, blogEntries] = await Promise.all([
-	getAreaEntries(),
+const [authorEntries, blogEntries] = await Promise.all([
 	getAuthorEntries(),
 	getBlogEntries(),
 ]);
@@ -19,11 +16,6 @@ const latestPosts = posts.slice(0, 6);
 const mostReadPosts = [...editorialHighlights, ...posts]
 	.filter((post, index, list) => list.findIndex((item) => item.slug === post.slug) === index)
 	.slice(0, 5);
-const categoryDirectory = buildCanonicalAreaDirectory(areaEntries, posts);
-const hasPublishedPosts = posts.length > 0;
-const postCountLabel = hasPublishedPosts
-	? `${posts.length} artigo${posts.length === 1 ? '' : 's'} publicado${posts.length === 1 ? '' : 's'} no acervo atual`
-	: 'Acervo editorial em preparação';
 const heroImage = mostReadPosts[0]?.image ?? '/images/site/hero/hero-01.webp';
 const heroImageAlt = mostReadPosts[0]?.imageAlt ?? 'Imagem editorial em preto e branco para abertura do blog PAVIE';
 const collectionSchema = {
@@ -50,37 +42,18 @@ const collectionSchema = {
 
 <BlogLayout
 	title="Blog jurídico da PAVIE | Advocacia"
-	description="Leitura jurídica organizada por categorias canônicas, com conexão direta entre conteúdo editorial, áreas públicas e retorno ao site institucional."
+	description="Leitura jurídica organizada por categorias canônicas, com conexão direta entre conteúdo editorial e áreas públicas correspondentes."
 	canonical={`${BLOG_SITE_URL}/blog/`}
 >
 	<div class="container blog-home">
-		<section class="blog-editorial-header" aria-labelledby="blog-home-title">
-			<span class="badge">Blog jurídico PAVIE | Advocacia</span>
-			<h1 id="blog-home-title">Leituras para reconhecer o tema, organizar documentos e voltar ao site com mais clareza.</h1>
-			<p>
-				O blog qualifica a compreensão do problema por categorias canônicas. Cada leitura aprofunda critérios,
-				limites e caminhos de retorno à área institucional correspondente.
-			</p>
-			<div class="blog-hero__actions">
-				<a class="btn btn-primary" href="/blog/categoria/">Explorar categorias</a>
-				<a class="btn btn-ghost" href={MAIN_SITE_URL}>Voltar ao site institucional</a>
-			</div>
-			<div class="meta-list" aria-label="Informações do acervo editorial">
-				<span><span class="meta-dot" aria-hidden="true"></span>{postCountLabel}</span>
-				<span><span class="meta-dot" aria-hidden="true"></span>{categoryDirectory.length} categorias canônicas</span>
-				<span><span class="meta-dot" aria-hidden="true"></span>Ponte direta para as áreas do site</span>
-			</div>
-		</section>
-
-		<section class="blog-editorial-hero" aria-labelledby="most-read-title">
+		<section class="blog-editorial-hero" aria-label="Mais lidos">
 			<figure class="blog-editorial-hero__visual">
 				<img src={heroImage} alt={heroImageAlt} loading="eager" decoding="async" />
 				<figcaption>Leitura editorial com foco em prova, contexto e via adequada.</figcaption>
 			</figure>
 
-			<aside class="most-read-panel" aria-labelledby="most-read-title">
+			<aside class="most-read-panel" aria-label="Artigos mais lidos">
 				<span class="section-kicker">Mais lidos</span>
-				<h2 id="most-read-title">Pontos de entrada para começar a leitura</h2>
 				{mostReadPosts.length > 0 ? (
 					<ol class="most-read-list">
 						{mostReadPosts.map((post, index) => (
@@ -102,8 +75,6 @@ const collectionSchema = {
 			</aside>
 		</section>
 
-		<CategoryGrid categories={categoryDirectory} />
-
 		<BlogGrid
 			title="Artigos em destaque"
 			kicker="Seleção editorial"
@@ -119,19 +90,6 @@ const collectionSchema = {
 			emptyTitle="Publicações em preparação"
 			emptyText="Novos artigos serão exibidos aqui após revisão editorial e jurídica."
 		/>
-
-		<section class="editorial-cta" aria-label="Retorno ao site institucional">
-			<span class="section-kicker">Retorno ao site institucional</span>
-			<h2>Quando a leitura já ajudou a organizar o tema, volte ao site para conhecer a área correspondente.</h2>
-			<p>
-				O blog prepara a compreensão. O site institucional concentra áreas, método, limites do primeiro contato e
-				informações necessárias para uma eventual análise do caso concreto.
-			</p>
-			<div class="blog-actions">
-				<a class="btn btn-secondary" href={`${MAIN_SITE_URL}/#areas`}>Conheça a área correspondente</a>
-				<a class="btn btn-ghost" href={MAIN_SITE_URL}>Voltar ao site institucional</a>
-			</div>
-		</section>
 	</div>
 
 	<script is:inline type="application/ld+json" set:html={JSON.stringify(collectionSchema)} />
