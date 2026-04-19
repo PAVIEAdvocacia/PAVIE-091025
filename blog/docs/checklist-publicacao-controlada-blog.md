@@ -16,6 +16,17 @@ Este checklist operacional acompanha o `RC-BLOG-FINAL-2026-04-19`. Ele nao alter
 - Conferir no HTML gerado de B3 a ordem da sidebar: `Neste artigo`, `Categorias`, `Leituras da mesma categoria`.
 - Fazer QA visual humana em navegador real, desktop e mobile.
 
+## Excecao operacional do `qa:blog`
+
+A falha atual do `npm run qa:blog` pode ser aceita no deploy atual quando estiver limitada aos eventos abaixo:
+
+- `editorial_b3_s2_final_cta_click`;
+- `editorial_b3_related_read_click`.
+
+Esses eventos deixaram de ter ponto de disparo porque o ajuste final aceito da B3 removeu do corpo principal do artigo o CTA final para S2 e o bloco final de leituras relacionadas. A remocao e compativel com o estado aprovado da B3: pagina de leitura mais limpa, sidebar preservada e ordenada, sem cauda promocional/institucional e sem novo CTA dominante.
+
+Essa excecao nao invalida o GO tecnico quando `npm run check` e `npm run build` passam e a inspecao do HTML confirma a ausencia dos blocos removidos. O alinhamento futuro do script `qa:blog` ao novo comportamento de B3 deve ser tratado como tarefa separada, sem bloquear este pacote de publicacao controlada.
+
 ## Deploy
 
 - Publicar o build gerado em `dist`.
