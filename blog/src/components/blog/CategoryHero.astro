@@ -1,5 +1,10 @@
 ---
 import type { CanonicalAreaDirectoryItem } from '../../lib/canonical-directory';
+import {
+	EDITORIAL_ANALYTICS_EVENTS,
+	categoryAnalyticsContext,
+	editorialAnalyticsAttributes,
+} from '../../lib/editorial-analytics';
 
 interface Props {
 	category: CanonicalAreaDirectoryItem;
@@ -8,6 +13,7 @@ interface Props {
 }
 
 const { category, countLabel, hasPosts = false } = Astro.props;
+const categoryContext = categoryAnalyticsContext(category);
 ---
 
 <section class="category-hero" aria-labelledby="blog-category-title">
@@ -34,6 +40,13 @@ const { category, countLabel, hasPosts = false } = Astro.props;
 			href={category.href}
 			data-link-origin="category-hero"
 			data-link-target="area"
+			{...editorialAnalyticsAttributes({
+				eventName: EDITORIAL_ANALYTICS_EVENTS.B2_S2_CLICK,
+				surfaceOrigin: 'B2',
+				surfaceTarget: 'S2',
+				linkType: 'area-bridge',
+				...categoryContext,
+			})}
 		>
 			Conhecer área correspondente
 		</a>

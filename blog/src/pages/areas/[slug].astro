@@ -4,6 +4,12 @@ import { MAIN_SITE_URL } from '../../consts';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getAreaEntries, getAuthorEntries, getBlogEntries } from '../../lib/blog-content';
 import { getCanonicalAreaDirectoryItem } from '../../lib/canonical-directory';
+import {
+	EDITORIAL_ANALYTICS_EVENTS,
+	categoryAnalyticsContext,
+	editorialAnalyticsAttributes,
+	postAnalyticsContext,
+} from '../../lib/editorial-analytics';
 import { isPublicPost, normalizePosts, sortPostsByDate } from '../../lib/posts';
 import { buildBreadcrumbSchema, buildFaqSchema, LEGAL_SERVICE_BASE_SCHEMA } from '../../lib/seo';
 import '../../styles/institutional-pages.css';
@@ -53,6 +59,7 @@ const finalText =
 	'O enquadramento correto evita decisões precipitadas. Se o seu contexto já está maduro para avaliação, inicie a análise técnica.';
 const finalCtaLabel = area.finalCtaLabel ?? 'Solicitar análise inicial';
 const areaReadingPosts = currentArea.latestPosts.slice(0, 3);
+const areaAnalyticsContext = categoryAnalyticsContext(currentArea);
 const breadcrumbSchema = buildBreadcrumbSchema(breadcrumbs, canonicalUrl);
 const faqSchema = area.faqItems.length > 0 ? buildFaqSchema(area.faqItems) : undefined;
 const legalServiceSchema = {
@@ -84,6 +91,13 @@ const legalServiceSchema = {
 						href="/#contato"
 						data-link-origin="area-hero"
 						data-link-target="site-contact"
+						{...editorialAnalyticsAttributes({
+							eventName: EDITORIAL_ANALYTICS_EVENTS.S2_SITE_CONTACT_CLICK,
+							surfaceOrigin: 'S2',
+							surfaceTarget: 'SITE',
+							linkType: 'site-contact',
+							...areaAnalyticsContext,
+						})}
 					>
 						Solicitar análise inicial
 					</a>
@@ -182,6 +196,13 @@ const legalServiceSchema = {
 									href={post.url}
 									data-link-origin="area-reading"
 									data-link-target="article"
+									{...editorialAnalyticsAttributes({
+										eventName: EDITORIAL_ANALYTICS_EVENTS.S2_BLOG_BRIDGE_CLICK,
+										surfaceOrigin: 'S2',
+										surfaceTarget: 'B3',
+										linkType: 'blog-bridge',
+										...postAnalyticsContext(post),
+									})}
 								>
 									{post.title}
 								</a>
@@ -194,6 +215,13 @@ const legalServiceSchema = {
 					href={currentArea.categoryHref}
 					data-link-origin="area-reading"
 					data-link-target="category"
+					{...editorialAnalyticsAttributes({
+						eventName: EDITORIAL_ANALYTICS_EVENTS.S2_BLOG_BRIDGE_CLICK,
+						surfaceOrigin: 'S2',
+						surfaceTarget: 'B2',
+						linkType: 'blog-bridge',
+						...areaAnalyticsContext,
+					})}
 				>
 					Explorar categoria
 				</a>
@@ -211,6 +239,13 @@ const legalServiceSchema = {
 				href="/#contato"
 				data-link-origin="area-final"
 				data-link-target="site-contact"
+				{...editorialAnalyticsAttributes({
+					eventName: EDITORIAL_ANALYTICS_EVENTS.S2_SITE_CONTACT_CLICK,
+					surfaceOrigin: 'S2',
+					surfaceTarget: 'SITE',
+					linkType: 'site-contact',
+					...areaAnalyticsContext,
+				})}
 			>
 				{finalCtaLabel}
 			</a>

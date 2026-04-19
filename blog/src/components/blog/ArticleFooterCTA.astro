@@ -4,6 +4,7 @@ interface Props {
 	description: string;
 	label?: string;
 	intent?: string;
+	analyticsAttributes?: Record<string, string>;
 }
 
 const {
@@ -11,6 +12,7 @@ const {
 	description,
 	label = 'Conheça a área correspondente',
 	intent = 'area',
+	analyticsAttributes = {},
 } = Astro.props;
 ---
 
@@ -28,6 +30,7 @@ const {
 			data-cta-intent={intent}
 			data-link-origin="article-final"
 			data-link-target="area"
+			{...analyticsAttributes}
 		>
 			{label}
 		</a>

@@ -1,11 +1,17 @@
 ---
 import type { BlogPost } from '../../lib/posts';
+import {
+	EDITORIAL_ANALYTICS_EVENTS,
+	editorialAnalyticsAttributes,
+	postAnalyticsContext,
+} from '../../lib/editorial-analytics';
 
 interface Props {
 	posts: BlogPost[];
 	title?: string;
 	emptyHref?: string;
 	emptyLabel?: string;
+	sourcePost?: BlogPost;
 }
 
 const {
@@ -13,7 +19,9 @@ const {
 	title = 'Leituras relacionadas',
 	emptyHref = '/blog/',
 	emptyLabel = 'Voltar ao blog',
+	sourcePost,
 } = Astro.props;
+const sourceContext = sourcePost ? postAnalyticsContext(sourcePost) : undefined;
 ---
 
 <section class="related-posts" aria-labelledby="related-posts-title">
@@ -27,6 +35,15 @@ const {
 						href={post.url}
 						data-link-origin="article-related"
 						data-link-target="related-article"
+						{...editorialAnalyticsAttributes({
+							eventName: EDITORIAL_ANALYTICS_EVENTS.B3_RELATED_READ_CLICK,
+							surfaceOrigin: 'B3',
+							surfaceTarget: 'B3',
+							linkType: 'related-read',
+							...postAnalyticsContext(post),
+							categoryCode: sourceContext?.categoryCode ?? post.categoryCode,
+							categorySlug: sourceContext?.categorySlug ?? post.categorySlug,
+						})}
 					>
 						{post.title}
 					</a>

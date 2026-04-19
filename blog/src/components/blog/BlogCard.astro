@@ -1,14 +1,44 @@
 ﻿---
 import type { BlogPost } from '../../lib/posts';
+import {
+	editorialAnalyticsAttributes,
+	postAnalyticsContext,
+	type EditorialAnalyticsEventName,
+	type EditorialSurface,
+} from '../../lib/editorial-analytics';
 
 interface Props {
 	post: BlogPost;
+	analyticsSurfaceOrigin?: EditorialSurface;
+	articleEventName?: EditorialAnalyticsEventName;
+	categoryEventName?: EditorialAnalyticsEventName;
 }
 
-const { post } = Astro.props;
+const { post, analyticsSurfaceOrigin, articleEventName, categoryEventName } = Astro.props;
 const dateLabel = post.publishedAt
 	? post.publishedAt.toLocaleDateString('pt-BR', { dateStyle: 'medium' })
 	: 'Sem data';
+const baseAnalyticsContext = postAnalyticsContext(post);
+const articleAnalyticsAttrs =
+	analyticsSurfaceOrigin && articleEventName
+		? editorialAnalyticsAttributes({
+				eventName: articleEventName,
+				surfaceOrigin: analyticsSurfaceOrigin,
+				surfaceTarget: 'B3',
+				linkType: 'article-link',
+				...baseAnalyticsContext,
+			})
+		: {};
+const categoryAnalyticsAttrs =
+	analyticsSurfaceOrigin && categoryEventName
+		? editorialAnalyticsAttributes({
+				eventName: categoryEventName,
+				surfaceOrigin: analyticsSurfaceOrigin,
+				surfaceTarget: 'B2',
+				linkType: 'category-link',
+				...baseAnalyticsContext,
+			})
+		: {};
 ---
 
 <article class="blog-card">
@@ -18,6 +48,7 @@ const dateLabel = post.publishedAt
 		aria-label={`Ler artigo: ${post.title}`}
 		data-link-origin="blog-card"
 		data-link-target="article"
+		{...articleAnalyticsAttrs}
 	>
 		{post.image ? (
 			<img src={post.image} alt={post.imageAlt} loading="lazy" />
@@ -34,6 +65,7 @@ const dateLabel = post.publishedAt
 				href={post.categoryUrl}
 				data-link-origin="blog-card"
 				data-link-target="category"
+				{...categoryAnalyticsAttrs}
 			>
 				{post.area}
 			</a>
@@ -46,6 +78,7 @@ const dateLabel = post.publishedAt
 				href={post.url}
 				data-link-origin="blog-card"
 				data-link-target="article"
+				{...articleAnalyticsAttrs}
 			>
 				{post.title}
 			</a>
@@ -60,6 +93,7 @@ const dateLabel = post.publishedAt
 			href={post.url}
 			data-link-origin="blog-card"
 			data-link-target="article"
+			{...articleAnalyticsAttrs}
 		>
 			Ler artigo completo <span aria-hidden="true">-&gt;</span>
 		</a>

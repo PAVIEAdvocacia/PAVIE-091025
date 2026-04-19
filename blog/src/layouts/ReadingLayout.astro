@@ -11,6 +11,11 @@ import RelatedReads from '../components/blog/RelatedReads.astro';
 import BaseLayout from './BaseLayout.astro';
 import { getAreaEntries } from '../lib/blog-content';
 import { buildCanonicalAreaDirectory, getAreaEntryByCategoryCode } from '../lib/canonical-directory';
+import {
+	EDITORIAL_ANALYTICS_EVENTS,
+	editorialAnalyticsAttributes,
+	postAnalyticsContext,
+} from '../lib/editorial-analytics';
 import { buildBreadcrumbSchema, PUBLISHER_SCHEMA, toAbsoluteUrl } from '../lib/seo';
 
 interface Props {
@@ -51,6 +56,7 @@ const showIntroBlock = Boolean(introText) || showIntroTags;
 const hasReadingSidebar = toc.length > 1 || supportPosts.length > 0 || categoryDirectory.length > 0;
 const categoryHref = post.categoryUrl ?? '/blog/';
 const areaHref = post.areaUrl ?? '/#areas';
+const articleAnalyticsContext = postAnalyticsContext(post);
 const finalCtaCopyByType: Record<string, string> = {
 	area:
 		'A leitura situa o tema. A página da área mostra como esse recorte se conecta ao atendimento institucional da PAVIE.',
@@ -171,6 +177,13 @@ const faqSchema =
 						label={finalCta.label}
 						description={finalCta.description}
 						intent={post.ctaType ?? 'area'}
+						analyticsAttributes={editorialAnalyticsAttributes({
+							eventName: EDITORIAL_ANALYTICS_EVENTS.B3_S2_FINAL_CTA_CLICK,
+							surfaceOrigin: 'B3',
+							surfaceTarget: 'S2',
+							linkType: 'final-cta',
+							...articleAnalyticsContext,
+						})}
 					/>
 
 					<AuthorBox post={post} />
@@ -180,6 +193,7 @@ const faqSchema =
 						title={hasCanonicalTaxonomy ? 'Leituras relacionadas da categoria' : 'Leituras relacionadas'}
 						emptyHref={categoryHref}
 						emptyLabel="Explorar categoria"
+						sourcePost={post}
 					/>
 				</div>
 			</article>

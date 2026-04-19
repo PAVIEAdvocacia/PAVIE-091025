@@ -6,6 +6,10 @@ import BlogLayout from '../../../layouts/BlogLayout.astro';
 import { getAuthorEntries, getBlogEntries } from '../../../lib/blog-content';
 import { getAuthorEntryBySlug } from '../../../lib/canonical-directory';
 import { normalizeCmsImagePath } from '../../../lib/content-media';
+import {
+	EDITORIAL_ANALYTICS_EVENTS,
+	editorialAnalyticsAttributes,
+} from '../../../lib/editorial-analytics';
 import { isPublicPost, normalizePosts, sortPostsByDate } from '../../../lib/posts';
 import { buildBreadcrumbSchema, toAbsoluteUrl } from '../../../lib/seo';
 
@@ -22,6 +26,13 @@ if (!currentAuthor) {
 }
 
 const authorImage = normalizeCmsImagePath(currentAuthor.data.image) ?? currentAuthor.data.image;
+const authorSiteAnalyticsAttrs = editorialAnalyticsAttributes({
+	eventName: EDITORIAL_ANALYTICS_EVENTS.B4_SITE_CLICK,
+	surfaceOrigin: 'B4',
+	surfaceTarget: 'SITE',
+	linkType: 'site-link',
+	authorSlug: currentAuthor.data.slug,
+});
 const posts = sortPostsByDate(normalizePosts(blogEntries, authorEntries))
 	.filter(isPublicPost)
 	.filter((post) => post.authorSlug === currentAuthor.data.slug);
@@ -76,6 +87,7 @@ const personSchema = {
 						href={MAIN_SITE_URL}
 						data-link-origin="author-hero"
 						data-link-target="site"
+						{...authorSiteAnalyticsAttrs}
 					>
 						Ir ao site
 					</a>
@@ -129,6 +141,7 @@ const personSchema = {
 				href={MAIN_SITE_URL}
 				data-link-origin="author-final"
 				data-link-target="site"
+				{...authorSiteAnalyticsAttrs}
 			>
 				Ir ao site
 			</a>

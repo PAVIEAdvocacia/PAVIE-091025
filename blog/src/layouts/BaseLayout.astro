@@ -1,5 +1,6 @@
 ﻿---
 import BaseHead from '../components/BaseHead.astro';
+import EditorialAnalytics from '../components/blog/EditorialAnalytics.astro';
 import SiteFooter from '../components/site/Footer.astro';
 import SiteHeader from '../components/site/Header.astro';
 import { DEFAULT_OG_IMAGE, MAIN_SITE_URL, SITE_DESCRIPTION, SITE_TITLE } from '../consts';
@@ -60,5 +61,6 @@ const canonicalUrl = canonical || new URL(Astro.url.pathname, Astro.site ?? MAIN
 			</main>
 			{!hideFooter && <SiteFooter currentPath={Astro.url.pathname} />}
 		</div>
+		<EditorialAnalytics />
 	</body>
 </html>

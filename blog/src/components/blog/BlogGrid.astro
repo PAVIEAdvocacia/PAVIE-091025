@@ -1,5 +1,6 @@
 ---
 import type { BlogPost } from '../../lib/posts';
+import type { EditorialAnalyticsEventName, EditorialSurface } from '../../lib/editorial-analytics';
 import BlogCard from './BlogCard.astro';
 
 interface Props {
@@ -12,6 +13,9 @@ interface Props {
 	emptyText?: string;
 	emptyHref?: string;
 	emptyLabel?: string;
+	analyticsSurfaceOrigin?: EditorialSurface;
+	articleEventName?: EditorialAnalyticsEventName;
+	categoryEventName?: EditorialAnalyticsEventName;
 }
 
 const {
@@ -24,6 +28,9 @@ const {
 	emptyText = 'Esta seleção já está estruturada e receberá textos conforme avançarem por revisão editorial e jurídica.',
 	emptyHref = '/blog/',
 	emptyLabel = 'Voltar ao blog',
+	analyticsSurfaceOrigin,
+	articleEventName,
+	categoryEventName,
 } = Astro.props;
 
 const safePosts = Array.isArray(posts) ? posts : [];
@@ -40,7 +47,14 @@ const hasPosts = safePosts.length > 0;
 
 	<div class:list={['blog-grid', compact ? 'blog-grid--compact' : 'blog-grid--cards']}>
 		{hasPosts ? (
-			safePosts.map((post) => <BlogCard post={post} />)
+			safePosts.map((post) => (
+				<BlogCard
+					post={post}
+					analyticsSurfaceOrigin={analyticsSurfaceOrigin}
+					articleEventName={articleEventName}
+					categoryEventName={categoryEventName}
+				/>
+			))
 		) : (
 			<article class="surface-card empty-state blog-grid__empty">
 				<h3>{emptyTitle}</h3>

@@ -1,0 +1,88 @@
+<script>
+	type EditorialAnalyticsPayload = {
+		eventName: string;
+		surfaceOrigin: string;
+		surfaceTarget: string;
+		linkLabel: string;
+		linkType: string;
+		categoryCode?: string;
+		categorySlug?: string;
+		articleSlug?: string;
+		areaSlug?: string;
+		authorSlug?: string;
+		href?: string;
+		pagePath: string;
+	};
+
+	type EditorialAnalyticsWindow = Window & {
+		__pavieEditorialAnalyticsReady?: boolean;
+		pavieEditorialDataLayer?: EditorialAnalyticsPayload[];
+		pavieEditorialTrack?: (eventName: string, payload: EditorialAnalyticsPayload) => void;
+	};
+
+	const analyticsWindow = window as EditorialAnalyticsWindow;
+
+	if (!analyticsWindow.__pavieEditorialAnalyticsReady) {
+		analyticsWindow.__pavieEditorialAnalyticsReady = true;
+		analyticsWindow.pavieEditorialDataLayer = analyticsWindow.pavieEditorialDataLayer ?? [];
+
+		const readDatasetValue = (link: HTMLElement, key: string) => {
+			const value = link.dataset[key];
+			return value && value.trim() ? value.trim() : undefined;
+		};
+
+		const buildPayload = (link: HTMLAnchorElement): EditorialAnalyticsPayload | undefined => {
+			const eventName = readDatasetValue(link, 'analyticsEvent');
+			const surfaceOrigin =
+				readDatasetValue(link, 'analyticsSurfaceOrigin') ?? readDatasetValue(link, 'linkOrigin');
+			const surfaceTarget =
+				readDatasetValue(link, 'analyticsSurfaceTarget') ?? readDatasetValue(link, 'linkTarget');
+			const linkType = readDatasetValue(link, 'analyticsLinkType') ?? 'link';
+
+			if (!eventName || !surfaceOrigin || !surfaceTarget) {
+				return undefined;
+			}
+
+			return {
+				eventName,
+				surfaceOrigin,
+				surfaceTarget,
+				linkLabel: link.textContent?.replace(/\s+/g, ' ').trim() || link.getAttribute('aria-label') || '',
+				linkType,
+				categoryCode: readDatasetValue(link, 'analyticsCategoryCode'),
+				categorySlug: readDatasetValue(link, 'analyticsCategorySlug'),
+				articleSlug: readDatasetValue(link, 'analyticsArticleSlug'),
+				areaSlug: readDatasetValue(link, 'analyticsAreaSlug'),
+				authorSlug: readDatasetValue(link, 'analyticsAuthorSlug'),
+				href: link.href,
+				pagePath: window.location.pathname,
+			};
+		};
+
+		const publishPayload = (payload: EditorialAnalyticsPayload) => {
+			analyticsWindow.pavieEditorialDataLayer?.push(payload);
+			analyticsWindow.dispatchEvent(new CustomEvent('pavie:editorial-analytics', { detail: payload }));
+
+			if (typeof analyticsWindow.pavieEditorialTrack === 'function') {
+				analyticsWindow.pavieEditorialTrack(payload.eventName, payload);
+			}
+		};
+
+		document.addEventListener(
+			'click',
+			(event) => {
+				const target = event.target;
+				if (!(target instanceof Element)) return;
+
+				const link = target.closest<HTMLAnchorElement>('a[data-analytics-event]');
+				if (!link) return;
+
+				const payload = buildPayload(link);
+				if (payload) {
+					publishPayload(payload);
+				}
+			},
+			{ capture: true },
+		);
+	}
+</script>

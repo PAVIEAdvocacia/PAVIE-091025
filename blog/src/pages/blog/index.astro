@@ -5,6 +5,11 @@ import BlogLayout from '../../layouts/BlogLayout.astro';
 import { getAuthorEntries, getBlogEntries } from '../../lib/blog-content';
 import { buildB1Selection } from '../../lib/blog-home-selection';
 import { normalizeCmsImagePath } from '../../lib/content-media';
+import {
+	EDITORIAL_ANALYTICS_EVENTS,
+	editorialAnalyticsAttributes,
+	postAnalyticsContext,
+} from '../../lib/editorial-analytics';
 import { isPublicPost, normalizePosts, sortPostsByDate } from '../../lib/posts';
 
 const [authorEntries, blogEntries] = await Promise.all([
@@ -68,6 +73,13 @@ const collectionSchema = {
 											href={post.url}
 											data-link-origin="blog-home-primary"
 											data-link-target="article"
+											{...editorialAnalyticsAttributes({
+												eventName: EDITORIAL_ANALYTICS_EVENTS.B1_ARTICLE_CLICK,
+												surfaceOrigin: 'B1',
+												surfaceTarget: 'B3',
+												linkType: 'article-link',
+												...postAnalyticsContext(post),
+											})}
 										>
 											{post.title}
 										</a>
@@ -79,6 +91,13 @@ const collectionSchema = {
 												href={post.categoryUrl}
 												data-link-origin="blog-home-primary"
 												data-link-target="category"
+												{...editorialAnalyticsAttributes({
+													eventName: EDITORIAL_ANALYTICS_EVENTS.B1_CATEGORY_CLICK,
+													surfaceOrigin: 'B1',
+													surfaceTarget: 'B2',
+													linkType: 'category-link',
+													...postAnalyticsContext(post),
+												})}
 											>
 												{post.area}
 											</a>
@@ -103,6 +122,9 @@ const collectionSchema = {
 			title="Leituras úteis para organizar o tema"
 			kicker="Bloco B | Utilidade editorial"
 			posts={usefulReads}
+			analyticsSurfaceOrigin="B1"
+			articleEventName={EDITORIAL_ANALYTICS_EVENTS.B1_ARTICLE_CLICK}
+			categoryEventName={EDITORIAL_ANALYTICS_EVENTS.B1_CATEGORY_CLICK}
 			emptyTitle="Leituras úteis em preparação"
 			emptyText="Este bloco será preenchido por guias, checklists e respostas com maior utilidade de leitura conforme o acervo aprovado crescer."
 		/>
@@ -111,6 +133,9 @@ const collectionSchema = {
 			title="Publicações recentes selecionadas"
 			kicker="Bloco C | Recência subordinada"
 			posts={recentReads}
+			analyticsSurfaceOrigin="B1"
+			articleEventName={EDITORIAL_ANALYTICS_EVENTS.B1_ARTICLE_CLICK}
+			categoryEventName={EDITORIAL_ANALYTICS_EVENTS.B1_CATEGORY_CLICK}
 			emptyTitle="Publicações em preparação"
 			emptyText="A recência aparece como bloco subordinado, sem governar a seleção principal da home."
 		/>

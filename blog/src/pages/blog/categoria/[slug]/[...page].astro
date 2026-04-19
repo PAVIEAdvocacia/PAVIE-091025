@@ -7,6 +7,11 @@ import BlogLayout from '../../../../layouts/BlogLayout.astro';
 import { getAreaEntries, getAuthorEntries, getBlogEntries } from '../../../../lib/blog-content';
 import { getCanonicalAreaDirectoryItem, buildCanonicalAreaDirectory } from '../../../../lib/canonical-directory';
 import { CATEGORY_PAGE_SIZE, getCategoryPageCount, getCategoryPageState } from '../../../../lib/category-pagination';
+import {
+	EDITORIAL_ANALYTICS_EVENTS,
+	categoryAnalyticsContext,
+	editorialAnalyticsAttributes,
+} from '../../../../lib/editorial-analytics';
 import { isPublicPost, normalizePosts, sortPostsByDate } from '../../../../lib/posts';
 import { buildBreadcrumbSchema } from '../../../../lib/seo';
 
@@ -52,6 +57,7 @@ const featuredPost = currentCategory.featuredPost;
 const pagination = getCategoryPageState(currentCategory.posts, featuredPost, pageNumber, CATEGORY_PAGE_SIZE);
 const { pageCount, listPosts, firstItemNumber, hasPagination } = pagination;
 const hasCategoryPosts = currentCategory.postCount > 0;
+const categoryAnalyticsContextValue = categoryAnalyticsContext(currentCategory);
 const categoryAuthor =
 	authorEntries.find((entry) => entry.data.slug === 'fabio-pavie' || entry.data.id === 'fabio-pavie') ??
 	authorEntries[0];
@@ -232,6 +238,13 @@ const pageTitle = pageNumber > 1
 					href={currentCategory.href}
 					data-link-origin="category-final"
 					data-link-target="area"
+					{...editorialAnalyticsAttributes({
+						eventName: EDITORIAL_ANALYTICS_EVENTS.B2_S2_CLICK,
+						surfaceOrigin: 'B2',
+						surfaceTarget: 'S2',
+						linkType: 'final-cta',
+						...categoryAnalyticsContextValue,
+					})}
 				>
 					Conhecer área correspondente
 				</a>
