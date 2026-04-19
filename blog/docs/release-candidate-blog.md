@@ -1,49 +1,43 @@
-# Release candidate documental e tecnico do blog PAVIE
+# Release candidate final do blog PAVIE
 
 ## Metadados
 
-- Versao: `RC-BLOG-2026-04-19`
+- Versao: `RC-BLOG-FINAL-2026-04-19`
 - Data: 2026-04-19
-- Escopo: fechamento executivo do blog apos Fases 1 a 8, baseline pos-publicacao e ajuste cirurgico posterior de B3
+- Escopo: fechamento final pos-ajuste cirurgico de B3
 - Natureza: documental, tecnica e reversivel
-- Regra de execucao: nao reabrir arquitetura, taxonomia, rotas, paginacao, score da B1, readiness, interlinking, instrumentacao, visual amplo, QA aceito, regime de CTA ou funcao dominante das superficies
+- Regra de execucao: consolidar o estado final aceito sem reabrir arquitetura, taxonomia, rotas, paginacao, governanca da B1, readiness, interlinking estrutural, instrumentacao da Fase 6, refinamento visual global da Fase 7, QA da Fase 8, regime de CTA ou funcao dominante das superficies
 
 ## Resumo executivo
 
-O blog da PAVIE esta consolidado como sistema editorial de descoberta, maturacao e reconducao institucional. A estrutura publica aceita permanece limitada a B1, B2, B3 e B4, com S2 como destino institucional correspondente. O front-end nao cria taxonomia; areas, categorias, slugs e vinculos continuam derivados do registry canonico.
+O blog da PAVIE chegou a um release candidate final tecnicamente geravel e documentalmente rastreavel. As Fases 1 a 8 permanecem aceitas, e o ajuste cirurgico posterior de B3 foi incorporado como estado final da pagina de leitura.
 
-O estado tecnico atual preserva as rotas publicas, a taxonomia de 8 categorias, a paginacao canonica de B2, a governanca editorial da B1, a regra de readiness por categoria, a malha de interlinking, a camada neutra de instrumentacao e a documentacao de QA/publicacao. O baseline pos-publicacao ja existe em `docs/baseline-pos-publicacao-blog.md` e serve para orientar a leitura operacional inicial sem transformar metricas brutas em governo editorial prematuro.
-
-## Escopo efetivamente entregue
-
-- B1 `/blog/` como home editorial curada, sem paginacao estrutural e sem voltar a operar como feed cronologico dominante.
-- B2 `/blog/categoria/[slug]/[...page].astro` como categoria canonica paginada, com pagina 1 em `/blog/categoria/[slug]/` e paginas 2+ em `/blog/categoria/[slug]/2/`, `/3/` etc.
-- B3 `/blog/[slug]/` como pagina de artigo, com breadcrumbs, titulo, metadados, corpo editorial e sidebar de apoio.
-- B4 `/blog/autor/[slug]/` como superficie de autoria editorial.
-- S2 `/areas/[slug]/` como destino institucional correspondente a cada categoria canonica.
-- Registry canonico preservado como fonte de verdade para categorias, slugs, areas e vinculos.
-- B1 governada por matriz editorial propria, com selecao por valor editorial, cobertura e progressao de jornada, nao por recencia pura.
-- Readiness editorial documentado, sem publicacao artificial de categorias sem massa real.
-- Interlinking estrutural documentado e preparado para mensuracao futura.
-- Instrumentacao editorial neutra criada, sem dashboard, ranking ou simulacao de popularidade.
-- QA tecnico/editorial/publicacao documentado na Fase 8.
-- Baseline pos-publicacao criado para leitura inicial de sinais reais.
+O sistema preserva a regra central: descobrir, amadurecer e devolver ao site institucional, sem transformar o blog em feed cronologico, superficie comercial paralela ou expansao artificial de taxonomia.
 
 ## Superficies publicas validas
 
-| Codigo | Superficie | Funcao dominante |
+| Codigo | Rota | Funcao dominante |
 |---|---|---|
-| B1 | `/blog/` | Home editorial curada, com destaques e recentes subordinados |
-| B2 | `/blog/categoria/[slug]/` | Categoria canonica tematica, paginada e pronta para escalar |
-| B3 | `/blog/[slug]/` | Artigo individual de leitura editorial |
+| B1 | `/blog/` | Home editorial curada, governada por matriz propria e recentes subordinados |
+| B2 | `/blog/categoria/[slug]/` | Categoria canonica paginada, pronta para escalar quando houver massa real |
+| B3 | `/blog/[slug]/` | Pagina de leitura do artigo, limpa e editorial |
 | B4 | `/blog/autor/[slug]/` | Autoria editorial controlada |
 | S2 | `/areas/[slug]/` | Area institucional correspondente e destino de reconducao |
 
-Superficies removidas ou vedadas permanecem fora do mapa: indice publico `/blog/categoria/`, rota legada `/autor/[slug]/`, contato forte dentro do blog, arquivo cronologico dominante e blocos de popularidade sem metrica real.
+Continuam vedadas fora do mapa aceito:
+
+- indice publico `/blog/categoria/`;
+- rota legada `/autor/[slug]/` fora de `/blog/autor/[slug]/`;
+- contato forte dentro do blog;
+- arquivo cronologico principal;
+- blocos de "mais lidos", "mais populares" ou rankings sem metrica real;
+- taxonomia criada pelo front-end.
 
 ## Taxonomia publica vigente
 
-O registry canonico mantem 8 categorias publicas controladas:
+O registry canonico permanece como fonte unica de verdade para categorias, slugs, areas e vinculos.
+
+Categorias publicas vigentes:
 
 - CAT-01: Sucessoes, Inventarios e Partilha Patrimonial
 - CAT-02: Planejamento Patrimonial, Sucessorio e Arranjos Preventivos
@@ -54,11 +48,37 @@ O registry canonico mantem 8 categorias publicas controladas:
 - CAT-07: Tributacao Patrimonial e Recuperacao Tributaria Seletiva
 - CAT-08: Direito do Consumidor e Responsabilidade Civil
 
-Nao ha CAT-09, tags promovidas a categoria, rotulos concorrentes ou taxonomia derivada do front-end.
+Nao ha CAT-09, categoria derivada por tag, rotulo concorrente ou slug paralelo.
 
-## Estado do acervo e readiness
+## Estado da B1
 
-| Categoria | Estado no RC |
+A B1 permanece como home editorial curada, governada por matriz editorial propria. A selecao editorial nao e governada por recencia pura, curtidas, clique bruto, popularidade simulada ou arquivo cronologico.
+
+Estado final:
+
+- destaques principais preservados como bloco soberano;
+- leituras uteis preservadas como bloco de apoio;
+- recentes permanecem limitados e subordinados;
+- categorias e retorno institucional seguem como eixos de progressao;
+- performance futura permanece apenas como apoio, quando houver dado real.
+
+## Estado da B2
+
+A B2 permanece como categoria canonica paginada obrigatoria.
+
+Regra final:
+
+- pagina 1: `/blog/categoria/[slug]/`;
+- paginas 2+: `/blog/categoria/[slug]/2/`, `/3/` etc.;
+- duplicata `/1` vedada;
+- `CATEGORY_PAGE_SIZE`: 9;
+- paginacao fica dormente enquanto nao houver massa real suficiente.
+
+Estado atual: nenhuma categoria abre segunda pagina publica, pois o acervo ainda nao excede o limiar efetivo.
+
+## Estado do acervo por categoria
+
+| Categoria | Estado |
 |---|---|
 | CAT-01 | Acervo em preparacao |
 | CAT-02 | Acervo em preparacao |
@@ -69,26 +89,24 @@ Nao ha CAT-09, tags promovidas a categoria, rotulos concorrentes ou taxonomia de
 | CAT-07 | Acervo em preparacao |
 | CAT-08 | Acervo minimo real atingido, com 5 posts publicos elegiveis |
 
-A CAT-08 permanece como unica categoria hoje minimamente pronta. CAT-01 a CAT-07 possuem estrutura, registry, B2 e S2 correspondentes, mas seguem honestamente em preparacao ate receberem conteudo revisado, publico, taxonomicamente correto e materialmente suficiente.
+Nao houve publicacao artificial para preencher arquitetura. CAT-01 a CAT-07 permanecem em preparacao ate haver conteudo revisado, publico, taxonomicamente correto e materialmente suficiente.
 
-## Estado da paginacao
+## Estado do interlinking
 
-- `CATEGORY_PAGE_SIZE`: 9
-- Pagina 1 canonica: `/blog/categoria/[slug]/`
-- Paginas subsequentes: `/blog/categoria/[slug]/2/`, `/3/` etc.
-- Duplicata `/1` vedada.
-- Paginacao permanece dormente enquanto `total <= pageSize` ou enquanto nao houver massa real suficiente.
-- Estado atual: categorias geradas sem segunda pagina publica, pois o acervo ainda nao ultrapassa o limiar de paginacao.
+A malha estrutural entre B1, B2, B3, B4 e S2 permanece consolidada:
 
-## Estado da B1
+- B1 aponta para categorias e artigos curados;
+- B2 aponta para artigos publicos quando houver e para S2 correspondente;
+- B3 preserva breadcrumb, categoria, sidebar e links uteis;
+- B4 reforca autoria sem virar pagina institucional paralela;
+- S2 aponta para B2 e B3 quando houver acervo real;
+- links legados e superficies removidas permanecem fora do mapa aceito.
 
-A B1 esta documentada como home editorial curada, governada por matriz propria e nao por recencia pura, popularidade bruta ou arquivo cronologico. Os blocos editoriais aceitos permanecem subordinados a prioridade editorial, retorno para area correspondente, estagio de jornada, cobertura de categoria, utilidade de leitura, frescor editorial e apoio futuro de performance real.
+## Estado da instrumentacao da Fase 6
 
-O baseline pos-publicacao reforca que curtidas, clique bruto, recencia pura e metricas de vaidade nao governam a B1.
+A camada neutra de instrumentacao editorial permanece definida e disponivel, sem simular metricas, rankings ou popularidade.
 
-## Estado da instrumentacao
-
-A Fase 6 criou uma camada neutra de instrumentacao editorial. Os eventos definidos permanecem como nomenclatura estavel para medicao futura:
+Eventos nomeados na Fase 6:
 
 - `editorial_b1_category_click`
 - `editorial_b1_article_click`
@@ -99,76 +117,130 @@ A Fase 6 criou uma camada neutra de instrumentacao editorial. Os eventos definid
 - `editorial_s2_blog_bridge_click`
 - `editorial_s2_site_contact_click`
 
-A camada nao simula metricas, nao calcula popularidade e nao altera a governanca da B1 sem dados reais.
+Observacao operacional: apos o ajuste final de B3, os eventos `editorial_b3_s2_final_cta_click` e `editorial_b3_related_read_click` continuam nomeados na camada de instrumentacao, mas nao possuem ponto de disparo na B3 atual porque os blocos finais correspondentes foram removidos por decisao editorial. Essa documentacao nao altera a Fase 6; apenas registra o efeito do hotfix aceito em B3.
 
 ## Estado do QA da Fase 8
 
-A Fase 8 registrou QA editorial, tecnico e de publicacao como aprovado, com integridade de rotas, taxonomia, interlinking, contagem publica, breadcrumbs, ausencia de rotas legadas e readiness do acervo.
+A Fase 8 permanece como QA aprovado para arquitetura, taxonomia, rotas, contagem publica, breadcrumbs, ausencia de rotas legadas e readiness. O ajuste final de B3 foi validado adicionalmente por `npm run check`, `npm run build` e inspecao do HTML renderizado.
 
-Nesta etapa de RC, foi executado `npm run qa:blog` para conferir aderencia entre documentacao antiga e estado atual do codigo. O script encontrou links internos validos e contagem publica correta, mas falhou em dois eventos de B3:
+O script `npm run qa:blog` foi executado nesta etapa final. Ele confirmou:
 
-- `editorial_b3_s2_final_cta_click=0`
-- `editorial_b3_related_read_click=0`
+- links internos verificados: `26 HTMLs, missing=0`;
+- contagem publica: `CAT-01=0`, `CAT-02=0`, `CAT-03=0`, `CAT-04=0`, `CAT-05=0`, `CAT-06=0`, `CAT-07=0`, `CAT-08=5`;
+- eventos B1, B2, B4 e S2 presentes.
 
-Essa falha nao foi corrigida nesta etapa porque a tarefa de RC nao autoriza alterar templates, eventos ou QA. Ela registra uma divergencia documental/operacional gerada pelo ajuste cirurgico posterior de B3, que removeu do corpo do artigo o CTA final, o bloco de autoria e o bloco final de leituras relacionadas, mantendo a leitura mais limpa e a navegacao de apoio na sidebar.
+O mesmo script falhou em dois pontos esperados pelo QA antigo:
 
-## Divergencias documentais encontradas
+- `editorial_b3_s2_final_cta_click=0`;
+- `editorial_b3_related_read_click=0`.
 
-Existe divergencia relevante entre notas anteriores e o estado atual da B3:
+Leitura executiva: a falha do `qa:blog` nao indica regressao de rota ou build; indica desalinhamento do script de QA com o novo estado aceito da B3, que removeu os blocos finais onde esses eventos eram disparados. Como esta etapa nao reabre QA nem instrumentacao, o resultado foi registrado como pendencia operacional de alinhamento futuro.
 
-- As notas da Fase 5, Fase 6 e Fase 8 ainda descrevem B3 com CTA final para S2 e leituras relacionadas instrumentadas no corpo/final do artigo.
-- O estado atual do codigo, apos ajuste cirurgico de B3, remove esses blocos do corpo principal e reorganiza a sidebar em: `Neste artigo`, `Categorias`, `Leituras da mesma categoria`.
-- O script `qa:blog` ainda espera os eventos de B3 ligados aos blocos removidos e, por isso, falha no estado atual.
+## Estado final ajustado da B3
 
-Decisao documental aplicada: registrar a divergencia no RC sem reabrir estrutura, sem reinstalar os blocos removidos e sem alterar a instrumentacao nesta etapa.
+O hotfix/refino final da B3 foi incorporado ao RC.
+
+Estado aceito:
+
+- sidebar na ordem final: `Neste artigo`, `Categorias`, `Leituras da mesma categoria`;
+- corpo final sem cauda promocional ou institucional;
+- removidos do corpo principal: `Transicao para o site`, botao `Conheca a area correspondente`, aviso `Conteudo informativo...`, bloco `Responsavel pelo conteudo / Fabio Mathias Pavie` e bloco `Leituras relacionadas da categoria`;
+- hero image mais baixa, silenciosa e editorial, com imagem recuada, overlay controlado e titulo como protagonista;
+- nenhum novo CTA dominante foi criado;
+- nenhum bloco removido foi reinstalado em outro ponto do corpo.
+
+Evidencia de HTML renderizado, apos build:
+
+- `B3 HTML files: 5`;
+- `Transicao para o site`: `filesWithMatch=0`;
+- `Conheca a area correspondente`: `filesWithMatch=0`;
+- `Conteudo informativo. Cada caso exige analise tecnica individual.`: `filesWithMatch=0`;
+- `Responsavel pelo conteudo`: `filesWithMatch=0`;
+- `Leituras relacionadas da categoria`: `filesWithMatch=0`;
+- `reading-footer`: `filesWithMatch=0`;
+- `reading-next-step`: `filesWithMatch=0`;
+- `author-card`: `filesWithMatch=0`;
+- `related-posts`: `filesWithMatch=0`;
+- ordem da sidebar validada nos 5 HTMLs de B3 com `ok=True`.
 
 ## Baseline pos-publicacao
 
-O baseline pos-publicacao ja foi criado em `docs/baseline-pos-publicacao-blog.md` e nao foi refeito neste RC.
+O baseline pos-publicacao ja existe em `docs/baseline-pos-publicacao-blog.md` e nao foi refeito nesta etapa.
 
-Funcao do baseline:
+Funcao:
 
-- orientar o que observar na primeira semana e no primeiro mes;
+- orientar primeira semana e primeiro mes;
 - separar metricas fortes de metricas auxiliares;
-- impedir que ausencia inicial de dados seja interpretada como falha;
-- impedir que clique bruto, curtida, recencia ou popularidade governem a B1;
-- preparar leitura futura dos eventos da Fase 6 sem simular dashboard final.
+- impedir que ausencia inicial de dados seja tratada como falha;
+- impedir que recencia, clique bruto ou curtidas governem a B1;
+- preparar leitura futura dos eventos reais sem simular dashboard.
+
+## Validacao final
+
+Comandos executados em 2026-04-19:
+
+| Comando | Resultado |
+|---|---|
+| `npm run check` | OK: `0 errors`, `0 warnings`, `0 hints` |
+| `npm run build` | OK: `25 page(s) built` |
+| `npm run qa:blog` | Falha conhecida: eventos antigos de B3 sem ponto de disparo apos hotfix |
+
+Observacao: `npm run check` e `npm run build` foram executados fora do sandbox por bloqueio local `spawn EPERM` do Astro neste ambiente.
+
+## O que esta pronto
+
+- Build estatico do blog.
+- B1 curada e governada por matriz editorial.
+- B2 canonica, paginada e pronta para escalar.
+- B3 limpa, editorial e comprovada no HTML final.
+- B4 de autoria editorial.
+- S2 vinculada as categorias canonicas.
+- Registry canonico preservado.
+- CAT-08 com acervo minimo real.
+- CAT-01 a CAT-07 honestamente em preparacao.
+- Baseline pos-publicacao existente.
+- Checklist de publicacao controlada documentado em `docs/checklist-publicacao-controlada-blog.md`.
+
+## Pendencias residuais
+
+- QA visual humana em navegador real, especialmente desktop/mobile.
+- Alinhamento futuro do script `qa:blog` ao novo estado aceito da B3, caso ele continue sendo gate obrigatorio no pipeline.
+- Conexao futura de provider analitico real para transformar a camada neutra de eventos em medicao persistente.
 
 ## Condicao de GO/HOLD
 
 ### GO tecnico
 
-O blog tem GO tecnico para build estatico e manutencao controlada se `npm run check` e `npm run build` permanecerem verdes no pacote de publicacao.
+Ha GO tecnico para o pacote estatico quando o gate de publicacao considerar `npm run check`, `npm run build` e a inspecao HTML de B3 como validacoes suficientes para este hotfix.
 
 ### HOLD operacional
 
-Recomenda-se HOLD operacional para publicacao final ate que duas pendencias sejam explicitamente saneadas ou aceitas:
-
-- QA visual humana em navegador real, especialmente desktop/mobile.
-- Ratificacao documental do ajuste cirurgico de B3 ou atualizacao do script/documentacao de QA para refletir que os eventos `editorial_b3_s2_final_cta_click` e `editorial_b3_related_read_click` nao possuem mais ponto de disparo no corpo atual da B3.
-
-## Rollback logico
-
-Aplicar rollback logico se qualquer uma das condicoes abaixo ocorrer:
-
-- rotas B1, B2, B3, B4 ou S2 deixarem de gerar;
-- B2 criar duplicata `/1` ou paginacao artificial;
-- registry canonico divergir das 8 categorias aceitas;
-- posts draft/noindex entrarem indevidamente no acervo publico;
-- links internos estrategicos gerarem 404;
-- B1 voltar a operar como feed cronologico dominante;
-- B3 ficar desalinhada com a decisao final sobre CTA/related reads/instrumentacao;
-- QA visual humana identificar regressao material de leitura em desktop ou mobile.
-
-Como registrar rollback:
-
-- apontar data, ambiente, rota afetada e evidencia minima;
-- registrar se o rollback foi tecnico, editorial, documental ou operacional;
-- restaurar o ultimo estado aprovado sem reabrir taxonomia ou arquitetura;
-- documentar a decisao antes de nova tentativa de publicacao.
+Ha HOLD operacional se o processo de deploy exigir `npm run qa:blog` verde como gate obrigatorio sem aceitar a excecao documentada da B3. Nesse caso, sera necessario atualizar o QA automatizado em etapa propria ou ratificar formalmente a excecao antes do deploy.
 
 ## Decisao sugerida
 
-Decisao sugerida: `GO tecnico / HOLD operacional`.
+Decisao sugerida: `GO tecnico com pendencia humana final`.
 
-Racional: o blog esta estruturalmente consolidado e tecnicamente apto a gerar build, mas o RC encontrou uma divergencia operacional relevante entre QA/documentacao da Fase 6/Fase 8 e o ajuste posterior de B3. A publicacao controlada deve aguardar QA visual humana e ratificacao documental dessa mudanca de B3 ou atualizacao do QA automatizado para o novo comportamento aceito.
+Principal cautela antes da publicacao final: executar QA visual humana em navegador real e decidir operacionalmente se o `qa:blog` antigo sera ajustado ou se a excecao dos eventos removidos de B3 sera aceita no pacote de publicacao controlada.
+
+## Rollback logico
+
+Aplicar rollback logico se houver regressao visivel ou tecnica em qualquer destes pontos:
+
+- B1, B2, B3, B4 ou S2 deixam de gerar;
+- B2 gera duplicata `/1` ou paginacao artificial;
+- registry deixa de refletir as 8 categorias canonicas;
+- posts `draft` ou `noindex` entram no acervo publico;
+- links internos estrategicos passam a gerar 404;
+- B1 volta a parecer feed cronologico dominante;
+- B3 volta a renderizar cauda promocional, bloco de autoria ou leituras relacionadas no corpo final;
+- sidebar de B3 deixa de seguir a ordem `Neste artigo`, `Categorias`, `Leituras da mesma categoria`;
+- QA visual humana identificar regressao material de leitura em desktop ou mobile.
+
+Registro minimo de rollback:
+
+- data e ambiente;
+- rota afetada;
+- evidencia da regressao;
+- decisao aplicada;
+- responsavel pela liberacao do novo pacote.
