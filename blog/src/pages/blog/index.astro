@@ -2,21 +2,25 @@
 import BlogGrid from '../../components/blog/BlogGrid.astro';
 import { BLOG_SITE_URL, MAIN_SITE_URL } from '../../consts';
 import BlogLayout from '../../layouts/BlogLayout.astro';
-import { getAuthorEntries, getBlogEntries } from '../../lib/blog-content';
+import { getAreaEntries, getAuthorEntries, getBlogEntries } from '../../lib/blog-content';
 import { buildB1Selection } from '../../lib/blog-home-selection';
+import { buildCanonicalAreaDirectory } from '../../lib/canonical-directory';
 import { normalizeCmsImagePath } from '../../lib/content-media';
 import {
 	EDITORIAL_ANALYTICS_EVENTS,
+	categoryAnalyticsContext,
 	editorialAnalyticsAttributes,
 	postAnalyticsContext,
 } from '../../lib/editorial-analytics';
 import { isPublicPost, normalizePosts, sortPostsByDate } from '../../lib/posts';
 
-const [authorEntries, blogEntries] = await Promise.all([
+const [areaEntries, authorEntries, blogEntries] = await Promise.all([
+	getAreaEntries(),
 	getAuthorEntries(),
 	getBlogEntries(),
 ]);
 const posts = sortPostsByDate(normalizePosts(blogEntries, authorEntries)).filter(isPublicPost);
+const categoryDirectory = buildCanonicalAreaDirectory(areaEntries, posts);
 const b1Selection = buildB1Selection(posts);
 const { primaryHighlights, usefulReads, recentReads, schemaPosts } = b1Selection;
 const heroImage = primaryHighlights[0]?.image ?? '/images/site/hero/hero-01.webp';
@@ -116,6 +120,43 @@ const collectionSchema = {
 					</div>
 				)}
 			</aside>
+		</section>
+
+		<section class="blog-taxonomy-strip" aria-labelledby="blog-taxonomy-title">
+			<div class="blog-taxonomy-strip__intro">
+				<span class="section-kicker">Mapa editorial</span>
+				<h2 id="blog-taxonomy-title">Categorias do blog</h2>
+			</div>
+			<ol class="blog-taxonomy-strip__list">
+				{categoryDirectory.map((category) => (
+					<li>
+						{category.postCount > 0 ? (
+							<a
+								href={category.categoryHref}
+								data-link-origin="blog-home-taxonomy"
+								data-link-target="category"
+								{...editorialAnalyticsAttributes({
+									eventName: EDITORIAL_ANALYTICS_EVENTS.B1_CATEGORY_CLICK,
+									surfaceOrigin: 'B1',
+									surfaceTarget: 'B2',
+									linkType: 'category-link',
+									...categoryAnalyticsContext(category),
+								})}
+							>
+								<span>{category.code}</span>
+								<strong>{category.displayTitle}</strong>
+								<small>{category.postCount} artigo{category.postCount === 1 ? '' : 's'}</small>
+							</a>
+						) : (
+							<div class="blog-taxonomy-strip__item" data-category-state="preparation">
+								<span>{category.code}</span>
+								<strong>{category.displayTitle}</strong>
+								<small>Em preparacao</small>
+							</div>
+						)}
+					</li>
+				))}
+			</ol>
 		</section>
 
 		<BlogGrid
