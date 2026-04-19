@@ -605,6 +605,132 @@
 	background: color-mix(in srgb, var(--surface-card) 72%, var(--surface-page));
 }
 
+/* Fase 7: refinamento de leitura, autoria e relacionados em B3. */
+.reading-page {
+	gap: clamp(1.15rem, 0.9rem + 0.9vw, 1.8rem);
+}
+
+.reading-shell {
+	gap: clamp(1.25rem, 0.9rem + 1.4vw, 2.35rem);
+}
+
+.reading-hero .badge {
+	border-color: color-mix(in srgb, var(--color-sand) 48%, transparent);
+	background: rgba(255, 255, 255, 0.12);
+	color: var(--text-contrast);
+	backdrop-filter: blur(6px);
+}
+
+.reading-content {
+	padding: clamp(1.2rem, 2.4vw, 2.85rem);
+	box-shadow: 0 10px 30px rgba(44, 44, 44, 0.04);
+}
+
+.reading-intro {
+	padding-bottom: clamp(1rem, 0.82rem + 0.7vw, 1.45rem);
+	margin-bottom: clamp(1rem, 0.82rem + 0.7vw, 1.45rem);
+}
+
+.article-content {
+	gap: clamp(1rem, 0.9rem + 0.35vw, 1.24rem);
+	line-height: 1.88;
+}
+
+.article-content > * {
+	margin-inline: auto;
+	width: 100%;
+}
+
+.article-content h2 {
+	max-width: 21ch;
+	margin-inline: 0 auto;
+	padding-top: 0.25rem;
+}
+
+.article-content h3 {
+	max-width: 36ch;
+	margin-inline: 0 auto;
+}
+
+.reading-panel {
+	box-shadow: none;
+	background: color-mix(in srgb, var(--surface-card) 94%, var(--surface-alt));
+}
+
+.reading-sidebar-list a {
+	border-radius: var(--radius-xs);
+	transition: background var(--transition-fast), padding-inline var(--transition-fast);
+}
+
+.reading-sidebar-list a:hover,
+.reading-sidebar-list a:focus-visible,
+.reading-sidebar-list a[aria-current='page'] {
+	background: color-mix(in srgb, var(--surface-alt) 72%, white);
+	padding-inline: 0.42rem;
+}
+
+.reading-next-step {
+	border-inline-start: 3px solid color-mix(in srgb, var(--color-accent) 72%, white);
+	box-shadow: none;
+}
+
+.reading-next-step h2 {
+	max-width: 28ch;
+	font-size: clamp(1.35rem, 1.12rem + 0.8vw, 1.85rem);
+}
+
+.reading-ethics-note {
+	padding-top: 0.45rem;
+	border-top: 1px solid color-mix(in srgb, var(--color-line) 74%, white);
+}
+
+.author-card {
+	padding: clamp(0.95rem, 0.82rem + 0.5vw, 1.25rem);
+	border: 1px solid color-mix(in srgb, var(--color-line) 82%, white);
+	border-radius: var(--radius-sm);
+	background: color-mix(in srgb, var(--surface-card) 88%, var(--surface-alt));
+}
+
+.author-card__photo {
+	aspect-ratio: 1 / 1;
+}
+
+.related-posts {
+	padding-top: 0.2rem;
+}
+
+.related-posts h3 {
+	font-family: var(--font-sans);
+	font-size: 0.84rem;
+	letter-spacing: 0.02em;
+	text-transform: uppercase;
+	color: var(--color-accent);
+}
+
+.related-posts article {
+	padding: clamp(0.9rem, 0.78rem + 0.45vw, 1.15rem);
+	border-color: color-mix(in srgb, var(--color-line) 82%, white);
+	transition: border-color var(--transition-fast), background var(--transition-fast);
+}
+
+.related-posts article:hover,
+.related-posts article:focus-within {
+	border-color: color-mix(in srgb, var(--color-accent) 32%, var(--color-line));
+	background: color-mix(in srgb, var(--surface-card) 82%, var(--surface-alt));
+}
+
+.related-posts h4 a {
+	color: var(--color-graphite);
+	text-decoration: none;
+}
+
+.related-posts h4 a:hover,
+.related-posts h4 a:focus-visible {
+	color: var(--color-petrol);
+	text-decoration: underline;
+	text-decoration-color: color-mix(in srgb, var(--color-petrol) 28%, transparent);
+}
+
 @media (hover: hover) and (pointer: fine) {
 	.author-card__photo:hover,
 	.reading-hero img:hover {

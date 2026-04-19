@@ -37,7 +37,7 @@ const safePosts = Array.isArray(posts) ? posts : [];
 const hasPosts = safePosts.length > 0;
 ---
 
-<section id={id} class="blog-grid" aria-label={title}>
+<section id={id} class="blog-grid-section" aria-label={title}>
 	<div class="section-title">
 		<div>
 			{kicker && <span class="section-kicker">{kicker}</span>}
@@ -45,7 +45,7 @@ const hasPosts = safePosts.length > 0;
 		</div>
 	</div>
 
-	<div class:list={['blog-grid', compact ? 'blog-grid--compact' : 'blog-grid--cards']}>
+	<div class:list={['blog-grid', 'blog-grid__items', compact ? 'blog-grid--compact' : 'blog-grid--cards']}>
 		{hasPosts ? (
 			safePosts.map((post) => (
 				<BlogCard
