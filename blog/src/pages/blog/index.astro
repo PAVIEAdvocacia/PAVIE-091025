@@ -1,8 +1,10 @@
 ---
 import BlogGrid from '../../components/blog/BlogGrid.astro';
-import { BLOG_SITE_URL } from '../../consts';
+import { BLOG_SITE_URL, MAIN_SITE_URL } from '../../consts';
 import BlogLayout from '../../layouts/BlogLayout.astro';
 import { getAuthorEntries, getBlogEntries } from '../../lib/blog-content';
+import { buildB1Selection } from '../../lib/blog-home-selection';
+import { normalizeCmsImagePath } from '../../lib/content-media';
 import { isPublicPost, normalizePosts, sortPostsByDate } from '../../lib/posts';
 
 const [authorEntries, blogEntries] = await Promise.all([
@@ -10,14 +12,15 @@ const [authorEntries, blogEntries] = await Promise.all([
 	getBlogEntries(),
 ]);
 const posts = sortPostsByDate(normalizePosts(blogEntries, authorEntries)).filter(isPublicPost);
-const featuredPosts = posts.filter((post) => post.featured).slice(0, 3);
-const editorialHighlights = featuredPosts.length > 0 ? featuredPosts : posts.slice(0, 3);
-const latestPosts = posts.slice(0, 6);
-const mostReadPosts = [...editorialHighlights, ...posts]
-	.filter((post, index, list) => list.findIndex((item) => item.slug === post.slug) === index)
-	.slice(0, 5);
-const heroImage = mostReadPosts[0]?.image ?? '/images/site/hero/hero-01.webp';
-const heroImageAlt = mostReadPosts[0]?.imageAlt ?? 'Imagem editorial em preto e branco para abertura do blog PAVIE';
+const b1Selection = buildB1Selection(posts);
+const { primaryHighlights, usefulReads, recentReads, schemaPosts } = b1Selection;
+const heroImage = primaryHighlights[0]?.image ?? '/images/site/hero/hero-01.webp';
+const heroImageAlt = primaryHighlights[0]?.imageAlt ?? 'Imagem editorial em preto e branco para abertura do blog PAVIE';
+const blogAuthor =
+	authorEntries.find((entry) => entry.data.slug === 'fabio-pavie' || entry.data.id === 'fabio-pavie') ??
+	authorEntries[0];
+const authorImage =
+	normalizeCmsImagePath(blogAuthor?.data.image) ?? '/uploads/fabio-pavie-profile.png';
 const collectionSchema = {
 	'@context': 'https://schema.org',
 	'@type': 'CollectionPage',
@@ -26,10 +29,10 @@ const collectionSchema = {
 	description:
 		'Leituras jurídicas da PAVIE organizadas por categorias do blog e conectadas às áreas públicas correspondentes.',
 	mainEntity:
-		posts.length > 0
+		schemaPosts.length > 0
 			? {
 					'@type': 'ItemList',
-					itemListElement: posts.slice(0, 12).map((post, index) => ({
+					itemListElement: schemaPosts.slice(0, 12).map((post, index) => ({
 						'@type': 'ListItem',
 						position: index + 1,
 						url: `${BLOG_SITE_URL}${post.url}`,
@@ -46,22 +49,22 @@ const collectionSchema = {
 	canonical={`${BLOG_SITE_URL}/blog/`}
 >
 	<div class="container blog-home">
-		<section class="blog-editorial-hero" aria-label="Mais lidos">
+		<section class="blog-editorial-hero" aria-label="Destaques principais">
 			<figure class="blog-editorial-hero__visual">
 				<img src={heroImage} alt={heroImageAlt} loading="eager" decoding="async" />
 				<figcaption>Leitura editorial com foco em prova, contexto e via adequada.</figcaption>
 			</figure>
 
-			<aside class="most-read-panel" aria-label="Artigos mais lidos">
-				<span class="section-kicker">Mais lidos</span>
-				{mostReadPosts.length > 0 ? (
+			<aside class="most-read-panel" aria-label="Destaques principais da seleção editorial">
+				<span class="section-kicker">Bloco A | Destaques principais</span>
+				{primaryHighlights.length > 0 ? (
 					<ol class="most-read-list">
-						{mostReadPosts.map((post, index) => (
+						{primaryHighlights.map((post, index) => (
 							<li>
 								<a href={post.url}>
 									<span>{String(index + 1).padStart(2, '0')}</span>
 									<strong>{post.title}</strong>
-									<small>{post.readingTime} min · {post.area}</small>
+									<small>{post.readingTime} min | {post.area}</small>
 								</a>
 							</li>
 						))}
@@ -76,20 +79,51 @@ const collectionSchema = {
 		</section>
 
 		<BlogGrid
-			title="Artigos em destaque"
-			kicker="Seleção editorial"
-			posts={editorialHighlights}
-			emptyTitle="Destaques em preparação"
-			emptyText="Os destaques entram conforme o acervo aprovado cresce dentro das categorias canônicas."
+			title="Leituras úteis para organizar o tema"
+			kicker="Bloco B | Utilidade editorial"
+			posts={usefulReads}
+			emptyTitle="Leituras úteis em preparação"
+			emptyText="Este bloco será preenchido por guias, checklists e respostas com maior utilidade de leitura conforme o acervo aprovado crescer."
 		/>
 
 		<BlogGrid
-			title="Últimas publicações"
-			kicker="Acervo recente"
-			posts={latestPosts}
+			title="Publicações recentes selecionadas"
+			kicker="Bloco C | Recência subordinada"
+			posts={recentReads}
 			emptyTitle="Publicações em preparação"
-			emptyText="Novos artigos serão exibidos aqui após revisão editorial e jurídica."
+			emptyText="A recência aparece como bloco subordinado, sem governar a seleção principal da home."
 		/>
+
+		{blogAuthor && (
+			<section class="surface-card blog-author-spotlight" aria-label="Autoria editorial do blog">
+				<img
+					src={authorImage}
+					alt={blogAuthor.data.imageAlt}
+					loading="lazy"
+				/>
+				<div>
+					<span class="section-kicker">Autoria editorial</span>
+					<h2>{blogAuthor.data.name}</h2>
+					<p>{blogAuthor.data.shortBio}</p>
+					<div class="blog-actions">
+						<a class="btn btn-primary" href={`/blog/autor/${blogAuthor.data.slug}/`}>Ver perfil do autor</a>
+						<a class="btn btn-ghost" href={MAIN_SITE_URL}>Ir ao site institucional</a>
+					</div>
+				</div>
+			</section>
+		)}
+
+		<section class="author-institutional-link" aria-labelledby="blog-site-return-title">
+			<span class="section-kicker">Retorno ao site</span>
+			<div>
+				<h2 id="blog-site-return-title">O blog amadurece a leitura; o site concentra as áreas e o contato institucional.</h2>
+				<p>
+					Use os artigos para organizar o problema e volte ao site quando precisar entender áreas,
+					método e caminhos institucionais da PAVIE.
+				</p>
+			</div>
+			<a class="btn btn-ghost" href={MAIN_SITE_URL}>Ir ao site</a>
+		</section>
 	</div>
 
 	<script is:inline type="application/ld+json" set:html={JSON.stringify(collectionSchema)} />

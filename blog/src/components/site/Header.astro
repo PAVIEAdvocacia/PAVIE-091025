@@ -25,8 +25,7 @@ const siteNavItems: NavItem[] = [
 
 const blogNavItems: NavItem[] = [
 	{ href: `${BLOG_SITE_URL}/blog/`, label: 'Conteudos', activePath: '/blog/', activeMatch: 'exact' },
-	{ href: `${BLOG_SITE_URL}/blog/categoria/`, label: 'Categorias', activePath: '/blog/categoria/', activeMatch: 'prefix' },
-	{ href: `${BLOG_SITE_URL}/autor/fabio-pavie/`, label: 'Autor', activePath: '/autor/', activeMatch: 'prefix' },
+	{ href: `${BLOG_SITE_URL}/blog/autor/fabio-pavie/`, label: 'Autor', activePath: '/blog/autor/', activeMatch: 'prefix' },
 ];
 
 const navItems = isBlogSurface ? blogNavItems : siteNavItems;
