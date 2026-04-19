@@ -20,25 +20,7 @@ const {
 ---
 
 <aside class="reading-sidebar" aria-label="Apoio de leitura">
-	{supportPosts.length > 0 && (
-		<section class="reading-panel reading-sidebar-block" aria-labelledby="support-posts-title">
-			<h2 id="support-posts-title">Leituras da mesma categoria</h2>
-			<ol class="reading-sidebar-list">
-				{supportPosts.map((post) => (
-					<li>
-						<a
-							href={post.url}
-							data-link-origin="article-sidebar"
-							data-link-target="related-article"
-						>
-							<span>{post.area}</span>
-							<strong>{post.title}</strong>
-						</a>
-					</li>
-				))}
-			</ol>
-		</section>
-	)}
+	{toc.length > 1 && <ReadingTOC items={toc} />}
 
 	{categories.length > 0 && (
 		<section class="reading-panel reading-sidebar-block" aria-labelledby="sidebar-categories-title">
@@ -61,5 +43,23 @@ const {
 		</section>
 	)}
 
-	{toc.length > 1 && <ReadingTOC items={toc} />}
+	{supportPosts.length > 0 && (
+		<section class="reading-panel reading-sidebar-block" aria-labelledby="support-posts-title">
+			<h2 id="support-posts-title">Leituras da mesma categoria</h2>
+			<ol class="reading-sidebar-list">
+				{supportPosts.map((post) => (
+					<li>
+						<a
+							href={post.url}
+							data-link-origin="article-sidebar"
+							data-link-target="related-article"
+						>
+							<span>{post.area}</span>
+							<strong>{post.title}</strong>
+						</a>
+					</li>
+				))}
+			</ol>
+		</section>
+	)}
 </aside>

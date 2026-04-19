@@ -2,20 +2,12 @@
 import type { BlogPost } from '../lib/posts';
 import type { TocItem } from '../lib/toc';
 import '../styles/reading.css';
-import ArticleFooterCTA from '../components/blog/ArticleFooterCTA.astro';
 import ArticleHero from '../components/blog/ArticleHero.astro';
-import AuthorBox from '../components/blog/AuthorBox.astro';
 import Breadcrumbs from '../components/blog/Breadcrumbs.astro';
 import ReadingSidebar from '../components/blog/ReadingSidebar.astro';
-import RelatedReads from '../components/blog/RelatedReads.astro';
 import BaseLayout from './BaseLayout.astro';
 import { getAreaEntries } from '../lib/blog-content';
 import { buildCanonicalAreaDirectory, getAreaEntryByCategoryCode } from '../lib/canonical-directory';
-import {
-	EDITORIAL_ANALYTICS_EVENTS,
-	editorialAnalyticsAttributes,
-	postAnalyticsContext,
-} from '../lib/editorial-analytics';
 import { buildBreadcrumbSchema, PUBLISHER_SCHEMA, toAbsoluteUrl } from '../lib/seo';
 
 interface Props {
@@ -26,7 +18,7 @@ interface Props {
 	noIndex?: boolean;
 }
 
-const { post, toc, related, allPosts = [], noIndex = false } = Astro.props;
+const { post, toc, allPosts = [], noIndex = false } = Astro.props;
 const areaEntries = await getAreaEntries();
 const canonicalCategoryCode = post.canonicalCategory ?? post.categoryCode;
 const currentArea = getAreaEntryByCategoryCode(areaEntries, canonicalCategoryCode);
@@ -54,28 +46,7 @@ const introTags = post.temas.slice(0, 3);
 const showIntroTags = introTags.length > 0;
 const showIntroBlock = Boolean(introText) || showIntroTags;
 const hasReadingSidebar = toc.length > 1 || supportPosts.length > 0 || categoryDirectory.length > 0;
-const categoryHref = post.categoryUrl ?? '/blog/';
 const areaHref = post.areaUrl ?? '/#areas';
-const articleAnalyticsContext = postAnalyticsContext(post);
-const finalCtaCopyByType: Record<string, string> = {
-	area:
-		'A leitura situa o tema. A página da área mostra como esse recorte se conecta ao atendimento institucional da PAVIE.',
-	contact:
-		'A área correspondente ajuda a separar informação editorial, limites do texto e caminhos institucionais para o caso concreto.',
-	'article-series':
-		'Depois da leitura, a área correspondente organiza o lugar deste tema no ecossistema institucional da PAVIE.',
-	'document-review':
-		'Antes de solicitar qualquer análise, veja como a área correspondente organiza documentos, limites e próximos passos.',
-};
-const finalCta =
-	hasCanonicalTaxonomy && post.areaUrl
-		? {
-				label: 'Conheça a área correspondente',
-				href: areaHref,
-				description: finalCtaCopyByType[post.ctaType ?? 'area'] ?? finalCtaCopyByType.area,
-			}
-		: post.cta;
-
 const articleSchema = {
 	'@context': 'https://schema.org',
 	'@type': 'BlogPosting',
@@ -171,31 +142,6 @@ const faqSchema =
 					</section>
 				)}
 
-				<div class="reading-footer">
-					<ArticleFooterCTA
-						href={finalCta.href}
-						label={finalCta.label}
-						description={finalCta.description}
-						intent={post.ctaType ?? 'area'}
-						analyticsAttributes={editorialAnalyticsAttributes({
-							eventName: EDITORIAL_ANALYTICS_EVENTS.B3_S2_FINAL_CTA_CLICK,
-							surfaceOrigin: 'B3',
-							surfaceTarget: 'S2',
-							linkType: 'final-cta',
-							...articleAnalyticsContext,
-						})}
-					/>
-
-					<AuthorBox post={post} />
-
-					<RelatedReads
-						posts={related}
-						title={hasCanonicalTaxonomy ? 'Leituras relacionadas da categoria' : 'Leituras relacionadas'}
-						emptyHref={categoryHref}
-						emptyLabel="Explorar categoria"
-						sourcePost={post}
-					/>
-				</div>
 			</article>
 
 			{hasReadingSidebar && (

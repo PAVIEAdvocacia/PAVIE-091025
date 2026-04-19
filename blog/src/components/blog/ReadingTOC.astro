@@ -8,7 +8,7 @@ interface Props {
 const { items } = Astro.props;
 ---
 
-<section class="reading-panel" aria-labelledby="toc-title">
+<section class="reading-panel reading-sidebar-block" aria-labelledby="toc-title">
 	<h2 id="toc-title">Neste artigo</h2>
 	<ol class="reading-toc">
 		{items.map((item) => (
