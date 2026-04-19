@@ -6,13 +6,12 @@ import ReadingLayout from './ReadingLayout.astro';
 interface Props {
 	post: BlogPost;
 	toc?: TocItem[];
-	related?: BlogPost[];
 	noIndex?: boolean;
 }
 
-const { post, toc = [], related = [], noIndex = false } = Astro.props;
+const { post, toc = [], noIndex = false } = Astro.props;
 ---
 
-<ReadingLayout post={post} toc={toc} related={related} noIndex={noIndex}>
+<ReadingLayout post={post} toc={toc} noIndex={noIndex}>
 	<slot />
 </ReadingLayout>

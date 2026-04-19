@@ -13,7 +13,6 @@ import { buildBreadcrumbSchema, PUBLISHER_SCHEMA, toAbsoluteUrl } from '../lib/s
 interface Props {
 	post: BlogPost;
 	toc: TocItem[];
-	related: BlogPost[];
 	allPosts?: BlogPost[];
 	noIndex?: boolean;
 }
@@ -110,7 +109,7 @@ const faqSchema =
 		<div class="reading-progress" aria-hidden="true"><span data-reading-progress></span></div>
 
 		<div class:list={['reading-shell', { 'reading-shell--single': !hasReadingSidebar }]}>
-			<article class="reading-content" aria-labelledby="reading-hero-title">
+			<article class="reading-content" aria-labelledby="reading-hero-title" data-b3-reading-clean="true">
 				{showIntroBlock && (
 					<section class="reading-intro" aria-label="Introdução do artigo">
 						{introText && <p class="reading-intro__lead">{introText}</p>}

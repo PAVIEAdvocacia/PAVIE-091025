@@ -2,7 +2,6 @@
 import { render } from 'astro:content';
 import ReadingLayout from '../../layouts/ReadingLayout.astro';
 import { getAuthorEntries, getBlogEntries } from '../../lib/blog-content';
-import { getRelatedPosts } from '../../lib/related';
 import { isPublicPost, isPublishedPost, normalizePost, normalizePosts, sortPostsByDate } from '../../lib/posts';
 import { buildToc } from '../../lib/toc';
 
@@ -37,12 +36,11 @@ if (!currentEntry) {
 
 const currentPost = normalizePost(currentEntry, authorEntries);
 const publicPosts = sortPostsByDate(normalizePosts(entries, authorEntries)).filter(isPublicPost);
-const related = getRelatedPosts(publicPosts, currentPost, 3);
 const { Content, headings } = await render(currentEntry);
 const toc = buildToc(headings);
 const noIndex = !isPublicPost(currentPost);
 ---
 
-<ReadingLayout post={currentPost} toc={toc} related={related} allPosts={publicPosts} noIndex={noIndex}>
+<ReadingLayout post={currentPost} toc={toc} allPosts={publicPosts} noIndex={noIndex}>
 	<Content />
 </ReadingLayout>
