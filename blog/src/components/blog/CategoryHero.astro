@@ -4,9 +4,10 @@ import type { CanonicalAreaDirectoryItem } from '../../lib/canonical-directory';
 interface Props {
 	category: CanonicalAreaDirectoryItem;
 	countLabel: string;
+	hasPosts?: boolean;
 }
 
-const { category, countLabel } = Astro.props;
+const { category, countLabel, hasPosts = false } = Astro.props;
 ---
 
 <section class="category-hero" aria-labelledby="blog-category-title">
@@ -20,7 +21,21 @@ const { category, countLabel } = Astro.props;
 		</div>
 	</div>
 	<div class="blog-actions">
-		<a class="btn btn-primary" href="#leituras-categoria">Ler artigos</a>
-		<a class="btn btn-ghost" href={category.href}>Conhecer área correspondente</a>
+		<a
+			class="btn btn-primary"
+			href="#leituras-categoria"
+			data-link-origin="category-hero"
+			data-link-target={hasPosts ? 'category-articles' : 'category-readiness'}
+		>
+			{hasPosts ? 'Ler artigos' : 'Ver acervo em preparação'}
+		</a>
+		<a
+			class="btn btn-ghost"
+			href={category.href}
+			data-link-origin="category-hero"
+			data-link-target="area"
+		>
+			Conhecer área correspondente
+		</a>
 	</div>
 </section>

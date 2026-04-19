@@ -15,7 +15,18 @@ const heroAlt = post.imageAlt ?? `Imagem editorial do artigo ${post.title}`;
 <header class="reading-hero article-hero" aria-labelledby="reading-hero-title">
 	<img src={heroImage} alt={heroAlt} loading="eager" />
 	<div class="reading-hero__inner">
-		<span class="badge">{badgeLabel}</span>
+		{post.categoryUrl ? (
+			<a
+				class="badge"
+				href={post.categoryUrl}
+				data-link-origin="article-hero"
+				data-link-target="category"
+			>
+				{badgeLabel}
+			</a>
+		) : (
+			<span class="badge">{badgeLabel}</span>
+		)}
 		<h1 id="reading-hero-title" class="reading-hero__title">{post.title}</h1>
 		<ReadingMeta post={post} />
 	</div>

@@ -25,7 +25,13 @@ const { post, toc, related, allPosts = [], noIndex = false } = Astro.props;
 const areaEntries = await getAreaEntries();
 const canonicalCategoryCode = post.canonicalCategory ?? post.categoryCode;
 const currentArea = getAreaEntryByCategoryCode(areaEntries, canonicalCategoryCode);
-const sidebarPosts = allPosts.filter((item) => item.slug !== post.slug).slice(0, 5);
+const supportPosts = allPosts
+	.filter((item) => item.slug !== post.slug)
+	.filter((item) => {
+		if (!canonicalCategoryCode) return true;
+		return item.categoryCode === canonicalCategoryCode || item.canonicalCategory === canonicalCategoryCode;
+	})
+	.slice(0, 5);
 const categoryDirectory = buildCanonicalAreaDirectory(areaEntries, allPosts);
 const hasCanonicalTaxonomy =
 	post.publicSurfaceStatus === 'allowed' && Boolean(canonicalCategoryCode) && Boolean(post.categoryUrl);
@@ -33,7 +39,7 @@ const canonicalUrl = post.canonicalUrl ?? toAbsoluteUrl(post.url);
 
 const breadcrumbs = [
 	{ label: 'Início', href: '/' },
-	{ label: 'Publicações', href: '/blog/' },
+	{ label: 'Blog', href: '/blog/' },
 	...(hasCanonicalTaxonomy && post.categoryUrl ? [{ label: post.area, href: post.categoryUrl }] : []),
 	{ label: post.title },
 ];
@@ -42,7 +48,7 @@ const introText = post.excerpt || post.description;
 const introTags = post.temas.slice(0, 3);
 const showIntroTags = introTags.length > 0;
 const showIntroBlock = Boolean(introText) || showIntroTags;
-const hasReadingSidebar = toc.length > 1 || sidebarPosts.length > 0 || categoryDirectory.length > 0;
+const hasReadingSidebar = toc.length > 1 || supportPosts.length > 0 || categoryDirectory.length > 0;
 const categoryHref = post.categoryUrl ?? '/blog/';
 const areaHref = post.areaUrl ?? '/#areas';
 const finalCtaCopyByType: Record<string, string> = {
@@ -181,7 +187,7 @@ const faqSchema =
 			{hasReadingSidebar && (
 				<ReadingSidebar
 					toc={toc}
-					popularPosts={sidebarPosts}
+					supportPosts={supportPosts}
 					categories={categoryDirectory}
 					currentCategoryCode={canonicalCategoryCode}
 				/>

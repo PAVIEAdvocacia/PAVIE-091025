@@ -61,11 +61,32 @@ const collectionSchema = {
 					<ol class="most-read-list">
 						{primaryHighlights.map((post, index) => (
 							<li>
-								<a href={post.url}>
+								<div class="most-read-list__item">
 									<span>{String(index + 1).padStart(2, '0')}</span>
-									<strong>{post.title}</strong>
-									<small>{post.readingTime} min | {post.area}</small>
-								</a>
+									<strong>
+										<a
+											href={post.url}
+											data-link-origin="blog-home-primary"
+											data-link-target="article"
+										>
+											{post.title}
+										</a>
+									</strong>
+									<small>
+										{post.readingTime} min |{' '}
+										{post.categoryUrl ? (
+											<a
+												href={post.categoryUrl}
+												data-link-origin="blog-home-primary"
+												data-link-target="category"
+											>
+												{post.area}
+											</a>
+										) : (
+											post.area
+										)}
+									</small>
+								</div>
 							</li>
 						))}
 					</ol>
@@ -106,8 +127,22 @@ const collectionSchema = {
 					<h2>{blogAuthor.data.name}</h2>
 					<p>{blogAuthor.data.shortBio}</p>
 					<div class="blog-actions">
-						<a class="btn btn-primary" href={`/blog/autor/${blogAuthor.data.slug}/`}>Ver perfil do autor</a>
-						<a class="btn btn-ghost" href={MAIN_SITE_URL}>Ir ao site institucional</a>
+						<a
+							class="btn btn-primary"
+							href={`/blog/autor/${blogAuthor.data.slug}/`}
+							data-link-origin="blog-home-author"
+							data-link-target="author"
+						>
+							Ver perfil do autor
+						</a>
+						<a
+							class="btn btn-ghost"
+							href={MAIN_SITE_URL}
+							data-link-origin="blog-home-author"
+							data-link-target="site"
+						>
+							Ir ao site institucional
+						</a>
 					</div>
 				</div>
 			</section>
@@ -122,7 +157,14 @@ const collectionSchema = {
 					método e caminhos institucionais da PAVIE.
 				</p>
 			</div>
-			<a class="btn btn-ghost" href={MAIN_SITE_URL}>Ir ao site</a>
+			<a
+				class="btn btn-ghost"
+				href={MAIN_SITE_URL}
+				data-link-origin="blog-home-return"
+				data-link-target="site"
+			>
+				Ir ao site
+			</a>
 		</section>
 	</div>
 

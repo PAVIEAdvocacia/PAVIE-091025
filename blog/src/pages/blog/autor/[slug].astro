@@ -27,8 +27,8 @@ const posts = sortPostsByDate(normalizePosts(blogEntries, authorEntries))
 	.filter((post) => post.authorSlug === currentAuthor.data.slug);
 const canonicalUrl = `${BLOG_SITE_URL}/blog/autor/${currentAuthor.data.slug}/`;
 const breadcrumbs = [
-	{ label: 'Inicio', href: '/' },
-	{ label: 'Publicacoes', href: '/blog/' },
+	{ label: 'Início', href: '/' },
+	{ label: 'Blog', href: '/blog/' },
 	{ label: 'Autor' },
 	{ label: currentAuthor.data.name },
 ];
@@ -63,8 +63,22 @@ const personSchema = {
 				<p class="author-hero__oab">{currentAuthor.data.oab}</p>
 				<p>{currentAuthor.data.shortBio}</p>
 				<div class="blog-hero__actions">
-					<a class="btn btn-primary" href="#textos-do-autor">Ver textos</a>
-					<a class="btn btn-ghost" href={MAIN_SITE_URL}>Ir ao site</a>
+					<a
+						class="btn btn-primary"
+						href="#textos-do-autor"
+						data-link-origin="author-hero"
+						data-link-target="author-articles"
+					>
+						Ver textos
+					</a>
+					<a
+						class="btn btn-ghost"
+						href={MAIN_SITE_URL}
+						data-link-origin="author-hero"
+						data-link-target="site"
+					>
+						Ir ao site
+					</a>
 				</div>
 			</div>
 		</section>
@@ -110,7 +124,14 @@ const personSchema = {
 					Esta pagina permanece como referencia editorial dos textos assinados.
 				</p>
 			</div>
-			<a class="btn btn-ghost" href={MAIN_SITE_URL}>Ir ao site</a>
+			<a
+				class="btn btn-ghost"
+				href={MAIN_SITE_URL}
+				data-link-origin="author-final"
+				data-link-target="site"
+			>
+				Ir ao site
+			</a>
 		</section>
 	</div>
 

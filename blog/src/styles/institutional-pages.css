@@ -375,6 +375,27 @@
 	margin-top: 0;
 }
 
+.s2-reading__posts {
+	list-style: none;
+	display: grid;
+	gap: 0.45rem;
+	padding-top: var(--space-2xs);
+	border-top: 1px solid color-mix(in srgb, var(--color-line) 78%, white);
+}
+
+.s2-reading__posts a {
+	color: var(--color-petrol);
+	font-weight: 700;
+	text-decoration: none;
+}
+
+.s2-reading__posts a:hover,
+.s2-reading__posts a:focus-visible {
+	color: var(--color-accent);
+	text-decoration: underline;
+	text-decoration-color: color-mix(in srgb, var(--color-accent) 34%, transparent);
+}
+
 .s2-final-cta {
 	display: flex;
 	align-items: center;

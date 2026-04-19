@@ -69,10 +69,10 @@ const previousPageHref =
 const nextPageHref =
 	pageNumber < pageCount ? `${currentCategory.categoryHref}${pageNumber + 1}/` : undefined;
 const breadcrumbs = [
-	{ label: 'Inicio', href: '/' },
-	{ label: 'Publicacoes', href: '/blog/' },
+	{ label: 'Início', href: '/' },
+	{ label: 'Blog', href: '/blog/' },
 	{ label: currentCategory.title },
-	...(pageNumber > 1 ? [{ label: `Pagina ${pageNumber}` }] : []),
+	...(pageNumber > 1 ? [{ label: `Página ${pageNumber}` }] : []),
 ];
 const breadcrumbSchema = buildBreadcrumbSchema(breadcrumbs, canonicalUrl);
 const pageTitle = pageNumber > 1
@@ -88,7 +88,7 @@ const pageTitle = pageNumber > 1
 	<div class="container blog-home blog-category-page">
 		<Breadcrumbs items={breadcrumbs} />
 
-		<CategoryHero category={currentCategory} countLabel={categoryCountLabel} />
+		<CategoryHero category={currentCategory} countLabel={categoryCountLabel} hasPosts={hasCategoryPosts} />
 
 		<section class="category-area-link" aria-labelledby="category-area-title">
 			<div class="category-area-link__copy">
@@ -167,7 +167,13 @@ const pageTitle = pageNumber > 1
 										{post.publishedAt && ` - ${post.publishedAt.toLocaleDateString('pt-BR', { dateStyle: 'medium' })}`}
 									</p>
 									<h3>
-										<a href={post.url}>{post.title}</a>
+										<a
+											href={post.url}
+											data-link-origin="category-reading-list"
+											data-link-target="article"
+										>
+											{post.title}
+										</a>
 									</h3>
 									<p>{post.excerpt}</p>
 								</div>
@@ -188,9 +194,27 @@ const pageTitle = pageNumber > 1
 
 			{hasPagination && (
 				<nav class="blog-actions" aria-label="Paginacao da categoria">
-					{previousPageHref && <a class="btn btn-ghost" href={previousPageHref}>Pagina anterior</a>}
+					{previousPageHref && (
+						<a
+							class="btn btn-ghost"
+							href={previousPageHref}
+							data-link-origin="category-pagination"
+							data-link-target="category-page"
+						>
+							Pagina anterior
+						</a>
+					)}
 					<span class="section-kicker">Pagina {pageNumber} de {pageCount}</span>
-					{nextPageHref && <a class="btn btn-ghost" href={nextPageHref}>Proxima pagina</a>}
+					{nextPageHref && (
+						<a
+							class="btn btn-ghost"
+							href={nextPageHref}
+							data-link-origin="category-pagination"
+							data-link-target="category-page"
+						>
+							Proxima pagina
+						</a>
+					)}
 				</nav>
 			)}
 		</section>
@@ -203,7 +227,14 @@ const pageTitle = pageNumber > 1
 				os limites do primeiro contato e o caminho adequado para uma analise responsavel.
 			</p>
 			<div class="blog-actions">
-				<a class="btn btn-primary" href={currentCategory.href}>Conhecer area correspondente</a>
+				<a
+					class="btn btn-primary"
+					href={currentCategory.href}
+					data-link-origin="category-final"
+					data-link-target="area"
+				>
+					Conhecer área correspondente
+				</a>
 			</div>
 		</section>
 
@@ -217,7 +248,14 @@ const pageTitle = pageNumber > 1
 						sem substituir analise juridica individual.
 					</p>
 				</div>
-				<a class="btn btn-ghost" href={`/blog/autor/${categoryAuthor.data.slug}/`}>Ver perfil do autor</a>
+				<a
+					class="btn btn-ghost"
+					href={`/blog/autor/${categoryAuthor.data.slug}/`}
+					data-link-origin="category-author"
+					data-link-target="author"
+				>
+					Ver perfil do autor
+				</a>
 			</section>
 		)}
 	</div>

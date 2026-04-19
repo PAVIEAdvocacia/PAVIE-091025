@@ -6,27 +6,31 @@ import ReadingTOC from './ReadingTOC.astro';
 
 interface Props {
 	toc: TocItem[];
-	popularPosts?: BlogPost[];
+	supportPosts?: BlogPost[];
 	categories?: CanonicalAreaDirectoryItem[];
 	currentCategoryCode?: string;
 }
 
 const {
 	toc,
-	popularPosts = [],
+	supportPosts = [],
 	categories = [],
 	currentCategoryCode,
 } = Astro.props;
 ---
 
 <aside class="reading-sidebar" aria-label="Apoio de leitura">
-	{popularPosts.length > 0 && (
-		<section class="reading-panel reading-sidebar-block" aria-labelledby="popular-posts-title">
-			<h2 id="popular-posts-title">Artigos mais lidos</h2>
+	{supportPosts.length > 0 && (
+		<section class="reading-panel reading-sidebar-block" aria-labelledby="support-posts-title">
+			<h2 id="support-posts-title">Leituras da mesma categoria</h2>
 			<ol class="reading-sidebar-list">
-				{popularPosts.map((post) => (
+				{supportPosts.map((post) => (
 					<li>
-						<a href={post.url}>
+						<a
+							href={post.url}
+							data-link-origin="article-sidebar"
+							data-link-target="related-article"
+						>
 							<span>{post.area}</span>
 							<strong>{post.title}</strong>
 						</a>
@@ -45,6 +49,8 @@ const {
 						<a
 							href={category.categoryHref}
 							aria-current={category.code === currentCategoryCode ? 'page' : undefined}
+							data-link-origin="article-sidebar"
+							data-link-target="category"
 						>
 							<span>{category.code}</span>
 							<strong>{category.displayTitle}</strong>

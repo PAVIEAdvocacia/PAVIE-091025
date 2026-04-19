@@ -41,6 +41,13 @@ const authorUrl = matchedAuthor ? `/blog/autor/${matchedAuthor.data.slug}/` : po
 		<h3>{authorName}</h3>
 		<p>{post.authorRole}</p>
 		<p class="author-card__note">{authorSignature}</p>
-		<a class="author-card__link" href={authorUrl}>Ver página do autor</a>
+		<a
+			class="author-card__link"
+			href={authorUrl}
+			data-link-origin="article-author-box"
+			data-link-target="author"
+		>
+			Ver página do autor
+		</a>
 	</div>
 </section>

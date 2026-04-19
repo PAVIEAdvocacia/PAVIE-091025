@@ -11,8 +11,14 @@ const dateLabel = post.publishedAt
 	: 'Sem data';
 ---
 
-<a class="blog-card" href={post.url} aria-label={`Ler artigo: ${post.title}`}>
-	<div class="blog-card__media">
+<article class="blog-card">
+	<a
+		class="blog-card__media blog-card__media-link"
+		href={post.url}
+		aria-label={`Ler artigo: ${post.title}`}
+		data-link-origin="blog-card"
+		data-link-target="article"
+	>
 		{post.image ? (
 			<img src={post.image} alt={post.imageAlt} loading="lazy" />
 		) : (
@@ -20,15 +26,42 @@ const dateLabel = post.publishedAt
 				PAVIE
 			</div>
 		)}
-	</div>
+	</a>
 	<div class="blog-card__body">
-		<span class="badge">{post.area}</span>
-		<h3 class="blog-card__title">{post.title}</h3>
+		{post.categoryUrl ? (
+			<a
+				class="badge blog-card__category"
+				href={post.categoryUrl}
+				data-link-origin="blog-card"
+				data-link-target="category"
+			>
+				{post.area}
+			</a>
+		) : (
+			<span class="badge">{post.area}</span>
+		)}
+		<h3 class="blog-card__title">
+			<a
+				class="blog-card__title-link"
+				href={post.url}
+				data-link-origin="blog-card"
+				data-link-target="article"
+			>
+				{post.title}
+			</a>
+		</h3>
 		<p class="blog-card__excerpt">{post.excerpt}</p>
 		<div class="blog-card__meta">
 			<span>{dateLabel}</span>
 			<span>{post.readingTime} min</span>
 		</div>
-		<span class="blog-card__arrow">Ler artigo completo <span aria-hidden="true">-&gt;</span></span>
+		<a
+			class="blog-card__arrow"
+			href={post.url}
+			data-link-origin="blog-card"
+			data-link-target="article"
+		>
+			Ler artigo completo <span aria-hidden="true">-&gt;</span>
+		</a>
 	</div>
-</a>
+</article>

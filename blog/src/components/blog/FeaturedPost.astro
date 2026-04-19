@@ -24,7 +24,18 @@ const dateLabel = post.publishedAt
 	</div>
 	<div class="featured-post__copy">
 		<span class="section-kicker">{kicker}</span>
-		<span class="badge">{post.area}</span>
+		{post.categoryUrl ? (
+			<a
+				class="badge featured-post__category"
+				href={post.categoryUrl}
+				data-link-origin="featured-post"
+				data-link-target="category"
+			>
+				{post.area}
+			</a>
+		) : (
+			<span class="badge">{post.area}</span>
+		)}
 		<h2 id="featured-post-title" class="featured-post__title">
 			{post.title}
 		</h2>
@@ -34,7 +45,12 @@ const dateLabel = post.publishedAt
 			<span><span class="meta-dot" aria-hidden="true"></span>{post.readingTime} min de leitura</span>
 		</div>
 		<div>
-			<a class="featured-post__link" href={post.url}>
+			<a
+				class="featured-post__link"
+				href={post.url}
+				data-link-origin="featured-post"
+				data-link-target="article"
+			>
 				Ler artigo em destaque
 			</a>
 		</div>
