@@ -9,6 +9,7 @@
     "precheck": "npm run validate:content",
     "check": "astro check",
     "audit:pre-sprint-2": "node scripts/pre-sprint-2-audit.mjs",
+    "qa:blog": "node scripts/qa-blog-publication.mjs",
     "validate:content": "node scripts/validate-content-model.mjs",
     "preview": "astro preview",
     "astro": "astro"
