@@ -1,6 +1,6 @@
 import type { CollectionEntry } from 'astro:content';
 import type { BlogPost } from './posts';
-import { canonicalAreaHref, canonicalCategoryHref } from './canonical-content';
+import { canonicalAreaHref, canonicalCategoryHref, getCanonicalCategoryDefinition } from './canonical-content';
 
 export type AreaEntry = CollectionEntry<'areas'>;
 export type AuthorEntry = CollectionEntry<'authors'>;
@@ -39,18 +39,19 @@ export function buildCanonicalAreaDirectory(
 	return sortAreaEntries(areas)
 		.filter((entry) => entry.data.isActive !== false)
 		.map((entry) => {
+			const categoryDefinition = getCanonicalCategoryDefinition(entry.data.categoryCode);
 			const areaPosts = safePosts.filter((post) => post.categoryCode === entry.data.categoryCode);
 			return {
 				entry,
 				code: entry.data.categoryCode,
-				slug: entry.data.slug,
+				slug: categoryDefinition?.slug ?? entry.data.slug,
 				title: entry.data.title,
 				canonicalTitle: entry.data.canonicalTitle ?? entry.data.title,
 				displayTitle: entry.data.displayTitle ?? entry.data.title,
 				shortDescription: entry.data.shortDescription,
 				headline: entry.data.headline,
 				description: entry.data.description,
-				href: canonicalAreaHref(entry.data.slug),
+				href: canonicalAreaHref(entry.data.categoryCode),
 				categoryHref: canonicalCategoryHref(entry.data.categoryCode),
 				postCount: areaPosts.length,
 				posts: areaPosts,
@@ -65,7 +66,9 @@ export function getCanonicalAreaDirectoryItem(
 	posts: BlogPost[],
 	slug: string,
 ): CanonicalAreaDirectoryItem | undefined {
-	return buildCanonicalAreaDirectory(areas, posts).find((item) => item.slug === slug);
+	return buildCanonicalAreaDirectory(areas, posts).find((item) => {
+		return item.slug === slug || item.entry.data.slug === slug;
+	});
 }
 
 export function getAreaEntryByCategoryCode(

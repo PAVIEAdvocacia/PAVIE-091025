@@ -73,6 +73,7 @@ export interface BlogPost {
 	faqItems: FaqItem[];
 	status: string;
 	featured: boolean;
+	noindex: boolean;
 	canonicalUrl?: string;
 	contentModel: 'legacy' | 'canonical';
 	publicSurfaceStatus: 'allowed' | 'blocked_unresolved_taxonomy';
@@ -457,6 +458,7 @@ export function postRoute(slug: string): string {
 export function isPublicPost(post: BlogPost): boolean {
 	return (
 		post.status === 'published' &&
+		!post.noindex &&
 		post.publicSurfaceStatus === 'allowed' &&
 		Boolean(post.slug) &&
 		Boolean(post.publishedAt)
@@ -539,6 +541,7 @@ export function normalizePost(entry: RawPostEntry, authorEntries: AuthorEntry[] 
 		hasApprovedCanonicalCorrespondenceForLegacyArea(normalizeAreaKey(legacyAreaValue));
 	const publicSurfaceStatus = categoryCode ? 'allowed' : 'blocked_unresolved_taxonomy';
 	const featured = Boolean(data.featured);
+	const noindex = Boolean(data.noindex);
 	const seoTitle = cleanString(data.seoTitle) || cleanString(data.seo_title) || undefined;
 	const canonicalUrlValue =
 		cleanString(data.canonicalUrl) ||
@@ -590,6 +593,7 @@ export function normalizePost(entry: RawPostEntry, authorEntries: AuthorEntry[] 
 		faqItems: [],
 		status,
 		featured,
+		noindex,
 		canonicalUrl: canonicalUrlValue,
 		contentModel,
 		publicSurfaceStatus,
