@@ -43,7 +43,7 @@ const introTags = post.temas.slice(0, 3);
 const showIntroTags = introTags.length > 0;
 const showIntroBlock = Boolean(introText) || showIntroTags;
 const hasReadingSidebar = toc.length > 1 || sidebarPosts.length > 0 || categoryDirectory.length > 0;
-const categoryHref = post.categoryUrl ?? '/blog/categoria/';
+const categoryHref = post.categoryUrl ?? '/blog/';
 const areaHref = post.areaUrl ?? '/#areas';
 const finalCtaCopyByType: Record<string, string> = {
 	area:

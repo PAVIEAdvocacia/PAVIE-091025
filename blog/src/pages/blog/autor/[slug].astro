@@ -1,13 +1,13 @@
 ---
-import Breadcrumbs from '../../components/blog/Breadcrumbs.astro';
-import BlogGrid from '../../components/blog/BlogGrid.astro';
-import { BLOG_SITE_URL, MAIN_SITE_URL } from '../../consts';
-import BlogLayout from '../../layouts/BlogLayout.astro';
-import { getAuthorEntries, getBlogEntries } from '../../lib/blog-content';
-import { getAuthorEntryBySlug } from '../../lib/canonical-directory';
-import { normalizeCmsImagePath } from '../../lib/content-media';
-import { isPublicPost, normalizePosts, sortPostsByDate } from '../../lib/posts';
-import { buildBreadcrumbSchema, toAbsoluteUrl } from '../../lib/seo';
+import Breadcrumbs from '../../../components/blog/Breadcrumbs.astro';
+import BlogGrid from '../../../components/blog/BlogGrid.astro';
+import { BLOG_SITE_URL, MAIN_SITE_URL } from '../../../consts';
+import BlogLayout from '../../../layouts/BlogLayout.astro';
+import { getAuthorEntries, getBlogEntries } from '../../../lib/blog-content';
+import { getAuthorEntryBySlug } from '../../../lib/canonical-directory';
+import { normalizeCmsImagePath } from '../../../lib/content-media';
+import { isPublicPost, normalizePosts, sortPostsByDate } from '../../../lib/posts';
+import { buildBreadcrumbSchema, toAbsoluteUrl } from '../../../lib/seo';
 
 export async function getStaticPaths() {
 	const authorEntries = await getAuthorEntries();
@@ -25,7 +25,7 @@ const authorImage = normalizeCmsImagePath(currentAuthor.data.image) ?? currentAu
 const posts = sortPostsByDate(normalizePosts(blogEntries, authorEntries))
 	.filter(isPublicPost)
 	.filter((post) => post.authorSlug === currentAuthor.data.slug);
-const canonicalUrl = `${BLOG_SITE_URL}/autor/${currentAuthor.data.slug}/`;
+const canonicalUrl = `${BLOG_SITE_URL}/blog/autor/${currentAuthor.data.slug}/`;
 const breadcrumbs = [
 	{ label: 'Inicio', href: '/' },
 	{ label: 'Publicacoes', href: '/blog/' },
@@ -79,13 +79,13 @@ const personSchema = {
 			<div class="author-focus__grid">
 				<article class="surface-card author-focus__card">
 					<span>01</span>
-					<h3>Critérios e documentos</h3>
-					<p>Os textos priorizam enquadramento, prova, cronologia e riscos práticos antes de qualquer conclusão.</p>
+					<h3>Criterios e documentos</h3>
+					<p>Os textos priorizam enquadramento, prova, cronologia e riscos praticos antes de qualquer conclusao.</p>
 				</article>
 				<article class="surface-card author-focus__card">
 					<span>02</span>
-					<h3>Recondução responsável</h3>
-					<p>A leitura editorial ajuda a nomear o problema e, quando necessário, remete ao site institucional.</p>
+					<h3>Reconducao responsavel</h3>
+					<p>A leitura editorial ajuda a nomear o problema e, quando necessario, remete ao site institucional.</p>
 				</article>
 			</div>
 		</section>
@@ -97,8 +97,8 @@ const personSchema = {
 			posts={posts}
 			emptyTitle="Acervo em atualizacao"
 			emptyText="A pagina de autor ja esta estruturada. Novos artigos entram aqui conforme passam por revisao editorial e juridica."
-			emptyHref="/blog/categoria/"
-			emptyLabel="Explorar categorias"
+			emptyHref="/blog/"
+			emptyLabel="Voltar ao blog"
 		/>
 
 		<section class="author-institutional-link" aria-labelledby="author-institutional-title">

@@ -22,7 +22,7 @@ const authorName = matchedAuthor?.data.name ?? post.authorName;
 const authorPhoto = normalizeCmsImagePath(matchedAuthor?.data.image) ?? post.authorImage;
 const authorPhotoAlt =
 	matchedAuthor?.data.imageAlt ?? post.authorImageAlt ?? `Foto do advogado ${authorName}`;
-const authorUrl = matchedAuthor ? `/autor/${matchedAuthor.data.slug}/` : post.authorUrl ?? '/sobre/';
+const authorUrl = matchedAuthor ? `/blog/autor/${matchedAuthor.data.slug}/` : post.authorUrl ?? '/sobre/';
 ---
 
 <section class="author-card" aria-label="Informações do autor">

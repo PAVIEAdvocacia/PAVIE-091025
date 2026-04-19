@@ -45,7 +45,7 @@ export const PRIMARY_CTA_OPTIONS = [
 	{
 		key: 'areas_editoriais',
 		label: 'Explorar categorias',
-		href: '/blog/categoria/',
+		href: '/blog/',
 		description: 'Continue a leitura por assunto e encontre novos caminhos para aprofundar a situacao.',
 	},
 	{

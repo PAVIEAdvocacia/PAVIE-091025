@@ -199,7 +199,7 @@ function resolveCanonicalCta(
 	areaUrl: string,
 	categoryUrl: string,
 ): { ctaKey: string; cta: CtaConfig } {
-	const safeCategoryHref = categoryUrl || '/blog/categoria/';
+	const safeCategoryHref = categoryUrl || '/blog/';
 	const safeAreaHref = areaUrl || '/#areas';
 
 	switch (ctaType) {
@@ -512,14 +512,14 @@ export function normalizePost(entry: RawPostEntry, authorEntries: AuthorEntry[] 
 				canonicalCtaType,
 				canonicalCtaTarget,
 				areaUrl || '/#areas',
-				categoryUrl || '/blog/categoria/',
+				categoryUrl || '/blog/',
 			)
 		: (() => {
 				const legacyKey = resolveLegacyPrimaryCtaKey(cleanString(data.primary_cta), funnelStage);
 				const legacyCta = resolveLegacyPrimaryCta(legacyKey);
 				const normalizedLegacyCta =
 					legacyKey === 'areas_editoriais'
-						? { ...legacyCta, href: categoryUrl || '/blog/categoria/' }
+						? { ...legacyCta, href: categoryUrl || '/blog/' }
 						: legacyKey === 'areas_de_atuacao'
 							? { ...legacyCta, href: areaUrl || '/#areas' }
 							: legacyCta;

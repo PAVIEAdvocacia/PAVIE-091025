@@ -177,7 +177,7 @@ export function resolveRuntimeAreaKeyFromCategoryCode(
 
 export function canonicalCategoryHref(code: string): string {
 	const definition = getCanonicalCategoryDefinition(code);
-	return definition ? `/blog/categoria/${definition.slug}/` : '/blog/categoria/';
+	return definition ? `/blog/categoria/${definition.slug}/` : '/blog/';
 }
 
 export function canonicalAreaHref(codeOrSlug: string): string {
@@ -187,7 +187,7 @@ export function canonicalAreaHref(codeOrSlug: string): string {
 }
 
 export function canonicalAuthorHref(slug: string): string {
-	return `/autor/${slug.replace(/^\/+|\/+$/g, '')}/`;
+	return `/blog/autor/${slug.replace(/^\/+|\/+$/g, '')}/`;
 }
 
 export function getAuthorDefinitionById(id: string) {

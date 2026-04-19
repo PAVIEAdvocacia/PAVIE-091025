@@ -1,19 +1,44 @@
 ---
-import Breadcrumbs from '../../../components/blog/Breadcrumbs.astro';
-import CategoryHero from '../../../components/blog/CategoryHero.astro';
-import FeaturedPost from '../../../components/blog/FeaturedPost.astro';
-import { BLOG_SITE_URL } from '../../../consts';
-import BlogLayout from '../../../layouts/BlogLayout.astro';
-import { getAreaEntries, getAuthorEntries, getBlogEntries } from '../../../lib/blog-content';
-import { getCanonicalAreaDirectoryItem } from '../../../lib/canonical-directory';
-import { isPublicPost, normalizePosts, sortPostsByDate } from '../../../lib/posts';
-import { buildBreadcrumbSchema } from '../../../lib/seo';
+import Breadcrumbs from '../../../../components/blog/Breadcrumbs.astro';
+import CategoryHero from '../../../../components/blog/CategoryHero.astro';
+import FeaturedPost from '../../../../components/blog/FeaturedPost.astro';
+import { BLOG_SITE_URL } from '../../../../consts';
+import BlogLayout from '../../../../layouts/BlogLayout.astro';
+import { getAreaEntries, getAuthorEntries, getBlogEntries } from '../../../../lib/blog-content';
+import { getCanonicalAreaDirectoryItem, buildCanonicalAreaDirectory } from '../../../../lib/canonical-directory';
+import { isPublicPost, normalizePosts, sortPostsByDate } from '../../../../lib/posts';
+import { buildBreadcrumbSchema } from '../../../../lib/seo';
+
+const CATEGORY_PAGE_SIZE = 9;
 
 export async function getStaticPaths() {
-	const areaEntries = await getAreaEntries();
-	return areaEntries
-		.filter((entry) => entry.data.isActive !== false)
-		.map((entry) => ({ params: { category: entry.data.slug } }));
+	const pageSize = 9;
+	const [areaEntries, authorEntries, blogEntries] = await Promise.all([
+		getAreaEntries(),
+		getAuthorEntries(),
+		getBlogEntries(),
+	]);
+	const posts = sortPostsByDate(normalizePosts(blogEntries, authorEntries)).filter(isPublicPost);
+	const categories = buildCanonicalAreaDirectory(areaEntries, posts);
+
+	return categories.flatMap((category) => {
+		const featuredPost = category.featuredPost;
+		const archivePosts = featuredPost
+			? category.posts.filter((post) => post.slug !== featuredPost.slug)
+			: category.posts;
+		const pageCount = Math.max(1, Math.ceil(archivePosts.length / pageSize));
+
+		return Array.from({ length: pageCount }, (_, index) => ({
+			params: {
+				slug: category.slug,
+				page: index === 0 ? undefined : String(index + 1),
+			},
+			props: {
+				categorySlug: category.slug,
+				pageNumber: index + 1,
+			},
+		}));
+	});
 }
 
 const [areaEntries, authorEntries, blogEntries] = await Promise.all([
@@ -22,16 +47,20 @@ const [areaEntries, authorEntries, blogEntries] = await Promise.all([
 	getBlogEntries(),
 ]);
 const posts = sortPostsByDate(normalizePosts(blogEntries, authorEntries)).filter(isPublicPost);
-const currentCategory = getCanonicalAreaDirectoryItem(areaEntries, posts, Astro.params.category ?? '');
+const currentCategory = getCanonicalAreaDirectoryItem(areaEntries, posts, Astro.props.categorySlug ?? Astro.params.slug ?? '');
 
 if (!currentCategory) {
-	throw new Error(`Categoria canonica nao encontrada: ${Astro.params.category}`);
+	throw new Error(`Categoria canonica nao encontrada: ${Astro.params.slug}`);
 }
 
+const pageNumber = Number(Astro.props.pageNumber ?? 1);
 const featuredPost = currentCategory.featuredPost;
-const listPosts = featuredPost
+const archivePosts = featuredPost
 	? currentCategory.posts.filter((post) => post.slug !== featuredPost.slug)
 	: currentCategory.posts;
+const pageCount = Math.max(1, Math.ceil(archivePosts.length / CATEGORY_PAGE_SIZE));
+const pageStart = (pageNumber - 1) * CATEGORY_PAGE_SIZE;
+const listPosts = archivePosts.slice(pageStart, pageStart + CATEGORY_PAGE_SIZE);
 const hasCategoryPosts = currentCategory.postCount > 0;
 const categoryAuthor =
 	authorEntries.find((entry) => entry.data.slug === 'fabio-pavie' || entry.data.id === 'fabio-pavie') ??
@@ -39,12 +68,21 @@ const categoryAuthor =
 const categoryCountLabel = hasCategoryPosts
 	? `${currentCategory.postCount} artigo${currentCategory.postCount === 1 ? '' : 's'} publicado${currentCategory.postCount === 1 ? '' : 's'}`
 	: 'Acervo em preparacao nesta categoria';
-const canonicalUrl = `${BLOG_SITE_URL}${currentCategory.categoryHref}`;
+const pagePath = pageNumber > 1 ? `${currentCategory.categoryHref}${pageNumber}/` : currentCategory.categoryHref;
+const canonicalUrl = `${BLOG_SITE_URL}${pagePath}`;
+const previousPageHref =
+	pageNumber > 1
+		? pageNumber === 2
+			? currentCategory.categoryHref
+			: `${currentCategory.categoryHref}${pageNumber - 1}/`
+		: undefined;
+const nextPageHref =
+	pageNumber < pageCount ? `${currentCategory.categoryHref}${pageNumber + 1}/` : undefined;
 const breadcrumbs = [
 	{ label: 'Inicio', href: '/' },
 	{ label: 'Publicacoes', href: '/blog/' },
-	{ label: 'Categorias', href: '/blog/categoria/' },
 	{ label: currentCategory.title },
+	...(pageNumber > 1 ? [{ label: `Pagina ${pageNumber}` }] : []),
 ];
 const breadcrumbSchema = buildBreadcrumbSchema(breadcrumbs, canonicalUrl);
 ---
@@ -95,24 +133,26 @@ const breadcrumbSchema = buildBreadcrumbSchema(breadcrumbs, canonicalUrl);
 			</p>
 		</section>
 
-		<section class="category-featured" aria-labelledby="category-featured-title">
-			<div class="section-title">
-				<div>
-					<span class="section-kicker">Leitura em destaque</span>
-					<h2 id="category-featured-title">Comece por uma leitura central da categoria</h2>
+		{pageNumber === 1 && (
+			<section class="category-featured" aria-labelledby="category-featured-title">
+				<div class="section-title">
+					<div>
+						<span class="section-kicker">Leitura em destaque</span>
+						<h2 id="category-featured-title">Comece por uma leitura central da categoria</h2>
+					</div>
 				</div>
-			</div>
-			{featuredPost ? (
-				<FeaturedPost post={featuredPost} />
-			) : (
-				<div class="surface-card empty-state" aria-label="Acervo em preparacao">
-					<h3>Acervo em preparacao</h3>
-					<p>
-						Esta categoria ja esta estruturada no registry e recebera textos conforme avancarem por revisao editorial e juridica.
-					</p>
-				</div>
-			)}
-		</section>
+				{featuredPost ? (
+					<FeaturedPost post={featuredPost} />
+				) : (
+					<div class="surface-card empty-state" aria-label="Acervo em preparacao">
+						<h3>Acervo em preparacao</h3>
+						<p>
+							Esta categoria ja esta estruturada no registry e recebera textos conforme avancarem por revisao editorial e juridica.
+						</p>
+					</div>
+				)}
+			</section>
+		)}
 
 		<section id="leituras-categoria" class="category-reading-list" aria-labelledby="category-reading-list-title">
 			<div class="section-title">
@@ -127,7 +167,7 @@ const breadcrumbSchema = buildBreadcrumbSchema(breadcrumbs, canonicalUrl);
 					{listPosts.map((post, index) => (
 						<li>
 							<article class="category-reading-item">
-								<span class="category-reading-item__number">{String(index + 1).padStart(2, '0')}</span>
+								<span class="category-reading-item__number">{String(pageStart + index + 1).padStart(2, '0')}</span>
 								<div>
 									<p class="category-reading-item__meta">
 										{post.readingTime} min de leitura
@@ -151,6 +191,14 @@ const breadcrumbSchema = buildBreadcrumbSchema(breadcrumbs, canonicalUrl);
 							: 'A categoria ja esta estruturada no registry e recebera artigos conforme o acervo for aprovado.'}
 					</p>
 				</div>
+			)}
+
+			{pageCount > 1 && (
+				<nav class="blog-actions" aria-label="Paginacao da categoria">
+					{previousPageHref && <a class="btn btn-ghost" href={previousPageHref}>Pagina anterior</a>}
+					<span class="section-kicker">Pagina {pageNumber} de {pageCount}</span>
+					{nextPageHref && <a class="btn btn-ghost" href={nextPageHref}>Proxima pagina</a>}
+				</nav>
 			)}
 		</section>
 
@@ -176,7 +224,7 @@ const breadcrumbSchema = buildBreadcrumbSchema(breadcrumbs, canonicalUrl);
 						sem substituir analise juridica individual.
 					</p>
 				</div>
-				<a class="btn btn-ghost" href={`/autor/${categoryAuthor.data.slug}/`}>Ver perfil do autor</a>
+				<a class="btn btn-ghost" href={`/blog/autor/${categoryAuthor.data.slug}/`}>Ver perfil do autor</a>
 			</section>
 		)}
 	</div>
