@@ -2,7 +2,7 @@
 import Breadcrumbs from '../../../../components/blog/Breadcrumbs.astro';
 import CategoryHero from '../../../../components/blog/CategoryHero.astro';
 import FeaturedPost from '../../../../components/blog/FeaturedPost.astro';
-import { BLOG_SITE_URL } from '../../../../consts';
+import { BLOG_SITE_URL, MAIN_SITE_URL } from '../../../../consts';
 import BlogLayout from '../../../../layouts/BlogLayout.astro';
 import { getAreaEntries, getAuthorEntries, getBlogEntries } from '../../../../lib/blog-content';
 import { getCanonicalAreaDirectoryItem, buildCanonicalAreaDirectory } from '../../../../lib/canonical-directory';
@@ -235,7 +235,7 @@ const pageTitle = pageNumber > 1
 			<div class="blog-actions">
 				<a
 					class="btn btn-primary"
-					href={currentCategory.href}
+					href={`${MAIN_SITE_URL}${currentCategory.href}`}
 					data-link-origin="category-final"
 					data-link-target="area"
 					{...editorialAnalyticsAttributes({

@@ -1,6 +1,6 @@
 ---
 import Breadcrumbs from '../../components/blog/Breadcrumbs.astro';
-import { MAIN_SITE_URL } from '../../consts';
+import { BLOG_SITE_URL, MAIN_SITE_URL } from '../../consts';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getAreaEntries, getAuthorEntries, getBlogEntries } from '../../lib/blog-content';
 import { getCanonicalAreaDirectoryItem } from '../../lib/canonical-directory';
@@ -88,7 +88,7 @@ const legalServiceSchema = {
 				<div class="institutional-actions">
 					<a
 						class="btn btn-primary"
-						href="/#contato"
+						href={`${MAIN_SITE_URL}/#contato`}
 						data-link-origin="area-hero"
 						data-link-target="site-contact"
 						{...editorialAnalyticsAttributes({
@@ -193,7 +193,7 @@ const legalServiceSchema = {
 						{areaReadingPosts.map((post) => (
 							<li>
 								<a
-									href={post.url}
+									href={`${BLOG_SITE_URL}${post.url}`}
 									data-link-origin="area-reading"
 									data-link-target="article"
 									{...editorialAnalyticsAttributes({
@@ -212,7 +212,7 @@ const legalServiceSchema = {
 				)}
 				<a
 					class="btn btn-secondary"
-					href={currentArea.categoryHref}
+					href={`${BLOG_SITE_URL}${currentArea.categoryHref}`}
 					data-link-origin="area-reading"
 					data-link-target="category"
 					{...editorialAnalyticsAttributes({
@@ -236,7 +236,7 @@ const legalServiceSchema = {
 			</div>
 			<a
 				class="btn btn-primary"
-				href="/#contato"
+				href={`${MAIN_SITE_URL}/#contato`}
 				data-link-origin="area-final"
 				data-link-target="site-contact"
 				{...editorialAnalyticsAttributes({
