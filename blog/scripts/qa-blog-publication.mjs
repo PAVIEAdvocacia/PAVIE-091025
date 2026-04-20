@@ -14,15 +14,24 @@ const authorsDir = path.join(srcDir, 'content', 'authors');
 const postsDir = path.join(srcDir, 'content', 'blog');
 
 const EXPECTED_CATEGORY_CODES = ['CAT-01', 'CAT-02', 'CAT-03', 'CAT-04', 'CAT-05', 'CAT-06', 'CAT-07', 'CAT-08'];
-const EXPECTED_EDITORIAL_EVENTS = [
+const REQUIRED_EDITORIAL_EVENTS = [
 	'editorial_b1_category_click',
 	'editorial_b1_article_click',
 	'editorial_b2_s2_click',
-	'editorial_b3_s2_final_cta_click',
-	'editorial_b3_related_read_click',
 	'editorial_b4_site_click',
 	'editorial_s2_blog_bridge_click',
 	'editorial_s2_site_contact_click',
+];
+const ACCEPTED_DORMANT_B3_EVENTS = [
+	'editorial_b3_s2_final_cta_click',
+	'editorial_b3_related_read_click',
+];
+const FORBIDDEN_B3_TAIL_STRINGS = [
+	'Transição para o site',
+	'Conheça a área correspondente',
+	'Conteúdo informativo. Cada caso exige análise técnica individual.',
+	'Responsável pelo conteúdo',
+	'Leituras relacionadas da categoria',
 ];
 const FORBIDDEN_PUBLIC_STRINGS = [
 	'Artigos mais lidos',
@@ -352,12 +361,19 @@ function validateBreadcrumbs(dist) {
 
 function validateEditorialEvents(dist) {
 	const allHtml = [...dist.htmlByRoute.values()].join('\n');
-	for (const eventName of EXPECTED_EDITORIAL_EVENTS) {
+	for (const eventName of REQUIRED_EDITORIAL_EVENTS) {
 		const count = (allHtml.match(new RegExp(eventName, 'g')) ?? []).length;
 		if (count === 0) {
 			errors.push(`Evento critico da Fase 6 ausente no build: ${eventName}.`);
 		}
 		notes.push(`${eventName}=${count}`);
+	}
+	for (const eventName of ACCEPTED_DORMANT_B3_EVENTS) {
+		const count = (allHtml.match(new RegExp(eventName, 'g')) ?? []).length;
+		if (count > 0) {
+			errors.push(`Evento antigo de B3 reapareceu no HTML final aceito: ${eventName}.`);
+		}
+		notes.push(`${eventName}=${count} (dormant no B3 limpo)`);
 	}
 	if (!allHtml.includes('pavieEditorialDataLayer')) {
 		errors.push('Runtime neutro da Fase 6 ausente: pavieEditorialDataLayer.');
@@ -392,6 +408,34 @@ function validateForbiddenRegressions(dist) {
 	}
 }
 
+function validateAcceptedB3ReadingState(content, dist) {
+	for (const post of content.publicPosts) {
+		const route = `/blog/${post.data.slug}/`;
+		const html = dist.htmlByRoute.get(route) ?? '';
+		if (!html.includes('data-b3-reading-clean="true"')) {
+			errors.push(`${route}: marcador do B3 limpo ausente.`);
+		}
+		if (!html.includes('data-b3-sidebar-order="toc-categories-same-category"')) {
+			errors.push(`${route}: ordem aceita da sidebar da B3 ausente.`);
+		}
+		for (const forbidden of FORBIDDEN_B3_TAIL_STRINGS) {
+			if (html.includes(forbidden)) {
+				errors.push(`${route}: cauda removida da B3 reapareceu: ${forbidden}.`);
+			}
+		}
+		const tocIndex = html.indexOf('data-sidebar-section="toc"');
+		const categoriesIndex = html.indexOf('data-sidebar-section="categories"');
+		const sameCategoryIndex = html.indexOf('data-sidebar-section="same-category"');
+		if (tocIndex === -1 || categoriesIndex === -1 || sameCategoryIndex === -1) {
+			errors.push(`${route}: sidebar da B3 deve manter Neste artigo, Categorias e Leituras da mesma categoria.`);
+			continue;
+		}
+		if (!(tocIndex < categoriesIndex && categoriesIndex < sameCategoryIndex)) {
+			errors.push(`${route}: ordem da sidebar da B3 diverge do estado aceito.`);
+		}
+	}
+}
+
 function validateVisualStructure() {
 	const blogCss = readText(blogCssPath);
 	const readingCss = readText(readingCssPath);
@@ -400,7 +444,7 @@ function validateVisualStructure() {
 			errors.push(`src/styles/blog.css: refinamento visual esperado ausente: ${token}.`);
 		}
 	}
-	for (const token of ['reading-next-step', 'author-card', 'related-posts', 'reading-sidebar-list']) {
+	for (const token of ['reading-hero', 'reading-sidebar', 'reading-panel', 'article-content']) {
 		if (!readingCss.includes(token)) {
 			errors.push(`src/styles/reading.css: refinamento visual esperado ausente: ${token}.`);
 		}
@@ -455,6 +499,7 @@ validateBlogHome(dist);
 validateBreadcrumbs(dist);
 validateEditorialEvents(dist);
 validateForbiddenRegressions(dist);
+validateAcceptedB3ReadingState(content, dist);
 validateVisualStructure();
 validateB1GovernanceSignal();
 

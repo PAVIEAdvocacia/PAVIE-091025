@@ -162,6 +162,7 @@ const collectionSchema = {
 		<BlogGrid
 			title="Leituras úteis para organizar o tema"
 			kicker="Bloco B | Utilidade editorial"
+			id="blog-useful-reads"
 			posts={usefulReads}
 			analyticsSurfaceOrigin="B1"
 			articleEventName={EDITORIAL_ANALYTICS_EVENTS.B1_ARTICLE_CLICK}
@@ -173,7 +174,9 @@ const collectionSchema = {
 		<BlogGrid
 			title="Publicações recentes selecionadas"
 			kicker="Bloco C | Recência subordinada"
+			id="blog-recent-selected"
 			posts={recentReads}
+			compact
 			analyticsSurfaceOrigin="B1"
 			articleEventName={EDITORIAL_ANALYTICS_EVENTS.B1_ARTICLE_CLICK}
 			categoryEventName={EDITORIAL_ANALYTICS_EVENTS.B1_CATEGORY_CLICK}
