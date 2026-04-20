@@ -426,9 +426,16 @@
 	color: var(--text-muted);
 }
 
-.area-card a {
+.area-card__links {
 	align-self: end;
+	list-style: none;
+	display: grid;
+	gap: 0.42rem;
+	padding: 0;
 	margin-top: 0;
+}
+
+.area-card a {
 	font-size: 0.72rem;
 	font-weight: 900;
 	text-transform: uppercase;

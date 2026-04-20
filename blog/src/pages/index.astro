@@ -2,10 +2,10 @@
 import BrandLogo from '../components/brand/BrandLogo.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { buildFaqSchema, LEGAL_SERVICE_BASE_SCHEMA, toAbsoluteUrl } from '../lib/seo';
-import { MAIN_SITE_URL } from '../consts';
+import { BLOG_SITE_URL, MAIN_SITE_URL } from '../consts';
 import { getAreaEntries, getAuthorEntries, getBlogEntries } from '../lib/blog-content';
 import { buildCanonicalAreaDirectory } from '../lib/canonical-directory';
-import { CANONICAL_CATEGORY_DEFINITIONS } from '../lib/canonical-content';
+import { CANONICAL_SITE_MACRO_AREAS } from '../lib/canonical-content';
 import { isPublicPost, normalizePosts, sortPostsByDate } from '../lib/posts';
 import '../styles/site-home.css';
 
@@ -52,10 +52,14 @@ const faq = [
 ];
 
 type HomeAreaCard = {
-	code: string;
 	title: string;
 	description: string;
 	href: string;
+	relatedAreas: {
+		code: string;
+		label: string;
+		href: string;
+	}[];
 };
 
 const [areaEntries, authorEntries, blogEntries] = await Promise.all([
@@ -65,18 +69,25 @@ const [areaEntries, authorEntries, blogEntries] = await Promise.all([
 ]);
 const posts = sortPostsByDate(normalizePosts(blogEntries, authorEntries)).filter(isPublicPost);
 const areaDirectory = buildCanonicalAreaDirectory(areaEntries, posts);
+type AreaDirectoryItem = (typeof areaDirectory)[number];
 const areaByCode = new Map(areaDirectory.map((area) => [area.code, area]));
-const areaCards = [...CANONICAL_CATEGORY_DEFINITIONS]
-	.sort((a, b) => a.homeOrder - b.homeOrder)
+const areaCards = CANONICAL_SITE_MACRO_AREAS
 	.map((definition): HomeAreaCard | undefined => {
-		const area = areaByCode.get(definition.code);
-		if (!area) return undefined;
-
+		const relatedAreas = definition.codes
+			.map((code) => areaByCode.get(code))
+			.filter((area): area is AreaDirectoryItem => Boolean(area))
+			.map((area) => ({
+				code: area.code,
+				label: area.displayTitle,
+				href: area.href,
+			}));
+		const primaryArea = areaByCode.get(definition.primaryCode) ?? relatedAreas[0];
+		if (!primaryArea || relatedAreas.length === 0) return undefined;
 		return {
-			code: definition.code,
-			title: definition.homeTitle,
-			description: definition.homeDescription,
-			href: area.href,
+			title: definition.title,
+			description: definition.description,
+			href: primaryArea.href,
+			relatedAreas,
 		};
 	})
 	.filter((card): card is HomeAreaCard => Boolean(card));
@@ -179,7 +190,15 @@ const localBusinessSchema = {
 						<span class="area-card__icon" aria-hidden="true"></span>
 						<h3>{area.title}</h3>
 						<p>{area.description}</p>
-						<a href={area.href}>Conhecer área <span aria-hidden="true">→</span></a>
+						<ul class="area-card__links" aria-label={`Áreas relacionadas a ${area.title}`}>
+							{area.relatedAreas.map((relatedArea) => (
+								<li>
+									<a href={relatedArea.href}>
+										{relatedArea.label} <span aria-hidden="true">→</span>
+									</a>
+								</li>
+							))}
+						</ul>
 					</article>
 				))}
 			</div>
@@ -194,7 +213,7 @@ const localBusinessSchema = {
 					Eles foram elaborados para traçar um caminho claro e seguro sobre os seus direitos, preparando
 					o terreno de forma informativa para quando decidir falar com o advogado.
 				</p>
-				<a class="btn btn-secondary" href="/blog/">Acessar artigos e guias</a>
+				<a class="btn btn-secondary" href={`${BLOG_SITE_URL}/blog/`}>Acessar Conteúdos</a>
 			</div>
 		</section>
 

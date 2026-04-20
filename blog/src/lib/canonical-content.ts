@@ -15,6 +15,37 @@ export const CANONICAL_CATEGORY_CODES = CANONICAL_CATEGORY_DEFINITIONS.map(
 	(category) => category.code,
 ) as [string, ...string[]];
 
+export const CANONICAL_SITE_MACRO_AREAS = [
+	{
+		title: 'Patrimônio, sucessões e planejamento',
+		description:
+			'Inventários, organização patrimonial, planejamento sucessório e imóveis com impacto documental relevante.',
+		primaryCode: 'CAT-01',
+		codes: ['CAT-01', 'CAT-02', 'CAT-05'] as const,
+	},
+	{
+		title: 'Família patrimonial e relações documentais',
+		description:
+			'Dissoluções, arranjos familiares e situações binacionais em que o cuidado familiar também exige leitura patrimonial.',
+		primaryCode: 'CAT-03',
+		codes: ['CAT-03', 'CAT-04'] as const,
+	},
+	{
+		title: 'Contratos, obrigações e crédito',
+		description:
+			'Cobrança, execução, contratos e recuperação seletiva de crédito com análise de prova, risco e viabilidade.',
+		primaryCode: 'CAT-06',
+		codes: ['CAT-06'] as const,
+	},
+	{
+		title: 'Consumidor, responsabilidade e tributação patrimonial',
+		description:
+			'Falhas documentáveis, responsabilidade civil e questões tributárias patrimoniais que pedem recorte técnico.',
+		primaryCode: 'CAT-08',
+		codes: ['CAT-08', 'CAT-07'] as const,
+	},
+] as const;
+
 export const CONTENT_TYPE_OPTIONS = [
 	'cornerstone',
 	'guide',
