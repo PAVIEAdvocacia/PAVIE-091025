@@ -3,19 +3,22 @@ function normalizeOrigin(value: string | undefined, fallback: string): string {
 	return raw.replace(/\/+$/, '');
 }
 
+const DEFAULT_MAIN_SITE_URL = 'https://pavieadvocacia.com.br';
+const DEFAULT_BLOG_SITE_URL = 'https://blog.pavieadvocacia.com.br';
+
 export const SITE_ORIGIN = normalizeOrigin(
 	import.meta.env.PUBLIC_SITE_ORIGIN,
-	'https://blog.pavieadvocacia.com.br',
+	DEFAULT_BLOG_SITE_URL,
 );
 
 export const MAIN_SITE_URL = normalizeOrigin(
 	import.meta.env.PUBLIC_MAIN_SITE_URL,
-	SITE_ORIGIN,
+	DEFAULT_MAIN_SITE_URL,
 );
 
 export const BLOG_SITE_URL = normalizeOrigin(
 	import.meta.env.PUBLIC_BLOG_SITE_URL,
-	SITE_ORIGIN,
+	DEFAULT_BLOG_SITE_URL,
 );
 
 export const SITE_TITLE = 'PAVIE | Advocacia — Blog Jurídico';

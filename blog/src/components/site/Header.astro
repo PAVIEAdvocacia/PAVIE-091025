@@ -35,7 +35,7 @@ const brandLabel = isBlogSurface
 	: 'PAVIE | Advocacia, inicio do site institucional';
 const utilityLink = isBlogSurface
 	? { href: `${MAIN_SITE_URL}/`, label: 'Ir ao site', mark: '' }
-	: { href: `${BLOG_SITE_URL}/blog/`, label: 'Conteudo do Advogado', mark: '+' };
+	: { href: `${BLOG_SITE_URL}/blog/`, label: 'Conteudos', mark: '' };
 
 function isActive(item: NavItem): boolean {
 	const href = item.activePath ?? item.href;

@@ -1,5 +1,7 @@
 backend:
   name: github
+  # Sprint 0: repo preservado conforme remote operacional validado neste clone.
+  # A troca para outro owner deve ser validada antes de alterar o CMS.
   repo: PAVIEAdvocacia/PAVIE-091025
   branch: main
   base_url: https://blog.pavieadvocacia.com.br
@@ -17,8 +19,8 @@ public_folder: "/uploads"
 
 collections:
   - name: "posts"
-    label: "Posts Canonicos"
-    label_singular: "Post"
+    label: "Conteudos editoriais"
+    label_singular: "Conteudo editorial"
     folder: "blog/src/content/blog"
     preview_path: "blog/{{slug}}"
     create: true
@@ -219,8 +221,8 @@ collections:
         hint: "Corpo principal do post. Revisao humana obrigatoria para copy sensivel."
 
   - name: "areas"
-    label: "Areas Canonicas"
-    label_singular: "Area"
+    label: "Areas correspondentes"
+    label_singular: "Area correspondente"
     folder: "blog/src/content/areas"
     preview_path: "areas/{{slug}}"
     create: true
@@ -319,7 +321,7 @@ collections:
     label: "Autores"
     label_singular: "Autor"
     folder: "blog/src/content/authors"
-    preview_path: "autor/{{slug}}"
+    preview_path: "blog/autor/{{slug}}"
     create: true
     delete: false
     identifier_field: "name"

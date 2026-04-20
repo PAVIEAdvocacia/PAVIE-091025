@@ -4,7 +4,10 @@ import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 import mdx from '@astrojs/mdx';
 
-const site = process.env.PUBLIC_SITE_ORIGIN?.replace(/\/+$/, '') || 'https://blog.pavieadvocacia.com.br';
+const site =
+	process.env.PUBLIC_BLOG_SITE_URL?.replace(/\/+$/, '') ||
+	process.env.PUBLIC_SITE_ORIGIN?.replace(/\/+$/, '') ||
+	'https://blog.pavieadvocacia.com.br';
 const sitemapExcludedPaths = ['/blog/sobre/'];
 
 /**
