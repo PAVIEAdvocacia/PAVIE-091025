@@ -1,0 +1,506 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<meta name="format-detection" content="telephone=no" />
+	<title>Contato institucional | PAVIE | Advocacia</title>
+	<meta
+		name="description"
+		content="Fluxo institucional de entrada da PAVIE | Advocacia para triagem inicial, organizacao do contexto e definicao responsavel dos proximos passos."
+	/>
+	<link rel="canonical" href="https://pavieadvocacia.com.br/contato/" />
+	<link rel="preconnect" href="https://fonts.googleapis.com" />
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+	<link
+		href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Lora:wght@500;600;700&display=swap"
+		rel="stylesheet"
+	/>
+	<style>
+		:root {
+			--ink: #25282b;
+			--muted: #667273;
+			--petrol: #173f3c;
+			--petrol-strong: #0d2d2b;
+			--accent: #8f1f2a;
+			--sand: #e8ddce;
+			--paper: #fbf7f0;
+			--soft: #f3eee6;
+			--line: #ded4c7;
+			--white: #ffffff;
+			--radius: 18px;
+			--shadow: 0 24px 80px rgba(37, 40, 43, 0.08);
+		}
+
+		* { box-sizing: border-box; }
+		body {
+			margin: 0;
+			background: var(--paper);
+			color: var(--ink);
+			font-family: Inter, system-ui, sans-serif;
+			line-height: 1.65;
+		}
+		a { color: inherit; }
+		img { display: block; max-width: 100%; }
+		.container { width: min(1120px, calc(100% - 2rem)); margin-inline: auto; }
+		.skip-link {
+			position: absolute;
+			left: 1rem;
+			top: 1rem;
+			z-index: 100;
+			padding: 0.75rem 1rem;
+			background: var(--white);
+			color: var(--petrol);
+			border: 1px solid var(--line);
+			transform: translateY(-180%);
+		}
+		.skip-link:focus { transform: translateY(0); }
+		.site-topline {
+			background: var(--petrol-strong);
+			color: rgba(255, 255, 255, 0.86);
+			font-size: 0.82rem;
+		}
+		.site-topline__inner {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			gap: 1rem;
+			min-height: 42px;
+		}
+		.site-topline a { text-decoration: none; }
+		.site-header {
+			position: sticky;
+			top: 0;
+			z-index: 50;
+			background: rgba(251, 247, 240, 0.94);
+			border-bottom: 1px solid rgba(222, 212, 199, 0.78);
+			backdrop-filter: blur(12px);
+		}
+		.site-header__inner {
+			min-height: 70px;
+			display: grid;
+			grid-template-columns: auto 1fr auto;
+			align-items: center;
+			gap: 2rem;
+		}
+		.brand {
+			display: grid;
+			gap: 0.05rem;
+			text-decoration: none;
+		}
+		.brand strong {
+			font-family: Lora, Georgia, serif;
+			font-size: 1.24rem;
+			color: var(--petrol);
+			letter-spacing: -0.02em;
+		}
+		.brand span {
+			font-size: 0.68rem;
+			font-weight: 800;
+			text-transform: uppercase;
+			color: var(--muted);
+			letter-spacing: 0.12em;
+		}
+		.nav {
+			display: flex;
+			justify-content: center;
+			gap: clamp(1rem, 2vw, 2rem);
+		}
+		.nav a, .header-link {
+			font-size: 0.78rem;
+			font-weight: 800;
+			text-transform: uppercase;
+			text-decoration: none;
+			color: color-mix(in srgb, var(--petrol) 76%, var(--ink));
+		}
+		.header-link { color: var(--accent); }
+		.nav a:hover, .nav a:focus-visible, .header-link:hover, .header-link:focus-visible { color: var(--accent); }
+		main { padding-block: clamp(3.5rem, 8vw, 5rem); }
+		.eyebrow {
+			display: inline-flex;
+			align-items: center;
+			gap: 0.5rem;
+			font-size: 0.74rem;
+			font-weight: 850;
+			text-transform: uppercase;
+			color: var(--petrol);
+			letter-spacing: 0.08em;
+		}
+		.eyebrow::before {
+			content: "";
+			width: 0.42rem;
+			height: 0.42rem;
+			border-radius: 99px;
+			background: var(--accent);
+		}
+		h1, h2, h3 {
+			margin: 0;
+			font-family: Lora, Georgia, serif;
+			line-height: 1.05;
+			color: var(--petrol);
+		}
+		.hero {
+			display: grid;
+			grid-template-columns: minmax(0, 1fr) minmax(300px, 0.42fr);
+			gap: clamp(2rem, 5vw, 4rem);
+			align-items: start;
+			padding-bottom: clamp(2rem, 4vw, 3rem);
+			border-bottom: 1px solid var(--line);
+		}
+		.hero h1 {
+			max-width: 13ch;
+			margin-top: 1.1rem;
+			font-size: clamp(3rem, 6vw, 4.8rem);
+			letter-spacing: -0.05em;
+		}
+		.hero p {
+			max-width: 62ch;
+			margin-top: 1.3rem;
+			color: var(--muted);
+			font-size: 1rem;
+		}
+		.btn {
+			display: inline-flex;
+			align-items: center;
+			justify-content: center;
+			min-height: 46px;
+			padding: 0.82rem 1.2rem;
+			border: 1px solid transparent;
+			border-radius: 999px;
+			font-size: 0.78rem;
+			font-weight: 850;
+			text-transform: uppercase;
+			text-decoration: none;
+			letter-spacing: 0.04em;
+			cursor: pointer;
+		}
+		.btn-primary {
+			background: var(--accent);
+			color: var(--white);
+			box-shadow: 0 14px 34px rgba(143, 31, 42, 0.18);
+		}
+		.btn-secondary {
+			background: rgba(255,255,255,0.72);
+			border-color: var(--line);
+			color: var(--petrol);
+		}
+		.hero-card, .info-card, .form-card, .steps-card {
+			padding: 1.45rem;
+			background: rgba(255,255,255,0.8);
+			border: 1px solid var(--line);
+			border-radius: var(--radius);
+			box-shadow: var(--shadow);
+		}
+		.hero-card p, .info-card p, .steps-card p, .form-note, .form-status { color: var(--muted); }
+		.hero-card h2 { font-size: 1.5rem; }
+		.grid-3 {
+			display: grid;
+			grid-template-columns: repeat(3, minmax(0, 1fr));
+			gap: 1rem;
+			padding-block: clamp(2rem, 5vw, 3.5rem);
+		}
+		.info-card { display: grid; gap: 0.8rem; }
+		.info-card h3, .steps-card h3, .form-card h2 { font-size: 1.35rem; }
+		.list, .steps {
+			display: grid;
+			gap: 0.6rem;
+			padding-left: 1.1rem;
+			margin: 0;
+		}
+		.entry-grid {
+			display: grid;
+			grid-template-columns: minmax(0, 0.72fr) minmax(340px, 0.9fr);
+			gap: clamp(2rem, 5vw, 4rem);
+			align-items: start;
+		}
+		.entry-copy {
+			display: grid;
+			gap: 1rem;
+		}
+		.form-card {
+			display: grid;
+			gap: 0.95rem;
+		}
+		label {
+			display: grid;
+			gap: 0.35rem;
+			font-size: 0.74rem;
+			font-weight: 850;
+			text-transform: uppercase;
+			color: color-mix(in srgb, var(--ink) 76%, var(--muted));
+		}
+		input, select, textarea {
+			width: 100%;
+			border: 1px solid var(--line);
+			border-radius: 12px;
+			padding: 0.82rem 0.9rem;
+			background: var(--white);
+			color: var(--ink);
+			font: inherit;
+		}
+		textarea { resize: vertical; }
+		.consent {
+			grid-template-columns: auto 1fr;
+			align-items: start;
+			text-transform: none;
+			font-weight: 500;
+			color: var(--muted);
+		}
+		.consent input {
+			width: auto;
+			margin-top: 0.35rem;
+		}
+		.form-status {
+			min-height: 1.2rem;
+			margin: 0;
+			font-size: 0.86rem;
+		}
+		.form-card .btn { width: 100%; }
+		.site-footer {
+			padding-block: 3rem;
+			background: #161a1b;
+			color: rgba(255, 255, 255, 0.78);
+			margin-top: clamp(4rem, 7vw, 6rem);
+		}
+		.site-footer__grid {
+			display: grid;
+			grid-template-columns: minmax(0, 1fr) repeat(3, minmax(150px, 0.32fr));
+			gap: 2rem;
+		}
+		.site-footer h2, .site-footer h3 {
+			font-family: Inter, system-ui, sans-serif;
+			font-size: 0.78rem;
+			text-transform: uppercase;
+			color: var(--white);
+			letter-spacing: 0.08em;
+		}
+		.site-footer ul {
+			display: grid;
+			gap: 0.42rem;
+			margin: 0;
+			padding: 0;
+			list-style: none;
+		}
+		.site-footer a { text-decoration: none; color: rgba(255, 255, 255, 0.78); }
+		.site-footer a:hover, .site-footer a:focus-visible { color: var(--white); text-decoration: underline; }
+		.site-footer__bottom {
+			margin-top: 2rem;
+			padding-top: 1rem;
+			border-top: 1px solid rgba(255,255,255,0.12);
+			font-size: 0.82rem;
+			display: grid;
+			gap: 0.5rem;
+		}
+		@media (max-width: 980px) {
+			.site-header__inner,
+			.hero,
+			.entry-grid,
+			.site-footer__grid { grid-template-columns: 1fr; }
+			.nav { justify-content: start; flex-wrap: wrap; }
+			.grid-3 { grid-template-columns: 1fr; }
+		}
+		@media (max-width: 660px) {
+			.site-topline__inner { display: grid; padding-block: 0.55rem; }
+			.hero h1 { font-size: 2.7rem; }
+			.btn { width: 100%; }
+		}
+	</style>
+</head>
+<body>
+	<a class="skip-link" href="#conteudo">Pular para o conteúdo principal</a>
+
+	<div class="site-topline" role="note">
+		<div class="container site-topline__inner">
+			<span>Sede institucional da PAVIE | Advocacia</span>
+			<span><a href="tel:+5521964382263">+55 (21) 96438-2263</a> · <a href="mailto:contato@pavieadvocacia.com.br">contato@pavieadvocacia.com.br</a></span>
+		</div>
+	</div>
+
+	<header class="site-header" role="banner">
+		<div class="container site-header__inner">
+			<a class="brand" href="/" aria-label="PAVIE | Advocacia, início">
+				<strong>PAVIE | Advocacia</strong>
+				<span>Clareza técnica e responsabilidade</span>
+			</a>
+			<nav class="nav" aria-label="Navegação principal">
+				<a href="/">Início</a>
+				<a href="/#areas">Áreas</a>
+				<a href="/#metodo">Método</a>
+				<a href="https://blog.pavieadvocacia.com.br/blog/">Conteúdos</a>
+			</nav>
+			<a class="header-link" href="#formulario-contato">Triagem inicial</a>
+		</div>
+	</header>
+
+	<main id="conteudo">
+		<div class="container">
+			<section class="hero" aria-labelledby="contact-title">
+				<div>
+					<span class="eyebrow">Contato institucional</span>
+					<h1 id="contact-title">Envie o contexto com clareza para a triagem inicial.</h1>
+					<p>
+						O primeiro contato serve para enquadrar o problema, identificar documentos principais
+						e verificar aderência técnica. Ele não representa contratação automática nem promessa de
+						providência imediata.
+					</p>
+					<div style="display:flex;flex-wrap:wrap;gap:0.9rem;margin-top:1.8rem;">
+						<a class="btn btn-primary" href="#formulario-contato">Ir para o formulário</a>
+						<a class="btn btn-secondary" href="/#areas">Rever áreas de atuação</a>
+					</div>
+				</div>
+				<aside class="hero-card" aria-label="Expectativa do primeiro contato">
+					<span class="eyebrow" style="font-size:0.68rem;">Expectativa correta</span>
+					<h2>Triagem, leitura inicial e próximos passos possíveis.</h2>
+					<p>
+						O retorno inicial ajuda a separar contexto, prova mínima e aderência. Quando houver base
+						suficiente, a PAVIE indica documentos faltantes, limites do caso e eventual caminho para
+						análise individual.
+					</p>
+				</aside>
+			</section>
+
+			<section class="grid-3" aria-labelledby="guidance-title">
+				<article class="info-card">
+					<span class="eyebrow" style="font-size:0.68rem;">Canais claros</span>
+					<h3 id="guidance-title">O formulário concentra a entrada, com apoio por e-mail e telefone.</h3>
+					<ul class="list">
+						<li><a href="mailto:contato@pavieadvocacia.com.br">contato@pavieadvocacia.com.br</a></li>
+						<li><a href="tel:+5521964382263">+55 (21) 96438-2263</a></li>
+						<li>Av. Ataulfo de Paiva, 1235, Rio de Janeiro - RJ</li>
+					</ul>
+				</article>
+				<article class="info-card">
+					<span class="eyebrow" style="font-size:0.68rem;">O que informar</span>
+					<h3>Uma triagem melhor depende de contexto objetivo.</h3>
+					<ul class="list">
+						<li>quem está envolvido e qual é o problema principal;</li>
+						<li>quais fatos já aconteceram e se existe urgência real;</li>
+						<li>quais documentos, mensagens, contratos ou comprovantes você já possui.</li>
+					</ul>
+				</article>
+				<article class="info-card">
+					<span class="eyebrow" style="font-size:0.68rem;">Confidencialidade</span>
+					<h3>Os dados enviados servem apenas para triagem institucional.</h3>
+					<p>
+						O envio inicial é tratado com reserva profissional. A análise individual depende do conjunto
+						documental, da natureza do caso e da confirmação do escopo possível.
+					</p>
+				</article>
+			</section>
+
+			<section class="entry-grid" id="formulario-contato" aria-labelledby="entry-title">
+				<div class="entry-copy">
+					<span class="eyebrow">Fluxo de entrada</span>
+					<h2 id="entry-title">Formulário mínimo útil para triagem.</h2>
+					<p>
+						Preencha apenas o necessário para localizar o tema, compreender a situação e permitir o
+						retorno inicial. Se houver aderência, os próximos passos são indicados depois da primeira leitura.
+					</p>
+					<article class="steps-card">
+						<h3>Depois do envio</h3>
+						<ol class="steps">
+							<li>Leitura inicial do contexto e dos sinais de urgência.</li>
+							<li>Retorno com pedido de documentos, delimitação ou encaminhamento cabível.</li>
+							<li>Avaliação sobre análise técnica individual, sem promessa de contratação automática.</li>
+						</ol>
+					</article>
+				</div>
+
+				<form class="form-card" id="contatoForm" method="post" action="/api/contato" aria-describedby="contact-form-note">
+					<h2>Solicitar triagem inicial</h2>
+					<p class="form-note">
+						Compartilhe um resumo objetivo. O foco é entender o problema, não fechar uma conclusão instantânea.
+					</p>
+
+					<input id="turnstileToken" name="turnstileToken" type="hidden" />
+
+					<label>
+						<span>Nome completo</span>
+						<input id="nome" name="nome" autocomplete="name" required type="text" />
+					</label>
+					<label>
+						<span>E-mail</span>
+						<input id="email" name="email" autocomplete="email" required type="email" />
+					</label>
+					<label>
+						<span>Telefone ou WhatsApp</span>
+						<input id="telefone_full" name="telefone_full" autocomplete="tel" inputmode="tel" type="tel" />
+					</label>
+					<label>
+						<span>Tema principal</span>
+						<select id="tema" name="tema">
+							<option value="">Selecione se já souber</option>
+							<option value="patrimonio-sucessoes">Patrimônio, sucessões ou planejamento</option>
+							<option value="familia-patrimonial">Família patrimonial ou dissoluções</option>
+							<option value="imoveis-contratos-credito">Imóveis, contratos, cobrança ou crédito</option>
+							<option value="consumidor-responsabilidade">Consumidor, responsabilidade civil ou tributos patrimoniais</option>
+							<option value="nao-sei-classificar">Ainda não sei classificar</option>
+						</select>
+					</label>
+					<label>
+						<span>Resumo da situação</span>
+						<textarea id="mensagem" name="mensagem" rows="6" required></textarea>
+					</label>
+					<label class="consent">
+						<input name="consentimento" required type="checkbox" />
+						<span>Autorizo o uso dos dados enviados apenas para retorno institucional e triagem inicial, sob sigilo profissional.</span>
+					</label>
+					<div
+						class="cf-turnstile"
+						data-sitekey="0x4AAAAAAB6FBS0cTG_7KOYv"
+						data-callback="onTsDone"
+						data-expired-callback="onTsExpired"
+						data-error-callback="onTsError"
+					></div>
+					<p class="form-status" id="formStatus" role="status" aria-live="polite">Aguardando validação de segurança.</p>
+					<button class="btn btn-primary" type="submit">Enviar para triagem inicial</button>
+					<p class="form-note" id="contact-form-note">Contato inicial não significa contratação. A orientação depende de leitura técnica, documentos e delimitação do caso concreto.</p>
+				</form>
+			</section>
+		</div>
+	</main>
+
+	<footer class="site-footer" role="contentinfo">
+		<div class="container site-footer__grid">
+			<section>
+				<h2>PAVIE | Advocacia</h2>
+				<p>Sede institucional para áreas, método, honorários, fluxo de entrada e contato técnico inicial.</p>
+			</section>
+			<nav aria-label="Links institucionais">
+				<h3>Institucional</h3>
+				<ul>
+					<li><a href="/">Início</a></li>
+					<li><a href="/#areas">Áreas</a></li>
+					<li><a href="/#metodo">Método</a></li>
+					<li><a href="/contato/">Contato institucional</a></li>
+				</ul>
+			</nav>
+			<nav aria-label="Links editoriais">
+				<h3>Conteúdos</h3>
+				<ul>
+					<li><a href="https://blog.pavieadvocacia.com.br/blog/">Home do blog</a></li>
+					<li><a href="https://blog.pavieadvocacia.com.br/blog/autor/fabio-pavie/">Autor</a></li>
+				</ul>
+			</nav>
+			<nav aria-label="Contato e documentos legais">
+				<h3>Contato e legal</h3>
+				<ul>
+					<li><a href="mailto:contato@pavieadvocacia.com.br">contato@pavieadvocacia.com.br</a></li>
+					<li><a href="tel:+5521964382263">+55 (21) 96438-2263</a></li>
+					<li><a href="/privacidade/privacidade.html">Política de Privacidade</a></li>
+					<li><a href="/termos/termos.html">Termos de Serviço</a></li>
+				</ul>
+			</nav>
+		</div>
+		<div class="container site-footer__bottom">
+			<p>Conteúdo público e informativo. O blog qualifica a leitura; a análise individual acontece na camada institucional.</p>
+			<p>OAB/RJ 134.947 · Rio de Janeiro · Atendimento conforme análise de escopo e documentação.</p>
+			<p>© 2026 PAVIE | Advocacia. Todos os direitos reservados.</p>
+		</div>
+	</footer>
+
+	<script src="/form.turnstile.js" defer></script>
+	<script src="/assets/js/form.submit.js" defer></script>
+	<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+</body>
+</html>

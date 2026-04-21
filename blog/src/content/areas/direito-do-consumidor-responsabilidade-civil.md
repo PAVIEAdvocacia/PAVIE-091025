@@ -50,7 +50,7 @@ finalTitle: "Avaliar a falha com prova e proporcionalidade"
 finalText: "A leitura técnica ajuda a separar expectativa, falha comprovável e medida proporcional. Se o caso exige análise individualizada, envie as informações iniciais."
 finalCtaLabel: "Solicitar análise inicial"
 ctaType: "contact"
-ctaTarget: "/#contato"
+ctaTarget: "/contato/"
 seoTitle: "Direito do Consumidor e Responsabilidade Civil | PAVIE Advocacia"
 description: "Direito do consumidor, responsabilidade civil, falhas de serviço, negativação indevida, cobranças abusivas e reparação com leitura técnica da prova."
 order: 8

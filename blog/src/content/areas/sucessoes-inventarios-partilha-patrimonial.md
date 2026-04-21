@@ -51,7 +51,7 @@ finalTitle: "Organizar a sucessão com método"
 finalText: "O enquadramento correto evita perdas patrimoniais, atrasos e conflitos desnecessários. Se o seu caso já exige leitura técnica, envie as informações iniciais para avaliação."
 finalCtaLabel: "Solicitar análise inicial"
 ctaType: "contact"
-ctaTarget: "/#contato"
+ctaTarget: "/contato/"
 seoTitle: "Sucessões, Inventários e Partilha Patrimonial | PAVIE Advocacia"
 description: "Inventário, partilha patrimonial, leitura sucessória e organização documental com direção técnica e critérios claros para definição da via adequada."
 order: 1

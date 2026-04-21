@@ -1,5 +1,4 @@
 ﻿---
-import BrandLogo from '../components/brand/BrandLogo.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { buildFaqSchema, LEGAL_SERVICE_BASE_SCHEMA, toAbsoluteUrl } from '../lib/seo';
 import { BLOG_SITE_URL, MAIN_SITE_URL } from '../consts';
@@ -117,7 +116,7 @@ const localBusinessSchema = {
 					patrimônio até questões sensíveis de família, curatelas e recuperação de créditos.
 				</p>
 				<div class="site-hero__actions">
-					<a class="btn btn-primary" href="#contato">Solicitar análise do caso</a>
+					<a class="btn btn-primary" href={`${MAIN_SITE_URL}/contato/`}>Solicitar análise do caso</a>
 					<a class="btn btn-secondary" href="/#areas">Ver áreas de atuação</a>
 				</div>
 				<p class="site-hero__location">Sede no Rio de Janeiro <span aria-hidden="true">•</span> Atendimento em todo o Brasil</p>
@@ -233,21 +232,21 @@ const localBusinessSchema = {
 			</div>
 		</section>
 
-		<section id="contato" class="site-contact" aria-labelledby="contato-title">
+		<section class="site-contact" aria-labelledby="contato-title">
 			<div class="container site-contact__grid">
 				<div class="site-contact__copy">
-					<BrandLogo variant="horizontal" theme="dark" width={300} />
+					<span class="site-eyebrow">Contato institucional</span>
+					<h2 id="contato-title">Quando a situação já pede leitura institucional, siga pelo fluxo de entrada.</h2>
 					<p>
-						Segurança jurídica, direção técnica apurada pelo respeito, colaboração e excelência na
-						defesa dos seus direitos.
+						A home apresenta áreas, método e critérios. O fluxo institucional de entrada concentra a
+						triagem, a leitura inicial do contexto e a definição responsável dos próximos passos.
 					</p>
 
 					<article class="site-contact__honorarios">
-						<h3>Transparência em honorários</h3>
+						<h3>O que acontece no primeiro envio</h3>
 						<p>
-							Adotamos critérios coerentes com clareza, previsibilidade e sigilo profissional.
-							Os honorários são apresentados antes do início de qualquer atuação, sem promessas ou
-							atalhos incompatíveis com a ética jurídica.
+							O contato inicial serve para localizar o tema, reunir documentos principais e avaliar
+							aderência técnica. Não há contratação automática nem promessa de resultado imediato.
 						</p>
 					</article>
 
@@ -257,129 +256,26 @@ const localBusinessSchema = {
 					</ul>
 				</div>
 
-				<form
-					id="siteContactForm"
-					class="site-contact__form"
-					action="/api/contato"
-					method="post"
-					aria-describedby="site-contact-note"
-				>
-					<h2 id="contato-title">Solicitar Análise do Caso</h2>
+				<article class="site-contact__form">
+					<h2>Triagem inicial com contexto mínimo útil.</h2>
 					<p>
-						Compartilhe o contexto do seu problema para darmos o primeiro passo. Nossa equipe fará
-						uma leitura atenta da sua situação, oferecendo um retorno cuidadoso e objetivo sobre a
-						viabilidade técnica, sempre sob rigoroso sigilo profissional.
+						No contato institucional você informa o problema principal, documentos já disponíveis
+						e sinais de urgência. Esse material orienta o retorno inicial da PAVIE.
 					</p>
-
-					<input id="turnstileToken" name="turnstileToken" type="hidden" />
-
-					<label>
-						<span>Nome completo</span>
-						<input id="nome" name="nome" autocomplete="name" required type="text" />
-					</label>
-
-					<label>
-						<span>Telefone, WhatsApp ou E-mail</span>
-						<input id="contato_preferencial" name="contato_preferencial" autocomplete="email" required type="text" />
-					</label>
-
-					<label>
-						<span>Resumo da situação</span>
-						<textarea id="mensagem" name="mensagem" required rows="5"></textarea>
-					</label>
-
-					<label class="site-contact__consent">
-						<input name="consent" required type="checkbox" />
-						<span>Autorizo o uso dos dados enviados apenas para retorno do contato, sob sigilo profissional.</span>
-					</label>
-
-					<div
-						class="cf-turnstile"
-						data-sitekey="0x4AAAAAAB6FBS0cTG_7KOYv"
-						data-callback="onTsDone"
-						data-expired-callback="onTsExpired"
-						data-error-callback="onTsError"
-					>
-					</div>
-
-					<p id="site-contact-status" class="site-contact__status" role="status" aria-live="polite"></p>
-
-					<button class="btn btn-primary" type="submit">Enviar para o Advogado</button>
-					<p id="site-contact-note" class="site-contact__note">
-						Contato inicial não é contratação automática. A orientação jurídica depende da análise da situação individual.
+					<ul class="site-contact__links" aria-label="O que informar antes do contato">
+						<li>Quem está envolvido e qual é a situação principal.</li>
+						<li>Quais fatos já ocorreram e que documentos você já possui.</li>
+						<li>Se há urgência real, prazo ou providência em curso.</li>
+					</ul>
+					<a class="btn btn-primary" href={`${MAIN_SITE_URL}/contato/`}>Ir para o contato institucional</a>
+					<p class="site-contact__note">
+						Contato inicial não é contratação automática. A orientação jurídica depende de triagem,
+						documentos e análise individual.
 					</p>
-				</form>
+				</article>
 			</div>
 		</section>
 	</div>
-
-	<script is:inline>
-		(function () {
-			var tokenField = document.getElementById('turnstileToken');
-			var form = document.getElementById('siteContactForm');
-			var status = document.getElementById('site-contact-status');
-
-			window.onTsDone = function (token) {
-				if (tokenField) tokenField.value = token || '';
-				if (status) status.textContent = 'Validação de segurança concluída.';
-			};
-			window.onTsExpired = function () {
-				if (tokenField) tokenField.value = '';
-				if (status) status.textContent = 'Validação expirada. Aguarde recarregar e tente novamente.';
-			};
-			window.onTsError = function () {
-				if (tokenField) tokenField.value = '';
-				if (status) status.textContent = 'Não foi possível carregar a validação de segurança.';
-			};
-
-			if (!form || !status) return;
-
-			form.addEventListener('submit', async function (event) {
-				event.preventDefault();
-				var button = form.querySelector('button[type="submit"]');
-				var originalText = button ? button.textContent : '';
-
-				if (tokenField && !tokenField.value) {
-					status.textContent = 'Aguarde a validação de segurança antes de enviar.';
-					return;
-				}
-
-				if (button) {
-					button.disabled = true;
-					button.textContent = 'Enviando...';
-				}
-				status.textContent = 'Enviando informações iniciais...';
-
-				try {
-					var response = await fetch(form.action, {
-						method: 'POST',
-						body: new FormData(form),
-						headers: { Accept: 'application/json' },
-					});
-					var data = await response.json().catch(function () { return {}; });
-					if (!response.ok || data.ok === false) {
-						throw new Error(data.error || 'Falha no envio.');
-					}
-					status.textContent = 'Solicitação enviada. A PAVIE fará a triagem inicial do contato.';
-					form.reset();
-					if (tokenField) tokenField.value = '';
-					if (window.turnstile && typeof window.turnstile.reset === 'function') {
-						window.turnstile.reset();
-					}
-				} catch (error) {
-					status.textContent = error && error.message
-						? 'Não foi possível enviar: ' + error.message
-						: 'Não foi possível enviar a solicitação.';
-				} finally {
-					if (button) {
-						button.disabled = false;
-						button.textContent = originalText;
-					}
-				}
-			});
-		})();
-	</script>
-	<script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 	<script is:inline type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
 	<script is:inline type="application/ld+json" set:html={JSON.stringify(localBusinessSchema)} />
 </BaseLayout>

@@ -51,7 +51,7 @@ finalTitle: "Estruturar antes do conflito"
 finalText: "A organização preventiva reduz incertezas e permite escolhas mais conscientes. Se o seu objetivo é planejar com segurança, envie as informações iniciais para avaliação."
 finalCtaLabel: "Solicitar análise inicial"
 ctaType: "contact"
-ctaTarget: "/#contato"
+ctaTarget: "/contato/"
 seoTitle: "Planejamento Patrimonial e Sucessório | PAVIE Advocacia"
 description: "Organização patrimonial e sucessória preventiva com método documental, leitura de riscos e definição antecipada de arranjos relevantes."
 order: 2

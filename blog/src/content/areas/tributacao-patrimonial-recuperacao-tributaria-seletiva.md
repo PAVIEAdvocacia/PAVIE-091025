@@ -50,7 +50,7 @@ finalTitle: "Separar possibilidade real de expectativa"
 finalText: "A leitura tributária responsável evita promessas e medidas improdutivas. Se há tributo patrimonial a avaliar, envie as informações iniciais para análise."
 finalCtaLabel: "Solicitar análise inicial"
 ctaType: "contact"
-ctaTarget: "/#contato"
+ctaTarget: "/contato/"
 seoTitle: "Tributação Patrimonial e Recuperação Tributária | PAVIE Advocacia"
 description: "Tributação patrimonial, fato gerador, revisão seletiva e leitura documental de incidências fiscais ligadas ao patrimônio e à transmissão."
 order: 7

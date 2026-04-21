@@ -50,7 +50,7 @@ finalTitle: "Avaliar a recuperação antes da medida"
 finalText: "Uma cobrança técnica começa pela leitura da prova e da utilidade da medida. Se há crédito a avaliar, envie as informações iniciais para análise."
 finalCtaLabel: "Solicitar análise inicial"
 ctaType: "contact"
-ctaTarget: "/#contato"
+ctaTarget: "/contato/"
 seoTitle: "Cobrança, Execução e Contratos | PAVIE Advocacia"
 description: "Cobrança, execução, contratos e recuperação de crédito com leitura documental, exigibilidade e estratégia técnica inicial."
 order: 6

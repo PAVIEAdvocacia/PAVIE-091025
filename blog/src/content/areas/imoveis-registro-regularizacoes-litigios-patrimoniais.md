@@ -50,7 +50,7 @@ finalTitle: "Ler o imóvel antes de agir"
 finalText: "A organização documental permite separar risco real de aparente e escolher a medida adequada. Se o imóvel exige avaliação técnica, envie as informações iniciais."
 finalCtaLabel: "Solicitar análise inicial"
 ctaType: "contact"
-ctaTarget: "/#contato"
+ctaTarget: "/contato/"
 seoTitle: "Imóveis, Registro e Regularizações | PAVIE Advocacia"
 description: "Leitura registral, regularização imobiliária, posse, propriedade e litígios patrimoniais com avaliação documental e risco objetivo."
 order: 5

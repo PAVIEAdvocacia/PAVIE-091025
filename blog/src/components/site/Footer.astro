@@ -14,123 +14,77 @@ interface Props {
 }
 
 const { currentPath = '/' } = Astro.props;
-const isBlogSurface = currentPath.startsWith('/blog') || currentPath.startsWith('/autor');
-
-const blogLinks = [
-	{ label: 'Conteúdos', href: `${BLOG_SITE_URL}/blog/` },
-	{ label: 'Autor', href: `${BLOG_SITE_URL}/blog/autor/fabio-pavie/` },
-];
+const isBlogSurface = currentPath.startsWith('/blog');
 
 const institutionalLinks = [
-	{ label: 'Início do site', href: `${MAIN_SITE_URL}/` },
-	{ label: 'Áreas de atuação', href: `${MAIN_SITE_URL}/#areas` },
-	{ label: 'Contato institucional', href: `${MAIN_SITE_URL}/#contato` },
+	{ label: 'Inicio do site', href: `${MAIN_SITE_URL}/` },
+	{ label: 'Areas de atuacao', href: `${MAIN_SITE_URL}/#areas` },
+	{ label: 'Metodo', href: `${MAIN_SITE_URL}/#metodo` },
+	{ label: 'Contato institucional', href: `${MAIN_SITE_URL}/contato/` },
+];
+
+const editorialLinks = [
+	{ label: 'Home de conteudos', href: `${BLOG_SITE_URL}/blog/` },
+	{ label: 'Autor', href: `${BLOG_SITE_URL}/blog/autor/fabio-pavie/` },
 ];
 
 const legalLinks = [
-	{ label: 'Política de privacidade', href: '/legal/politica-de-privacidade-pavie-advocacia.pdf' },
-	{ label: 'Termos de serviço', href: '/legal/termos-de-servico-pavie-advocacia.pdf' },
-];
-
-const siteLinks = [
-	{ label: 'Início', href: `${MAIN_SITE_URL}/` },
-	{ label: 'Áreas', href: `${MAIN_SITE_URL}/#areas` },
-	{ label: 'Método', href: `${MAIN_SITE_URL}/#metodo` },
-	{ label: 'Contato', href: `${MAIN_SITE_URL}/#contato` },
-];
-
-const blogBridgeLinks = [
-	{ label: 'Conteudos', href: `${BLOG_SITE_URL}/blog/` },
-	{ label: 'Autor', href: `${BLOG_SITE_URL}/blog/autor/fabio-pavie/` },
+	{ label: 'Politica de privacidade', href: '/legal/politica-de-privacidade-pavie-advocacia.pdf' },
+	{ label: 'Termos de servico', href: '/legal/termos-de-servico-pavie-advocacia.pdf' },
 ];
 
 const addressLine = `${BUSINESS_ADDRESS.streetAddress}, ${BUSINESS_ADDRESS.addressLocality} - ${BUSINESS_ADDRESS.addressRegion}`;
+const signatureText = isBlogSurface
+	? 'Camada editorial para descoberta, organizacao de contexto e retorno disciplinado ao site institucional.'
+	: 'Sede institucional para areas, metodo, honorarios, fluxo de entrada e contato tecnico inicial.';
+const noticeText = isBlogSurface
+	? 'Conteudo publico e informativo. O blog qualifica a leitura; a analise individual acontece na camada institucional.'
+	: 'Contato inicial nao e contratacao automatica. Toda orientacao depende de triagem, documentos e analise tecnica proporcional.';
 ---
 
-<footer class:list={['site-footer', isBlogSurface && 'site-footer--blog']} role="contentinfo">
-	{isBlogSurface ? (
-		<>
-			<div class="container site-footer__grid site-footer__grid--blog">
-				<section class="site-footer__brand" aria-labelledby="blog-footer-brand">
-					<BrandLogo variant="square" theme="dark" width={165} />
-					<h2 id="blog-footer-brand" class="site-footer__signature">PAVIE | Advocacia</h2>
-					<p>
-						Camada editorial para descoberta, maturação temática e retorno disciplinado ao site institucional.
-					</p>
-				</section>
+<footer class="site-footer" role="contentinfo">
+	<div class="container site-footer__grid">
+		<section class="site-footer__brand" aria-labelledby="site-footer-brand">
+			<BrandLogo variant="square" theme="dark" width={165} />
+			<h2 id="site-footer-brand" class="site-footer__signature">PAVIE | Advocacia</h2>
+			<p>{signatureText}</p>
+		</section>
 
-				<nav aria-label="Links essenciais do blog">
-					<h2>Blog</h2>
-					<ul>
-						{blogLinks.map((link) => (
-							<li><a href={link.href}>{link.label}</a></li>
-						))}
-					</ul>
-				</nav>
+		<nav aria-label="Navegacao institucional">
+			<h2>Institucional</h2>
+			<ul>
+				{institutionalLinks.map((link) => (
+					<li><a href={link.href}>{link.label}</a></li>
+				))}
+			</ul>
+		</nav>
 
-				<nav aria-label="Ponte para o site institucional">
-					<h2>Site institucional</h2>
-					<ul>
-						{institutionalLinks.map((link) => (
-							<li><a href={link.href}>{link.label}</a></li>
-						))}
-						{legalLinks.map((link) => (
-							<li><a href={link.href}>{link.label}</a></li>
-						))}
-					</ul>
-				</nav>
+		<nav aria-label="Ponte editorial">
+			<h2>Conteudos</h2>
+			<ul>
+				{editorialLinks.map((link) => (
+					<li><a href={link.href}>{link.label}</a></li>
+				))}
+			</ul>
+		</nav>
 
-				<section class="site-footer__contact" aria-labelledby="blog-footer-contact">
-					<h2 id="blog-footer-contact">Contato</h2>
-					<ul>
-						<li><a href={`mailto:${BUSINESS_EMAIL}`}>{BUSINESS_EMAIL}</a></li>
-						<li><a href={`tel:${BUSINESS_PHONE_E164}`}>{BUSINESS_PHONE_DISPLAY}</a></li>
-						<li>{addressLine}</li>
-					</ul>
-				</section>
-			</div>
+		<section class="site-footer__contact" aria-labelledby="site-footer-contact">
+			<h2 id="site-footer-contact">Contato e base legal</h2>
+			<ul>
+				<li><a href={`mailto:${BUSINESS_EMAIL}`}>{BUSINESS_EMAIL}</a></li>
+				<li><a href={`tel:${BUSINESS_PHONE_E164}`}>{BUSINESS_PHONE_DISPLAY}</a></li>
+				<li><a href={`${MAIN_SITE_URL}/contato/`}>Fluxo de entrada institucional</a></li>
+				<li>{addressLine}</li>
+				{legalLinks.map((link) => (
+					<li><a href={link.href}>{link.label}</a></li>
+				))}
+			</ul>
+		</section>
+	</div>
 
-			<div class="container site-footer__notice" role="note">
-				<p>Conteúdo público e informativo. Não substitui análise jurídica individual.</p>
-			</div>
-		</>
-	) : (
-		<div class="container site-footer__grid">
-			<section class="site-footer__brand" aria-labelledby="site-footer-brand">
-				<BrandLogo variant="square" theme="dark" width={165} />
-				<h2 id="site-footer-brand" class="site-footer__signature">PAVIE | Advocacia</h2>
-				<p>
-					Atendimento jurídico estratégico, técnico e humano para questões que exigem clareza,
-					organização documental e direção responsável.
-				</p>
-				<ul class="site-footer__compact-list" aria-label="Canais de contato">
-					<li><a href={`mailto:${BUSINESS_EMAIL}`}>{BUSINESS_EMAIL}</a></li>
-					<li><a href={`tel:${BUSINESS_PHONE_E164}`}>{BUSINESS_PHONE_DISPLAY}</a></li>
-				</ul>
-			</section>
-
-			<nav aria-label="Navegação institucional">
-				<h2>Institucional</h2>
-				<ul>
-					{siteLinks.map((link) => (
-						<li><a href={link.href}>{link.label}</a></li>
-					))}
-				</ul>
-			</nav>
-
-			<nav aria-label="Navegação editorial">
-				<h2>Camada editorial</h2>
-				<ul>
-					{blogBridgeLinks.map((link) => (
-						<li><a href={link.href}>{link.label}</a></li>
-					))}
-					{legalLinks.map((link) => (
-						<li><a href={link.href}>{link.label}</a></li>
-					))}
-				</ul>
-			</nav>
-		</div>
-	)}
+	<div class="container site-footer__notice" role="note">
+		<p>{noticeText}</p>
+	</div>
 
 	<div class="container site-footer__bottom">
 		<p>OAB/RJ 134.947 · Sede no Rio de Janeiro · Atendimento em todo o Brasil</p>
@@ -168,13 +122,9 @@ const addressLine = `${BUSINESS_ADDRESS.streetAddress}, ${BUSINESS_ADDRESS.addre
 
 	.site-footer__grid {
 		display: grid;
-		grid-template-columns: minmax(260px, 1.25fr) minmax(160px, 0.55fr) minmax(190px, 0.72fr);
-		gap: clamp(2.25rem, 6vw, 5rem);
+		grid-template-columns: minmax(260px, 1.25fr) repeat(3, minmax(170px, 0.62fr));
+		gap: clamp(2.25rem, 6vw, 4.2rem);
 		align-items: start;
-	}
-
-	.site-footer__grid--blog {
-		grid-template-columns: minmax(260px, 1.25fr) minmax(150px, 0.5fr) minmax(190px, 0.7fr) minmax(190px, 0.68fr);
 	}
 
 	.site-footer__brand {
@@ -232,10 +182,6 @@ const addressLine = `${BUSINESS_ADDRESS.streetAddress}, ${BUSINESS_ADDRESS.addre
 		text-decoration-color: rgba(151, 29, 37, 0.5);
 	}
 
-	.site-footer__compact-list {
-		padding-top: var(--space-xs);
-	}
-
 	.site-footer__contact {
 		display: grid;
 		gap: var(--space-sm);
@@ -249,7 +195,7 @@ const addressLine = `${BUSINESS_ADDRESS.streetAddress}, ${BUSINESS_ADDRESS.addre
 
 	.site-footer__notice p {
 		position: relative;
-		max-width: 62ch;
+		max-width: 72ch;
 		padding-left: 0.85rem;
 	}
 
@@ -275,16 +221,14 @@ const addressLine = `${BUSINESS_ADDRESS.streetAddress}, ${BUSINESS_ADDRESS.addre
 	}
 
 	@media (max-width: 980px) {
-		.site-footer__grid,
-		.site-footer__grid--blog {
+		.site-footer__grid {
 			grid-template-columns: repeat(2, minmax(0, 1fr));
 			gap: var(--space-xl);
 		}
 	}
 
 	@media (max-width: 680px) {
-		.site-footer__grid,
-		.site-footer__grid--blog {
+		.site-footer__grid {
 			grid-template-columns: 1fr;
 		}
 

@@ -43,6 +43,6 @@ export const DEFAULT_OG_IMAGE = '/uploads/001-convertido-de-png.webp';
 
 export const DEFAULT_CTA = {
 	label: 'Solicitar orientação inicial',
-	href: '/#contato',
+	href: '/contato/',
 	description: 'Descreva sua situação para entender quando faz sentido avançar para a orientação inicial.',
 };

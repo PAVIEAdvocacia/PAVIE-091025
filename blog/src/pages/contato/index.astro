@@ -1,0 +1,201 @@
+---
+import Breadcrumbs from '../../components/blog/Breadcrumbs.astro';
+import {
+	BUSINESS_ADDRESS,
+	BUSINESS_EMAIL,
+	BUSINESS_PHONE_DISPLAY,
+	BUSINESS_PHONE_E164,
+	MAIN_SITE_URL,
+} from '../../consts';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { buildBreadcrumbSchema, LEGAL_SERVICE_BASE_SCHEMA } from '../../lib/seo';
+import '../../styles/contact-page.css';
+
+const title = 'Contato institucional | PAVIE | Advocacia';
+const description =
+	'Fluxo institucional de entrada da PAVIE | Advocacia para triagem inicial, organizacao do contexto e definicao responsavel dos proximos passos.';
+const canonicalUrl = `${MAIN_SITE_URL}/contato/`;
+const breadcrumbs = [
+	{ label: 'Inicio', href: '/' },
+	{ label: 'Contato institucional' },
+];
+const breadcrumbSchema = buildBreadcrumbSchema(breadcrumbs, canonicalUrl);
+const legalServiceSchema = {
+	...LEGAL_SERVICE_BASE_SCHEMA,
+	'@id': `${canonicalUrl}#contato`,
+	url: canonicalUrl,
+	name: 'Contato institucional | PAVIE | Advocacia',
+	description,
+};
+const addressLine = `${BUSINESS_ADDRESS.streetAddress}, ${BUSINESS_ADDRESS.addressLocality} - ${BUSINESS_ADDRESS.addressRegion}`;
+---
+
+<BaseLayout title={title} description={description} canonical={canonicalUrl}>
+	<div class="container institutional-page contact-page">
+		<Breadcrumbs items={breadcrumbs} />
+
+		<section class="s3-hero" aria-labelledby="contact-title">
+			<div class="s3-hero__copy">
+				<span class="badge">Contato institucional</span>
+				<h1 id="contact-title">Envie o contexto com clareza para a triagem inicial.</h1>
+				<p class="institutional-page__lead">
+					O primeiro contato serve para enquadrar o problema, identificar documentos principais
+					e verificar aderencia tecnica. Ele nao representa contratacao automatica nem promessa
+					de providencia imediata.
+				</p>
+				<div class="institutional-actions">
+					<a class="btn btn-primary" href="#formulario-contato">Ir para o formulario</a>
+					<a class="btn btn-ghost" href={`${MAIN_SITE_URL}/#areas`}>Rever areas de atuacao</a>
+				</div>
+			</div>
+
+			<aside class="surface-card surface-card--padded s3-hero__panel" aria-label="Expectativa do primeiro contato">
+				<span class="section-kicker">Expectativa correta</span>
+				<h2>Triagem, leitura inicial e proximos passos possiveis.</h2>
+				<p>
+					O retorno inicial ajuda a separar contexto, prova minima e aderencia. Quando houver
+					base suficiente, a PAVIE indica documentos faltantes, limites do caso e eventual
+					caminho para analise individual.
+				</p>
+			</aside>
+		</section>
+
+		<section class="s3-guidance" aria-labelledby="guidance-title">
+			<div class="section-title">
+				<div>
+					<span class="section-kicker">Antes de enviar</span>
+					<h2 id="guidance-title">Use o contato para situacoes que ja pedem leitura institucional.</h2>
+				</div>
+			</div>
+
+			<div class="s3-guidance__grid">
+				<article class="surface-card surface-card--padded s3-guidance__card">
+					<span class="section-kicker">Canais claros</span>
+					<h3>O formulario concentra a entrada, com apoio por e-mail e telefone.</h3>
+					<ul class="s3-list">
+						<li><a href={`mailto:${BUSINESS_EMAIL}`}>{BUSINESS_EMAIL}</a></li>
+						<li><a href={`tel:${BUSINESS_PHONE_E164}`}>{BUSINESS_PHONE_DISPLAY}</a></li>
+						<li>{addressLine}</li>
+					</ul>
+				</article>
+
+				<article class="surface-card surface-card--padded s3-guidance__card">
+					<span class="section-kicker">O que informar</span>
+					<h3>Uma triagem melhor depende de contexto objetivo.</h3>
+					<ul class="s3-list">
+						<li>Quem esta envolvido e qual e o problema principal.</li>
+						<li>Quais fatos ja aconteceram e se existe urgencia real.</li>
+						<li>Quais documentos, mensagens, contratos ou comprovantes voce ja possui.</li>
+					</ul>
+				</article>
+
+				<article class="surface-card surface-card--padded s3-guidance__card">
+					<span class="section-kicker">Confidencialidade</span>
+					<h3>Os dados enviados servem apenas para triagem institucional.</h3>
+					<p>
+						O envio inicial e tratado com reserva profissional. A analise individual depende do
+						conjunto documental, da natureza do caso e da confirmacao do escopo possivel.
+					</p>
+				</article>
+			</div>
+		</section>
+
+		<section id="formulario-contato" class="s3-entry" aria-labelledby="entry-title">
+			<div class="s3-entry__copy">
+				<span class="section-kicker">Fluxo de entrada</span>
+				<h2 id="entry-title">Formulario minimo util para triagem.</h2>
+				<p>
+					Preencha apenas o necessario para localizar o tema, compreender a situacao e permitir
+					o retorno inicial. Se houver aderencia, os proximos passos sao indicados depois da
+					primeira leitura.
+				</p>
+
+				<div class="surface-card surface-card--padded s3-entry__panel">
+					<h3>Depois do envio</h3>
+					<ol class="s3-steps">
+						<li>Leitura inicial do contexto e dos sinais de urgencia.</li>
+						<li>Retorno com pedido de documentos, delimitacao ou encaminhamento cabivel.</li>
+						<li>Avaliacao sobre analise tecnica individual, sem promessa de contratacao automatica.</li>
+					</ol>
+				</div>
+			</div>
+
+			<form
+				id="contatoForm"
+				class="surface-card surface-card--padded s3-form"
+				action="/api/contato"
+				method="post"
+				aria-describedby="contact-form-note"
+			>
+				<h2>Solicitar triagem inicial</h2>
+				<p class="text-muted">
+					Compartilhe um resumo objetivo. O foco e entender o problema, nao fechar uma conclusao
+					instantanea.
+				</p>
+
+				<input id="turnstileToken" name="turnstileToken" type="hidden" />
+
+				<label for="nome">
+					<span>Nome completo</span>
+					<input id="nome" name="nome" autocomplete="name" required type="text" />
+				</label>
+
+				<label for="email">
+					<span>E-mail</span>
+					<input id="email" name="email" autocomplete="email" required type="email" />
+				</label>
+
+				<label for="telefone_full">
+					<span>Telefone ou WhatsApp</span>
+					<input id="telefone_full" name="telefone_full" autocomplete="tel" inputmode="tel" type="tel" />
+				</label>
+
+				<label for="tema">
+					<span>Tema principal</span>
+					<select id="tema" name="tema">
+						<option value="">Selecione se ja souber</option>
+						<option value="patrimonio-sucessoes">Patrimonio, sucessoes ou planejamento</option>
+						<option value="familia-patrimonial">Familia patrimonial ou dissolucoes</option>
+						<option value="imoveis-contratos-credito">Imoveis, contratos, cobranca ou credito</option>
+						<option value="consumidor-responsabilidade">Consumidor, responsabilidade civil ou tributos patrimoniais</option>
+						<option value="nao-sei-classificar">Ainda nao sei classificar</option>
+					</select>
+				</label>
+
+				<label for="mensagem">
+					<span>Resumo da situacao</span>
+					<textarea id="mensagem" name="mensagem" required rows="6"></textarea>
+				</label>
+
+				<label class="s3-form__consent" for="consentimento">
+					<input id="consentimento" name="consentimento" required type="checkbox" />
+					<span>Autorizo o uso dos dados enviados apenas para retorno institucional e triagem inicial, sob sigilo profissional.</span>
+				</label>
+
+				<div
+					class="cf-turnstile"
+					data-sitekey="0x4AAAAAAB6FBS0cTG_7KOYv"
+					data-callback="onTsDone"
+					data-expired-callback="onTsExpired"
+					data-error-callback="onTsError"
+				></div>
+
+				<p id="formStatus" class="s3-form__status" role="status" aria-live="polite">
+					Aguardando validacao de seguranca.
+				</p>
+
+				<button class="btn btn-primary" type="submit">Enviar para triagem inicial</button>
+				<p id="contact-form-note" class="s3-form__note">
+					Contato inicial nao significa contratacao. A orientacao depende de leitura tecnica,
+					documentos e delimitacao do caso concreto.
+				</p>
+			</form>
+		</section>
+	</div>
+
+	<script is:inline src="/form.turnstile.js" defer></script>
+	<script is:inline src="/assets/js/form.submit.js" defer></script>
+	<script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+	<script is:inline type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+	<script is:inline type="application/ld+json" set:html={JSON.stringify(legalServiceSchema)} />
+</BaseLayout>

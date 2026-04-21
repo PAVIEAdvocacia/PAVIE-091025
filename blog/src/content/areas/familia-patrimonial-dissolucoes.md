@@ -48,7 +48,7 @@ finalTitle: "Conduzir a reorganização familiar com critério"
 finalText: "Quando relações familiares e patrimônio se cruzam, a clareza documental reduz riscos e ajuda a tomar decisões melhores. Se o caso exige avaliação técnica, envie as informações iniciais."
 finalCtaLabel: "Solicitar análise inicial"
 ctaType: "contact"
-ctaTarget: "/#contato"
+ctaTarget: "/contato/"
 seoTitle: "Família Patrimonial e Dissoluções | PAVIE Advocacia"
 description: "Condução técnica e estratégica em divórcios, partilhas e relações familiares com impacto patrimonial. Avaliação documental, limites da atuação e leitura útil antes do contato."
 order: 3

@@ -51,7 +51,7 @@ export const PRIMARY_CTA_OPTIONS = [
 	{
 		key: 'diagnostico_juridico',
 		label: 'Solicitar orientacao inicial',
-		href: '/#contato',
+		href: '/contato/',
 		description:
 			'Entenda quando faz sentido avancar para a orientacao inicial e quais informacoes ajudam no primeiro contato.',
 	},

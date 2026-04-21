@@ -50,7 +50,7 @@ finalTitle: "Organizar o caso internacional antes da medida"
 finalText: "A leitura inicial evita deslocamentos desnecessários, documentos incompletos e estratégia fora da jurisdição adequada. Envie as informações iniciais para avaliação."
 finalCtaLabel: "Solicitar análise inicial"
 ctaType: "contact"
-ctaTarget: "/#contato"
+ctaTarget: "/contato/"
 seoTitle: "Família Binacional e Sucessões Internacionais | PAVIE Advocacia"
 description: "Questões familiares e sucessórias com elemento internacional, compatibilização documental, tradução, apostilamento e estratégia transnacional."
 order: 4

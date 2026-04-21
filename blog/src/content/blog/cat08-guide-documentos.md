@@ -13,7 +13,7 @@ canonicalCategory: "CAT-08"
 contentType: "guide"
 readerStage: "clarify"
 ctaType: "document-review"
-ctaTarget: "/#contato"
+ctaTarget: "/contato/"
 draft: false
 noindex: false
 featured: false

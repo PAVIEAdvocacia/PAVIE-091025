@@ -209,7 +209,7 @@ function resolveCanonicalCta(
 				ctaKey: 'diagnostico_juridico',
 				cta: {
 					label: 'Solicitar orientacao inicial',
-					href: ctaTarget || '/#contato',
+					href: ctaTarget || '/contato/',
 					description:
 						'Entenda quando faz sentido avancar para a orientacao inicial e quais informacoes ajudam no primeiro contato.',
 				},
@@ -243,7 +243,7 @@ function resolveCanonicalCta(
 				ctaKey: 'diagnostico_juridico',
 				cta: {
 					label: 'Solicitar análise inicial',
-					href: ctaTarget || '/#contato',
+					href: ctaTarget || '/contato/',
 					description:
 						'Comece reunindo os documentos principais para avaliar a via mais adequada para a situacao.',
 				},
