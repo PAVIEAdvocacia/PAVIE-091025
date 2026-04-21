@@ -1,6 +1,6 @@
 ---
 import { render } from 'astro:content';
-import ReadingLayout from '../../layouts/ReadingLayout.astro';
+import PostLayout from '../../layouts/PostLayout.astro';
 import { getAuthorEntries, getBlogEntries } from '../../lib/blog-content';
 import { isPublicPost, isPublishedPost, normalizePost, normalizePosts, sortPostsByDate } from '../../lib/posts';
 import { buildToc } from '../../lib/toc';
@@ -41,6 +41,6 @@ const toc = buildToc(headings);
 const noIndex = !isPublicPost(currentPost);
 ---
 
-<ReadingLayout post={currentPost} toc={toc} allPosts={publicPosts} noIndex={noIndex}>
+<PostLayout post={currentPost} toc={toc} allPosts={publicPosts} noIndex={noIndex}>
 	<Content />
-</ReadingLayout>
+</PostLayout>

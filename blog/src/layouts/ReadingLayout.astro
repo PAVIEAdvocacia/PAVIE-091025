@@ -3,12 +3,21 @@ import type { BlogPost } from '../lib/posts';
 import type { TocItem } from '../lib/toc';
 import '../styles/reading.css';
 import ArticleHero from '../components/blog/ArticleHero.astro';
+import ArticleFooterCTA from '../components/blog/ArticleFooterCTA.astro';
+import AuthorBox from '../components/blog/AuthorBox.astro';
 import Breadcrumbs from '../components/blog/Breadcrumbs.astro';
 import ReadingSidebar from '../components/blog/ReadingSidebar.astro';
 import BaseLayout from './BaseLayout.astro';
 import { getAreaEntries } from '../lib/blog-content';
 import { buildCanonicalAreaDirectory, getAreaEntryByCategoryCode } from '../lib/canonical-directory';
+import {
+	EDITORIAL_ANALYTICS_EVENTS,
+	editorialAnalyticsAttributes,
+	postAnalyticsContext,
+} from '../lib/editorial-analytics';
 import { buildBreadcrumbSchema, PUBLISHER_SCHEMA, toAbsoluteUrl } from '../lib/seo';
+import { buildPostMap } from '../lib/posts';
+import { MAIN_SITE_URL } from '../consts';
 
 interface Props {
 	post: BlogPost;
@@ -21,13 +30,19 @@ const { post, toc, allPosts = [], noIndex = false } = Astro.props;
 const areaEntries = await getAreaEntries();
 const canonicalCategoryCode = post.canonicalCategory ?? post.categoryCode;
 const currentArea = getAreaEntryByCategoryCode(areaEntries, canonicalCategoryCode);
-const supportPosts = allPosts
+const postMap = buildPostMap(allPosts);
+const explicitSupportPosts = post.relatedArticles
+	.map((slug) => postMap.get(slug))
+	.filter((item): item is BlogPost => Boolean(item))
+	.filter((item) => item.slug !== post.slug);
+const fallbackSupportPosts = allPosts
 	.filter((item) => item.slug !== post.slug)
 	.filter((item) => {
 		if (!canonicalCategoryCode) return true;
 		return item.categoryCode === canonicalCategoryCode || item.canonicalCategory === canonicalCategoryCode;
 	})
 	.slice(0, 5);
+const supportPosts = explicitSupportPosts.length > 0 ? explicitSupportPosts : fallbackSupportPosts;
 const categoryDirectory = buildCanonicalAreaDirectory(areaEntries, allPosts);
 const hasCanonicalTaxonomy =
 	post.publicSurfaceStatus === 'allowed' && Boolean(canonicalCategoryCode) && Boolean(post.categoryUrl);
@@ -45,7 +60,23 @@ const introTags = post.temas.slice(0, 3);
 const showIntroTags = introTags.length > 0;
 const showIntroBlock = Boolean(introText) || showIntroTags;
 const hasReadingSidebar = toc.length > 1 || supportPosts.length > 0 || categoryDirectory.length > 0;
-const areaHref = post.areaUrl ?? '/#areas';
+const areaHref =
+	post.areaUrl ??
+	(post.ctaType === 'area' && post.ctaTarget ? post.ctaTarget : undefined) ??
+	'/areas/';
+const finalAreaHref = /^https?:\/\//i.test(areaHref) ? areaHref : new URL(areaHref, MAIN_SITE_URL).toString();
+const finalCtaDescription =
+	currentArea?.data.shortDescription ??
+	post.cta.description ??
+	'Consulte a area institucional correspondente para entender criterios, documentos e limites da analise inicial.';
+const showFinalCta = Boolean(finalAreaHref && post.publicSurfaceStatus === 'allowed');
+const finalCtaAnalyticsAttrs = editorialAnalyticsAttributes({
+	eventName: EDITORIAL_ANALYTICS_EVENTS.B3_S2_FINAL_CTA_CLICK,
+	surfaceOrigin: 'B3',
+	surfaceTarget: 'S2',
+	linkType: 'final-cta',
+	...postAnalyticsContext(post),
+});
 const articleSchema = {
 	'@context': 'https://schema.org',
 	'@type': 'BlogPosting',
@@ -141,6 +172,17 @@ const faqSchema =
 					</section>
 				)}
 
+				<div class="reading-footer">
+					<AuthorBox post={post} />
+					{showFinalCta && (
+						<ArticleFooterCTA
+							href={finalAreaHref}
+							description={finalCtaDescription}
+							intent="area"
+							analyticsAttributes={finalCtaAnalyticsAttrs}
+						/>
+					)}
+				</div>
 			</article>
 
 			{hasReadingSidebar && (
