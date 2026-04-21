@@ -221,6 +221,10 @@
 			display: grid;
 			gap: 0.95rem;
 		}
+		.form-field {
+			display: grid;
+			gap: 0.35rem;
+		}
 		label {
 			display: grid;
 			gap: 0.35rem;
@@ -256,6 +260,21 @@
 			font-size: 0.86rem;
 		}
 		.form-card .btn { width: 100%; }
+		.exp-s3-form-reduced .entry-grid {
+			grid-template-columns: minmax(0, 0.74fr) minmax(300px, 0.86fr);
+		}
+		.exp-s3-form-reduced .form-card {
+			gap: 0.8rem;
+		}
+		.exp-s3-form-reduced .form-field--optional {
+			display: none;
+		}
+		.exp-s3-form-reduced .form-card h2 {
+			font-size: 1.22rem;
+		}
+		.exp-s3-form-reduced .form-note {
+			max-width: 48ch;
+		}
 		.site-footer {
 			padding-block: 3rem;
 			background: #161a1b;
@@ -290,6 +309,21 @@
 			font-size: 0.82rem;
 			display: grid;
 			gap: 0.5rem;
+		}
+
+		.exp-r1-footer-accent-soft .site-footer {
+			background:
+				linear-gradient(180deg, rgba(28, 31, 33, 0.98), rgba(21, 24, 25, 1)),
+				#1b1e20;
+		}
+
+		.exp-r1-footer-accent-soft .site-footer__bottom {
+			border-top-color: rgba(204, 176, 147, 0.16);
+		}
+
+		.exp-r1-footer-accent-soft .site-footer a:hover,
+		.exp-r1-footer-accent-soft .site-footer a:focus-visible {
+			text-decoration-color: rgba(204, 176, 147, 0.42);
 		}
 		@media (max-width: 980px) {
 			.site-header__inner,
@@ -406,7 +440,15 @@
 					</article>
 				</div>
 
-				<form class="form-card" id="contatoForm" method="post" action="/api/contato" aria-describedby="contact-form-note">
+				<form
+					class="form-card"
+					id="contatoForm"
+					method="post"
+					action="/api/contato"
+					aria-describedby="contact-form-note"
+					data-experiment-key="s3-form-reduced"
+					data-base-variant="standard"
+				>
 					<h2>Solicitar triagem inicial</h2>
 					<p class="form-note">
 						Compartilhe um resumo objetivo. O foco é entender o problema, não fechar uma conclusão instantânea.
@@ -422,11 +464,11 @@
 						<span>E-mail</span>
 						<input id="email" name="email" autocomplete="email" required type="email" />
 					</label>
-					<label>
+					<label class="form-field form-field--optional">
 						<span>Telefone ou WhatsApp</span>
 						<input id="telefone_full" name="telefone_full" autocomplete="tel" inputmode="tel" type="tel" />
 					</label>
-					<label>
+					<label class="form-field form-field--optional">
 						<span>Tema principal</span>
 						<select id="tema" name="tema">
 							<option value="">Selecione se já souber</option>
@@ -460,7 +502,7 @@
 		</div>
 	</main>
 
-	<footer class="site-footer" role="contentinfo">
+	<footer class="site-footer" role="contentinfo" data-experiment-key="r1-footer-accent-soft" data-base-variant="standard">
 		<div class="container site-footer__grid">
 			<section>
 				<h2>PAVIE | Advocacia</h2>
@@ -499,6 +541,7 @@
 		</div>
 	</footer>
 
+	<script src="/assets/js/pavie-experiments.js"></script>
 	<script src="/form.turnstile.js" defer></script>
 	<script src="/assets/js/form.submit.js" defer></script>
 	<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>

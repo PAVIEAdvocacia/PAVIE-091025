@@ -25,7 +25,12 @@ const authorPhotoAlt =
 const authorUrl = matchedAuthor ? `/blog/autor/${matchedAuthor.data.slug}/` : post.authorUrl ?? '/sobre/';
 ---
 
-<section class="author-card" aria-label="Informações do autor">
+<section
+	class="author-card"
+	aria-label="Informações do autor"
+	data-experiment-key="b3-author-compact"
+	data-base-variant="standard"
+>
 	{
 		authorPhoto && (
 			<img

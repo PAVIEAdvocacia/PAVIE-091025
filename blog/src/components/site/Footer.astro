@@ -42,7 +42,12 @@ const noticeText = isBlogSurface
 	: 'Contato inicial nao e contratacao automatica. Toda orientacao depende de triagem, documentos e analise tecnica proporcional.';
 ---
 
-<footer class="site-footer" role="contentinfo">
+<footer
+	class="site-footer"
+	role="contentinfo"
+	data-experiment-key="r1-footer-accent-soft"
+	data-base-variant="standard"
+>
 	<div class="container site-footer__grid">
 		<section class="site-footer__brand" aria-labelledby="site-footer-brand">
 			<BrandLogo variant="square" theme="dark" width={165} />
@@ -235,5 +240,37 @@ const noticeText = isBlogSurface
 		.site-footer__bottom {
 			display: grid;
 		}
+	}
+
+	:global(body.exp-r1-footer-accent-soft) .site-footer {
+		background:
+			linear-gradient(180deg, rgba(28, 31, 33, 0.98), rgba(21, 24, 25, 1)),
+			#1b1e20;
+	}
+
+	:global(body.exp-r1-footer-accent-soft) .site-footer::before {
+		background-image:
+			linear-gradient(135deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+			linear-gradient(45deg, rgba(204, 176, 147, 0.035) 1px, transparent 1px);
+		background-size: 18px 18px;
+		opacity: 0.12;
+	}
+
+	:global(body.exp-r1-footer-accent-soft) .site-footer h2 {
+		color: color-mix(in srgb, white 78%, var(--color-sand));
+	}
+
+	:global(body.exp-r1-footer-accent-soft) .site-footer a:hover,
+	:global(body.exp-r1-footer-accent-soft) .site-footer a:focus-visible {
+		text-decoration-color: rgba(204, 176, 147, 0.42);
+	}
+
+	:global(body.exp-r1-footer-accent-soft) .site-footer__notice,
+	:global(body.exp-r1-footer-accent-soft) .site-footer__bottom {
+		border-top-color: rgba(204, 176, 147, 0.16);
+	}
+
+	:global(body.exp-r1-footer-accent-soft) .site-footer__notice p::before {
+		background: color-mix(in srgb, var(--color-sand) 72%, var(--color-accent));
 	}
 </style>

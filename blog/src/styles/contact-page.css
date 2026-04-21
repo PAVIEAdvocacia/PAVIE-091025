@@ -96,6 +96,11 @@
 	gap: 0.95rem;
 }
 
+.s3-form__field {
+	display: grid;
+	gap: 0.36rem;
+}
+
 .s3-form label:not(.s3-form__consent) {
 	display: grid;
 	gap: 0.36rem;
@@ -147,6 +152,30 @@
 .s3-form__status {
 	min-height: 1.25rem;
 	font-size: 0.92rem;
+}
+
+body.exp-s3-form-reduced .s3-entry {
+	grid-template-columns: minmax(0, 0.74fr) minmax(300px, 0.86fr);
+}
+
+body.exp-s3-form-reduced .s3-form {
+	gap: 0.8rem;
+}
+
+body.exp-s3-form-reduced .s3-form__field--optional {
+	display: none;
+}
+
+body.exp-s3-form-reduced .s3-form h2 {
+	font-size: clamp(1.12rem, 1.04rem + 0.42vw, 1.4rem);
+}
+
+body.exp-s3-form-reduced .s3-form .text-muted {
+	max-width: 48ch;
+}
+
+body.exp-s3-form-reduced .s3-entry__panel {
+	background: color-mix(in srgb, var(--surface-card) 88%, white);
 }
 
 @media (max-width: 960px) {

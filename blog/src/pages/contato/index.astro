@@ -126,6 +126,8 @@ const addressLine = `${BUSINESS_ADDRESS.streetAddress}, ${BUSINESS_ADDRESS.addre
 				action="/api/contato"
 				method="post"
 				aria-describedby="contact-form-note"
+				data-experiment-key="s3-form-reduced"
+				data-base-variant="standard"
 			>
 				<h2>Solicitar triagem inicial</h2>
 				<p class="text-muted">
@@ -145,12 +147,12 @@ const addressLine = `${BUSINESS_ADDRESS.streetAddress}, ${BUSINESS_ADDRESS.addre
 					<input id="email" name="email" autocomplete="email" required type="email" />
 				</label>
 
-				<label for="telefone_full">
+				<label for="telefone_full" class="s3-form__field s3-form__field--optional">
 					<span>Telefone ou WhatsApp</span>
 					<input id="telefone_full" name="telefone_full" autocomplete="tel" inputmode="tel" type="tel" />
 				</label>
 
-				<label for="tema">
+				<label for="tema" class="s3-form__field s3-form__field--optional">
 					<span>Tema principal</span>
 					<select id="tema" name="tema">
 						<option value="">Selecione se ja souber</option>

@@ -592,6 +592,64 @@
 	text-decoration: underline;
 }
 
+body.exp-b3-cta-tonal-band .reading-next-step {
+	position: relative;
+	border-inline-start: 0;
+	background:
+		linear-gradient(
+			180deg,
+			color-mix(in srgb, var(--color-soft) 54%, white),
+			color-mix(in srgb, var(--surface-card) 94%, white)
+		);
+}
+
+body.exp-b3-cta-tonal-band .reading-next-step::before {
+	content: '';
+	display: block;
+	width: min(140px, 36%);
+	height: 0.22rem;
+	border-radius: 999px;
+	background: linear-gradient(
+		90deg,
+		color-mix(in srgb, var(--color-sand) 82%, white),
+		color-mix(in srgb, var(--color-accent) 42%, var(--color-petrol))
+	);
+}
+
+body.exp-b3-cta-tonal-band .reading-next-step h2 {
+	max-width: 30ch;
+}
+
+body.exp-b3-cta-tonal-band .reading-bridge__actions {
+	margin-top: 0.1rem;
+}
+
+body.exp-b3-cta-tonal-band .reading-ethics-note {
+	padding-top: 0;
+	border-top: 0;
+}
+
+body.exp-b3-author-compact .author-card {
+	grid-template-columns: minmax(72px, 92px) minmax(0, 1fr);
+	gap: 0.7rem;
+	padding: 0.85rem 0.95rem;
+	background: color-mix(in srgb, var(--surface-card) 94%, white);
+}
+
+body.exp-b3-author-compact .author-card__photo {
+	aspect-ratio: 4 / 5;
+	border-radius: var(--radius-xs);
+}
+
+body.exp-b3-author-compact .author-card__body {
+	gap: 0.35rem;
+}
+
+body.exp-b3-author-compact .author-card p,
+body.exp-b3-author-compact .author-card__note {
+	font-size: 0.86rem;
+}
+
 .related-posts {
 	display: grid;
 	gap: 0.8rem;

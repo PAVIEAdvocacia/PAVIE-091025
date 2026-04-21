@@ -61,6 +61,7 @@ const canonicalUrl = canonical || new URL(Astro.url.pathname, Astro.site ?? MAIN
 			</main>
 			{!hideFooter && <SiteFooter currentPath={Astro.url.pathname} />}
 		</div>
+		<script is:inline src="/assets/js/pavie-experiments.js"></script>
 		<EditorialAnalytics />
 	</body>
 </html>
