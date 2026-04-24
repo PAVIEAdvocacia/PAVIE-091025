@@ -3,6 +3,8 @@ import type { BlogPost } from '../lib/posts';
 import type { TocItem } from '../lib/toc';
 import '../styles/reading.css';
 import ArticleHero from '../components/blog/ArticleHero.astro';
+import ArticleFooterCTA from '../components/blog/ArticleFooterCTA.astro';
+import AuthorBox from '../components/blog/AuthorBox.astro';
 import Breadcrumbs from '../components/blog/Breadcrumbs.astro';
 import ReadingSidebar from '../components/blog/ReadingSidebar.astro';
 import BaseLayout from './BaseLayout.astro';
@@ -46,6 +48,20 @@ const showIntroTags = introTags.length > 0;
 const showIntroBlock = Boolean(introText) || showIntroTags;
 const hasReadingSidebar = toc.length > 1 || supportPosts.length > 0 || categoryDirectory.length > 0;
 const areaHref = post.areaUrl ?? '/#areas';
+const finalCtaHref = post.cta?.href || post.ctaTarget || areaHref;
+const finalCtaLabel =
+	post.ctaType === 'area' && post.cta?.label === 'Conheça a área correspondente'
+		? 'Ver área correspondente'
+		: post.cta?.label ?? 'Ver próximo passo';
+const finalCtaDescription =
+	post.cta?.description ??
+	'Este conteúdo tem caráter informativo. Para o caso concreto, é preciso avaliar fatos, documentos, contexto e estratégia.';
+const finalCtaTarget = finalCtaHref.startsWith('/areas/')
+	? 'area'
+	: finalCtaHref.includes('#contato')
+		? 'site-contact'
+		: 'site';
+const showFinalCta = Boolean(finalCtaHref && post.publicSurfaceStatus === 'allowed');
 const articleSchema = {
 	'@context': 'https://schema.org',
 	'@type': 'BlogPosting',
@@ -141,6 +157,18 @@ const faqSchema =
 					</section>
 				)}
 
+				<div class="reading-footer">
+					<AuthorBox post={post} />
+					{showFinalCta && (
+						<ArticleFooterCTA
+							href={finalCtaHref}
+							description={finalCtaDescription}
+							label={finalCtaLabel}
+							intent={post.ctaType ?? 'area'}
+							target={finalCtaTarget}
+						/>
+					)}
+				</div>
 			</article>
 
 			{hasReadingSidebar && (

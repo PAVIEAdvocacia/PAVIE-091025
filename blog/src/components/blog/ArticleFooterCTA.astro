@@ -4,22 +4,26 @@ interface Props {
 	description: string;
 	label?: string;
 	intent?: string;
+	target?: string;
 	analyticsAttributes?: Record<string, string>;
 }
 
 const {
 	href,
 	description,
-	label = 'Conheça a área correspondente',
+	label = 'Ver próximo passo',
 	intent = 'area',
+	target,
 	analyticsAttributes = {},
 } = Astro.props;
+
+const dataLinkTarget = target ?? (intent === 'area' ? 'area' : 'site-contact');
 ---
 
-<section class="reading-next-step" aria-label="Próximo passo após a leitura">
+<section class="reading-next-step" aria-label="Próximo passo após a leitura" data-b3-final-cta="true">
 	<div>
-		<span class="section-kicker">Transição para o site</span>
-		<h2>Quando a leitura já localiza o tema, o próximo passo é consultar a área correspondente.</h2>
+		<span class="section-kicker">Próximo passo</span>
+		<h2>Use a leitura como ponto de partida para organizar a análise.</h2>
 		<p>{description}</p>
 	</div>
 	<div class="reading-bridge__actions">
@@ -29,11 +33,11 @@ const {
 			data-cta-origin="article-final"
 			data-cta-intent={intent}
 			data-link-origin="article-final"
-			data-link-target="area"
+			data-link-target={dataLinkTarget}
 			{...analyticsAttributes}
 		>
 			{label}
 		</a>
 	</div>
-	<p class="reading-ethics-note">Conteúdo informativo. Cada caso exige análise técnica individual.</p>
+	<p class="reading-ethics-note">Este conteúdo tem caráter informativo. Para o caso concreto, é preciso avaliar fatos, documentos, contexto e estratégia.</p>
 </section>

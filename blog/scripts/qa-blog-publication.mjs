@@ -22,7 +22,7 @@ const REQUIRED_EDITORIAL_EVENTS = [
 	'editorial_s2_blog_bridge_click',
 	'editorial_s2_site_contact_click',
 ];
-const ACCEPTED_DORMANT_B3_EVENTS = [
+const LEGACY_B3_EVENTS = [
 	'editorial_b3_s2_final_cta_click',
 	'editorial_b3_related_read_click',
 ];
@@ -368,12 +368,12 @@ function validateEditorialEvents(dist) {
 		}
 		notes.push(`${eventName}=${count}`);
 	}
-	for (const eventName of ACCEPTED_DORMANT_B3_EVENTS) {
+	for (const eventName of LEGACY_B3_EVENTS) {
 		const count = (allHtml.match(new RegExp(eventName, 'g')) ?? []).length;
 		if (count > 0) {
-			errors.push(`Evento antigo de B3 reapareceu no HTML final aceito: ${eventName}.`);
+			errors.push(`Evento legado de B3 reapareceu no HTML final aceito: ${eventName}.`);
 		}
-		notes.push(`${eventName}=${count} (dormant no B3 limpo)`);
+		notes.push(`${eventName}=${count} (legado, sem ponto de disparo na B3 canonica)`);
 	}
 	if (!allHtml.includes('pavieEditorialDataLayer')) {
 		errors.push('Runtime neutro da Fase 6 ausente: pavieEditorialDataLayer.');
@@ -414,6 +414,20 @@ function validateAcceptedB3ReadingState(content, dist) {
 		const html = dist.htmlByRoute.get(route) ?? '';
 		if (!html.includes('data-b3-reading-clean="true"')) {
 			errors.push(`${route}: marcador do B3 limpo ausente.`);
+		}
+		const finalCtaCount = (html.match(/data-b3-final-cta="true"/g) ?? []).length;
+		if (finalCtaCount !== 1) {
+			errors.push(`${route}: B3 deve renderizar exatamente um CTA final disciplinado; encontrados ${finalCtaCount}.`);
+		}
+		if (!html.includes('data-link-origin="article-final"')) {
+			errors.push(`${route}: CTA final da B3 sem origem de link article-final.`);
+		}
+		const authorBoxCount = (html.match(/data-b3-author-box="true"/g) ?? []).length;
+		if (authorBoxCount !== 1) {
+			errors.push(`${route}: B3 deve renderizar exatamente um bloco de autoria editorial; encontrados ${authorBoxCount}.`);
+		}
+		if (!html.includes('data-link-origin="article-author-box"')) {
+			errors.push(`${route}: bloco de autoria da B3 sem link para pagina do autor.`);
 		}
 		if (!html.includes('data-b3-sidebar-order="toc-categories-same-category"')) {
 			errors.push(`${route}: ordem aceita da sidebar da B3 ausente.`);
