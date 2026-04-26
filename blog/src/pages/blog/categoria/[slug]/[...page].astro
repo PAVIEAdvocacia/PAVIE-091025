@@ -49,7 +49,7 @@ const posts = sortPostsByDate(normalizePosts(blogEntries, authorEntries)).filter
 const currentCategory = getCanonicalAreaDirectoryItem(areaEntries, posts, Astro.props.categorySlug ?? Astro.params.slug ?? '');
 
 if (!currentCategory) {
-	throw new Error(`Categoria canonica nao encontrada: ${Astro.params.slug}`);
+	throw new Error(`Categoria canônica não encontrada: ${Astro.params.slug}`);
 }
 
 const pageNumber = Number(Astro.props.pageNumber ?? 1);
@@ -63,7 +63,7 @@ const categoryAuthor =
 	authorEntries[0];
 const categoryCountLabel = hasCategoryPosts
 	? `${currentCategory.postCount} artigo${currentCategory.postCount === 1 ? '' : 's'} publicado${currentCategory.postCount === 1 ? '' : 's'}`
-	: 'Acervo em preparacao nesta categoria';
+	: 'Acervo em preparação nesta categoria';
 const pagePath = pageNumber > 1 ? `${currentCategory.categoryHref}${pageNumber}/` : currentCategory.categoryHref;
 const canonicalUrl = `${BLOG_SITE_URL}${pagePath}`;
 const previousPageHref =
@@ -82,7 +82,7 @@ const breadcrumbs = [
 ];
 const breadcrumbSchema = buildBreadcrumbSchema(breadcrumbs, canonicalUrl);
 const pageTitle = pageNumber > 1
-	? `${currentCategory.title} | Categoria do blog | Pagina ${pageNumber}`
+	? `${currentCategory.title} | Categoria do blog | Página ${pageNumber}`
 	: `${currentCategory.title} | Categoria do blog`;
 ---
 
@@ -98,17 +98,17 @@ const pageTitle = pageNumber > 1
 
 		<section class="category-area-link" aria-labelledby="category-area-title">
 			<div class="category-area-link__copy">
-				<span class="section-kicker">Relacao area-categoria</span>
+				<span class="section-kicker">Relação área-categoria</span>
 				<h2 id="category-area-title">Esta categoria amadurece a leitura antes do retorno ao site.</h2>
 				<p>{currentCategory.headline}</p>
 			</div>
-			<ul class="category-area-link__facts" aria-label="Vinculo editorial da categoria">
+			<ul class="category-area-link__facts" aria-label="Vínculo editorial da categoria">
 				<li>
 					<span>Categoria editorial</span>
 					<strong>{currentCategory.displayTitle}</strong>
 				</li>
 				<li>
-					<span>Area correspondente</span>
+					<span>Área correspondente</span>
 					<strong>{currentCategory.canonicalTitle}</strong>
 				</li>
 				<li>
@@ -128,7 +128,7 @@ const pageTitle = pageNumber > 1
 				<h2 id="category-archive-title">{categoryCountLabel}</h2>
 			</div>
 			<p>
-				A contagem usa apenas textos publicados, revisados e liberados para superficie publica nesta categoria.
+				A contagem usa apenas textos publicados, revisados e liberados para superfície pública nesta categoria.
 			</p>
 		</section>
 
@@ -143,10 +143,10 @@ const pageTitle = pageNumber > 1
 				{featuredPost ? (
 					<FeaturedPost post={featuredPost} />
 				) : (
-					<div class="surface-card empty-state" aria-label="Acervo em preparacao">
-						<h3>Acervo em preparacao</h3>
+					<div class="surface-card empty-state" aria-label="Acervo em preparação">
+						<h3>Acervo em preparação</h3>
 						<p>
-							Esta categoria ja esta estruturada no registry e recebera textos conforme avancarem por revisao editorial e juridica.
+							Esta categoria já está estruturada no registry e receberá textos conforme avançarem por revisão editorial e jurídica.
 						</p>
 					</div>
 				)}
@@ -157,7 +157,7 @@ const pageTitle = pageNumber > 1
 			<div class="section-title">
 				<div>
 					<span class="section-kicker">Artigos da categoria</span>
-					<h2 id="category-reading-list-title">Leituras uteis para maturar o tema</h2>
+					<h2 id="category-reading-list-title">Leituras úteis para maturar o tema</h2>
 				</div>
 			</div>
 
@@ -189,11 +189,11 @@ const pageTitle = pageNumber > 1
 				</ol>
 			) : (
 				<div class="surface-card empty-state" aria-label="Sem leituras complementares nesta categoria">
-					<h3>{hasCategoryPosts ? 'Leitura central ja disponivel' : 'Acervo em preparacao'}</h3>
+					<h3>{hasCategoryPosts ? 'Leitura central já disponível' : 'Acervo em preparação'}</h3>
 					<p>
 						{hasCategoryPosts
-							? 'A categoria ja possui uma leitura central em destaque. Novos textos complementares entram conforme forem revisados.'
-							: 'A categoria ja esta estruturada no registry e recebera artigos conforme o acervo for aprovado.'}
+							? 'A categoria já possui uma leitura central em destaque. Novos textos complementares entram conforme forem revisados.'
+							: 'A categoria já está estruturada no registry e receberá artigos conforme o acervo for aprovado.'}
 					</p>
 				</div>
 			)}
@@ -207,10 +207,10 @@ const pageTitle = pageNumber > 1
 							data-link-origin="category-pagination"
 							data-link-target="category-page"
 						>
-							Pagina anterior
+							Página anterior
 						</a>
 					)}
-					<span class="section-kicker">Pagina {pageNumber} de {pageCount}</span>
+					<span class="section-kicker">Página {pageNumber} de {pageCount}</span>
 					{nextPageHref && (
 						<a
 							class="btn btn-ghost"
@@ -218,7 +218,7 @@ const pageTitle = pageNumber > 1
 							data-link-origin="category-pagination"
 							data-link-target="category-page"
 						>
-							Proxima pagina
+							Próxima página
 						</a>
 					)}
 				</nav>
@@ -226,11 +226,11 @@ const pageTitle = pageNumber > 1
 		</section>
 
 		<section class="category-final-cta" aria-labelledby="category-final-title">
-			<span class="section-kicker">Transicao para o site</span>
-			<h2 id="category-final-title">Quando o tema ja estiver mais claro, volte a area correspondente.</h2>
+			<span class="section-kicker">Transição para o site</span>
+			<h2 id="category-final-title">Quando o tema já estiver mais claro, volte à área correspondente.</h2>
 			<p>
-				A categoria organiza a leitura por interesse. A pagina institucional concentra o enquadramento da area,
-				os limites do primeiro contato e o caminho adequado para uma analise responsavel.
+				A categoria organiza a leitura por interesse. A página institucional concentra o enquadramento da área,
+				os limites do primeiro contato e o caminho adequado para uma análise responsável.
 			</p>
 			<div class="blog-actions">
 				<a
@@ -257,8 +257,8 @@ const pageTitle = pageNumber > 1
 				<div>
 					<h2 id="category-author-title">{categoryAuthor.data.name}</h2>
 					<p>
-						A curadoria da categoria privilegia contexto, criterios documentais e limites da leitura editorial,
-						sem substituir analise juridica individual.
+						A curadoria da categoria privilegia contexto, critérios documentais e limites da leitura editorial,
+						sem substituir análise jurídica individual.
 					</p>
 				</div>
 				<a

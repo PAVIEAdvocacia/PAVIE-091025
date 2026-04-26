@@ -8,7 +8,6 @@ import { buildCanonicalAreaDirectory } from '../../lib/canonical-directory';
 import { normalizeCmsImagePath } from '../../lib/content-media';
 import {
 	EDITORIAL_ANALYTICS_EVENTS,
-	categoryAnalyticsContext,
 	editorialAnalyticsAttributes,
 	postAnalyticsContext,
 } from '../../lib/editorial-analytics';
@@ -22,7 +21,13 @@ const [areaEntries, authorEntries, blogEntries] = await Promise.all([
 const posts = sortPostsByDate(normalizePosts(blogEntries, authorEntries)).filter(isPublicPost);
 const categoryDirectory = buildCanonicalAreaDirectory(areaEntries, posts);
 const b1Selection = buildB1Selection(posts);
-const { primaryHighlights, usefulReads, recentReads, schemaPosts } = b1Selection;
+const primaryHighlights = b1Selection.primaryHighlights.slice(0, 2);
+const activeCategory = categoryDirectory.find((category) => category.postCount > 0);
+const activeCategoryPosts = activeCategory
+	? posts.filter((post) => post.categoryCode === activeCategory.code)
+	: [];
+const preparationCategories = categoryDirectory.filter((category) => category.postCount === 0);
+const { schemaPosts } = b1Selection;
 const heroImage = primaryHighlights[0]?.image ?? '/images/site/hero/hero-01.webp';
 const heroImageAlt = primaryHighlights[0]?.imageAlt ?? 'Imagem editorial em preto e branco para abertura do blog PAVIE';
 const blogAuthor =
@@ -58,14 +63,16 @@ const collectionSchema = {
 	canonical={`${BLOG_SITE_URL}/blog/`}
 >
 	<div class="container blog-home">
-		<section class="blog-editorial-hero" aria-label="Destaques principais">
+		<section class="blog-editorial-hero" aria-label="Destaques">
 			<figure class="blog-editorial-hero__visual">
 				<img src={heroImage} alt={heroImageAlt} loading="eager" decoding="async" />
 				<figcaption>Leitura editorial com foco em prova, contexto e via adequada.</figcaption>
 			</figure>
 
-			<aside class="most-read-panel" aria-label="Destaques principais da seleção editorial">
-				<span class="section-kicker">Bloco A | Destaques principais</span>
+			<aside class="most-read-panel" aria-label="Destaques">
+				<span class="section-kicker">Destaques</span>
+				<h1>Leituras jurídicas para organizar contexto, documentos e próximos passos.</h1>
+				<p>O blog reúne textos informativos conectados às áreas institucionais, sem substituir análise individual do caso.</p>
 				{primaryHighlights.length > 0 ? (
 					<ol class="most-read-list">
 						{primaryHighlights.map((post, index) => (
@@ -125,63 +132,31 @@ const collectionSchema = {
 		<section class="blog-taxonomy-strip" aria-labelledby="blog-taxonomy-title">
 			<div class="blog-taxonomy-strip__intro">
 				<span class="section-kicker">Mapa editorial</span>
-				<h2 id="blog-taxonomy-title">Categorias do blog</h2>
+				<h2 id="blog-taxonomy-title">Categorias em preparação</h2>
 			</div>
 			<ol class="blog-taxonomy-strip__list">
-				{categoryDirectory.map((category) => (
+				{preparationCategories.map((category) => (
 					<li>
-						{category.postCount > 0 ? (
-							<a
-								href={category.categoryHref}
-								data-link-origin="blog-home-taxonomy"
-								data-link-target="category"
-								{...editorialAnalyticsAttributes({
-									eventName: EDITORIAL_ANALYTICS_EVENTS.B1_CATEGORY_CLICK,
-									surfaceOrigin: 'B1',
-									surfaceTarget: 'B2',
-									linkType: 'category-link',
-									...categoryAnalyticsContext(category),
-								})}
-							>
-								<span>{category.code}</span>
-								<strong>{category.displayTitle}</strong>
-								<small>{category.postCount} artigo{category.postCount === 1 ? '' : 's'}</small>
-							</a>
-						) : (
-							<div class="blog-taxonomy-strip__item" data-category-state="preparation">
-								<span>{category.code}</span>
-								<strong>{category.displayTitle}</strong>
-								<small>Em preparacao</small>
-							</div>
-						)}
+						<div class="blog-taxonomy-strip__item" data-category-state="preparation">
+							<span>{category.code}</span>
+							<strong>{category.displayTitle}</strong>
+							<small>Em preparação</small>
+						</div>
 					</li>
 				))}
 			</ol>
 		</section>
 
 		<BlogGrid
-			title="Leituras úteis para organizar o tema"
-			kicker="Bloco B | Utilidade editorial"
+			title={`Artigos publicados em ${activeCategory?.displayTitle ?? 'categoria ativa'}`}
+			kicker="Leituras úteis"
 			id="blog-useful-reads"
-			posts={usefulReads}
+			posts={activeCategoryPosts}
 			analyticsSurfaceOrigin="B1"
 			articleEventName={EDITORIAL_ANALYTICS_EVENTS.B1_ARTICLE_CLICK}
 			categoryEventName={EDITORIAL_ANALYTICS_EVENTS.B1_CATEGORY_CLICK}
 			emptyTitle="Leituras úteis em preparação"
 			emptyText="Este bloco será preenchido por guias, checklists e respostas com maior utilidade de leitura conforme o acervo aprovado crescer."
-		/>
-
-		<BlogGrid
-			title="Publicações recentes selecionadas"
-			kicker="Bloco C | Recência subordinada"
-			id="blog-recent-selected"
-			posts={recentReads}
-			compact
-			analyticsSurfaceOrigin="B1"
-			articleEventName={EDITORIAL_ANALYTICS_EVENTS.B1_ARTICLE_CLICK}
-			categoryEventName={EDITORIAL_ANALYTICS_EVENTS.B1_CATEGORY_CLICK}
-			emptyTitle="Publicações em preparação"
-			emptyText="A recência aparece como bloco subordinado, sem governar a seleção principal da home."
 		/>
 
 		{blogAuthor && (

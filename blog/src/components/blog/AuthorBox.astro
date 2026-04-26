@@ -16,7 +16,7 @@ const matchedAuthor = authorEntries.find((entry) => {
 });
 const authorSignature =
 	(matchedAuthor?.data.slug ?? post.authorSlug) === 'fabio-pavie'
-		? 'Fabio Pavie escreve principalmente sobre questões patrimoniais, familiares, sucessórias, imobiliárias e documentais, com rigor documental e linguagem clara.'
+		? 'Fabio Mathias Pavie, advogado titular e fundador da PAVIE | Advocacia, OAB/RJ 134.947.'
 		: 'Conteúdo produzido no ecossistema PAVIE para orientar com clareza, sem substituir a análise individual do caso.';
 const authorName = matchedAuthor?.data.name ?? post.authorName;
 const authorPhoto = normalizeCmsImagePath(matchedAuthor?.data.image) ?? post.authorImage;

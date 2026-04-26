@@ -149,18 +149,18 @@ export function normalizeSlug(value: string): string {
 function inferThemes(title: string, description: string): string[] {
 	const source = `${title} ${description}`.toLowerCase();
 	const themes: string[] = [];
-	if (source.includes('divorcio')) themes.push('Divorcio');
+	if (source.includes('divorcio')) themes.push('Divórcio');
 	if (source.includes('guarda')) themes.push('Guarda');
-	if (source.includes('inventario')) themes.push('Inventario');
+	if (source.includes('inventario')) themes.push('Inventário');
 	if (source.includes('partilha')) themes.push('Partilha');
 	if (source.includes('contrato')) themes.push('Contratos');
-	if (source.includes('imovel')) themes.push('Imovel');
+	if (source.includes('imovel')) themes.push('Imóvel');
 	return themes;
 }
 
 function ensureDescription(title: string, description: string): string {
 	if (description) return description;
-	return `Analise juridica da PAVIE sobre ${title.toLowerCase()}.`;
+	return `Análise jurídica da PAVIE sobre ${title.toLowerCase()}.`;
 }
 
 function resolveLegacyStatus(rawValue: string): string {
@@ -208,10 +208,10 @@ function resolveCanonicalCta(
 			return {
 				ctaKey: 'diagnostico_juridico',
 				cta: {
-					label: 'Solicitar orientacao inicial',
+					label: 'Solicitar orientação inicial',
 					href: ctaTarget || '/#contato',
 					description:
-						'Entenda quando faz sentido avancar para a orientacao inicial e quais informacoes ajudam no primeiro contato.',
+						'Entenda quando faz sentido avançar para a orientação inicial e quais informações ajudam no primeiro contato.',
 				},
 			};
 		case 'area': {
@@ -223,8 +223,8 @@ function resolveCanonicalCta(
 					label: institutional ? 'Conheça a área correspondente' : 'Explorar temas',
 					href,
 					description: institutional
-						? 'Veja como a PAVIE apresenta esta area de atuacao na camada institucional do site.'
-						: 'Continue a leitura por assunto e encontre novos caminhos para aprofundar a situacao.',
+						? 'Veja como a PAVIE apresenta esta área de atuação na camada institucional do site.'
+						: 'Continue a leitura por assunto e encontre novos caminhos para aprofundar a situação.',
 				},
 			};
 		}
@@ -235,7 +235,7 @@ function resolveCanonicalCta(
 					label: 'Explorar temas',
 					href: ctaTarget || safeCategoryHref,
 					description:
-						'Continue a leitura por assunto e encontre novos caminhos para aprofundar a situacao.',
+						'Continue a leitura por assunto e encontre novos caminhos para aprofundar a situação.',
 				},
 			};
 		case 'document-review':
@@ -245,7 +245,7 @@ function resolveCanonicalCta(
 					label: 'Solicitar análise inicial',
 					href: ctaTarget || '/#contato',
 					description:
-						'Comece reunindo os documentos principais para avaliar a via mais adequada para a situacao.',
+						'Comece reunindo os documentos principais para avaliar a via mais adequada para a situação.',
 				},
 			};
 		default:

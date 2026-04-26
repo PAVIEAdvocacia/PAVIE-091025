@@ -290,8 +290,8 @@ export function buildB1EditorialCandidates(posts: BlogPost[]): B1EditorialCandid
 			reviewNote:
 				manualOverride.reviewNote ??
 				(featuredStatus
-					? 'Marcado como destaque no frontmatter canonico; prioridade manual preservada.'
-					: 'Selecao semiautomatica pela matriz B1 com vinculo area-categoria resolvido.'),
+					? 'Marcado como destaque no frontmatter canônico; prioridade manual preservada.'
+					: 'Seleção semiautomática pela matriz B1 com vínculo área-categoria resolvido.'),
 			preferredBlock: manualOverride.block,
 		} satisfies Omit<B1EditorialCandidate, 'score'>;
 

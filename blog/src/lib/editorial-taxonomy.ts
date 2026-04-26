@@ -1,7 +1,7 @@
 export const EDITORIAL_AREAS = [
 	{
 		key: 'familia-sucessoes-patrimonio',
-		label: 'Familia, Sucessoes e Patrimonio',
+		label: 'Família, Sucessões e Patrimônio',
 		aliases: [
 			'familia',
 			'sucessoes',
@@ -14,12 +14,12 @@ export const EDITORIAL_AREAS = [
 	},
 	{
 		key: 'contratos-obrigacoes-responsabilidade-civil',
-		label: 'Contratos, Obrigacoes e Responsabilidade Civil',
+		label: 'Contratos, Obrigações e Responsabilidade Civil',
 		aliases: ['contratos', 'cobranca', 'contratos-e-negocios', 'cobranca-e-recuperacao-de-credito'],
 	},
 	{
 		key: 'imobiliario-regularizacao-condominios',
-		label: 'Imobiliario, Regularizacao e Condominios',
+		label: 'Imobiliário, Regularização e Condomínios',
 		aliases: ['imobiliario', 'direito-imobiliario', 'imobiliario-e-regularizacao'],
 	},
 	{
@@ -29,7 +29,7 @@ export const EDITORIAL_AREAS = [
 	},
 	{
 		key: 'compliance-integridade-atuacao-empresarial',
-		label: 'Compliance, Integridade e Atuacao Empresarial',
+		label: 'Compliance, Integridade e Atuação Empresarial',
 		aliases: [
 			'compliance',
 			'empresarial',
@@ -46,19 +46,19 @@ export const PRIMARY_CTA_OPTIONS = [
 		key: 'areas_editoriais',
 		label: 'Explorar categorias',
 		href: '/blog/',
-		description: 'Continue a leitura por assunto e encontre novos caminhos para aprofundar a situacao.',
+		description: 'Continue a leitura por assunto e encontre novos caminhos para aprofundar a situação.',
 	},
 	{
 		key: 'diagnostico_juridico',
-		label: 'Solicitar orientacao inicial',
+		label: 'Solicitar orientação inicial',
 		href: '/#contato',
 		description:
-			'Entenda quando faz sentido avancar para a orientacao inicial e quais informacoes ajudam no primeiro contato.',
+			'Entenda quando faz sentido avançar para a orientação inicial e quais informações ajudam no primeiro contato.',
 	},
 	{
 		key: 'areas_de_atuacao',
-		label: 'Conheca as areas',
+		label: 'Conheça as áreas',
 		href: '/#areas',
-		description: 'Veja como a PAVIE apresenta suas areas de atuacao na camada institucional do site.',
+		description: 'Veja como a PAVIE apresenta suas áreas de atuação na camada institucional do site.',
 	},
 ] as const;

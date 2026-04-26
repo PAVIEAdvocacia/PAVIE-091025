@@ -17,25 +17,25 @@ const { currentPath = '/' } = Astro.props;
 const isBlogSurface = currentPath.startsWith('/blog') || currentPath.startsWith('/autor');
 
 const siteNavItems: NavItem[] = [
-	{ href: `${MAIN_SITE_URL}/`, label: 'Inicio', activePath: '/' },
-	{ href: `${MAIN_SITE_URL}/#areas`, label: 'Areas' },
-	{ href: `${MAIN_SITE_URL}/#metodo`, label: 'Metodo' },
+	{ href: `${MAIN_SITE_URL}/`, label: 'Início', activePath: '/' },
+	{ href: `${MAIN_SITE_URL}/#areas`, label: 'Áreas' },
+	{ href: `${MAIN_SITE_URL}/#metodo`, label: 'Método' },
 	{ href: `${MAIN_SITE_URL}/#contato`, label: 'Contato' },
 ];
 
 const blogNavItems: NavItem[] = [
-	{ href: `${BLOG_SITE_URL}/blog/`, label: 'Conteudos', activePath: '/blog/', activeMatch: 'exact' },
+	{ href: `${BLOG_SITE_URL}/blog/`, label: 'Conteúdos', activePath: '/blog/', activeMatch: 'exact' },
 	{ href: `${BLOG_SITE_URL}/blog/autor/fabio-pavie/`, label: 'Autor', activePath: '/blog/autor/', activeMatch: 'prefix' },
 ];
 
 const navItems = isBlogSurface ? blogNavItems : siteNavItems;
 const brandHref = isBlogSurface ? `${BLOG_SITE_URL}/blog/` : `${MAIN_SITE_URL}/`;
 const brandLabel = isBlogSurface
-	? 'PAVIE | Advocacia, inicio do blog'
-	: 'PAVIE | Advocacia, inicio do site institucional';
+	? 'PAVIE | Advocacia, início do blog'
+	: 'PAVIE | Advocacia, início do site institucional';
 const utilityLink = isBlogSurface
 	? { href: `${MAIN_SITE_URL}/`, label: 'Ir ao site', mark: '' }
-	: { href: `${BLOG_SITE_URL}/blog/`, label: 'Conteudo do Advogado', mark: '+' };
+	: { href: `${BLOG_SITE_URL}/blog/`, label: 'Conteúdo do advogado', mark: '+' };
 
 function isActive(item: NavItem): boolean {
 	const href = item.activePath ?? item.href;
@@ -52,7 +52,7 @@ function isActive(item: NavItem): boolean {
 			<BrandLogo variant="horizontal" width={160} />
 		</a>
 
-		<nav class="site-nav" aria-label={isBlogSurface ? 'Navegacao editorial' : 'Navegacao principal'}>
+		<nav class="site-nav" aria-label={isBlogSurface ? 'Navegação editorial' : 'Navegação principal'}>
 			{navItems.map((item) => (
 				<a
 					href={item.href}
@@ -69,7 +69,7 @@ function isActive(item: NavItem): boolean {
 		</a>
 
 		<details class="site-mobile-nav">
-			<summary aria-label="Abrir menu de navegacao">Menu</summary>
+			<summary aria-label="Abrir menu de navegação">Menu</summary>
 			<div class="site-mobile-nav__panel">
 				{navItems.map((item) => (
 					<a href={item.href}>

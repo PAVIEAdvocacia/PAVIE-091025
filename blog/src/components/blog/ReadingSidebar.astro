@@ -1,51 +1,21 @@
 ---
 import type { TocItem } from '../../lib/toc';
-import type { CanonicalAreaDirectoryItem } from '../../lib/canonical-directory';
 import type { BlogPost } from '../../lib/posts';
 import ReadingTOC from './ReadingTOC.astro';
 
 interface Props {
 	toc: TocItem[];
 	supportPosts?: BlogPost[];
-	categories?: CanonicalAreaDirectoryItem[];
-	currentCategoryCode?: string;
 }
 
 const {
 	toc,
 	supportPosts = [],
-	categories = [],
-	currentCategoryCode,
 } = Astro.props;
 ---
 
-<aside class="reading-sidebar" aria-label="Apoio de leitura" data-b3-sidebar-order="toc-categories-same-category">
+<aside class="reading-sidebar" aria-label="Apoio de leitura" data-b3-sidebar-order="toc-same-category">
 	{toc.length > 1 && <ReadingTOC items={toc} />}
-
-	{categories.length > 0 && (
-		<section
-			class="reading-panel reading-sidebar-block"
-			aria-labelledby="sidebar-categories-title"
-			data-sidebar-section="categories"
-		>
-			<h2 id="sidebar-categories-title">Categorias</h2>
-			<ul class="reading-sidebar-list">
-				{categories.map((category) => (
-					<li>
-						<a
-							href={category.categoryHref}
-							aria-current={category.code === currentCategoryCode ? 'page' : undefined}
-							data-link-origin="article-sidebar"
-							data-link-target="category"
-						>
-							<span>{category.code}</span>
-							<strong>{category.displayTitle}</strong>
-						</a>
-					</li>
-				))}
-			</ul>
-		</section>
-	)}
 
 	{supportPosts.length > 0 && (
 		<section

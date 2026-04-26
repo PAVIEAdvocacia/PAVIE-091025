@@ -139,7 +139,7 @@ const posts = defineCollection({
 					ctx.addIssue({
 						code: z.ZodIssueCode.custom,
 						path: ['legalReview'],
-						message: 'Posts publicaveis exigem revisao juridica concluida.',
+						message: 'Posts publicáveis exigem revisão jurídica concluída.',
 					});
 				}
 
@@ -147,7 +147,7 @@ const posts = defineCollection({
 					ctx.addIssue({
 						code: z.ZodIssueCode.custom,
 						path: ['editorialReview'],
-						message: 'Posts publicaveis exigem revisao editorial concluida.',
+						message: 'Posts publicáveis exigem revisão editorial concluída.',
 					});
 				}
 			}),

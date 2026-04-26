@@ -34,7 +34,7 @@ export const BUSINESS_ADDRESS = {
 } as const;
 
 export const DEFAULT_AUTHOR_NAME = 'Fabio Mathias Pavie';
-export const DEFAULT_AUTHOR_ROLE = 'Sócio-fundador da PAVIE | Advocacia';
+export const DEFAULT_AUTHOR_ROLE = 'Advogado titular e fundador da PAVIE | Advocacia, OAB/RJ 134.947';
 
 export const DEFAULT_OG_IMAGE = '/uploads/001-convertido-de-png.webp';
 

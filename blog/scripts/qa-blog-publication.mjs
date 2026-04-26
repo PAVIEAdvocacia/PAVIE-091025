@@ -398,9 +398,17 @@ function validateCategoryStates(categories, content, dist, pageSize) {
 function validateBlogHome(dist) {
 	const html = dist.htmlByRoute.get('/blog/') ?? '';
 	for (const label of ['Bloco A', 'Bloco B', 'Bloco C']) {
-		if (!html.includes(label)) {
-			errors.push(`/blog/: bloco editorial esperado ausente: ${label}.`);
+		if (html.includes(label)) {
+			errors.push(`/blog/: rotulo interno nao deve aparecer no publico: ${label}.`);
 		}
+	}
+	for (const label of ['Destaques', 'Leituras úteis', 'Categorias em preparação']) {
+		if (!html.includes(label)) {
+			errors.push(`/blog/: rotulo publico esperado ausente: ${label}.`);
+		}
+	}
+	if (html.includes('Publicações recentes selecionadas')) {
+		errors.push('/blog/: bloco recente redundante reapareceu na home enxuta.');
 	}
 	if (html.includes('data-link-origin="category-pagination"')) {
 		errors.push('/blog/: B1 nao deve renderizar paginacao estrutural.');
@@ -683,7 +691,7 @@ function validateAcceptedB3ReadingState(content, dist) {
 		if (!html.includes('data-link-origin="article-author-box"')) {
 			errors.push(`${route}: bloco de autoria da B3 sem link para pagina do autor.`);
 		}
-		if (!html.includes('data-b3-sidebar-order="toc-categories-same-category"')) {
+		if (!html.includes('data-b3-sidebar-order="toc-same-category"')) {
 			errors.push(`${route}: ordem aceita da sidebar da B3 ausente.`);
 		}
 		for (const forbidden of FORBIDDEN_B3_TAIL_STRINGS) {
@@ -694,12 +702,19 @@ function validateAcceptedB3ReadingState(content, dist) {
 		const tocIndex = html.indexOf('data-sidebar-section="toc"');
 		const categoriesIndex = html.indexOf('data-sidebar-section="categories"');
 		const sameCategoryIndex = html.indexOf('data-sidebar-section="same-category"');
-		if (tocIndex === -1 || categoriesIndex === -1 || sameCategoryIndex === -1) {
-			errors.push(`${route}: sidebar da B3 deve manter Neste artigo, Categorias e Leituras da mesma categoria.`);
+		if (categoriesIndex !== -1) {
+			errors.push(`${route}: lista completa de categorias reapareceu na sidebar da B3.`);
+		}
+		if (tocIndex === -1 || sameCategoryIndex === -1) {
+			errors.push(`${route}: sidebar da B3 deve manter Neste artigo e Leituras da mesma categoria.`);
 			continue;
 		}
-		if (!(tocIndex < categoriesIndex && categoriesIndex < sameCategoryIndex)) {
+		if (!(tocIndex < sameCategoryIndex)) {
 			errors.push(`${route}: ordem da sidebar da B3 diverge do estado aceito.`);
+		}
+		const relatedArticleCount = (html.match(/data-link-target="related-article"/g) ?? []).length;
+		if (relatedArticleCount > 3) {
+			errors.push(`${route}: sidebar da B3 deve limitar leituras relacionadas a 3; encontrados ${relatedArticleCount}.`);
 		}
 	}
 }

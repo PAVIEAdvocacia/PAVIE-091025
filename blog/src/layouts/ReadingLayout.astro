@@ -9,7 +9,7 @@ import Breadcrumbs from '../components/blog/Breadcrumbs.astro';
 import ReadingSidebar from '../components/blog/ReadingSidebar.astro';
 import BaseLayout from './BaseLayout.astro';
 import { getAreaEntries } from '../lib/blog-content';
-import { buildCanonicalAreaDirectory, getAreaEntryByCategoryCode } from '../lib/canonical-directory';
+import { getAreaEntryByCategoryCode } from '../lib/canonical-directory';
 import { buildBreadcrumbSchema, PUBLISHER_SCHEMA, toAbsoluteUrl } from '../lib/seo';
 
 interface Props {
@@ -29,11 +29,15 @@ const supportPosts = allPosts
 		if (!canonicalCategoryCode) return true;
 		return item.categoryCode === canonicalCategoryCode || item.canonicalCategory === canonicalCategoryCode;
 	})
-	.slice(0, 5);
-const categoryDirectory = buildCanonicalAreaDirectory(areaEntries, allPosts);
+	.slice(0, 3);
 const hasCanonicalTaxonomy =
 	post.publicSurfaceStatus === 'allowed' && Boolean(canonicalCategoryCode) && Boolean(post.categoryUrl);
 const canonicalUrl = post.canonicalUrl ?? toAbsoluteUrl(post.url);
+const cleanArticleTitle = (post.seoTitle ?? post.title).replace(
+	/\s*\|\s*PAVIE(?:\s*\|\s*Advocacia|\s+Advocacia)?\s*$/i,
+	'',
+);
+const articlePageTitle = `${cleanArticleTitle} | PAVIE | Advocacia`;
 
 const breadcrumbs = [
 	{ label: 'Início', href: '/' },
@@ -46,7 +50,7 @@ const introText = post.excerpt || post.description;
 const introTags = post.temas.slice(0, 3);
 const showIntroTags = introTags.length > 0;
 const showIntroBlock = Boolean(introText) || showIntroTags;
-const hasReadingSidebar = toc.length > 1 || supportPosts.length > 0 || categoryDirectory.length > 0;
+const hasReadingSidebar = toc.length > 1 || supportPosts.length > 0;
 const areaHref = post.areaUrl ?? '/#areas';
 const finalCtaHref = post.cta?.href || post.ctaTarget || areaHref;
 const finalCtaLabel =
@@ -109,7 +113,7 @@ const faqSchema =
 ---
 
 <BaseLayout
-	title={`${post.seoTitle ?? post.title} | PAVIE | Advocacia`}
+	title={articlePageTitle}
 	description={post.description}
 	canonical={canonicalUrl}
 	image={post.image}
@@ -175,8 +179,6 @@ const faqSchema =
 				<ReadingSidebar
 					toc={toc}
 					supportPosts={supportPosts}
-					categories={categoryDirectory}
-					currentCategoryCode={canonicalCategoryCode}
 				/>
 			)}
 		</div>
