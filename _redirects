@@ -9,7 +9,7 @@ http://pavieadvocacia.com.br/*       https://pavieadvocacia.com.br/:splat  301!
 /privacidade   /privacidade/privacidade.html   301
 /termos        /termos/termos.html             301
 
-# Encaminhamento do antigo /blog para o subdomínio oficial (quando o blog estiver no ar)
-/blog          https://blog.pavieadvocacia.com.br/        301
-/blog/         https://blog.pavieadvocacia.com.br/        301
-/blog/*        https://blog.pavieadvocacia.com.br/:splat  301
+# Encaminhamento do antigo /blog para o indice editorial no subdominio oficial
+/blog          https://blog.pavieadvocacia.com.br/blog/        301
+/blog/         https://blog.pavieadvocacia.com.br/blog/        301
+/blog/*        https://blog.pavieadvocacia.com.br/blog/:splat  301

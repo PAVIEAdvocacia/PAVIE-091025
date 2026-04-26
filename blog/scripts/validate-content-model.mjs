@@ -288,6 +288,15 @@ function validatePosts(definitions, authors, areas) {
 	const files = listContentFiles(postsDir);
 	const slugs = new Map();
 	const publishedCountByCategory = new Map();
+	const readinessByCategory = new Map(
+		definitions.map((definition) => [
+			definition.code,
+			{
+				base: 0,
+				complement: 0,
+			},
+		]),
+	);
 
 	for (const file of files) {
 		const data = parseFrontmatter(file);
@@ -359,12 +368,24 @@ function validatePosts(definitions, authors, areas) {
 
 		if (data.draft === 'false' && data.noindex === 'false' && effectiveCategoryCode) {
 			publishedCountByCategory.set(effectiveCategoryCode, (publishedCountByCategory.get(effectiveCategoryCode) ?? 0) + 1);
+			const readiness = readinessByCategory.get(effectiveCategoryCode);
+			if (readiness) {
+				if (['cornerstone', 'guide'].includes(data.contentType)) readiness.base += 1;
+				if (['faq', 'checklist', 'spoke'].includes(data.contentType)) readiness.complement += 1;
+			}
 		}
 	}
 
 	if (!files.length) warnings.push('src/content/blog: nenhum post encontrado. Estado permitido como transitorio controlado.');
-	if ((publishedCountByCategory.get('CAT-08') ?? 0) < 5) {
-		errors.push('src/content/blog: CAT-08 exige acervo minimo de 5 artigos publicados.');
+	for (const definition of definitions) {
+		const publishedCount = publishedCountByCategory.get(definition.code) ?? 0;
+		if (!publishedCount) continue;
+		const readiness = readinessByCategory.get(definition.code);
+		if (!readiness || readiness.base < 1 || readiness.complement < 1) {
+			errors.push(
+				`src/content/blog: ${definition.code} tem acervo publico, mas nao cumpre prontidao proporcional minima (1 cornerstone/guide + 1 faq/checklist/spoke).`,
+			);
+		}
 	}
 }
 
