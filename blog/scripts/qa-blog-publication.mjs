@@ -2,17 +2,23 @@ import fs from 'node:fs';
 import path from 'node:path';
 
 const root = process.cwd();
+const repoRoot = path.resolve(root, '..');
 const srcDir = path.join(root, 'src');
+const publicDir = path.join(root, 'public');
 const distDir = path.join(root, 'dist');
 const registryPath = path.join(srcDir, 'data', 'categories.registry.ts');
 const categoryPaginationPath = path.join(srcDir, 'lib', 'category-pagination.ts');
 const blogHomeSelectionPath = path.join(srcDir, 'lib', 'blog-home-selection.ts');
 const blogCssPath = path.join(srcDir, 'styles', 'blog.css');
 const readingCssPath = path.join(srcDir, 'styles', 'reading.css');
+const sourceRobotsPath = path.join(publicDir, 'robots.txt');
+const rootRedirectsPath = path.join(repoRoot, '_redirects');
 const areasDir = path.join(srcDir, 'content', 'areas');
 const authorsDir = path.join(srcDir, 'content', 'authors');
 const postsDir = path.join(srcDir, 'content', 'blog');
 
+const BLOG_PRODUCTION_ORIGIN = 'https://blog.pavieadvocacia.com.br';
+const LEGACY_ROOT_ORIGIN = 'https://pavieadvocacia.com.br';
 const EXPECTED_CATEGORY_CODES = ['CAT-01', 'CAT-02', 'CAT-03', 'CAT-04', 'CAT-05', 'CAT-06', 'CAT-07', 'CAT-08'];
 const REQUIRED_EDITORIAL_EVENTS = [
 	'editorial_b1_category_click',
@@ -38,6 +44,11 @@ const FORBIDDEN_PUBLIC_STRINGS = [
 	'mais populares',
 	'mais lidos',
 	'/blog/categoria/1/',
+];
+const FORBIDDEN_LEGACY_PUBLICATION_URLS = [
+	`${LEGACY_ROOT_ORIGIN}/sitemap-index.xml`,
+	`${LEGACY_ROOT_ORIGIN}/rss.xml`,
+	`${LEGACY_ROOT_ORIGIN}/blog/`,
 ];
 
 const errors = [];
@@ -86,6 +97,60 @@ function normalizeText(value) {
 		.normalize('NFD')
 		.replace(/[\u0300-\u036f]/g, '')
 		.toLowerCase();
+}
+
+function escapeRegExp(value) {
+	return String(value).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+function getAttribute(tag, attributeName) {
+	const pattern = new RegExp(`\\b${escapeRegExp(attributeName)}=(["'])(.*?)\\1`, 'i');
+	return tag.match(pattern)?.[2] ?? '';
+}
+
+function extractXmlTagValues(source, tagName) {
+	const values = [];
+	const pattern = new RegExp(`<${escapeRegExp(tagName)}(?:\\s[^>]*)?>([^<]+)<\\/${escapeRegExp(tagName)}>`, 'gi');
+	for (const match of source.matchAll(pattern)) values.push(match[1].trim());
+	return values;
+}
+
+function extractAbsoluteUrls(source) {
+	return [...source.matchAll(/https?:\/\/[^\s"'<>]+/g)].map((match) => match[0].replace(/[),.;]+$/, ''));
+}
+
+function originFromUrl(url, label) {
+	try {
+		return new URL(url).origin;
+	} catch {
+		errors.push(`${label}: URL invalida encontrada: ${url}.`);
+		return '';
+	}
+}
+
+function assertUrlsUseOrigin(label, urls, expectedOrigin) {
+	for (const url of urls) {
+		const origin = originFromUrl(url, label);
+		if (origin && origin !== expectedOrigin) {
+			errors.push(`${label}: URL fora do host canonico do blog (${expectedOrigin}): ${url}.`);
+		}
+	}
+}
+
+function assertNoLegacyPublicationUrls(label, source) {
+	for (const forbiddenUrl of FORBIDDEN_LEGACY_PUBLICATION_URLS) {
+		if (source.includes(forbiddenUrl)) {
+			errors.push(`${label}: referencia publica legada encontrada: ${forbiddenUrl}.`);
+		}
+	}
+}
+
+function hasRedirectRule(source, fromPath, toPath) {
+	const pattern = new RegExp(
+		`^\\s*${escapeRegExp(fromPath)}\\s+${escapeRegExp(toPath)}\\s+301!?\\s*$`,
+		'm',
+	);
+	return pattern.test(source);
 }
 
 function parseScalarValue(rawValue) {
@@ -393,6 +458,195 @@ function validateEditorialEvents(dist) {
 	}
 }
 
+function validateRobotsFile(label, filePath) {
+	if (!exists(filePath)) {
+		errors.push(`${label}: robots.txt ausente em ${relative(filePath)}.`);
+		return;
+	}
+
+	const source = readText(filePath);
+	const expectedSitemap = `${BLOG_PRODUCTION_ORIGIN}/sitemap-index.xml`;
+	const sitemapLines = source
+		.split(/\r?\n/)
+		.map((line) => line.trim())
+		.filter((line) => /^Sitemap:/i.test(line));
+
+	assertNoLegacyPublicationUrls(label, source);
+	if (!sitemapLines.includes(`Sitemap: ${expectedSitemap}`)) {
+		errors.push(`${label}: robots.txt deve apontar para Sitemap: ${expectedSitemap}.`);
+	}
+	for (const line of sitemapLines) {
+		const sitemapUrl = line.replace(/^Sitemap:\s*/i, '').trim();
+		assertUrlsUseOrigin(label, [sitemapUrl], BLOG_PRODUCTION_ORIGIN);
+		if (sitemapUrl !== expectedSitemap) {
+			errors.push(`${label}: sitemap declarado fora do alvo canonico: ${sitemapUrl}.`);
+		}
+	}
+}
+
+function validateGeneratedSitemaps() {
+	const sitemapIndexPath = path.join(distDir, 'sitemap-index.xml');
+	if (!exists(sitemapIndexPath)) {
+		errors.push('dist/sitemap-index.xml: sitemap index ausente.');
+		return { sitemapLocCount: 0 };
+	}
+
+	const sitemapIndex = readText(sitemapIndexPath);
+	const sitemapIndexLocs = extractXmlTagValues(sitemapIndex, 'loc');
+	assertNoLegacyPublicationUrls('dist/sitemap-index.xml', sitemapIndex);
+	assertUrlsUseOrigin('dist/sitemap-index.xml', sitemapIndexLocs, BLOG_PRODUCTION_ORIGIN);
+	if (!sitemapIndexLocs.length) {
+		errors.push('dist/sitemap-index.xml: nenhum <loc> encontrado.');
+	}
+
+	let sitemapLocCount = 0;
+	const checkedSitemapFiles = new Set([sitemapIndexPath]);
+	for (const loc of sitemapIndexLocs) {
+		let sitemapPath = '';
+		try {
+			sitemapPath = path.join(distDir, new URL(loc).pathname.replace(/^\/+/, ''));
+		} catch {
+			continue;
+		}
+		if (!exists(sitemapPath)) {
+			errors.push(`dist/sitemap-index.xml: sitemap referenciado nao existe em dist: ${loc}.`);
+			continue;
+		}
+		checkedSitemapFiles.add(sitemapPath);
+		const sitemapSource = readText(sitemapPath);
+		const locs = extractXmlTagValues(sitemapSource, 'loc');
+		sitemapLocCount += locs.length;
+		assertNoLegacyPublicationUrls(relative(sitemapPath), sitemapSource);
+		assertUrlsUseOrigin(relative(sitemapPath), locs, BLOG_PRODUCTION_ORIGIN);
+		if (!locs.length) {
+			errors.push(`${relative(sitemapPath)}: nenhum <loc> encontrado.`);
+		}
+	}
+
+	const generatedSitemaps = listFiles(distDir, (name) => /^sitemap-\d+\.xml$/i.test(name));
+	for (const file of generatedSitemaps) {
+		if (checkedSitemapFiles.has(file)) continue;
+		const source = readText(file);
+		const locs = extractXmlTagValues(source, 'loc');
+		sitemapLocCount += locs.length;
+		assertNoLegacyPublicationUrls(relative(file), source);
+		assertUrlsUseOrigin(relative(file), locs, BLOG_PRODUCTION_ORIGIN);
+	}
+
+	return { sitemapLocCount };
+}
+
+function validateGeneratedRss() {
+	const rssPath = path.join(distDir, 'rss.xml');
+	if (!exists(rssPath)) {
+		errors.push('dist/rss.xml: RSS ausente.');
+		return { rssUrlCount: 0 };
+	}
+
+	const source = readText(rssPath);
+	const channelLinks = extractXmlTagValues(source, 'link');
+	const channelLink = channelLinks[0] ?? '';
+	const urls = extractAbsoluteUrls(source);
+	assertNoLegacyPublicationUrls('dist/rss.xml', source);
+	assertUrlsUseOrigin('dist/rss.xml', urls, BLOG_PRODUCTION_ORIGIN);
+	if (channelLink !== `${BLOG_PRODUCTION_ORIGIN}/`) {
+		errors.push(`dist/rss.xml: <channel><link> deve ser ${BLOG_PRODUCTION_ORIGIN}/; encontrado ${channelLink || 'vazio'}.`);
+	}
+	if (!urls.length) {
+		errors.push('dist/rss.xml: nenhuma URL absoluta encontrada.');
+	}
+
+	return { rssUrlCount: urls.length };
+}
+
+function validateGeneratedCanonicals(dist) {
+	let canonicalCount = 0;
+	let rssAlternateCount = 0;
+	let skippedTechnicalHtmlCount = 0;
+	for (const file of dist.htmlFiles) {
+		const route = routeFromDistFile(file);
+		if (route.startsWith('/admin/')) {
+			skippedTechnicalHtmlCount += 1;
+			continue;
+		}
+		const html = readText(file);
+		const tags = html.match(/<link\b[^>]*>/gi) ?? [];
+		const canonicalTags = tags.filter((tag) => getAttribute(tag, 'rel').split(/\s+/).includes('canonical'));
+		const rssAlternateTags = tags.filter(
+			(tag) =>
+				getAttribute(tag, 'rel').split(/\s+/).includes('alternate') &&
+				getAttribute(tag, 'type') === 'application/rss+xml',
+		);
+
+		assertNoLegacyPublicationUrls(relative(file), html);
+		if (canonicalTags.length !== 1) {
+			errors.push(`${relative(file)}: esperado exatamente 1 canonical; encontrados ${canonicalTags.length}.`);
+		}
+		for (const tag of canonicalTags) {
+			const href = getAttribute(tag, 'href');
+			canonicalCount += 1;
+			if (!href) {
+				errors.push(`${relative(file)}: canonical sem href.`);
+				continue;
+			}
+			assertUrlsUseOrigin(`${relative(file)} canonical`, [href], BLOG_PRODUCTION_ORIGIN);
+		}
+
+		for (const tag of rssAlternateTags) {
+			const href = getAttribute(tag, 'href');
+			rssAlternateCount += 1;
+			if (!href) {
+				errors.push(`${relative(file)}: alternate RSS sem href.`);
+				continue;
+			}
+			assertUrlsUseOrigin(`${relative(file)} alternate RSS`, [href], BLOG_PRODUCTION_ORIGIN);
+			if (href !== `${BLOG_PRODUCTION_ORIGIN}/rss.xml`) {
+				errors.push(`${relative(file)}: alternate RSS deve apontar para ${BLOG_PRODUCTION_ORIGIN}/rss.xml.`);
+			}
+		}
+		if (rssAlternateTags.length !== 1) {
+			errors.push(`${relative(file)}: esperado exatamente 1 alternate RSS; encontrados ${rssAlternateTags.length}.`);
+		}
+	}
+
+	return { canonicalCount, rssAlternateCount, skippedTechnicalHtmlCount };
+}
+
+function validateRootBlogRedirects() {
+	if (!exists(rootRedirectsPath)) {
+		errors.push(`${relative(rootRedirectsPath)}: arquivo raiz de redirects ausente.`);
+		return;
+	}
+
+	const source = readText(rootRedirectsPath);
+	const expectedRules = [
+		['/blog', `${BLOG_PRODUCTION_ORIGIN}/blog/`],
+		['/blog/', `${BLOG_PRODUCTION_ORIGIN}/blog/`],
+		['/blog/*', `${BLOG_PRODUCTION_ORIGIN}/blog/:splat`],
+	];
+	for (const [fromPath, toPath] of expectedRules) {
+		if (!hasRedirectRule(source, fromPath, toPath)) {
+			errors.push(`${relative(rootRedirectsPath)}: redirect esperado ausente: ${fromPath} -> ${toPath} 301.`);
+		}
+	}
+	if (/^\/blog\s+https:\/\/blog\.pavieadvocacia\.com\.br\/\s+301!?\s*$/m.test(source)) {
+		errors.push(`${relative(rootRedirectsPath)}: /blog voltou a apontar para a raiz do subdominio, sem /blog/.`);
+	}
+	assertNoLegacyPublicationUrls(relative(rootRedirectsPath), source);
+}
+
+function validatePublicationHostGate(dist) {
+	validateRobotsFile('blog/public/robots.txt', sourceRobotsPath);
+	validateRobotsFile('dist/robots.txt', path.join(distDir, 'robots.txt'));
+	const { sitemapLocCount } = validateGeneratedSitemaps();
+	const { rssUrlCount } = validateGeneratedRss();
+	const { canonicalCount, rssAlternateCount, skippedTechnicalHtmlCount } = validateGeneratedCanonicals(dist);
+	validateRootBlogRedirects();
+	notes.push(
+		`gate robots/sitemap/RSS/canonical/host: host=${BLOG_PRODUCTION_ORIGIN}, sitemapLocs=${sitemapLocCount}, rssUrls=${rssUrlCount}, canonicals=${canonicalCount}, rssAlternates=${rssAlternateCount}, htmlTecnicosIgnorados=${skippedTechnicalHtmlCount}`,
+	);
+}
+
 function validateForbiddenRegressions(dist) {
 	const allHtml = [...dist.htmlByRoute.values()].join('\n');
 	for (const forbidden of FORBIDDEN_PUBLIC_STRINGS) {
@@ -512,6 +766,7 @@ validateCategoryStates(categories, content, dist, pageSize);
 validateBlogHome(dist);
 validateBreadcrumbs(dist);
 validateEditorialEvents(dist);
+validatePublicationHostGate(dist);
 validateForbiddenRegressions(dist);
 validateAcceptedB3ReadingState(content, dist);
 validateVisualStructure();
